@@ -13,3 +13,4 @@ VignetteBuilder: knitr
 Imports: ggplot2,dplyr,reshape2,gridExtra
 NeedsCompilation: no
 Packaged: 2017-07-22 20:16:40 UTC; shengliu
+RoxygenNote: 6.0.1
