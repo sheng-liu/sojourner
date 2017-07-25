@@ -99,7 +99,7 @@ kernelDensity = function (track.list){
 
 #Returns binary mask and plots
 
-createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, plot = T){
+createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, plot = T, separate = F){
 	#Store all merged track coordinate points into a dataframe
 	df <- mergeTracks(track.list)
 	
@@ -112,7 +112,8 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 	}
 	
 	if (p <= 0 || p >= 1){
-	  cat("ERROR: Need valid probability (p) or automatic calculation is not valid.")
+	  cat("p set to default 0.3.")
+	  p = 0.3
 	}
 
 	# Calculate contours to plot
@@ -159,8 +160,13 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 		plot(df[[2]] ~ df[[1]], col=region, data=df, xlim = c(0, 128), ylim = c(0, 128), xlab = "x", ylab = "y", main = title, cex = .1)
 		contour(kernel.density, levels=levels, labels=prob, add=T)
 	}
-	cat("\n", getTrackFileName(track.list), "masked at a kernel density probability of", round(p, digits = 3), "\n")
-  return(df$region)
+	cat("\n", length(ls), "clusters extracted.", .getTrackFileName(track.list), "masked at a kernel density probability of", round(p, digits = 3), "\n")
+  
+	if (!separate){
+	    return(df$region)
+	} else {
+	    return(cluster)
+	}
 }
 
 #### applymask ####
@@ -168,32 +174,36 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 #Creates masked track list
 
 applyMask = function(track.list, mask){
-  #Instantiate a masked track list with indexing variables
-  masked.track.list = list();
-  masked.track.list.names = list();
-  index.mask = 1;
-  index = 1;
-  
-  #Loop through all tracks
-  for(i in 1:length(track.list)){
-    mask.bool = TRUE;
-    
-    #Remove any tracks outside mask
-    for (j in 1:nrow(track.list[[i]])){
-      if (mask[[index]] == 1){
-        mask.bool = FALSE;
-      }
-      index = index + 1;
+    if (typeof(mask) == "integer"){
+        #Instantiate a masked track list with indexing variables
+        masked.track.list = list();
+        masked.track.list.names = list();
+        index.mask = 1;
+        index = 1;
+      
+        #Loop through all tracks
+        for(i in 1:length(track.list)){
+            mask.bool = TRUE;
+        
+            #Remove any tracks outside mask
+            for (j in 1:nrow(track.list[[i]])){
+                if (mask[[index]] == 1){
+                    mask.bool = FALSE;
+                }
+            index = index + 1;
+            }
+            if (!mask.bool){
+                masked.track.list[index.mask] <- track.list[i];
+                index.mask = index.mask + 1;
+                masked.track.list.names[1 + length(masked.track.list.names)] = names(track.list[i]);
+            }		
+        }
+        names(masked.track.list) <- masked.track.list.names;
+        #Return masked track list
+        return (masked.track.list);
+    } else {
+        
     }
-    if (!mask.bool){
-      masked.track.list[index.mask] <- track.list[i];
-      index.mask = index.mask + 1;
-      masked.track.list.names[1 + length(masked.track.list.names)] = names(track.list[i]);
-    }		
-  }
-  names(masked.track.list) <- masked.track.list.names;
-  #Return masked track list
-  return (masked.track.list);
 }
 
 #### mergeTracks ####
