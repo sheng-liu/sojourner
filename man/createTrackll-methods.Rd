@@ -28,6 +28,8 @@ createTrackll(interact = F, folder, input = 0, merge = F, ab.track = F, mask = F
 take in Diatrack (.txt or .mat), ImageJ (.csv), or SlimFast (.txt) input from a folder to output a list of track lists with the option to merge, mask, censor, record frames, and use multiple cores.
 }
 \details{
+IMPORTANT: It will take an extremely long time to mask unfiltered data. Filter first using filterTrack(trackll,filter=c(min=7,max=Inf)), then mask using maskTracks(folder, trackll)!
+
 It is highly advised that the frame record option be left on to preserve the most information, especially when linking frames.
 If the frame record option is turned on for reading Diatrack .txt files (input = 1), take note that the frame record is artificially created as consecutive frames after the given start frame.
 Otherwise, all other data types naturally record the frames of every coordinate point.

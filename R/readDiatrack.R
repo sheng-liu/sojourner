@@ -279,9 +279,7 @@ maskTracks=function(folder, trackll){
     }
 
     return(masked.tracks)
-
 }
-
 
 ##------------------------------------------------------------------------------
 ## Note:the list can be named, this wil change the read.distrack.folder 's

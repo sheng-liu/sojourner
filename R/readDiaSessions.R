@@ -278,7 +278,7 @@ readDiaSessions = function(folder, merge = F, ab.track = F, mask = F, cores = 1,
     
     # cleaning tracks by image mask
     if (mask==T){
-        trackll=maskTracks(folder = folder, trackll=trackll
+        trackll=maskTracks(folder = folder, trackll=trackll)
     }
     
     # merge masked tracks

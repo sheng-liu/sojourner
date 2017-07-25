@@ -9,6 +9,8 @@
 readDiatrack(folder, merge = F, ab.track = F, mask = F, cores = 1, frameRecord = T)
 
 .readDiatrack(file, interact = F, ab.track = F, frameRecord = F)
+
+maskTracks(folder, trackll)
 }
 \arguments{
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).}
