@@ -14,6 +14,8 @@
 ##' readDiatrack(folder, merge = F, ab.track = F, mask = F, cores = 1, frameRecord = T)
 ##'
 ##' .readDiatrack(file, interact = F, ab.track = F, frameRecord = F)
+##' 
+##' maskTracks(folder, trackll)
 ##'
 ## @method # this roxygen directive does not working
 ##' @param folder Full path to Diatrack output file.
@@ -70,6 +72,7 @@
 
 ##' @export readDiatrack
 ##' @export .readDiatrack
+##' @export maskTracks
 
 ###############################################################################
 
@@ -231,39 +234,6 @@ trackCenter=function(trackll){
 
 ##------------------------------------------------------------------------------
 ##
-
-maskTracks=function(trackll,maskl){
-
-    mask.track.index=list()
-    length(mask.track.index)=length(trackll)
-    names(mask.track.index)=names(trackll)
-
-    return(pos.point)
-}
-
-##------------------------------------------------------------------------------
-##
-# Use each trajectory's geometric center as unit for clusterization.
-# Each data point is an averaged trajectory.
-
-trackCenter=function(trackll){
-
-    # arithmetic mean for geometric center (centroid)
-    track.center=list()
-    length(track.center)=length(trackll)
-    names(track.center)=names(trackll)
-
-    for (i in 1:length(trackll)){
-        track.center[[i]]=lapply(trackll[[i]],function(x){
-            # round coords
-            apply(x,2,function(coord){round(mean(coord))})})
-    }
-
-    return(track.center)
-}
-
-##------------------------------------------------------------------------------
-##
 # track.center and pos.point should be one to one cooresponding
 posTracks=function(track.center,pos.point){
 
@@ -278,12 +248,20 @@ posTracks=function(track.center,pos.point){
 ##------------------------------------------------------------------------------
 ##
 
-maskTracks=function(trackll,maskl){
-
+maskTracks=function(folder, trackll){
+    
+    # read in mask
+    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
+    
+    if (length(maskl)==0){
+        cat("No image mask file ending '_MASK.tif' found.\n")
+        
+    }
+    
     mask.track.index=list()
     length(mask.track.index)=length(trackll)
     names(mask.track.index)=names(trackll)
-
+    
     masked.tracks=list()
     length(masked.tracks)=length(trackll)
     names(masked.tracks)=names(trackll)
@@ -324,14 +302,6 @@ readDiatrack=function(folder,merge=F,ab.track=F,mask=F,cores=1, frameRecord = T)
     file.list=list.files(path=folder,pattern=".txt",full.names=T)
     file.name=list.files(path=folder,pattern=".txt",full.names=F)
     folder.name=basename(folder)
-
-    # read in mask
-    mask.list=list.files(path=folder,pattern="_MASK.tif",full.names=T)
-
-    if (mask==T & length(mask.list)==0){
-        cat("No image mask file ending '_MASK.tif' found.\n")
-
-    }
 
 
     # read in tracks
@@ -399,7 +369,7 @@ readDiatrack=function(folder,merge=F,ab.track=F,mask=F,cores=1, frameRecord = T)
 
     # cleaning tracks by image mask
     if (mask==T){
-        trackll=maskTracks(trackll=trackll,maskl=mask.list)
+        trackll=maskTracks(folder = folder, trackll=trackll)
     }
 
     # merge masked tracks
@@ -419,12 +389,7 @@ readDiatrack=function(folder,merge=F,ab.track=F,mask=F,cores=1, frameRecord = T)
     # file.name > data.frame.name
     # if merge==T, list takes the folder name
     # folder.name > data.frame.name
-
-    # filtration by image mask
-    if (mask==T){
-        trackll=maskTracks(trackll=trackll,maskl=mask.list)
-    }
-
+    
     # merge masked tracks
     # merge has to be done after mask
 

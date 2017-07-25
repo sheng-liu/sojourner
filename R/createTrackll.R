@@ -28,6 +28,9 @@
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.
 
 ##' @details
+##' 
+##' IMPORTANT: It will take an extremely long time to mask unfiltered data. Filter first using filterTrack(trackll,filter=c(min=7,max=Inf)), then mask using maskTracks(folder, trackll)!
+##' 
 ##' It is highly advised that the frame record option be left on to preserve the most information, especially when linking frames.
 ##' If the frame record option is turned on for reading Diatrack .txt files (input = 1), take note that the frame record is artificially created as consecutive frames after the given start frame.
 ##' Otherwise, all other data types naturally record the frames of every coordinate point.

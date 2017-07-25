@@ -147,14 +147,6 @@ readSlimFast = function(folder, merge = F, ab.track = F, mask = F, cores = 1, fr
     file.name = list.files(path = folder, pattern = ".txt", full.names = F)
     folder.name=basename(folder)
     
-    # read in mask
-    mask.list=list.files(path=folder,pattern="_MASK.tif",full.names=T)
-    
-    if (mask==T & length(mask.list)==0){
-        cat("No image mask file ending '_MASK.tif' found.\n")
-        
-    }
-    
     
     # read in tracks
     # list of list of data.frames,
@@ -217,7 +209,7 @@ readSlimFast = function(folder, merge = F, ab.track = F, mask = F, cores = 1, fr
     
     # cleaning tracks by image mask
     if (mask==T){
-        trackll=maskTracks(trackll=trackll,maskl=mask.list)
+        trackll=maskTracks(folder = folder, trackll=trackll)
     }
     
     # merge masked tracks
