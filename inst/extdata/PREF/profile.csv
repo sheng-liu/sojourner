@@ -1,0 +1,8 @@
+PARAMETER,VALUE
+lag.start,2
+lag.end,5
+percentage,0.25
+window.size,4
+
+
+
