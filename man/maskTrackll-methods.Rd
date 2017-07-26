@@ -6,9 +6,9 @@
 \alias{kernelDensity}
 \title{maskTrackll}
 \usage{
-maskTrackll(trackll, automatic = F)
+.densityMaskTracks(trackll, automatic = F, separate = F)
 
-maskTrackl(track.list, automatic = F)
+densityMaskTracks(track.list, automatic = F, separate = F)
 
 plotPoints(track.list)
 

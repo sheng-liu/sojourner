@@ -1,24 +1,24 @@
-#### maskTrackll.R
+#### densityMaskTracks.R
 #### Wu Lab, Johns Hopkins University
 #### Author: Sun Jay Yoo
 #### Date: July 21, 2017
 
-## maskTrackll-methods
+## densityMaskTracks-methods
 ##
 ##
 ###############################################################################
-##' @name maskTrackll
-##' @aliases maskTrackll
-##' @title maskTrackll
-##' @rdname maskTrackll-methods
+##' @name densityMaskTracks
+##' @aliases densityMaskTracks
+##' @title densityMaskTracks
+##' @rdname densityMaskTracks-methods
 ##' @docType methods
 ##'
 ##' @description mask track lists and lists of track lists using kernel density clusters
 
 ##' @usage 
-##' maskTrackll(trackll, automatic = F)
+##' .densityMaskTracks(trackll, automatic = F, separate = F)
 ##' 
-##' maskTrackl(track.list, automatic = F)
+##' densityMaskTracks(track.list, automatic = F, separate = F)
 ##' 
 ##' plotPoints(track.list)
 ##' 
@@ -27,15 +27,20 @@
 
 ##' @param trackll An uncensored/unfiltered list of track lists.
 ##' @param automatic Find p automatically using a model (not recommended)
+##' @param separate separate by cluster.
 ##' @param track.list A single uncensored/filtered track list.
 
 ##' @details
 ##' 
-##' When maskTrackll() is called by default with automatic = F, it will repeatedly ask the user for the kernel density probability (p)
+##' When densityMaskTracks() is called by default with automatic = F, it will repeatedly ask the user for the kernel density probability (p)
 ##' and the number of smallest clusters to elimnate. The kernel density probability (p) is a factor that determines how dense the cluster contours are.
 ##' Low p creates smaller and/or fewer clusters and vice versa. Adjust p accordingly, but if there are still small extra clusters made in undesired
 ##' areas, raise the number of smallest clusters to eliminate accordingly (note: sometimes noise clusters are too small to see). 
-##' Use maskTrackl() to apply this to only one track list.
+##' Use .densityMaskTracksl() to apply this to only one track list.
+##' 
+##' The separate parameter allows users to separate each track list from one video into their cluster components, creating a list of track lists.
+##' Applying this separate parameter to a list of track lists from multiple videos will simply append all the separated clusters together.
+##' Each track list is named "c#" as the header. The # indicating the cluster number.
 ##' 
 ##' Use plotTrackPoints and plotTrackLines to plot lists of track lists into separate scatter/line plots. 
 ##' Use .plotTrackPoints and .plotTrackLines for a single track list. These track lists can be plotted at any point in analysis.
@@ -57,15 +62,15 @@
 
 ##' @examples
 ##' 
-##' #Default call for masking a list of track lists.
-##' masked.trackll <- maskTrackl(trackll)
+##' #Default call for masking a list of track lists with separation by cluster.
+##' masked.trackll <- densityMaskTracks(trackll, separate = T)
 ##' 
 ##' #Default call for masking a track list
-##' masked.trackl <- maskTrackl(trackl)
+##' masked.trackl <- .densityMaskTracks(trackl)
 
 
-##' @export maskTrackl
-##' @export maskTrackll
+##' @export .densityMaskTracks
+##' @export densityMaskTracks
 ##' @export plotPoints
 ##' @export plotLines
 ##' @export .plotPoints
@@ -112,7 +117,7 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 	}
 	
 	if (p <= 0 || p >= 1){
-	  cat("p set to default 0.3.")
+	  cat("\np set to safe value of 0.3.\n")
 	  p = 0.3
 	}
 
@@ -160,7 +165,7 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 		plot(df[[2]] ~ df[[1]], col=region, data=df, xlim = c(0, 128), ylim = c(0, 128), xlab = "x", ylab = "y", main = title, cex = .1)
 		contour(kernel.density, levels=levels, labels=prob, add=T)
 	}
-	cat("\n", length(ls), "clusters extracted.", .getTrackFileName(track.list), "masked at a kernel density probability of", round(p, digits = 3), "\n")
+	cat("\n", length(ls), "clusters.", getTrackFileName(track.list), "masked at kernel density probability =", round(p, digits = 3), ", eliminate =", eliminate, "\n")
   
 	if (!separate){
 	    return(df$region)
@@ -174,36 +179,32 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 #Creates masked track list
 
 applyMask = function(track.list, mask){
-    if (typeof(mask) == "integer"){
-        #Instantiate a masked track list with indexing variables
-        masked.track.list = list();
-        masked.track.list.names = list();
-        index.mask = 1;
-        index = 1;
-      
-        #Loop through all tracks
-        for(i in 1:length(track.list)){
-            mask.bool = TRUE;
-        
-            #Remove any tracks outside mask
-            for (j in 1:nrow(track.list[[i]])){
-                if (mask[[index]] == 1){
-                    mask.bool = FALSE;
-                }
-            index = index + 1;
+    #Instantiate a masked track list with indexing variables
+    masked.track.list = list();
+    masked.track.list.names = list();
+    index.mask = 1;
+    index = 1;
+    
+    #Loop through all tracks
+    for(i in 1:length(track.list)){
+        mask.bool = TRUE;
+            
+        #Remove any tracks outside mask
+        for (j in 1:nrow(track.list[[i]])){
+            if (mask[[index]] == 1){
+                mask.bool = FALSE;
             }
-            if (!mask.bool){
-                masked.track.list[index.mask] <- track.list[i];
-                index.mask = index.mask + 1;
-                masked.track.list.names[1 + length(masked.track.list.names)] = names(track.list[i]);
-            }		
+            index = index + 1;
         }
-        names(masked.track.list) <- masked.track.list.names;
-        #Return masked track list
-        return (masked.track.list);
-    } else {
-        
+        if (!mask.bool){
+            masked.track.list[index.mask] <- track.list[i];
+            index.mask = index.mask + 1;
+            masked.track.list.names[1 + length(masked.track.list.names)] = names(track.list[i]);
+        }		
     }
+    names(masked.track.list) <- masked.track.list.names;
+    #Return masked track list
+    return (masked.track.list);
 }
 
 #### mergeTracks ####
@@ -218,18 +219,18 @@ mergeTracks = function(track.list){
   return (df);
 }
 
-#### maskTrackl ###
+#### .densityMaskTracks ###
 
-maskTrackl = function (track.list, automatic = F){
+.densityMaskTracks = function (track.list, automatic = F, separate = F){
   cat("\n Mask for", getTrackFileName(track.list), "...\n")
   kd <- kernelDensity(track.list);
   if (automatic){
-    mask <- createMask(track.list, kd, p = NULL);
+    mask <- createMask(track.list, kd, p = NULL, separate = separate);
   } else {
     eliminate = 0;
     p = NULL;
     done = FALSE;
-    mask <- createMask(track.list, kd, p = p);
+    mask <- createMask(track.list, kd, p = p, separate = separate);
     while (!done){
       cat("\n")
       done = as.integer(readline(prompt="Done (1 = YES; 0 = NO)?: "))
@@ -251,22 +252,43 @@ maskTrackl = function (track.list, automatic = F){
         cat("\nIncorrect input, set to default = 0.\n")
         eliminate = 0;
       }
-      mask <- createMask(track.list, kd, p = p, eliminate = eliminate);
+      mask <- createMask(track.list, kd, p = p, eliminate = eliminate, separate = separate);
     }
   }
-  masked.track.list <- applyMask(track.list, mask);
-  cat("\n Mask created for", getTrackFileName(track.list), "\n")
-  return(masked.track.list)
+  if (typeof(mask) == "integer"){
+      masked.track.list <- applyMask(track.list, mask);
+      cat("\n Masked track list for", getTrackFileName(track.list), "created.\n")
+      return(masked.track.list)
+  } else {
+      masked.trackll.cells <- list()
+      masked.trackll.cells.names <- list()
+      for (i in 1:length(mask)){
+          masked.trackll.cells[[length(masked.trackll.cells)+1]] <- applyMask(track.list, mask[[i]]);
+          masked.trackll.cells.names[[length(masked.trackll.cells.names)+1]] <- i;
+      }
+      names(masked.trackll.cells) <- paste("c", masked.trackll.cells.names, sep ="");
+      cat("\n Masked list of track lists (separated by cluster) for", getTrackFileName(track.list), "created.\n")
+      return(masked.trackll.cells)
+  }
+      
 }
 
-#### maskTrackll ####
+#### densityMaskTracks ####
 
-maskTrackll = function (trackll, automatic = F){
+densityMaskTracks = function (trackll, automatic = F, separate = F){
   masked.trackll <- list()
-  for (i in 1:length(trackll)){
-    masked.trackll[[i]] <- maskTrackl(trackll[[i]], automatic = automatic)
+  if (separate){
+      for (i in 1:length(trackll)){
+        tracks <- .densityMaskTracks(trackll[[i]], automatic = automatic, separate = separate)
+        masked.trackll <- append(masked.trackll, tracks)
+      }
+      names(masked.trackll) <- paste(names(masked.trackll), names(trackll), sep = "_")
+  } else {
+      for (i in 1:length(trackll)){
+          masked.trackll[[i]] <- .densityMaskTracks(trackll[[i]], automatic = automatic, separate = separate)
+      }
+      names(masked.trackll) <- names(trackll)
   }
-  names(masked.trackll) <- names(trackll)
   cat("\nAll tracks lists masked.\n")
   return(masked.trackll)
 }
@@ -276,6 +298,7 @@ maskTrackll = function (trackll, automatic = F){
 plotPoints = function(trackll){
   for (i in 1:length(trackll)){
     .plotPoints(trackll[[i]])
+    title(sub= names(trackll)[[i]])
   }
 }
 
@@ -289,11 +312,12 @@ plotPoints = function(trackll){
 plotLines = function(trackll){
   for (i in 1:length(trackll)){
     .plotLines(trackll[[i]])
+     title(sub= names(trackll)[[i]])
   }
 }
 
 .plotLines = function(track.list){
-  plot(track.list[[1]][[1]], track.list[[1]][[2]], type = "l", xlim = c(0, 128), ylim = c(0, 128), main = getTrackFileName(track.list))
+  plot(track.list[[1]][[1]], track.list[[1]][[2]], type = "l", xlim = c(0, 128), ylim = c(0, 128), xlab = "x", ylab = "y", main = getTrackFileName(track.list))
   for(i in 2:length(track.list)){
     lines(track.list[[i]][[1]], track.list[[i]][[2]])
   }
