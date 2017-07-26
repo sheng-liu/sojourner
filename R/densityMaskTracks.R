@@ -282,7 +282,7 @@ densityMaskTracks = function (trackll, automatic = F, separate = F){
         tracks <- .densityMaskTracks(trackll[[i]], automatic = automatic, separate = separate)
         masked.trackll <- append(masked.trackll, tracks)
       }
-      names(masked.trackll) <- paste(names(masked.trackll), names(trackll), sep = "_")
+      names(masked.trackll) <- paste(names(trackll), names(masked.trackll), sep = "_")
   } else {
       for (i in 1:length(trackll)){
           masked.trackll[[i]] <- .densityMaskTracks(trackll[[i]], automatic = automatic, separate = separate)
