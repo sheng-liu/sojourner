@@ -69,13 +69,15 @@ createTrackll=function(interact = F, folder, input = 0, merge = F, ab.track = F,
     if (interact){
         cat("Choose one file in the folder for processing... \n")
         folder = dirname(file.choose());
-        cat("Folder selection:", folder, "\n");
-        cat("Enter input file type and press ENTER: \n")
-        cat("1. Diatrack .txt file \n")
-        cat("2. Diatrack .mat session file: \n")
-        cat("3. ImageJ/MOSAIC or exported save .csv file\n")
-        cat("4. SlimFast .txt file \n")
-        input <- readline();
+        if (input == 0){
+            cat("Folder selection:", folder, "\n");
+            cat("Enter input file type and press ENTER: \n")
+            cat("1. Diatrack .txt file \n")
+            cat("2. Diatrack .mat session file: \n")
+            cat("3. ImageJ/MOSAIC or exported save .csv file\n")
+            cat("4. SlimFast .txt file \n")
+            input <- readline();
+        }
     }
 
     #Error if no input
