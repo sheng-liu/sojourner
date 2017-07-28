@@ -32,7 +32,7 @@ Also, ensure that the input trackll is a list of track lists and not just a trac
 
 The naming scheme for each export is as follows:
 
-[yy-MM-dd]_[HH-mm-ss]_[Last five characters of the file name].csv
+[Last five characters of the file name]_[yy-MM-dd]_[HH-mm-ss].csv
 }
 \examples{
 #Basic function call to exportTrackll with 2 cores into current directory

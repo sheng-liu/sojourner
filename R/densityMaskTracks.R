@@ -162,7 +162,7 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 	#Plot with mask and contour
 	if(plot){
 	  title = paste(getTrackFileName(track.list),"Mask with Kernel Density Probability (p) of", round(p, digits = 3), sep = " ");
-		plot(df[[2]] ~ df[[1]], col=region, data=df, xlim = c(0, 128), ylim = c(0, 128), xlab = "x", ylab = "y", main = title, cex = .1)
+		plot(df[[2]] ~ df[[1]], col=region, data=df, xlim = c(0, 128), ylim = c(0, 128), xlab = "x (Pixels)", ylab = "y (Pixels)", main = title, cex = .1)
 		contour(kernel.density, levels=levels, labels=prob, add=T)
 	}
 	cat("\n", length(ls), "clusters.", getTrackFileName(track.list), "masked at kernel density probability =", round(p, digits = 3), ", eliminate =", eliminate, "\n")
@@ -304,7 +304,7 @@ plotPoints = function(trackll){
 
 .plotPoints = function(track.list){
   df <- mergeTracks(track.list)
-  plot(df[[1]], df[[2]], xlim = c(0, 128), ylim = c(0, 128), xlab = "x", ylab = "y", main = getTrackFileName(track.list), cex = .1);
+  plot(df[[1]], df[[2]], xlim = c(0, 128), ylim = c(0, 128), xlab = "x (Pixels)", ylab = "y (Pixels)", main = paste("Tracks Plot for ", getTrackFileName(track.list), sep = ""), cex = .1);
 }
 
 #### plotLines ####
@@ -317,7 +317,7 @@ plotLines = function(trackll){
 }
 
 .plotLines = function(track.list){
-  plot(track.list[[1]][[1]], track.list[[1]][[2]], type = "l", xlim = c(0, 128), ylim = c(0, 128), xlab = "x", ylab = "y", main = getTrackFileName(track.list))
+  plot(track.list[[1]][[1]], track.list[[1]][[2]], type = "l", xlim = c(0, 128), ylim = c(0, 128), xlab = "x (Pixels)", ylab = "y (Pixels)", main = paste("Tracks Plot for ", getTrackFileName(track.list), sep = ""));
   for(i in 2:length(track.list)){
     lines(track.list[[i]][[1]], track.list[[i]][[2]])
   }

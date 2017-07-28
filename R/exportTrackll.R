@@ -37,7 +37,7 @@
 ##' 
 ##' The naming scheme for each export is as follows:
 ##' 
-##' [yy-MM-dd]_[HH-mm-ss]_[Last five characters of the file name].csv
+##' [Last five characters of the file name]_[yy-MM-dd]_[HH-mm-ss].csv
 
 ##' @examples
 ##' #Basic function call to exportTrackll with 2 cores into current directory
@@ -91,7 +91,7 @@
         }
     }
     #Write the data frame df into the .csv and display confirmation text
-    file.name = paste(format(Sys.time(), format = "%y-%m-%d_%H-%M-%S_"), track.file.name, ".csv", sep = "")
+    file.name = paste(track.file.name, format(Sys.time(), format = "_%y-%m-%d_%H-%M-%S"), ".csv", sep = "")
     write.csv(df, file=file.name);
     cat(paste("\n", file.name, " placed in current directory.\n", sep =""))
 }
