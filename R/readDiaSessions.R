@@ -93,25 +93,24 @@
     #Display starter text
     cat("\nReading Diatrack session file: ",file.name,"...\n");
     
-    #Pre-process data
+    #Pre-process data (for both newer and older session file versions)
     #Successor and predecessor rows of first frame switched for consistency
     #(Unsure why Diatrack reverses the ordering of these two rows for the first frame)
     data <- readMat(file)$tracks;
     if (length(data[1][[1]][[1]]) == 7){
         temp <- data[1][[1]][[1]][[7]]; 
         data[1][[1]][[1]][[7]] <- data[1][[1]][[1]][[6]];
-        data[1][[1]][[1]][[6]] <- temp;
-        pred = 6;
         succ = 7
     } else if (length(data[1][[1]][[1]]) == 8){
         temp <- data[1][[1]][[1]][[8]]; 
         data[1][[1]][[1]][[8]] <- data[1][[1]][[1]][[7]];
-        data[1][[1]][[1]][[6]] <- temp;
-        pred = 6;
         succ = 8;
     } else {
         cat("ERROR: Use a different Diatrack version.")
     }
+    data[1][[1]][[1]][[6]] <- temp;
+        pred = 6;
+
     #Data structure of data for future reference:
     #data[FRAME][[1]][[1]][[ROW]][[COL]] 
     
