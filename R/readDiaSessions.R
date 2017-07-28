@@ -97,10 +97,21 @@
     #Successor and predecessor rows of first frame switched for consistency
     #(Unsure why Diatrack reverses the ordering of these two rows for the first frame)
     data <- readMat(file)$tracks;
-    temp <- data[1][[1]][[1]][[7]]; 
-    data[1][[1]][[1]][[7]] <- data[1][[1]][[1]][[6]];
-    data[1][[1]][[1]][[6]] <- temp;
-    
+    if (length(data[1][[1]][[1]]) == 7){
+        temp <- data[1][[1]][[1]][[7]]; 
+        data[1][[1]][[1]][[7]] <- data[1][[1]][[1]][[6]];
+        data[1][[1]][[1]][[6]] <- temp;
+        pred = 6;
+        succ = 7
+    } else if (length(data[1][[1]][[1]]) == 8){
+        temp <- data[1][[1]][[1]][[8]]; 
+        data[1][[1]][[1]][[8]] <- data[1][[1]][[1]][[7]];
+        data[1][[1]][[1]][[6]] <- temp;
+        pred = 6;
+        succ = 8;
+    } else {
+        cat("ERROR: Use a different Diatrack version.")
+    }
     #Data structure of data for future reference:
     #data[FRAME][[1]][[1]][[ROW]][[COL]] 
     
@@ -133,7 +144,7 @@
                 break;
             } else if (length(data[startFrame][[1]][[1]][[1]]) == 0){ #Iterate to next frame at empty frames
                 next;
-            } else if (data[startFrame][[1]][[1]][[6]][[startIndex]] == 0) { #Break if particle is found
+            } else if (data[startFrame][[1]][[1]][[pred]][[startIndex]] == 0) { #Break if particle is found
                 break;
             }
             #Do nothing and iterate to next indexed particle if no particle is found
@@ -162,8 +173,8 @@
             } else {
                 track <- rbind(track, data.frame(x = RefinedCooX, y = RefinedCooY, z = RefinedCooZ));
             }
-            if (data[frame][[1]][[1]][[7]][[index]] != 0) {
-                index = data[frame][[1]][[1]][[7]][[index]];
+            if (data[frame][[1]][[1]][[succ]][[index]] != 0) {
+                index = data[frame][[1]][[1]][[succ]][[index]];
                 frame = frame + 1;
             } else
                 break;
