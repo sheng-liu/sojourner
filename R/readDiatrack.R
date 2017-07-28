@@ -277,7 +277,7 @@ maskTracks=function(folder, trackll){
         masked.tracks[[i]]=lapply(trackll[i],function(x){x[index]})[[1]]
 
     }
-
+    cat("\nAll files masked.\n")
     return(masked.tracks)
 }
 
