@@ -13,23 +13,19 @@
 ##' @rdname createTrackll-methods
 ##' @docType methods
 ##'
-##' @description take in Diatrack (.txt or .mat), ImageJ (.csv), or SlimFast (.txt) input from a folder to output a list of track lists with the option to merge, mask, censor, record frames, and use multiple cores.
+##' @description take in Diatrack (.txt or .mat), ImageJ (.csv), or SlimFast (.txt) input from a folder to output a list of track lists with the option to record frames and use multiple cores.
 
 ##' @usage 
-##' createTrackll(interact = F, folder, input = 0, merge = F, ab.track = F, mask = F, cores = 1, frameRecord = T)
+##' createTrackll(interact = F, folder, input = 0, ab.track = F, cores = 1, frameRecord = T)
 
 ##' @param interact Open interactive menu to choose the desired folder by selecting any file in it and select input type (script will process all files of that type in this folder).
 ##' @param folder Full path output file folder (if they are .txt, ensure that they are either all Diatrack or all SlimFast).
 ##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).
-##' @param merge Indicate if the output list should be merged into one- output list is divided by file names otherwise.
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param mask Indicate if image mask should be applied to screen tracks (Note: the mask file should have the same name as the Diatrack output txt file with a "_MASK.tif" ending. Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks).
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.
 
 ##' @details
-##' 
-##' IMPORTANT: It will take an extremely long time to mask unfiltered data. Filter first using filterTrack(trackll,filter=c(min=7,max=Inf)), then mask using maskTracks(folder, trackll)!
 ##' 
 ##' It is highly advised that the frame record option be left on to preserve the most information, especially when linking frames.
 ##' If the frame record option is turned on for reading Diatrack .txt files (input = 1), take note that the frame record is artificially created as consecutive frames after the given start frame.
@@ -63,7 +59,7 @@
 
 ### createTrackll ###
 
-createTrackll=function(interact = F, folder, input = 0, merge = F, ab.track = F, mask = F, cores = 1, frameRecord = T){
+createTrackll=function(interact = F, folder, input = 0, ab.track = F, cores = 1, frameRecord = T){
     
     #Interactive menu to select file in desired folder and input type
     if (interact){
@@ -87,12 +83,12 @@ createTrackll=function(interact = F, folder, input = 0, merge = F, ab.track = F,
 
     #Designate file types
     if (input == 1){
-        return(readDiatrack(folder, merge = merge, ab.track = ab.track, mask = mask, cores = cores, frameRecord = frameRecord));
+        return(readDiatrack(folder, ab.track = ab.track, cores = cores, frameRecord = frameRecord));
     } else if (input == 2){
-        return(readDiaSessions(folder, merge = merge, ab.track = ab.track, mask = mask, cores = cores, frameRecord = frameRecord));
+        return(readDiaSessions(folder, ab.track = ab.track, cores = cores, frameRecord = frameRecord));
     } else if (input == 3){
-        return(readParticleTracker(folder, merge = merge, ab.track = ab.track, mask = mask, cores = cores, frameRecord = frameRecord));
+        return(readParticleTracker(folder, ab.track = ab.track, cores = cores, frameRecord = frameRecord));
     } else if (input == 4){
-        return(readSlimFast(folder, merge = merge, ab.track = ab.track, mask = mask, cores = cores, frameRecord = frameRecord));
+        return(readSlimFast(folder, ab.track = ab.track, cores = cores, frameRecord = frameRecord));
     }
 }

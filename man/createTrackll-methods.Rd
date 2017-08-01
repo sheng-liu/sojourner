@@ -14,18 +14,14 @@ createTrackll(interact = F, folder, input = 0, merge = F, ab.track = F, mask = F
 
 \item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).}
 
-\item{merge}{Indicate if the output list should be merged into one- output list is divided by file names otherwise.}
-
 \item{ab.track}{Use absolute coordinates for tracks.}
-
-\item{mask}{Indicate if image mask should be applied to screen tracks (Note: the mask file should have the same name as the Diatrack output txt file with a "_MASK.tif" ending. Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks).}
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
 
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.}
 }
 \description{
-take in Diatrack (.txt or .mat), ImageJ (.csv), or SlimFast (.txt) input from a folder to output a list of track lists with the option to merge, mask, censor, record frames, and use multiple cores.
+take in Diatrack (.txt or .mat), ImageJ (.csv), or SlimFast (.txt) input from a folder to output a list of track lists with the option to record frames and use multiple cores.
 }
 \details{
 IMPORTANT: It will take an extremely long time to mask unfiltered data. Filter first using filterTrack(trackll,filter=c(min=7,max=Inf)), then mask using maskTracks(folder, trackll)!

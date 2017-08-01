@@ -6,37 +6,30 @@
 \alias{.readDiatrack}
 \title{readDiatrack}
 \usage{
-readDiatrack(folder, merge = F, ab.track = F, mask = F, cores = 1, frameRecord = T)
+readDiatrack(folder, ab.track = F, cores = 1, frameRecord = T)
 
 .readDiatrack(file, interact = F, ab.track = F, frameRecord = F)
 
 maskTracks(folder, trackll)
 }
 \arguments{
+\item{file}{Full path to Diatrack .mat session file.}
+
+\item{interact}{Open menu to interactively choose file.}
+
+\item{ab.track}{Use absolute coordinates for tracks.}
+
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).}
 
-\item{folder}{Full path to Diatrack output file.}
+\item{folder}{Full path to Diatrack .txt session files output folder.}
 
-\item{merge}{An logical indicate if the output list should be merged into one. Default merge = FALSE, output list is divided by file names.}
-
-\item{mask}{An logical indicate if image mask should be applied to screen tracks. Default False. Note the mask file should have the same name as the Diatrack output txt file with a "_MASK.tif" ending. Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.}
-
-\item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralelled.}
-}
-\value{
-\itemize{
-\item{merge = F} Defult. A list of list of data.frames. First level is a list of file names in Diatrack output folder, second level is a list of data.frames from individual output file.
-\item{merge = T} A list list of data.frames. First level is the folder name. second level is a list of data.frames from all Diatrack output files merged into one
-}
+\item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
 }
 \description{
 read output file (tracks/trajecotries) from Diatrack.
 }
 \details{
-default merge = FALSE, so the researcher can assay variations between files. Keep both output as two level list is for simplicity of downstream analysis.
-
 Note: the folder name should not contain ".", as it is a key charactero for subsequent indexing of file names.
-
 
 the absolute coordinates trajectory has moved
 
@@ -50,17 +43,4 @@ This "indexPerTrackll" is the index within a trackll, which is unique.
 folder=system.file("extdata","SWR1",package="smt")
 trackll=readDiatrack(folder)
 str(trackll,max.level=2)
-
-# Not run:
-# masking with image mask
-# trackll.masked=readDiatrack(folder=track.folder,merge=F,mask=T)
-# str(trackll.masked,1)
-
-# compare the masking effect
-# plotTrackOverlay(trackll)
-# plotTrackOverlay(trackll.masked)
-
-# plot mask
-# mask.list=list.files(path=folder,pattern="_MASK.tif",full.names=T)
-# plotMask(mask.file=mask.list[[1]])
 }

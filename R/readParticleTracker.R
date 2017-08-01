@@ -12,56 +12,27 @@
 ##' @description Read output file (tracks/trajectories in csv format) from ParticleTracker (a program of ImageJ plugin MosaicSuit).
 
 ##' @usage
-##' readParticleTracker(folder, merge = F, ab.track = F, mask = F, cores = 1, frameRecord = T)
+##' readParticleTracker(folder, ab.track = F, cores = 1, frameRecord = T)
 ##'
 ##' .readParticleTracker(file, interact = F, ab.track = F, frameRecord = F)
 ##'
 ## @method # this roxygen directive does not working
-##' @param folder Full path to Diatrack output file.
-##' @param merge An logical indicate if the output list should be merged into one. Default merge = FALSE, output list is divided by file names.
-##' @param mask An logical indicate if image mask should be applied to screen tracks. Default False. Note the mask file should have the same name as the Diatrack output txt file with a "_MASK.tif" ending. Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
-##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralelled.
-
+##' @param folder Full path to ImageJ .csv files output folder.
+##' @param ab.track Use absolute coordinates for tracks.
+##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
+##' @param file Full path to Diatrack .mat session file.
+##' @param interact Open menu to interactively choose file.
 
-##' @return
-##' \itemize{
-##' \item{merge = F} Defult. A list of list of data.frames. First level is a list of file names in Diatrack output folder, second level is a list of data.frames from individual output file.
-
-##' \item{merge = T} A list list of data.frames. First level is the folder name. second level is a list of data.frames from all Diatrack output files merged into one
-##' }
-
-
-## @section Usage : {
-## readParticleTracker(folder,merge=F)
-## }
 
 ##' @examples
 ##' # reading in tracks
 ##' folder=system.file("extdata","ImageJ",package="smt")
 ##' trackll=readParticleTracker(folder)
 ##' str(trackll,max.level=2)
-##'
-##' # masking with image mask
-##' trackll.masked=readParticleTracker(folder=folder,merge=F,mask=T)
-##' str(trackll.masked,1)
-##'
-##' # compare the masking effect
-##' plotTrackOverlay(trackll)
-##' plotTrackOverlay(trackll.masked)
-##'
-##' # if Nucclear image is available
-##' plotNucTrackOverlay(folder=folder,trackll=trackll)
-##' plotNucTrackOverlay(folder=folder,trackll=trackll.masked)
-##'
-##' # plot mask
-##' plotMask(folder=folder)
-
-
 
 ##' @details
 ##' The usage of readParticleTracker() is equivalent to ReadDiatrack().
-##' default merge = FALSE, so the researcher can assay variations between files. Keep both output as two level list is for simplicity of downstream analysis.
 ##'
 ##' Note: the folder name should not contain ".", as it is a key character for subsequent indexing of file names.
 ##'
@@ -186,7 +157,7 @@
 }
 
 
-readParticleTracker=function(folder,merge= F,ab.track=F,mask=F,cores=1, frameRecord=T){
+readParticleTracker=function(folder,ab.track=F,cores=1, frameRecord=T){
 
     trackll=list()
     track.holder=c()
@@ -265,43 +236,6 @@ readParticleTracker=function(folder,merge= F,ab.track=F,mask=F,cores=1, frameRec
 
     }
 
-    # cleaning tracks by image mask
-    if (mask==T){
-        trackll=maskTracks(folder = folder, trackll=trackll)
-    }
-    # merge masked tracks
-    # merge has to be done after mask
-
-
-    if (merge==T){
-
-
-        # concatenate track list into one list of data.frames
-        for (i in 1:length(file.list)){
-            track.holder=c(track.holder,trackll[[i]])
-        }
-
-        # rename indexPerTrackll of index
-        # extrac index
-        Index=strsplit(names(track.holder),split="[.]")  # split="\\."
-
-        # remove the last old indexPerTrackll
-        Index=lapply(Index,function(x){
-            x=x[1:(length(x)-1)]
-            x=paste(x,collapse=".")})
-
-        # add indexPerTrackll to track name
-        indexPerTrackll=1:length(track.holder)
-        names(track.holder)=mapply(paste,Index,
-                                   indexPerTrackll,sep=".")
-
-        # make the result a list of list with length 1
-        trackll=list()
-        trackll[[1]]=track.holder
-        names(trackll)[[1]]=folder.name
-
-        # trackll=track.holder
-    }
     cat("\nProcess complete.\n")
 
     return(trackll)

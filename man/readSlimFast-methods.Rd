@@ -6,11 +6,11 @@
 \alias{.readSlimFast}
 \title{readSlimFast}
 \usage{
-readSlimFa(folder, merge = F, ab.track = F, mask = F, cores = 1, frameRecord = T)
+readSlimFast(folder, ab.track = F, cores = 1, frameRecord = T)
 .readSlimFast(file, interact = F,  ab.track = F, frameRecord = F)
 }
 \arguments{
-\item{file}{Full path to SlimFast .txt session file.}
+\item{file}{Full path to Diatrack .mat session file.}
 
 \item{interact}{Open menu to interactively choose file.}
 
@@ -18,11 +18,7 @@ readSlimFa(folder, merge = F, ab.track = F, mask = F, cores = 1, frameRecord = T
 
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).}
 
-\item{folder}{Full path Diatrack .mat session files output folder.}
-
-\item{merge}{Indicate if the output list should be merged into one- output list is divided by file names otherwise.}
-
-\item{mask}{Indicate if image mask should be applied to screen tracks (Note: the mask file should have the same name as the Diatrack output txt file with a "_MASK.tif" ending. Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks).}
+\item{folder}{Full path to SlimFast .txt files output folder.}
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
 }
