@@ -92,7 +92,7 @@
 kernelDensity = function (track.list){
   
     #Merge track list into a single dataframe
-    df <- mergeTracks(track.list)
+    df <- mergeAllPoints(track.list)
     
     #Calculate kernel density from dataframe
     dens <- MASS::kde2d(df[[1]], df[[2]], n=200, lims=c(c(0, 128), c(0, 128)));
@@ -106,7 +106,7 @@ kernelDensity = function (track.list){
 
 createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, plot = T, separate = F){
 	#Store all merged track coordinate points into a dataframe
-	df <- mergeTracks(track.list)
+	df <- mergeAllPoints(track.list)
 	
 	if (is.null(p)){
 	  p = -0.1207484 + 0.3468734*(nrow(df)/length(track.list))
@@ -207,9 +207,9 @@ applyMask = function(track.list, mask){
     return (masked.track.list);
 }
 
-#### mergeTracks ####
+#### mergeAllPoints ####
 
-mergeTracks = function(track.list){
+mergeAllPoints = function(track.list){
   if (length(track.list[[1]]) == 3){
     df <- bind_rows(track.list, .id = "Trajectory")[, c("x", "y", "z")]
   } else {
@@ -303,7 +303,7 @@ plotPoints = function(trackll){
 }
 
 .plotPoints = function(track.list){
-  df <- mergeTracks(track.list)
+  df <- mergeAllPoints(track.list)
   plot(df[[1]], df[[2]], xlim = c(0, 128), ylim = c(0, 128), xlab = "x (Pixels)", ylab = "y (Pixels)", main = paste("Tracks Plot for ", getTrackFileName(track.list), sep = ""), cex = .1);
 }
 
