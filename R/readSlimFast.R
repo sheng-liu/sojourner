@@ -69,9 +69,9 @@
     data <- as.data.frame(subset(read.table(file), select=c(1:4)));
     
     #Name columns and add z column of 1s in the appropriate location
-    colnames(data) <- c("x","y","frame", "track");
+    colnames(data) <- c("x","y","Frame", "track");
     data <- cbind(data, data.frame("z" = 1));
-    data <- data[,c("x","y","z","frame", "track")]
+    data <- data[,c("x","y","z","Frame", "track")]
     
     #Instantiate track, start frame, and length lists
     track.list = list();

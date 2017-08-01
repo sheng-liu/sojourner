@@ -159,7 +159,7 @@
         index = startIndex;
         
         #Create temporary track to insert into track list
-        track <- data.frame(x = numeric(), y = numeric(), z = integer());
+        track <- data.frame("x" = numeric(), "y" = numeric(), "z" = integer());
         
         #Loop through every instance the particle exists and add its data to track
         #Break once it no longer has successors
@@ -168,9 +168,9 @@
             RefinedCooY = round(data[frame][[1]][[1]][[1]][[index]], 2);
             RefinedCooZ = round(data[frame][[1]][[1]][[3]][[index]], digits = 1);
             if (frameRecord){
-                track <- rbind(track, data.frame(x = RefinedCooX, y = RefinedCooY, z = RefinedCooZ, Frame = frame));
+                track <- rbind(track, data.frame("x" = RefinedCooX, "y" = RefinedCooY, "z" = RefinedCooZ, "Frame" = frame));
             } else {
-                track <- rbind(track, data.frame(x = RefinedCooX, y = RefinedCooY, z = RefinedCooZ));
+                track <- rbind(track, data.frame("x" = RefinedCooX, "y" = RefinedCooY, "z" = RefinedCooZ));
             }
             if (data[frame][[1]][[1]][[succ]][[index]] != 0) {
                 index = data[frame][[1]][[1]][[succ]][[index]];
