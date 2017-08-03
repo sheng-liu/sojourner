@@ -112,9 +112,14 @@ one.comp.fit=function(r,P,start=list(D=c(1e-3,3)),t.interval=0.01,maxiter.optim=
     print(ocfit);cat("\n")
 
     # plot
+    pdf(paste(Sys.time(), ".pdf", sep = ""))
     plot(r,P,main=title,cex=0.3)
     curve(p1(x,D=coef(ocfit)),add=TRUE,col="red")
-
+    dev.off()
+    
+    plot(r,P,main=title,cex=0.3)
+    curve(p1(x,D=coef(ocfit)),add=TRUE,col="red")
+    
     #coef(summary(ocfit))
 
     return(ocfit)
@@ -148,8 +153,17 @@ two.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)),
                 upper=c(Inf,Inf,1))
 
     print(tcfit);cat("\n")
-
+    
+    pdf(paste(Sys.time(), ".pdf", sep = ""))
     ## plotting
+    plot(r,P,main=title,cex=0.3)
+    curve(p3(x,
+             coef(tcfit)["D1"],
+             coef(tcfit)["D2"],
+             coef(tcfit)["alpha"]),
+          add=T,col="red"
+    )
+    dev.off()
     plot(r,P,main=title,cex=0.3)
     curve(p3(x,
              coef(tcfit)["D1"],
@@ -207,8 +221,13 @@ three.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
                  )
 
     print(thcfit);cat("\n") # needed for print when compiled as pacakge
-
+    
+    pdf(paste(Sys.time(), ".pdf", sep = ""))
     ## plot
+    plot(r,P,main=title,cex=0.3)
+    curve(p5(x,coef(thcfit)["D1"],coef(thcfit)["D2"],coef(thcfit)["D3"],coef(thcfit)["alpha"],coef(thcfit)["beta"]),add=T,col="red")
+    dev.off()
+    
     plot(r,P,main=title,cex=0.3)
     curve(p5(x,coef(thcfit)["D1"],coef(thcfit)["D2"],coef(thcfit)["D3"],coef(thcfit)["alpha"],coef(thcfit)["beta"]),add=T,col="red")
 

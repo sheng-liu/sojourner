@@ -67,7 +67,7 @@ dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=
 
     histo.plot=ggplot(dwell.time.mlt,
                       aes(x=value,group=variable,fill=variable))+
-        geom_histogram(binwidth=t.interval,position="dodge",colour="red")+ ##changed from white to red...
+        geom_histogram(binwidth=t.interval,position="dodge",colour="white")+ ##change from white to red?
         xlim(x.scale["min"],x.scale["max"])+
         theme_bw()+
         theme(legend.title=element_blank())+
