@@ -16,9 +16,9 @@
 ##' @description mask track lists and lists of track lists using kernel density clusters
 
 ##' @usage 
-##' .densityMaskTracks(trackll, automatic = F, separate = F)
+##' .densityMaskTracks(trackll, removeEdge = F, automatic = F, separate = F)
 ##' 
-##' densityMaskTracks(track.list, automatic = F, separate = F)
+##' densityMaskTracks(track.list, removeEdge = F, automatic = F, separate = F)
 ##' 
 ##' plotPoints(track.list)
 ##' 
@@ -26,6 +26,7 @@
 ##' 
 
 ##' @param trackll An uncensored/unfiltered list of track lists.
+##' @param removeEdge Remove edge clusters with incomplete contour lines/ploygons
 ##' @param automatic Find p automatically using a model (not recommended)
 ##' @param separate separate by cluster.
 ##' @param track.list A single uncensored/filtered track list.
@@ -41,6 +42,8 @@
 ##' The separate parameter allows users to separate each track list from one video into their cluster components, creating a list of track lists.
 ##' Applying this separate parameter to a list of track lists from multiple videos will simply append all the separated clusters together.
 ##' Each track list is named "c#" as the header. The # indicating the cluster number.
+##' 
+##' The removeEdge parameter allwos users to automatically remove any clusters that are on edges and/or have an incomplete contour line (discontinuous polgon)
 ##' 
 ##' Use plotTrackPoints and plotTrackLines to plot lists of track lists into separate scatter/line plots. 
 ##' Use .plotTrackPoints and .plotTrackLines for a single track list. These track lists can be plotted at any point in analysis.
@@ -63,7 +66,7 @@
 ##' @examples
 ##' 
 ##' #Default call for masking a list of track lists with separation by cluster.
-##' masked.trackll <- densityMaskTracks(trackll, separate = T)
+##' masked.trackll <- densityMaskTracks(trackll, removeEdge = T)
 ##' 
 ##' #Default call for masking a track list
 ##' masked.trackl <- .densityMaskTracks(trackl)
@@ -104,7 +107,7 @@ kernelDensity = function (track.list){
 
 #Returns binary mask and plots
 
-createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, plot = T, separate = F){
+createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, plot = T, separate = F, removeEdge = F){
 	#Store all merged track coordinate points into a dataframe
 	df <- mergeAllPoints(track.list)
 	
@@ -133,6 +136,22 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 
 	#Create the countour polygon with using coordinate points
 	ls <- contourLines(kernel.density, level=levels)
+	
+	#Remove edge/border clusters by removing all contour lines that are not complete polygons
+	if (removeEdge){
+	    i = 1
+	    repeat {
+	        if (tail(ls[[i]]$x, n = 1) != head(ls[[i]]$x, n = 1)){
+	            ls[[i]] <- NULL
+	        } else {
+	            i = i + 1
+	        }
+	        
+	        if (is.null(ls) || i >= length(ls) + 1){
+	            break
+	        }
+	    }
+	}
 
 	#Keep only the largest user-specified number of clusters, if given
 	if (eliminate > 0){
@@ -221,16 +240,16 @@ mergeAllPoints = function(track.list){
 
 #### .densityMaskTracks ###
 
-.densityMaskTracks = function (track.list, automatic = F, separate = F){
+.densityMaskTracks = function (track.list, removeEdge = F, automatic = F, separate = F){
   cat("\n Mask for", getTrackFileName(track.list), "...\n")
   kd <- kernelDensity(track.list);
   if (automatic){
-    mask <- createMask(track.list, kd, p = NULL, separate = separate);
+    mask <- createMask(track.list, kd, p = NULL, separate = separate, removeEdge = removeEdge);
   } else {
     eliminate = 0;
     p = NULL;
     done = FALSE;
-    mask <- createMask(track.list, kd, p = p, separate = separate);
+    mask <- createMask(track.list, kd, p = p, separate = separate, removeEdge = removeEdge);
     while (!done){
       cat("\n")
       done = as.integer(readline(prompt="Done (1 = YES; 0 = NO)?: "))
@@ -252,7 +271,7 @@ mergeAllPoints = function(track.list){
         cat("\nIncorrect input, set to default = 0.\n")
         eliminate = 0;
       }
-      mask <- createMask(track.list, kd, p = p, eliminate = eliminate, separate = separate);
+      mask <- createMask(track.list, kd, p = p, eliminate = eliminate, separate = separate, removeEdge = removeEdge);
     }
   }
   if (typeof(mask) == "integer"){
@@ -275,17 +294,17 @@ mergeAllPoints = function(track.list){
 
 #### densityMaskTracks ####
 
-densityMaskTracks = function (trackll, automatic = F, separate = F){
+densityMaskTracks = function (trackll, removeEdge = F, automatic = F, separate = F){
   masked.trackll <- list()
   if (separate){
       for (i in 1:length(trackll)){
-        tracks <- .densityMaskTracks(trackll[[i]], automatic = automatic, separate = separate)
+        tracks <- .densityMaskTracks(trackll[[i]], removeEdge = removeEdge, automatic = automatic, separate = separate)
         masked.trackll <- append(masked.trackll, tracks)
       }
       names(masked.trackll) <- paste(names(trackll), names(masked.trackll), sep = "_")
   } else {
       for (i in 1:length(trackll)){
-          masked.trackll[[i]] <- .densityMaskTracks(trackll[[i]], automatic = automatic, separate = separate)
+          masked.trackll[[i]] <- .densityMaskTracks(trackll[[i]], removeEdge = removeEdge, automatic = automatic, separate = separate)
       }
       names(masked.trackll) <- names(trackll)
   }

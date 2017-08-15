@@ -6,9 +6,9 @@
 \alias{kernelDensity}
 \title{densityMaskTracks}
 \usage{
-.densityMaskTracks(trackll, automatic = F, separate = F)
+.densityMaskTracks(trackll, removeEdge = F, automatic = F, separate = F)
 
-densityMaskTracks(track.list, automatic = F, separate = F)
+densityMaskTracks(track.list, removeEdge = F, automatic = F, separate = F)
 
 plotPoints(track.list)
 
@@ -18,6 +18,8 @@ plotLines(track.list)
 \item{track.list}{A single uncensored/filtered track list.}
 
 \item{trackll}{An uncensored/unfiltered list of track lists.}
+
+\item{removeEdge}{Remove edge clusters with incomplete contour lines/ploygons}
 
 \item{automatic}{Find p automatically using a model (not recommended)}
 
@@ -36,6 +38,8 @@ Use .densityMaskTracksl() to apply this to only one track list.
 The separate parameter allows users to separate each track list from one video into their cluster components, creating a list of track lists.
 Applying this separate parameter to a list of track lists from multiple videos will simply append all the separated clusters together.
 Each track list is named "c#" as the header. The # indicating the cluster number.
+
+The removeEdge parameter allwos users to automatically remove any clusters that are on edges and/or have an incomplete contour line (discontinuous polgon)
 
 Use plotTrackPoints and plotTrackLines to plot lists of track lists into separate scatter/line plots. 
 Use .plotTrackPoints and .plotTrackLines for a single track list. These track lists can be plotted at any point in analysis.
@@ -57,7 +61,7 @@ If one had to apply this function to a large number of typically unvariable trac
 \examples{
 
 #Default call for masking a list of track lists with separation by cluster.
-masked.trackll <- densityMaskTracks(trackll, separate = T)
+masked.trackll <- densityMaskTracks(trackll, removeEdge = T)
 
 #Default call for masking a track list
 masked.trackl <- .densityMaskTracks(trackl)

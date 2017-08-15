@@ -10,6 +10,8 @@ compareFolder(folders=c(folder1,folder2,...),ab.track=F,cores=1)
 \arguments{
 \item{folders}{a vector storing paths to the folders location."..." indicates multiple (unlimited) folders can be added into the function.}
 
+\item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).}
+
 \item{ab.track}{a Logical indicating if absolute coordinates should be used.}
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster.}
