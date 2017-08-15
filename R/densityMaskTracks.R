@@ -141,12 +141,15 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 	if (removeEdge){
 	    i = 1
 	    repeat {
+	        
+	        #Compare the first and last points in the polygon vector for continuity
 	        if (tail(ls[[i]]$x, n = 1) != head(ls[[i]]$x, n = 1) || tail(ls[[i]]$y, n = 1) != head(ls[[i]]$y, n = 1)){
 	            ls[[i]] <- NULL
 	        } else {
 	            i = i + 1
 	        }
 	        
+	        #Break loop if complete
 	        if (is.null(ls) || i >= length(ls) + 1){
 	            break
 	        }
