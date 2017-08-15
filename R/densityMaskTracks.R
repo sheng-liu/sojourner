@@ -141,7 +141,7 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 	if (removeEdge){
 	    i = 1
 	    repeat {
-	        if (tail(ls[[i]]$x, n = 1) != head(ls[[i]]$x, n = 1)){
+	        if (tail(ls[[i]]$x, n = 1) != head(ls[[i]]$x, n = 1) || tail(ls[[i]]$y, n = 1) != head(ls[[i]]$y, n = 1)){
 	            ls[[i]] <- NULL
 	        } else {
 	            i = i + 1
