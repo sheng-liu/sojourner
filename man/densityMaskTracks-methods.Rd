@@ -6,24 +6,26 @@
 \alias{kernelDensity}
 \title{densityMaskTracks}
 \usage{
-.densityMaskTracks(trackll, removeEdge = F, automatic = F, separate = F)
+.densityMaskTracks(trackll, scale = 128, removeEdge = F, automatic = F, separate = F)
 
-densityMaskTracks(track.list, removeEdge = F, automatic = F, separate = F)
+densityMaskTracks(track.list, scale = 128, removeEdge = F, automatic = F, separate = F)
 
-plotPoints(track.list)
+plotPoints(track.list, scale = 128)
 
-plotLines(track.list)
+plotLines(track.list, scale = 128)
 }
 \arguments{
 \item{track.list}{A single uncensored/filtered track list.}
 
-\item{trackll}{An uncensored/unfiltered list of track lists.}
+\item{scale}{X and Y scale (in pixels) of track video window}
+
+\item{trackll}{An uncensored/unfiltered list of track lists}
 
 \item{removeEdge}{Remove edge clusters with incomplete contour lines/ploygons}
 
 \item{automatic}{Find p automatically using a model (not recommended)}
 
-\item{separate}{separate by cluster.}
+\item{separate}{Separate by cluster}
 }
 \description{
 mask track lists and lists of track lists using kernel density clusters

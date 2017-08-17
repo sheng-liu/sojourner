@@ -16,19 +16,20 @@
 ##' @description mask track lists and lists of track lists using kernel density clusters
 
 ##' @usage 
-##' .densityMaskTracks(trackll, removeEdge = F, automatic = F, separate = F)
+##' .densityMaskTracks(trackll, scale = 128, removeEdge = F, automatic = F, separate = F)
 ##' 
-##' densityMaskTracks(track.list, removeEdge = F, automatic = F, separate = F)
+##' densityMaskTracks(track.list, scale = 128, removeEdge = F, automatic = F, separate = F)
 ##' 
-##' plotPoints(track.list)
+##' plotPoints(track.list, scale = 128)
 ##' 
-##' plotLines(track.list)
+##' plotLines(track.list, scale = 128)
 ##' 
 
-##' @param trackll An uncensored/unfiltered list of track lists.
+##' @param trackll An uncensored/unfiltered list of track lists
+##' @param scale X and Y scale (in pixels) of track video window
 ##' @param removeEdge Remove edge clusters with incomplete contour lines/ploygons
 ##' @param automatic Find p automatically using a model (not recommended)
-##' @param separate separate by cluster.
+##' @param separate Separate by cluster
 ##' @param track.list A single uncensored/filtered track list.
 
 ##' @details
@@ -92,108 +93,108 @@
 
 #Returns kernel density
 
-kernelDensity = function (track.list){
-  
+kernelDensity = function (track.list, scale = 128){
+    
     #Merge track list into a single dataframe
     df <- mergeAllPoints(track.list)
     
     #Calculate kernel density from dataframe
-    dens <- MASS::kde2d(df[[1]], df[[2]], n=200, lims=c(c(0, 128), c(0, 128)));
-
-  	return (dens);
+    dens <- MASS::kde2d(df[[1]], df[[2]], n=200, lims=c(c(0, scale), c(0, scale)));
+    
+    return (dens);
 }
 
 #### createMask ####
 
 #Returns binary mask and plots
 
-createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, plot = T, separate = F, removeEdge = F){
-	#Store all merged track coordinate points into a dataframe
-	df <- mergeAllPoints(track.list)
-	
-	if (is.null(p)){
-	  p = -0.1207484 + 0.3468734*(nrow(df)/length(track.list))
-	}
-	
-	if (is.null(eliminate)){
-	  eliminate = 0
-	}
-	
-	if (p <= 0 || p >= 1){
-	  cat("\np set to safe value of 0.3.\n")
-	  p = 0.3
-	}
-
-	# Calculate contours to plot
-	prob <- c(p)
-	dx <- diff(kernel.density$x[1:2])
-	dy <- diff(kernel.density$y[1:2])
-	sz <- sort(kernel.density$z)
-	c1 <- cumsum(sz) * dx * dy 
-	levels <- sapply(prob, function(x){ 
-		approx(c1, sz, xout = 1 - x)$y
-	})
-
-	#Create the countour polygon with using coordinate points
-	ls <- contourLines(kernel.density, level=levels)
-	
-	#Remove edge/border clusters by removing all contour lines that are not complete polygons
-	if (removeEdge){
-	    i = 1
-	    repeat {
-	        
-	        #Compare the first and last points in the polygon vector for continuity
-	        if (tail(ls[[i]]$x, n = 1) != head(ls[[i]]$x, n = 1) || tail(ls[[i]]$y, n = 1) != head(ls[[i]]$y, n = 1)){
-	            ls[[i]] <- NULL
-	        } else {
-	            i = i + 1
-	        }
-	        
-	        #Break loop if complete
-	        if (is.null(ls) || i >= length(ls) + 1){
-	            break
-	        }
-	    }
-	}
-
-	#Keep only the largest user-specified number of clusters, if given
-	if (eliminate > 0){
-	  num.clusters = length(ls) - eliminate;
-		while (length(ls) >  num.clusters){
-		 	noise = 0;
-		  min = Inf;
-		  for (i in 1:length(ls)){
-		    if(length(ls[[i]][[2]]) < min){
-		      	noise = i
-		      	min = length(ls[[i]][[2]])
-		    }
-		  }
-		  ls[[noise]] <- NULL
-		}
-	}
-
-	#Use coordinate coordinate polygon to create the cluster shape
-	cluster <- list()
-	for (i in 1:length(ls)){
-		cluster[[i]] <- point.in.polygon(df[[1]], df[[2]], ls[[i]]$x, ls[[i]]$y)
-	}
-
-	#Create binary mask of track coordinates
-	df$region <- factor(Reduce("+", cluster))
-
-	#Plot with mask and contour
-	if(plot){
-	  title = paste(getTrackFileName(track.list),"Mask with Kernel Density Probability (p) of", round(p, digits = 3), sep = " ");
-		plot(df[[2]] ~ df[[1]], col=region, data=df, xlim = c(0, 128), ylim = c(0, 128), xlab = "x (Pixels)", ylab = "y (Pixels)", main = title, cex = .1)
-		contour(kernel.density, levels=levels, labels=prob, add=T)
-	}
-	cat("\n", length(ls), "clusters.", getTrackFileName(track.list), "masked at kernel density probability =", round(p, digits = 3), ", eliminate =", eliminate, "\n")
-  
-	if (!separate){
-	    return(df$region)
-	} else {
-	    return(cluster)
-	}
+createMask = function (track.list, scale = 128, kernel.density, p = NULL, eliminate = NULL, plot = T, separate = F, removeEdge = F){
+    #Store all merged track coordinate points into a dataframe
+    df <- mergeAllPoints(track.list)
+    
+    if (is.null(p)){
+        p = -0.1207484 + 0.3468734*(nrow(df)/length(track.list))
+    }
+    
+    if (is.null(eliminate)){
+        eliminate = 0
+    }
+    
+    if (p <= 0 || p >= 1){
+        cat("\np set to safe value of 0.3.\n")
+        p = 0.3
+    }
+    
+    # Calculate contours to plot
+    prob <- c(p)
+    dx <- diff(kernel.density$x[1:2])
+    dy <- diff(kernel.density$y[1:2])
+    sz <- sort(kernel.density$z)
+    c1 <- cumsum(sz) * dx * dy 
+    levels <- sapply(prob, function(x){ 
+        approx(c1, sz, xout = 1 - x)$y
+    })
+    
+    #Create the countour polygon with using coordinate points
+    ls <- contourLines(kernel.density, level=levels)
+    
+    #Remove edge/border clusters by removing all contour lines that are not complete polygons
+    if (removeEdge){
+        i = 1
+        repeat {
+            
+            #Compare the first and last points in the polygon vector for continuity
+            if (tail(ls[[i]]$x, n = 1) != head(ls[[i]]$x, n = 1) || tail(ls[[i]]$y, n = 1) != head(ls[[i]]$y, n = 1)){
+                ls[[i]] <- NULL
+            } else {
+                i = i + 1
+            }
+            
+            #Break loop if complete
+            if (is.null(ls) || i >= length(ls) + 1){
+                break
+            }
+        }
+    }
+    
+    #Keep only the largest user-specified number of clusters, if given
+    if (eliminate > 0){
+        num.clusters = length(ls) - eliminate;
+        while (length(ls) >  num.clusters){
+            noise = 0;
+            min = Inf;
+            for (i in 1:length(ls)){
+                if(length(ls[[i]][[2]]) < min){
+                    noise = i
+                    min = length(ls[[i]][[2]])
+                }
+            }
+            ls[[noise]] <- NULL
+        }
+    }
+    
+    #Use coordinate coordinate polygon to create the cluster shape
+    cluster <- list()
+    for (i in 1:length(ls)){
+        cluster[[i]] <- point.in.polygon(df[[1]], df[[2]], ls[[i]]$x, ls[[i]]$y)
+    }
+    
+    #Create binary mask of track coordinates
+    df$region <- factor(Reduce("+", cluster))
+    
+    #Plot with mask and contour
+    if(plot){
+        title = paste(getTrackFileName(track.list),"Mask with Kernel Density Probability (p) of", round(p, digits = 3), sep = " ");
+        plot(df[[2]] ~ df[[1]], col=region, data=df, xlim = c(0, scale), ylim = c(0, scale), xlab = "x (Pixels)", ylab = "y (Pixels)", main = title, cex = .1)
+        contour(kernel.density, levels=levels, labels=prob, add=T)
+    }
+    cat("\n", length(ls), "clusters.", getTrackFileName(track.list), "masked at kernel density probability =", round(p, digits = 3), ", eliminate =", eliminate, "\n")
+    
+    if (!separate){
+        return(df$region)
+    } else {
+        return(cluster)
+    }
 }
 
 #### applymask ####
@@ -201,6 +202,7 @@ createMask = function (track.list, kernel.density, p = NULL, eliminate = NULL, p
 #Creates masked track list
 
 applyMask = function(track.list, mask){
+    
     #Instantiate a masked track list with indexing variables
     masked.track.list = list();
     masked.track.list.names = list();
@@ -210,7 +212,7 @@ applyMask = function(track.list, mask){
     #Loop through all tracks
     for(i in 1:length(track.list)){
         mask.bool = TRUE;
-            
+        
         #Remove any tracks outside mask
         for (j in 1:nrow(track.list[[i]])){
             if (mask[[index]] == 1){
@@ -232,116 +234,179 @@ applyMask = function(track.list, mask){
 #### mergeAllPoints ####
 
 mergeAllPoints = function(track.list){
-  if (length(track.list[[1]]) == 3){
-    df <- bind_rows(track.list, .id = "Trajectory")[, c("x", "y", "z")]
-  } else {
-    df <- bind_rows(track.list, .id = "Trajectory")[, c("x", "y", "z", "Frame")]
-  }
-  
-  return (df);
+    if (length(track.list[[1]]) == 3){
+        df <- bind_rows(track.list, .id = "Trajectory")[, c("x", "y", "z")]
+    } else {
+        df <- bind_rows(track.list, .id = "Trajectory")[, c("x", "y", "z", "Frame")]
+    }
+    
+    return (df);
 }
 
 #### .densityMaskTracks ###
 
-.densityMaskTracks = function (track.list, removeEdge = F, automatic = F, separate = F){
-  cat("\n Mask for", getTrackFileName(track.list), "...\n")
-  kd <- kernelDensity(track.list);
-  if (automatic){
-    mask <- createMask(track.list, kd, p = NULL, separate = separate, removeEdge = removeEdge);
-  } else {
-    eliminate = 0;
-    p = NULL;
-    done = FALSE;
-    mask <- createMask(track.list, kd, p = p, separate = separate, removeEdge = removeEdge);
-    while (!done){
-      cat("\n")
-      done = as.integer(readline(prompt="Done (1 = YES; 0 = NO)?: "))
-      if (is.na(done)){
-        cat("\nIncorrect input, set to default = 0.\n")
-        done = 0;
-      }
-      done = as.logical(done)
-      if (done){
-        break;
-      }
-      p = as.numeric(readline(prompt="New kernel density probability (p): "))
-      if (is.na(p)){
-        cat("\nIncorrect input, set to default.\n")
-        p = NULL;
-      }
-      eliminate = as.integer(readline(prompt="Number of smallest clusters to elimnate (recommended 0, unless last resort): "))
-      if (is.na(eliminate)){
-        cat("\nIncorrect input, set to default = 0.\n")
-        eliminate = 0;
-      }
-      mask <- createMask(track.list, kd, p = p, eliminate = eliminate, separate = separate, removeEdge = removeEdge);
+.densityMaskTracks = function (track.list, scale = 128, removeEdge = F, automatic = F, separate = F, loadModel = F, buildModel = F){
+    
+    
+    model = NULL;
+    if (loadModel){
+        
+        model.file = list.files(path=getwd(),pattern="_MODEL.csv",full.names=T)
+        if (length(model.file) > 1){
+            stop("Error: ensure that a file ending with _MODEL.csv is in the working directory!")
+        }
+        
+        model = read.csv(model.file)
+        
     }
-  }
-  if (typeof(mask) == "integer"){
-      masked.track.list <- applyMask(track.list, mask);
-      cat("\n Masked track list for", getTrackFileName(track.list), "created.\n")
-      return(masked.track.list)
-  } else {
-      masked.trackll.cells <- list()
-      masked.trackll.cells.names <- list()
-      for (i in 1:length(mask)){
-          masked.trackll.cells[[length(masked.trackll.cells)+1]] <- applyMask(track.list, mask[[i]]);
-          masked.trackll.cells.names[[length(masked.trackll.cells.names)+1]] <- i;
-      }
-      names(masked.trackll.cells) <- paste("c", masked.trackll.cells.names, sep ="");
-      cat("\n Masked list of track lists (separated by cluster) for", getTrackFileName(track.list), "created.\n")
-      return(masked.trackll.cells)
-  }
-      
+
+    cat("\n Mask for", getTrackFileName(track.list), "...\n")
+    
+    #Calculate kernel density
+    kd <- kernelDensity(track.list, scale = scale);
+    
+    #Option between automatic and manual
+    if (automatic){
+        
+        #Automatically create mask using default model
+        mask <- createMask(track.list, scale = scale, kd, p = NULL, separate = separate, removeEdge = removeEdge);
+        
+    } else {
+        
+        #Instantiate to default parameters and create mask using default mask
+        eliminate = 0;
+        p = NULL;
+        done = FALSE;
+        mask <- createMask(track.list, scale = scale, kd, p = p, separate = separate, removeEdge = removeEdge);
+        
+        #Repeatedly ask if satisfied with mask
+        while (!done){
+            
+            #Done prompt
+            cat("\n")
+            done = as.integer(readline(prompt="Done (1 = YES; 0 = NO)?: "))
+            
+            #If invalid input / not a number, set to default 0
+            if (is.na(done)){
+                cat("\nInvalid input, set to default 0 = NO.\n")
+                done = 0;
+            }
+            
+            #Convert integer to logical
+            done = as.logical(done)
+            
+            #Break if done
+            if (done){
+                break;
+            }
+            
+            #Request new p
+            p = as.numeric(readline(prompt="New kernel density probability (p): "))
+            
+            #If invalid input / not a number, set to default
+            if (is.na(p)){
+                cat("\nInvalid input, set to default.\n")
+                p = NULL;
+            }
+            
+            #Request to eliminate
+            eliminate = as.integer(readline(prompt="Number of smallest clusters to elimnate (recommended 0, unless last resort): "))
+            
+            #If invalid input / not a number, set to default
+            if (is.na(eliminate)){
+                cat("\nIncorrect input, set to default = 0.\n")
+                eliminate = 0;
+            }
+            
+            #Create mask using set parameter
+            mask <- createMask(track.list, scale = scale, kd, p = p, eliminate = eliminate, separate = separate, removeEdge = removeEdge);
+        }
+    }
+    
+    #Apply mask depending on desire to separate clusters
+    if (typeof(mask) == "integer"){
+        
+        #Apply full mask to track list and return
+        masked.track.list <- applyMask(track.list, mask);
+        cat("\n Masked track list for", getTrackFileName(track.list), "created.\n")
+        return(masked.track.list)
+    } else {
+        
+        #Create new list of track lists for separated clusters
+        masked.trackll.cells <- list()
+        masked.trackll.cells.names <- list()
+        
+        #Loop through separated masks and apply to track list
+        for (i in 1:length(mask)){
+            masked.trackll.cells[[length(masked.trackll.cells)+1]] <- applyMask(track.list, mask[[i]]);
+            masked.trackll.cells.names[[length(masked.trackll.cells.names)+1]] <- i;
+        }
+        
+        #Name separated list of track lists apppropriately and return
+        names(masked.trackll.cells) <- paste("c", masked.trackll.cells.names, sep ="");
+        cat("\n Masked list of track lists (separated by cluster) for", getTrackFileName(track.list), "created.\n")
+        return(masked.trackll.cells)
+    }
+    
 }
 
 #### densityMaskTracks ####
 
-densityMaskTracks = function (trackll, removeEdge = F, automatic = F, separate = F){
-  masked.trackll <- list()
-  if (separate){
-      for (i in 1:length(trackll)){
-        tracks <- .densityMaskTracks(trackll[[i]], removeEdge = removeEdge, automatic = automatic, separate = separate)
-        masked.trackll <- append(masked.trackll, tracks)
-      }
-      names(masked.trackll) <- paste(names(trackll), names(masked.trackll), sep = "_")
-  } else {
-      for (i in 1:length(trackll)){
-          masked.trackll[[i]] <- .densityMaskTracks(trackll[[i]], removeEdge = removeEdge, automatic = automatic, separate = separate)
-      }
-      names(masked.trackll) <- names(trackll)
-  }
-  cat("\nAll tracks lists masked.\n")
-  return(masked.trackll)
+densityMaskTracks = function (trackll, scale = 128, removeEdge = F, automatic = F, separate = F){
+    
+    #Instantiate empty list
+    masked.trackll <- list()
+    
+    #Option to separate
+    if (separate){
+        
+        #Apply separation to each track list and append the resulting list of track lists to each other
+        for (i in 1:length(trackll)){
+            tracks <- .densityMaskTracks(trackll[[i]], scale = scale, removeEdge = removeEdge, automatic = automatic, separate = separate)
+            masked.trackll <- append(masked.trackll, tracks)
+        }
+        names(masked.trackll) <- paste(names(trackll), names(masked.trackll), sep = "_")
+    } else {
+        
+        #Apply algorithm to each track list
+        for (i in 1:length(trackll)){
+            masked.trackll[[i]] <- .densityMaskTracks(trackll[[i]], scale = scale, removeEdge = removeEdge, automatic = automatic, separate = separate)
+        }
+        names(masked.trackll) <- names(trackll)
+    }
+    
+    #Confirmation text and return
+    cat("\nAll tracks lists masked.\n")
+    return(masked.trackll)
 }
 
 #### plotPoints ####
 
-plotPoints = function(trackll){
-  for (i in 1:length(trackll)){
-    .plotPoints(trackll[[i]])
-    title(sub= names(trackll)[[i]])
-  }
+plotPoints = function(trackll, scale = 128){
+    for (i in 1:length(trackll)){
+        .plotPoints(trackll[[i]], scale = scale)
+        title(sub= names(trackll)[[i]])
+    }
 }
 
-.plotPoints = function(track.list){
-  df <- mergeAllPoints(track.list)
-  plot(df[[1]], df[[2]], xlim = c(0, 128), ylim = c(0, 128), xlab = "x (Pixels)", ylab = "y (Pixels)", main = paste("Tracks Plot for ", getTrackFileName(track.list), sep = ""), cex = .1);
+.plotPoints = function(track.list, scale = 128){
+    df <- mergeAllPoints(track.list)
+    plot(df[[1]], df[[2]], xlim = c(0, scale), ylim = c(0, scale), xlab = "x (Pixels)", ylab = "y (Pixels)", main = paste("Tracks Plot for ", getTrackFileName(track.list), sep = ""), cex = .1);
 }
 
 #### plotLines ####
 
-plotLines = function(trackll){
-  for (i in 1:length(trackll)){
-    .plotLines(trackll[[i]])
-     title(sub= names(trackll)[[i]])
-  }
+plotLines = function(trackll, scale = 128){
+    for (i in 1:length(trackll)){
+        .plotLines(trackll[[i]], scale = scale)
+        title(sub= names(trackll)[[i]])
+    }
 }
 
-.plotLines = function(track.list){
-  plot(track.list[[1]][[1]], track.list[[1]][[2]], type = "l", xlim = c(0, 128), ylim = c(0, 128), xlab = "x (Pixels)", ylab = "y (Pixels)", main = paste("Tracks Plot for ", getTrackFileName(track.list), sep = ""));
-  for(i in 2:length(track.list)){
-    lines(track.list[[i]][[1]], track.list[[i]][[2]])
-  }
+.plotLines = function(track.list, scale = 128){
+    plot(track.list[[1]][[1]], track.list[[1]][[2]], type = "l", xlim = c(0, scale), ylim = c(0, scale), xlab = "x (Pixels)", ylab = "y (Pixels)", main = paste("Tracks Plot for ", getTrackFileName(track.list), sep = ""));
+    for(i in 2:length(track.list)){
+        lines(track.list[[i]][[1]], track.list[[i]][[2]])
+    }
 }
 
