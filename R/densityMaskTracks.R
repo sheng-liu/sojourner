@@ -343,11 +343,11 @@ mergeAllPoints = function(track.list){
             mask <- createMask(track.list, scale = scale, kd, p = p, eliminate = eliminate, separate = separate, removeEdge = removeEdge);
         }
         if (is.null(model)){
-            cat("New MODEL.csv created.")
+            cat("\nNew MODEL.csv created.\n")
             write.table(new.model, file = "MODEL.csv", sep = ",");
          } else {
-            cat("Data point added to MODEL.csv.")
-            write.table(new.model, file = "MODEL.csv", sep = ",", append = T, col.names = F);
+            cat("\nData point added to MODEL.csv.\n")
+            write.table(new.model, file = "MODEL.csv", sep = ",", append = T, col.names = F, row.names = F);
         }
     }
     
