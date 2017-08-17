@@ -113,7 +113,7 @@ createMask = function (track.list, scale = 128, kernel.density, p = NULL, elimin
     df <- mergeAllPoints(track.list)
     
     if (is.null(p)){
-        p = -0.1207484 + 0.3468734*(nrow(df)/length(track.list))
+        p = 0.5
     }
     
     if (is.null(eliminate)){
@@ -121,8 +121,8 @@ createMask = function (track.list, scale = 128, kernel.density, p = NULL, elimin
     }
     
     if (p <= 0 || p >= 1){
-        cat("\np set to safe value of 0.3.\n")
-        p = 0.3
+        cat("\np set to safe value of 0.5.\n")
+        p = 0.5
     }
     
     # Calculate contours to plot
@@ -245,38 +245,57 @@ mergeAllPoints = function(track.list){
 
 #### .densityMaskTracks ###
 
-.densityMaskTracks = function (track.list, scale = 128, removeEdge = F, automatic = F, separate = F, loadModel = F, buildModel = F){
+.densityMaskTracks = function (track.list, scale = 128, removeEdge = F, separate = F, buildModel = F){
     
-    
+    track.name = getTrackFileName(track.list)
     model = NULL;
-    if (loadModel){
-        
-        model.file = list.files(path=getwd(),pattern="_MODEL.csv",full.names=T)
-        if (length(model.file) > 1){
-            stop("Error: ensure that a file ending with _MODEL.csv is in the working directory!")
-        }
-        
+    model.file = list.files(path=getwd(),pattern="MODEL.csv",full.names=T)
+    if (length(model.file) != 1 || basename(model.file) != "MODEL.csv"){
+        cat("No model read. If desired, ensure there is one MODEL.csv.")
+    } else {
+        cat("MODEL.csv read.")
         model = read.csv(model.file)
-        
     }
 
-    cat("\n Mask for", getTrackFileName(track.list), "...\n")
+    cat("\n Masking", track.name, "...\n")
     
     #Calculate kernel density
     kd <- kernelDensity(track.list, scale = scale);
     
+    
+    #Set model variables
+    points = nrow(mergeAllPoints(track.list))
+    tracks = length(track.list)
+    avg = points/tracks
+    
+    #Predict p using model
+    if (is.null(model)){
+        p = 0.5;
+        #p = -0.1207484 + 0.3468734*avg
+    } else {
+        if (nrow(model) < 2){
+            p = 0.5
+            cat("Note: Model has less than 2 points.")
+        } else {
+            model.fit <- summary(fit <- lm(model$Probability ~ model$Average.Track.Length))
+            p = model.fit$coefficients[[1]] + model.fit$coefficients[[2]] * avg
+        }
+    }
+    
     #Option between automatic and manual
-    if (automatic){
+    if (!buildModel){
         
         #Automatically create mask using default model
-        mask <- createMask(track.list, scale = scale, kd, p = NULL, separate = separate, removeEdge = removeEdge);
+        mask <- createMask(track.list, scale = scale, kd, p = p, separate = separate, removeEdge = removeEdge);
         
     } else {
-        
-        #Instantiate to default parameters and create mask using default mask
+        new.model <- NULL;
+
+        #Instantiate to default parameters
         eliminate = 0;
-        p = NULL;
         done = FALSE;
+        
+        #reate mask using default mask
         mask <- createMask(track.list, scale = scale, kd, p = p, separate = separate, removeEdge = removeEdge);
         
         #Repeatedly ask if satisfied with mask
@@ -297,6 +316,8 @@ mergeAllPoints = function(track.list){
             
             #Break if done
             if (done){
+                new.model <- data.frame(track.name, points, tracks, points/tracks, p);
+                colnames(new.model) <- c("File Name", "Points", "Tracks", "Average Track Length", "Probability");
                 break;
             }
             
@@ -320,6 +341,13 @@ mergeAllPoints = function(track.list){
             
             #Create mask using set parameter
             mask <- createMask(track.list, scale = scale, kd, p = p, eliminate = eliminate, separate = separate, removeEdge = removeEdge);
+        }
+        if (is.null(model)){
+            cat("New MODEL.csv created.")
+            write.table(new.model, file = "MODEL.csv", sep = ",");
+         } else {
+            cat("Data point added to MODEL.csv.")
+            write.table(new.model, file = "MODEL.csv", sep = ",", append = T, col.names = F);
         }
     }
     
@@ -352,7 +380,7 @@ mergeAllPoints = function(track.list){
 
 #### densityMaskTracks ####
 
-densityMaskTracks = function (trackll, scale = 128, removeEdge = F, automatic = F, separate = F){
+densityMaskTracks = function (trackll, scale = 128, removeEdge = F, separate = F, buildModel = F){
     
     #Instantiate empty list
     masked.trackll <- list()
@@ -362,7 +390,7 @@ densityMaskTracks = function (trackll, scale = 128, removeEdge = F, automatic = 
         
         #Apply separation to each track list and append the resulting list of track lists to each other
         for (i in 1:length(trackll)){
-            tracks <- .densityMaskTracks(trackll[[i]], scale = scale, removeEdge = removeEdge, automatic = automatic, separate = separate)
+            tracks <- .densityMaskTracks(trackll[[i]], scale = scale, removeEdge = removeEdge, separate = separate, buildModel = buildModel)
             masked.trackll <- append(masked.trackll, tracks)
         }
         names(masked.trackll) <- paste(names(trackll), names(masked.trackll), sep = "_")
@@ -370,7 +398,7 @@ densityMaskTracks = function (trackll, scale = 128, removeEdge = F, automatic = 
         
         #Apply algorithm to each track list
         for (i in 1:length(trackll)){
-            masked.trackll[[i]] <- .densityMaskTracks(trackll[[i]], scale = scale, removeEdge = removeEdge, automatic = automatic, separate = separate)
+            masked.trackll[[i]] <- .densityMaskTracks(trackll[[i]], scale = scale, removeEdge = removeEdge, separate = separate, buildModel = buildModel)
         }
         names(masked.trackll) <- names(trackll)
     }
