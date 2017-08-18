@@ -270,8 +270,7 @@ mergeAllPoints = function(track.list){
     } else {
         model = read.csv(model.file)
         if (nrow(model) < 3){
-            cat("\n", basename(model.file), " read.\n", sep = "")
-            cat(paste("\nMODEL.csv read.\n", sep = ""))
+            cat(paste("\n", basename(model.file), " read.\n", sep = ""))
             p = 0.5
             cat("\nNote: Model has less than 3 points. Need more data. p set to safe default 0.5.\n")
         } else {
@@ -353,7 +352,7 @@ mergeAllPoints = function(track.list){
             write.table(new.model, file = "MODEL.csv", sep = ",", row.names = F);
          } else {
             write.table(new.model, file = basename(model.file), sep = ",", append = T, col.names = F, row.names = F);
-            cat("\nData point added to MODEL.csv.\n")
+            cat(paste("\nData point added to ", basename(model.file), ".\n", sep = ""))
         }
     }
     
