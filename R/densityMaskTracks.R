@@ -247,16 +247,8 @@ mergeAllPoints = function(track.list){
 
 .densityMaskTracks = function (track.list, scale = 128, removeEdge = F, separate = F, buildModel = F){
     
+    #Initial confirmation
     track.name = getTrackFileName(track.list)
-    model = NULL;
-    model.file = list.files(path=getwd(),pattern="MODEL.csv",full.names=T)
-    if (length(model.file) != 1 || basename(model.file) != "MODEL.csv"){
-        cat("No model read. If desired, ensure there is one MODEL.csv.")
-    } else {
-        cat("MODEL.csv read.")
-        model = read.csv(model.file)
-    }
-
     cat("\n Masking", track.name, "...\n")
     
     #Calculate kernel density
@@ -268,24 +260,36 @@ mergeAllPoints = function(track.list){
     tracks = length(track.list)
     avg = points/tracks
     
-    #Predict p using model
-    if (is.null(model)){
+    #Find initial model
+    model.fit = NULL
+    model = NULL;
+    model.file = list.files(path=getwd(),pattern="MODEL.csv",full.names=T)
+    if (length(model.file) != 1){
+        cat("\nNo initial model read. If desired, ensure there is one file ending in MODEL.csv in working directory.\n")
         p = 0.5;
-        #p = -0.1207484 + 0.3468734*avg
     } else {
-        if (nrow(model) < 2){
+        model = read.csv(model.file)
+        if (nrow(model) < 3){
+            cat("\n", basename(model.file), " read.\n", sep = "")
+            cat(paste("\nMODEL.csv read.\n", sep = ""))
             p = 0.5
-            cat("Note: Model has less than 2 points.")
+            cat("\nNote: Model has less than 3 points. Need more data. p set to safe default 0.5.\n")
         } else {
             model.fit <- summary(fit <- lm(model$Probability ~ model$Average.Track.Length))
+            cat(paste("\n", basename(model.file), " read. R-squared = ", round(model.fit$r.squared, digits = 3), "\n", sep = ""))
+            cat("\nPredicting p...\n")
             p = model.fit$coefficients[[1]] + model.fit$coefficients[[2]] * avg
+            if (!(p > 0 || p < 1)){
+                cat("\nWarning: Model inaccuracy! p set to safe default 0.5.\n")
+                p = 0.5
+            }
         }
     }
     
     #Option between automatic and manual
     if (!buildModel){
         
-        #Automatically create mask using default model
+        #Automatically initial mask
         mask <- createMask(track.list, scale = scale, kd, p = p, separate = separate, removeEdge = removeEdge);
         
     } else {
@@ -314,7 +318,7 @@ mergeAllPoints = function(track.list){
             #Convert integer to logical
             done = as.logical(done)
             
-            #Break if done
+            #If done, add to new model data frame and break
             if (done){
                 new.model <- data.frame(track.name, points, tracks, points/tracks, p);
                 colnames(new.model) <- c("File Name", "Points", "Tracks", "Average Track Length", "Probability");
@@ -342,12 +346,14 @@ mergeAllPoints = function(track.list){
             #Create mask using set parameter
             mask <- createMask(track.list, scale = scale, kd, p = p, eliminate = eliminate, separate = separate, removeEdge = removeEdge);
         }
+        
+        #Create new MODEL.csv or append new model accordingly
         if (is.null(model)){
             cat("\nNew MODEL.csv created.\n")
-            write.table(new.model, file = "MODEL.csv", sep = ",");
+            write.table(new.model, file = "MODEL.csv", sep = ",", row.names = F);
          } else {
+            write.table(new.model, file = basename(model.file), sep = ",", append = T, col.names = F, row.names = F);
             cat("\nData point added to MODEL.csv.\n")
-            write.table(new.model, file = "MODEL.csv", sep = ",", append = T, col.names = F, row.names = F);
         }
     }
     
