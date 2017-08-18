@@ -16,9 +16,9 @@
 ##' @description mask track lists and lists of track lists using kernel density clusters
 
 ##' @usage 
-##' .densityMaskTracks(trackll, scale = 128, removeEdge = F, automatic = F, separate = F)
+##' .densityMaskTracks(track.list, scale = 128, removeEdge = F, separate = F, buildModel = F)
 ##' 
-##' densityMaskTracks(track.list, scale = 128, removeEdge = F, automatic = F, separate = F)
+##' densityMaskTracks(trackll, scale = 128, removeEdge = F, separate = F, buildModel = F)
 ##' 
 ##' plotPoints(track.list, scale = 128)
 ##' 
@@ -28,17 +28,22 @@
 ##' @param trackll An uncensored/unfiltered list of track lists
 ##' @param scale X and Y scale (in pixels) of track video window
 ##' @param removeEdge Remove edge clusters with incomplete contour lines/ploygons
-##' @param automatic Find p automatically using a model (not recommended)
 ##' @param separate Separate by cluster
+##' @param buildModel Manually configure the kernel density probability (p), while continuously building a model. T to create a model or improve an existing model. F to load in a MODEL.csv for automatic masking.
 ##' @param track.list A single uncensored/filtered track list.
 
 ##' @details
 ##' 
-##' When densityMaskTracks() is called by default with automatic = F, it will repeatedly ask the user for the kernel density probability (p)
+##' This algorithm relies on one parameter, the kernel density probability (p), to mask track lists. 
+##' Following, describes a method to optimize a workflow to predict p actively.
+##' 
+##' When densityMaskTracks() is called with buildModel = T, it will repeatedly ask the user for the kernel density probability (p)
 ##' and the number of smallest clusters to elimnate. The kernel density probability (p) is a factor that determines how dense the cluster contours are.
 ##' Low p creates smaller and/or fewer clusters and vice versa. Adjust p accordingly, but if there are still small extra clusters made in undesired
-##' areas, raise the number of smallest clusters to eliminate accordingly (note: sometimes noise clusters are too small to see). 
-##' Use .densityMaskTracksl() to apply this to only one track list.
+##' areas, raise the number of smallest clusters to eliminate accordingly (note: sometimes noise clusters are too small to see). Manual input will
+##' get progressively easier after 3 data points as the model is continuously being improved and applied.
+##' Building the model will create a MODEL.csv in the working directory that can be used to mask automatically if buildModel = F (this will look for one MODEL.csv
+##' in the working directory).
 ##' 
 ##' The separate parameter allows users to separate each track list from one video into their cluster components, creating a list of track lists.
 ##' Applying this separate parameter to a list of track lists from multiple videos will simply append all the separated clusters together.
@@ -66,12 +71,19 @@
 
 ##' @examples
 ##' 
-##' #Default call for masking a list of track lists with separation by cluster.
-##' masked.trackll <- densityMaskTracks(trackll, removeEdge = T)
+##' #Building the initial model, MODEL.csv will be created in the working directory (this can be renamed as long as it ends with MODEL.csv)
+##' #Each time the model is improved, the manual input will get progressively easier
+##' #The output will be a masked trackll that is created exactly as set during the program
+##' masked.trackll <- densityMaskTracks(trackll, buildModel = T)
 ##' 
-##' #Default call for masking a track list
-##' masked.trackl <- .densityMaskTracks(trackl)
-
+##' #Using a different dataset to test the model automatically. This will call the MODEL.csv in the working directory (there can only be one)
+##' #The output will be a masked trackll that is created automatically using the model
+##' masked.trackll2 <- densityMaskTracks(trackll2, buildModel = F)
+##' 
+##' #Improving the model with the different dataset. This will add to the MODEL.csv in the working directory
+##' #The output will be a masked trackll that is created exactly as set during the program
+##' masked.trackll2 <- densityMaskTracks(trackll2, buildModel = T)
+##' 
 
 ##' @export .densityMaskTracks
 ##' @export densityMaskTracks
