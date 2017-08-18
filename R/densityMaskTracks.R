@@ -305,7 +305,7 @@ mergeAllPoints = function(track.list){
         
     } else {
         new.model <- NULL;
-
+        
         #Instantiate to default parameters
         eliminate = 0;
         done = FALSE;
@@ -362,7 +362,7 @@ mergeAllPoints = function(track.list){
         if (is.null(model)){
             cat("\nNew MODEL.csv created.\n")
             write.table(new.model, file = "MODEL.csv", sep = ",", row.names = F);
-         } else {
+        } else {
             write.table(new.model, file = basename(model.file), sep = ",", append = T, col.names = F, row.names = F);
             cat(paste("\nData point added to ", basename(model.file), ".\n", sep = ""))
         }
