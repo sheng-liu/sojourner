@@ -1,12 +1,19 @@
 ---
-title: "smt 0.3.9 change log"
+title: "smt change log"
 output: html_document
 ---
 
-# Changelog
-Notable changes since smt v0.3.8
+## 0.4.0 - 2017-08-21
+### Added
 
-## [Release date] - 2017-07-22
+### Changed
+
+### Deprecated
+
+### Removed
+
+
+## 0.3.9 - 2017-07-22
 ### Added
 - Created a .readDiaSessions algorithm to process a single Diatrack session file into a track list with the ability to calculate absolute coordinates and record frames.
 - Implemented .readDiaSessions into readDiaSessions to process multiple session files into a list of track lists in parallel with the ability to merge, calculate absolute coordinates, mask, and record frames.
