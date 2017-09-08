@@ -3,7 +3,7 @@ title: "smt change log"
 output: html_document
 ---
 
-## 0.4.0 - 2017-08-21
+## 0.3.9.1 - 2017-08-21
 ### Added
 - Created a kernel density masking algorithm that uses a kernel density calculation along with masking application algorithms to create a trackll mask based on density
 - Added features such as automatically removing edge clusters, separating clusters, and model building/loading into the .densityMaskTracks and densityMaskTracks
