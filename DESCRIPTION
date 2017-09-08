@@ -1,9 +1,9 @@
 Package: smt
 Type: Package
 Title: Single Molecule Tracking
-Version: 0.3.9
+Version: 0.3.9.1
 Date: 2015-10-15
-Author: Sheng Liu
+Author: Sheng Liu, Sun Jay Yoo
 Maintainer: Sheng Liu <sliu@jhu.edu>
 Description: single molecule tracking after imaging processing, it uses the outputs from image processing program, such as Diatrack, computes paramters that describes the movement of the moleclues.
 License: Artistic-2.0
@@ -12,5 +12,5 @@ Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 Imports: ggplot2,dplyr,reshape2,gridExtra
 NeedsCompilation: no
-Packaged: 2017-07-22 20:16:40 UTC; shengliu
+Packaged: 2017-09-05; shengliu
 RoxygenNote: 6.0.1
