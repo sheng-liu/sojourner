@@ -1,8 +1,3 @@
-#### linkSkippedFrames.R
-#### Wu Lab, Johns Hopkins University
-#### Author: Sun Jay Yoo
-#### Date: July 6, 2017
-
 ## linkSkippedFrames-methods
 ##
 ##

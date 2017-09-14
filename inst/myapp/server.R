@@ -1,13 +1,8 @@
 #### server.R
-#### Wu Lab, Johns Hopkins University
-#### Author: Sun Jay Yoo
-#### Date: July 28, 2017
 
-library(shiny)
-library(shinyjs)
-library(smt)
-
-source("helpers.R")
+# library(shiny)
+# library(shinyjs)
+# library(smt)
 
 shinyServer(function(input, output, session){
     

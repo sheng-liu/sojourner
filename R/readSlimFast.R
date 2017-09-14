@@ -1,8 +1,3 @@
-#### readSlimFast.R
-#### Wu Lab, Johns Hopkins University
-#### Author: Sun Jay Yoo
-#### Date: July 10, 2017
-
 ## readSlimFast-methods
 ##
 ##

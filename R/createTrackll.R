@@ -1,8 +1,3 @@
-#### createTrackll.R
-#### Wu Lab, Johns Hopkins University
-#### Author: Sun Jay Yoo
-#### Date: July 12, 2017
-
 ## createTrackll-methods
 ##
 ##
@@ -47,11 +42,13 @@
 ##' (Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
 
 ##' @examples
-##' #Basic function call with interactive menu (optimzing 2 cores)
+##' # select track folder interactively and specify using 2 cores
 ##' trackll <- createTrackll(interact = T, cores = 2)
 ##' 
-##' #Manual function call to process Diatrack session files (.mat)
-##' trackll <- createTrackll("/DIRECTORYPATH/", input = 2, cores = 2)
+##' # Specify trackll folder path programably, specify the file format to be "2"
+##' (i.e. Diatrack txt files ending with .txt), cores to be 2.
+##' folder=system.file("extdata","SWR1",package="smt")
+##' trackll <- createTrackll(folder=folder, input = 1, cores = 2)
 
 ##' @export createTrackll
 

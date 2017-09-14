@@ -1,11 +1,10 @@
 #### ui.R
-#### Wu Lab, Johns Hopkins University
-#### Author: Sun Jay Yoo
-#### Date: July 28, 2017
 
-library(shiny)
-library(shinyjs)
-library(smt)
+# library(smt)
+# library(shiny)
+library(shinyjs) 
+# this has to be sourced as well to load into memory, even if the package has
+# been imported to smt
 
 source("helpers.R")
 

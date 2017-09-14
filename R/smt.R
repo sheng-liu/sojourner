@@ -53,7 +53,15 @@
 ## @importFrom dplyr summarise group_by select %>%
 ##
 
+
+##' @import shiny
+##' @import shinyjs
+##' @export smtGUI
+
 smt=function(){}
 
+smtGUI=function(){
+    shiny::runApp('inst/myapp')
+}
 
 

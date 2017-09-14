@@ -1,11 +1,5 @@
 /*
 squareDispRcpp.cpp
-
-Wu Lab, Johns Hopkins University
-(Referenced original codebase squareDisp.R algorithm from Sheng Liu)
-
-Author: Sun Jay Yoo
-Date: May 22, 2017
 */
 
 #include <armadillo>
