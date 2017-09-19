@@ -325,7 +325,7 @@ mergeAllPoints = function(track.list){
     #Find initial model
     model.fit = NULL
     model = NULL;
-    model.file = list.files(path=getwd(),pattern="MODEL.csv",full.names=T)
+    model.file = list.files(path=getwd(),pattern="MODEL.csv",full.names=T, ignore.case = T)
     if (length(model.file) != 1){
         cat("\nNo initial model read. If desired, ensure there is one file ending in MODEL.csv in working directory.\n")
         p = 0.5;
