@@ -61,7 +61,9 @@
 smt=function(){}
 
 smtGUI=function(){
-    shiny::runApp('inst/myapp')
+    appPath=system.file("myapp",package="smt")
+    shiny::runApp(appPath)
+f
 }
 
 
