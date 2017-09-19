@@ -123,19 +123,18 @@ $(document).ready(function () {
 
 <div id="description" class="section level3">
 <h3>Description</h3>
-<p>A Shiny app implementation of many of the core features of smt. Namely, the basic abilities of reading trackll video files (of all supported types), processing tracks (linking, filtering, trimming, masking, merging), and analyzing tracks (MSD, Dcoef, CDF, and dwell time). The application interface provides a code-free GUI, suited with dynamic and interactive plots, that is relatively easy to use. The app is still in pre-alpha development and only supports the base functions needed for educational capabilities and such.</p>
+<p>A Shiny app implementation of many of the core features of smt. Namely, the basic abilities of reading trackll video files (of all supported types), processing tracks (linking, filtering, trimming, masking, merging), and analyzing tracks (MSD, Dcoef, CDF, and dwell time). The application interface provides a code-free GUI, suited with dynamic and interactive plots, that is relatively easy to use. The app is still in alpha development and only supports the base functions needed for educational capabilities and such.</p>
 </div>
 <div id="launching" class="section level3">
 <h3>Launching</h3>
-<p>In order to launch the app, either open either of the ui.R or server.R files in RStudio and select Run App in the menu bar. To launch the app through the console, ensure that the smt-beta home tree is the working directory, and run:</p>
-<pre class="r"><code>shiny::runApp('inst/myapp')</code></pre>
+<pre class="r"><code>smtGUI()</code></pre>
 </div>
 <div id="helpful-tips" class="section level3">
 <h3>Helpful Tips</h3>
 <ul>
 <li><p>If in doubt, check the console output of each command inputted through the GUI.</p></li>
 <li><p>Normal distribution, compare folder, and kernel density masking features are currently not supported.</p></li>
-<li><p>Reading tracks depends on a running session of R, as it uses its native file.choose() function.</p></li>
+<li><p>Reading tracks depends on a <strong>running session of R</strong>, as it uses its native file.choose() function.</p></li>
 </ul>
 </div>
 

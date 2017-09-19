@@ -55,7 +55,6 @@
 
 
 ##' @import shiny
-##' @import shinyjs
 ##' @export smtGUI
 
 smt=function(){}

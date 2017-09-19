@@ -15,12 +15,12 @@ withBusyIndicatorUI <- function(button) {
         button,
         span(
             class = "btn-loading-container",
-            hidden(
+            shinyjs::hidden(
                 img(src = "ajax-loader-bar.gif", class = "btn-loading-indicator"),
                 icon("check", class = "btn-done-indicator")
             )
         ),
-        hidden(
+        shinyjs::hidden(
             div(class = "btn-err",
                 div(icon("exclamation-circle"),
                     tags$b("Error: "),

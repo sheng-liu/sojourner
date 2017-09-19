@@ -1,0 +1,13 @@
+name: shiny-smt-040
+title: shiny-smt-0.4.0
+username:
+account: sunjay-yoo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 216490
+bundleId: 988047
+url: https://sunjay-yoo.shinyapps.io/shiny-smt-040/
+when: 1505838504.53319
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: www/.DS_Store
