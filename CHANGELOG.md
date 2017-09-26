@@ -3,13 +3,15 @@ title: "smt change log"
 output: html_document
 ---
 
-## 0.3.9.1 - 2017-08-21
+## 0.4.0 - 2017-09-26
 ### Added
 - Created a kernel density masking algorithm that uses a kernel density calculation along with masking application algorithms to create a trackll mask based on density
 - Added features such as automatically removing edge clusters, separating clusters, and model building/loading into the .densityMaskTracks and densityMaskTracks
 - Created plotPoints() and plotLines() and their trackl counterparts to simply plot all trajectories
 - Made .readDiaSessions compatible with newer versions of Diatrack
 - Made compareFolder compatible with createTrackll and all recognized trackll input file types
+- Fixed bugs with smt compatibility and reading
+- Added partial GUI support with smt-shiny (see guide for instructions)
 
 ### Deprecated
 
