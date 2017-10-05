@@ -29,10 +29,10 @@
 ##' \itemize{
 ##' \item{ list of "stepwise.displacement" and "CDF.displacement",} {A list of stepwise.displacement" and "CDF.displacement". the name of the list is the Diatrack folder name.}
 ##'
-##' \item{Output file,} {Displacement of individual trajectoreis at specified dt.}
+##' \item{Output file,} {Displacement of individual trajectoreis at specified dt. The output file is for user to plot in other applications. The column "UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a CDF plot. The distribution of "UniqueDisplacement" is the density plot. }
 ##'
 ##'
-##' \item{CDF plot,} {CDF plot of displacement for individual files.
+##' \item{CDF plot,} {CDF plot of displacement for individual files. 
 ##' }
 ##' }
 
