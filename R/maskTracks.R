@@ -134,11 +134,6 @@ maskTracks=function(folder, trackll){
         mask.track.index[[i]]=posTracks(track.center,pos.point)
         
         index=rownames(mask.track.index[[i]])
-        #k = 1
-        #for (j in 1:length(index)){
-        #    masked.tracks[[i]][k] <- trackll[[i]][as.numeric(index[[j]])]
-        #    k = j + 1
-        #}
         
         masked.tracks[[i]]=lapply(trackll[i],function(x){x[as.numeric(index)]})[[1]]
         
