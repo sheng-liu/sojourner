@@ -11,7 +11,7 @@
 ##'
 ##' @description Select trajectory based on component fitting on diffusion
 ##'   coefficient.
-##' @usage selComponentTracks(fit,likelihood=0.9,dcoef,log.transformed=F,output=F)
+##' @usage selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=F,output=F)
 ##' @param fit Component fitting result form fitNormDistr() function.
 ##' @param likelihood The likelihood of a trajecotry to be in fitted group. This parameter specifies the strigency of selecting trajectories to be in the fitted group and therefore influence the number of trajectories been selected.
 ##' @param dcoef Diffusion coefficent calcualted by Dcoef, which provide the link between trajecotry index and diffusion coefficent.
@@ -32,7 +32,7 @@
 ##' ## 1. select componentTracks per folder (cross movie) by using compareFolders
 ##' folder1=system.file("extdata","SWR1",package="smt")
 ##' folder2=system.file("extdata","HTZ1",package="smt")
-##' trackll=compareFolder(c(folder1,folder2))
+##' trackll=createTrackll(folder=c(folder1,folder2),input=1)
 ##' MSD=msd(trackll=trackll)
 ##' dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
 ##' # fit dcoef
@@ -40,9 +40,9 @@
 ##' fit=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=484)
 ##'
 ##' # select component tracks from fitting
-##' trackll.sel=selComponentTracks(fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = F)
+##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,dcoef=dcoef,log.transformed=T,output=F)
 ##' # subset component tracks to further analyze msd, dcoef
-##' trackll.swr1=trackll.sel[["SWR1"]]
+##' trackll.swr1=trackll.sel[["SWR1_WT_140mW_image6.txt"]]
 ##' msd(trackll.swr1,plot=T)
 ##' msd(trackll.swr1,summarize=T,plot=T)
 ##' Dcoef(trackll=trackll.swr1,plot=T)
@@ -52,7 +52,7 @@
 ##' dwellTime(trackll.swr1)
 ##'
 ##' # Output trajectory index to plot individually
-##' # trackll.sel=selComponentTracks(fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = T)
+##' # trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = T)
 ##' # specify index file path.
 ##' index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",package="smt")
 ##' index.file2=system.file("extdata","INDEX","componentTrackID-SWR1.comp.2.csv",package="smt")
@@ -64,7 +64,7 @@
 ##' ## 2. select componentTracks per movie base, use plotComponentTracks to plot component tracks back to initial Nuclei image.
 ##' ## plotComponentTrackOverlay
 ##' folder3=system.file("extdata","SWR1_2",package="smt")
-##' trackll=readDiatrack(folder3,merge=F)
+##' trackll=readDiatrack(folder3)
 ##'
 ##' ## use merge=T for per folder comparison, the analsyis result can't be plot back to original image
 ##' ## To see component tracks on original nuclei image, set merge=F (for per movie analysis)
@@ -82,7 +82,7 @@
 ##' fit=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=481)
 ##'
 ##' ## select component tracks based on fitting
-##' trackll.sel=selComponentTracks(fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = F)
+##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = F)
 ##' ## plot component tracks
 ##' plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
 ##'
@@ -97,8 +97,10 @@
 
 
 selComponentTracks=function(
+    trackll,
     fit,likelihood=0.9,dcoef,log.transformed=F,output=F){
 
+    # trackll is not used for calculation but for subsetting tracks
     comp=list()
     length(comp)=length(fit)
     names(comp)=names(fit)

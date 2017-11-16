@@ -10,7 +10,7 @@
 ##' @docType methods
 ##' @description compare folders with Diatrack output files. merge track files in each folder into one item of a track list. This list can then be fed into other functions for comparison.
 
-##' @usage compareFolder(folders=c(folder1,folder2,...),ab.track=F,cores=1)
+##' @usage compareFolder(folders=c(folder1,folder2,...),input=1,ab.track=F,cores=1)
 ##' @param folders a vector storing paths to the folders location."..." indicates multiple (unlimited) folders can be added into the function.
 ##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).
 ##' @param ab.track a Logical indicating if absolute coordinates should be used.
@@ -34,7 +34,7 @@
 ###############################################################################
 
 
-compareFolder=function(folders=c(folder1,folder2,...), input = 0, ab.track=F,cores=1){
+compareFolder=function(folders=c(folder1,folder2,...), input=1, ab.track=F,cores=1){
 
     # the number of folder to compare can be extended using ... statement
     # folder.list=list(folder1,folder2,folder3,folder4,folder5)

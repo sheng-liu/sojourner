@@ -18,7 +18,7 @@
 ##'
 ##' plotTrackFromIndex(index.file, movie.folder=c(folder1,folder2,...),
 ##'                    resolution=0.107,frame.min=1,frame.max=100,
-##'                    frame.start=1,frame.end=500)
+##'                    frame.start=1,frame.end=500,input=0)
 ##'
 ##' plotTrackOverlay(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
@@ -51,6 +51,7 @@
 ##' @param height Height of the page for plotting.
 ##' @param trackll.sel Selected component trajectory output by
 ##'   selComponentTracks().
+##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).
 
 ##' @return
 ##' \itemize{
@@ -267,7 +268,7 @@ plotTrack=function(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,frame.s
 ## plot trajectory according to index
 ## user need to put the corresponding movie files into a folder
 
-plotTrackFromIndex=function(index.file, movie.folder=c(folder1,folder2,...),resolution=0.107,frame.min=1,frame.max=100,frame.start=1,frame.end=500){
+plotTrackFromIndex=function(index.file, movie.folder=c(folder1,folder2,...),resolution=0.107,frame.min=1,frame.max=100,frame.start=1,frame.end=500,input=1){
 
     ## read trajectory index from the index.file
     index.df=read.csv(file=index.file,header=T)
@@ -301,7 +302,7 @@ plotTrackFromIndex=function(index.file, movie.folder=c(folder1,folder2,...),reso
 #
 #     }
 
-    ab.trackll=compareFolder(folders=movie.folder,ab.track=T)
+    ab.trackll=compareFolder(folders=movie.folder,ab.track=T,input=input)
 
     # as it is only for one folder
     # trackl.plot=ab.trackll[[1]][index]
