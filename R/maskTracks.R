@@ -100,7 +100,7 @@ posTracks=function(track.center,pos.point){
     
     # convert list to data.frame
     track.center.df=do.call(rbind.data.frame,track.center)
-    names(track.center.df)=c("x","y","z")
+    names(track.center.df)=c("x","y","z", "Frame")
     pos.tracks=plyr::match_df(track.center.df,pos.point,on=c("x","y"))
     return(pos.tracks)
     
@@ -135,7 +135,7 @@ maskTracks=function(folder, trackll){
         
         index=rownames(mask.track.index[[i]])
         
-        masked.tracks[[i]]=lapply(trackll[i],function(x){x[index]})[[1]]
+        masked.tracks[[i]]=lapply(trackll[i],function(x){x[as.numeric(index)]})[[1]]
         
     }
     cat("\nAll files masked.\n")
