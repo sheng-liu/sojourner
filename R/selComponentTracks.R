@@ -240,7 +240,8 @@ selComponentTracks=function(
 
 
         for (j in 1:length(trackID[[i]])){
-            componentTracks[[i]][j]=lapply(trackll[i],function(x){x[ trackID[[i]][[j]]  ]})
+            componentTracks[[i]][j]=lapply(trackll[i],function(x){
+                x[trackID[[i]][[j]]]})
         }
 
     }
