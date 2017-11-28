@@ -169,8 +169,13 @@
 
 ## .plotMask(mask.list[1])
 
-##
+## FOR SHINY USAGE:
+##' @export trackOverlayData
+##' @export .plotNucTrackOverlay
 
+
+
+##
 ## useful when the file is too big to include into the package.
 ## masking with image mask
 ## Not run:

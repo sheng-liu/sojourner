@@ -496,6 +496,7 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
                                       c("Coordinate Points" = 1, 
                                         "Trajectory Lines" = 2),
                                       selected = 2),
+                         textOutput("noNucOverlay"),
                          
                          plotOutput(outputId = "plotPoints", inline = T)
                      )

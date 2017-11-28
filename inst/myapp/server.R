@@ -14,10 +14,12 @@ shinyServer(function(input, output, session){
     fitcdf <- reactiveValues(data= NULL);
     dt <- reactiveValues(data= NULL);
     folder <- reactiveValues(data = NULL);
+    nuclei.list <- reactiveValues(data = NULL);
     
     observeEvent(input$folder, {
         folder$data <- dirname(file.choose());
         setwd(folder$data);
+        nuclei.list$data = list.files(path=folder$data,pattern="_Nuclei.tif",full.names=T)
         output$folderConfirm <- renderText({
             paste("New working directory: ", folder$data, sep = "")
         })
@@ -103,9 +105,8 @@ shinyServer(function(input, output, session){
     observeEvent(input$mask, {
         withBusyIndicatorServer("mask",{
             trackll$data <- maskTracks(folder$data, trackll$data)
-            plotNucTrackOverlay(folder = folder$data, trackll = trackll$data, cores = input$cores)
             output$maskConfirm <- renderText({
-                print("Masking completed. Nuclear overlay plots saved in working directory.")
+                print("Masking completed.")
             })
         })
     })
@@ -133,7 +134,14 @@ shinyServer(function(input, output, session){
             if (input$plotType == 1){
                 .plotPoints(trackll$data[[input$tracklNum]])
             } else {
-                .plotLines(trackll$data[[input$tracklNum]])
+                if (length(nuclei.list$data) > 0){
+                    .plotNucTrackOverlay(trackl = trackll$data[input$tracklNum], image.file = nuclei.list$data[input$tracklNum])
+                } else {
+                    output$noNucOverlay <- renderText({
+                        paste("(No nuclei images present for overlay.)")
+                    })
+                    .plotLines(trackll$data[[input$tracklNum]])
+                }
             }
         }
     }, width = 600, height = 600)
