@@ -1,11 +1,5 @@
 #### ui.R
 
-# library(smt)
-# library(shiny)
-# library(shinyjs) 
-# this has to be sourced as well to load into memory, even if the package has
-# been imported to smt
-
 source("helpers.R")
 
 shinyUI(fluidPage(#theme = "bootstrap.css",
