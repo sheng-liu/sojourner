@@ -40,6 +40,7 @@
 ##' IMPORTANT: It will take an extremely long time to mask unfiltered data. Filter first using filterTrack(trackll,filter=c(min=7,max=Inf)), then mask using maskTracks(folder, trackll)!
 
 ##' Note the mask file should have the same name as the output files with a "_MASK.tif" ending. 
+##' If there are more mask files than trackll, masking will fail. If there are less mask files, trackls without masks will be deleted.
 ##' Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
 
 ##' @export maskTracks
@@ -118,6 +119,31 @@ maskTracks=function(folder, trackll){
         cat("No image mask file ending '_MASK.tif' found.\n")
         
     }
+    
+    if (length(maskl) > length(trackll)){
+        stop("More masks than trackl.\n")
+    }
+    # make mask list and trackll one-to-one, delete extra trackl
+    maskl.check = list()
+    maskl.names = gsub("_MASK.tif","",basename(maskl))
+    trackll.names = gsub("[.].*","",names(trackll))
+    for (i in 1:length(trackll.names)) {
+        found = FALSE
+        for (j in 1:length(maskl.names)) {
+            if (trackll.names[[i]] == maskl.names[[j]]) {
+                maskl.check[[length(maskl.check)+1]] = maskl[j]
+                found = TRUE
+                break
+            }
+        }
+        if (!found) {
+            cat(paste(names(trackll)[[i]], "mask not found. Trackl deleted from masked output.\n", sep = " "))
+            trackll[[i]] <- NULL
+        }
+    }
+    maskl = maskl.check
+    
+    
     
     mask.track.index=list()
     length(mask.track.index)=length(trackll)
