@@ -1,6 +1,7 @@
 #### fitResidenceTime.R
 #### Wu Lab, Johns Hopkins University
 #### Author: Xiaona Tang
+#### Reference: fitCDF() by Sheng Liu
 #### Date: Sep 20, 2017
 
 ## fitRT-methods
@@ -29,7 +30,8 @@
 ##' }
 ##' @details Calculating average residence time of particles by fitting 1-CDF (survival distribution) of its trajectorys.
 ##'
-##' Input processed track list (trackll) and the fitting will start right away. 
+##' Upon running of the function, users will be prompted to input the name of the track list (trackll).
+##' Input processed, merged trackll and the fitting will start right away. 
 ##' The maximum time range to be plotted can be set using x.max, this will not change the fitting result. 
 ##' Fitting result is determined by the input trackll, and N.min (filtering of the trackll).
 
@@ -39,13 +41,14 @@
 ##' # Generate trackll, and process, 
 ##' # e.g. mask region of interest, merge tracks from multiple files.
 ##' folder=system.file("extdata","SWR1",package="smt")
-##' trackll=createTrackll(interact=F,folder,input=0)
-##' trackll=maskTracks(filder,trackll)
+##' trackll=createTrackll(interact=F,folder,input=1)
+##' trackll=maskTracks(folder,trackll)
 ##' trackll=mergeTracks(folder,trackll)
 ##'
 ##' # Fit the residence time of trackll
 ##' fitRT(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5)
 
+##' @export fitRT
 
 #####################################################################################
 #####################################################################################
@@ -80,9 +83,9 @@
   p1.model =function(t,k.s){
     exp(-k.s*t)}
   curve(p1.model(x-min(t),
-           coef(ocfit)["k.s"]
-           ),
-        add=T,col="green",lwd=4
+                 coef(ocfit)["k.s"]
+  ),
+  add=T,col="green",lwd=4
   )
   
   return(ocfit)
@@ -90,7 +93,8 @@
 
 ## Function for two component 1-CDF fitting.
 ## Initial values are not flexible for users, but fitting result is quite consistent.
-.two.comp.fit.rt=function(name,t,P,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),maxiter.search=1e3,maxiter.optim=1e3){
+## There is an option to fix the value of one of the two component k.ns.
+.two.comp.fit.rt=function(name,t,P,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),maxiter.search=1e3,maxiter.optim=1e3,k.ns=FALSE){
   
   ## Equation for two component 1-CDF fitting. shift the values of time points corresponding to each P value, 
   ##so that the first time point is 0. This would make the fitting more accurate.
@@ -102,40 +106,49 @@
   
   #cat("\nBrute force random search start value...\n\n")
   k.search.tcfit=nls2::nls2(P ~ p3(t,k.s,k.ns,alpha),start=data.frame(start),
-                      # algorithm="brute-force",
-                      algorithm="random-search",
-                      control = nls.control(maxiter = maxiter.search))
+                            # algorithm="brute-force",
+                            algorithm="random-search",
+                            control = nls.control(maxiter = maxiter.search))
   
   print(coef(k.search.tcfit))
   
-  ## local optimization using nlsLM
+  ## Local optimization using nlsLM.
   cat("\nLocal optimization...\n\n")
-  tcfit=minpack.lm::nlsLM(P ~ p3(t,k.s,k.ns,alpha),
-              start=coef(k.search.tcfit),
-              lower=c(0,0,0),
-              upper=c(Inf,Inf,1))
+  if(k.ns==FALSE){
+    tcfit=minpack.lm::nlsLM(P ~ p3(t,k.s,k.ns,alpha),
+                            start=coef(k.search.tcfit),
+                            lower=c(0,0,0),
+                            upper=c(Inf,Inf,1))
+  }
+  ## Use a fixex k.ns value given by user.
+  else{
+    tcfit=minpack.lm::nlsLM(P ~ p3(t,k.s,k.ns,alpha),
+                            start=coef(k.search.tcfit),
+                            lower=c(0,k.ns,0),
+                            upper=c(Inf,k.ns,1))
+  }
   
   print(tcfit);cat("\n")
   
-  ## plot the fitting curve over raw data. Shift the time points back.
+  ## Plot the fitting curve over raw data. Shift the time points back.
   p3.model =function(t,k.s,k.ns,alpha){
     alpha*exp(-k.s*t) + (1-alpha)*exp(-k.ns*t)}
   curve(p3.model(x-min(t),
-           coef(tcfit)["k.s"],
-           coef(tcfit)["k.ns"],
-           coef(tcfit)["alpha"]),
+                 coef(tcfit)["k.s"],
+                 coef(tcfit)["k.ns"],
+                 coef(tcfit)["alpha"]),
         add=T,col="red",lwd=4
   )
-  ##Usually two-component fitting is better. Output this fitting result on the final plot as figure legend.
+  ## Usually two-component fitting is better. Output this fitting result on the final plot as figure legend.
   par(mar=c(0, 0, 0, 0),xpd=FALSE)
   if (coef(tcfit)["k.s"]<coef(tcfit)["k.ns"]){
-  result.text=c(expression(italic(P(t)==alpha*e^-k[s]*''^t+(1-alpha)*e^-k[ns]*''^t)),
-                as.expression(bquote(italic('k'['s']==.(coef(tcfit)["k.s"])))),
-                as.expression(bquote(italic('k'['ns']==.(coef(tcfit)["k.ns"])))),
-                as.expression(bquote(italic(alpha==.(coef(tcfit)["alpha"])))),
-                as.expression(bquote(italic('RSS'==.(deviance(tcfit))))),
-                " "
-                )
+    result.text=c(expression(italic(P(t)==alpha*e^-k[s]*''^t+(1-alpha)*e^-k[ns]*''^t)),
+                  as.expression(bquote(italic('k'['s']==.(coef(tcfit)["k.s"])))),
+                  as.expression(bquote(italic('k'['ns']==.(coef(tcfit)["k.ns"])))),
+                  as.expression(bquote(italic(alpha==.(coef(tcfit)["alpha"])))),
+                  as.expression(bquote(italic('RSS'==.(deviance(tcfit))))),
+                  " "
+    )
   }
   else {
     result.text=c(expression(italic(P(t)==alpha*e^-k[s]*''^t+(1-alpha)*e^-k[ns]*''^t)),
@@ -146,7 +159,7 @@
                   " "
     )
   }
-  legend("bottomright",legend=result.text,pch=NULL,y.intersp=0.7,x.intersp=0.3,bty="n",cex=1.5)
+  legend("bottomright",legend=result.text,pch=NULL,y.intersp=0.3,x.intersp=0.3,bty="n",cex=1.5)
   par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=FALSE)
   
   return(tcfit)
@@ -154,10 +167,10 @@
 
 
 ## Master function for residence time (1-CDF) fitting.
-fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5,maxiter.search=1e3,
-               maxiter.optim=1e3){
+fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.125,maxiter.search=1e3,
+               maxiter.optim=1e3,k.ns=FALSE){
   
-#library(smt)  
+  #library(smt)  
   
   ############ Get trajectory information####################
   if(is.null(trackll)){
@@ -180,7 +193,7 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5,maxiter.search=1e3
   
   ########## Generate 1-CDF of dwell time (trajectory length) ###############
   library(mltools)
-  trajLength<-sapply(trackll[[1]],function(x){dim(x)[1]*t.interval})
+  trajLength<-sapply(trackll[[1]],function(x){(x$Frame[dim(x)[1]]-x$Frame[1]+1)*t.interval})
   CDF<-empirical_cdf(trajLength,ubounds=seq(t.interval, max(trajLength), by=t.interval))
   P<-(1-(CDF$CDF))
   ## Remove multiple "1" of P values, leaving only one "1" value.
@@ -206,19 +219,26 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5,maxiter.search=1e3
        cex.main=1.5,xlim=c(0,x.max),ylim=c(0,max(P)),cex.axis=1.5,cex.lab=1.5,pch=20,cex=1.5)
   
   ###### Fitting and add fitting curves over raw data###############
-  result.1=one.comp.fit(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval)),
-                           maxiter.optim=maxiter.optim)
-  result.2=two.comp.fit(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),
-               maxiter.search=maxiter.search,
-               maxiter.optim=maxiter.optim)
+  result.1=.one.comp.fit.rt(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval)),
+                            maxiter.optim=maxiter.optim)
+  if(k.ns==FALSE){
+    result.2=.two.comp.fit.rt(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),
+                              maxiter.search=maxiter.search,
+                              maxiter.optim=maxiter.optim,k.ns=k.ns)
+  }
+  ## Use a fixex k.ns value given by user.
+  else{
+    result.2=.two.comp.fit.rt(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval),k.ns=k.ns,alpha=c(1e-3,1)),
+                              maxiter.search=maxiter.search,
+                              maxiter.optim=maxiter.optim,k.ns=k.ns)
+  }
+  
   
   ####### Add legend to the plot ##################
   legend("topright",legend=c("Raw data","One component fit","Two component fit"),pch=NA,lty=c(3,1,1),lwd=4,col=c("black","green","red"),cex=1.5,
-          y.intersp=0.7,x.intersp=0.3,bty = "n")
+         y.intersp=0.3,x.intersp=0.3,bty = "n")
   legend("bottomleft",legend=bquote(italic('N'['min']==.(N.min))*' s'),bty = "n")
   
   return(list("One-Component Fit"=result.1,"Two-Component Fit"=result.2))
   
 }
-
-#fitRT(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5)

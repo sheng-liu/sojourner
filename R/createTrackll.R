@@ -62,6 +62,7 @@ createTrackll=function(interact = F, folder, input = 1, ab.track = F, cores = 1,
     if (interact){
         cat("Choose one file in the folder for processing... \n")
         folder = dirname(file.choose());
+        input = 0;
         if (input == 0){
             cat("Folder selection:", folder, "\n");
             cat("Enter input file type and press ENTER: \n")
