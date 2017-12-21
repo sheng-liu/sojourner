@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Description
 
-A Shiny app implementation of many of the core features of smt. Namely, the basic abilities of reading trackll video files (of all supported types), processing tracks (linking, filtering, trimming, masking, merging), and analyzing tracks (MSD, Dcoef, CDF, and dwell time). The application interface provides a code-free GUI, suited with dynamic and interactive plots, that is relatively easy to use. The app is still in alpha development and only supports the base functions needed for educational capabilities and such.
+A Shiny app implementation of many of the core features of smt. Namely, the basic abilities of reading trackll video files (of all supported types), processing tracks (linking, filtering, trimming, masking, merging), and analyzing tracks (MSD, Dcoef, CDF, and dwell time). The application interface provides a code-free GUI, suited with dynamic and interactive plots, that is relatively easy to use. The app is still in alpha development and only supports the base functions needed for educational capabilities and such. A command history log, named *command_history.R* in the working directory, will be continuously updated each time a command is called for diagnostic, replication, and tracking purposes.
 
 ### Launching
 
@@ -23,7 +23,7 @@ smtGUI()
 
 ### Helpful Tips
 
-* If in doubt, check the console output of each command inputted through the GUI.
+* If in doubt, check the console output of each command inputted through the GUI. These will show error and warning messages as needed.
 
 * Normal distribution, compare folder, and kernel density masking features are currently not supported.
 
