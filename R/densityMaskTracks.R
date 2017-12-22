@@ -142,9 +142,6 @@
 ##' @export .plotPoints
 ##' @export .plotLines
 
-##' @importFrom dplyr bind_rows
-##' @importFrom MASS kde2d
-##' @importFrom sp point.in.polygon
 
 ###############################################################################
 
