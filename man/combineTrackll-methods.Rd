@@ -22,15 +22,15 @@ Combine multiple tracklls into one trackll.
 }
 \details{
 Combine multiple track listw (tracklls) from multiple folders into one trackll, i.e. combining track infomation
-         from files in multiple folders (replicates) together as if they are in one folder. The tracklls 
+         from files in multiple folders (replicates) together as if they are in one folder. The tracklls
          either merged or un-merged.
-         
+
          Users will be prompted to input the name of each trackll to combine.
          If the combined tracklls are merged, users will also be prompted to input a combined attribute name for the combined trackll.
 }
 \examples{
 
-# Generate trackll, and process, 
+# Generate trackll, and process,
 # e.g. mask region of interest, merge tracks from multiple files.
 folder1=system.file("extdata","SWR1",package="smt")
 trackll1=createTrackll(interact=F,folder1,input=1)
