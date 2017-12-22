@@ -37,21 +37,21 @@ plotTrackOverlay.Dcoef(scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,r
 }
 }
 \description{
-Plot track/trajectory overlays from a list of files in a folder with color coded 
+Plot track/trajectory overlays from a list of files in a folder with color coded
              by the Diffusion Coefficient (Dcoef) of each track/trajectory.
 }
 \details{
-Plot track/trajectory overlays from a list of files in a folder with color coded 
+Plot track/trajectory overlays from a list of files in a folder with color coded
          by the Diffusion Coefficient (Dcoef) of each track/trajectory. The range of Dcoef can be defined. Nuclei backgrounds can be added to the plots.
          Tracks from each file will be plot in one plot, i.e., one plot per file. Colors are flexible.
-             
+
          Upon running of the function, users will be prompted to input the name of the track list (trackll).
-         Input un-merged trackll and the plotting will start. 
+         Input un-merged trackll and the plotting will start.
          The Dcoef is calculated by "static" method, which stabilizes the number of time lags used for fitting using time lag 2~ 5 despite the total time lags measured.
 }
 \examples{
 
-# Generate trackll, and process, 
+# Generate trackll, and process,
 # e.g. mask region of interest, tracks from multiple files should not be merged.
 folder=system.file("extdata","SWR1",package="smt")
 trackll=createTrackll(interact=F,folder,input=1)

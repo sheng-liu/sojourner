@@ -32,13 +32,13 @@
 ##'
 ##' Upon running of the function, users will be prompted to input the number of the track list (trackll) to compare/plot.
 ##' Then users will be prompted to input the name and acquisition time interval of each trackll. The trackll should be masked and merged.
-##' The maximum time range to be plotted can be set using x.max, this will not change the curve/probabiltiy, 
-##' which is determined by all track information in the trackll. 
+##' The maximum time range to be plotted can be set using x.max, this will not change the curve/probabiltiy,
+##' which is determined by all track information in the trackll.
 
 ##'
 ##' @examples
 ##'
-##' # Generate trackll, and process, 
+##' # Generate trackll, and process,
 ##' # e.g. mask region of interest, merge tracks from multiple files.
 ##' folder=system.file("extdata","SWR1",package="smt")
 ##' trackll=createTrackll(interact=F,folder,input=1)
@@ -50,7 +50,7 @@
 
 ##' @importFrom mltools empirical_cdf
 ##' @export compare.RT.CDF
-##' 
+##'
 #####################################################################################
 #####################################################################################
 
@@ -58,7 +58,7 @@
 
 compare.RT.CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),t.interval=0.5,output=F){
   #library(mltools)
-  
+
   ## Import trackll (merged) information
   if(is.null(trackll)){
     Totaltracklls <- readline("Set the numbers of trackll to compare decay (survival curve) of residence time:")
@@ -67,13 +67,13 @@ compare.RT.CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),t.interva
   else{
     Totaltracklls <- as.numeric (length(trackll))
   }
-  
+
   #cl=c("grey30",my_colorBrewer(9))
   #cl<-cl[c(1,2,5,6,8,10,9,7,4,3)]
   trackll.labels<-c()
   ## Record time interval of the input trackll incase the time interval is different among tracklls.
   t.interval=t.interval
-  
+
   for(i in c(1:Totaltracklls)){
     if(is.null(trackll)){
       trackll.labels[i]<-readline(cat("Enter the trackll you want to plot:    "))
@@ -84,29 +84,29 @@ compare.RT.CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),t.interva
       t.interval=rep(t.interval,length(trackll))
     }
   }
-    
+
   ## Set plot area and start a plot window.
   par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=FALSE)
   par(mfrow=c(1,1),bg="white",fg="black")
   plot.new()
   plot.window(xlim=c(0,x.max),ylim=c(0,1))
-  
+
   axis(1,cex.axis=1.5)
   axis(2,cex.axis=1.5)
   #title=readline("Set title for the plot:")
-  title(main="1-CDF of dwell time",cex.main=1.5)            
+  title(main="1-CDF of dwell time",cex.main=1.5)
   title(xlab="Time (s)",cex.lab=1.5)
   title(ylab="Survival probability",cex.lab=1.5)
   box()
-  
+
   ## Generate color set
     cl<-c("grey30","#FF8E8B","#65B9FF","#FF7DE6","#44D03D","#DF96FF","#F6A600","#00D4EF","#00D9B0","#B1C100")
-  ## Generate data.frame storing information of trackll name, time intervals, and corresponding 1-CDF.  
+  ## Generate data.frame storing information of trackll name, time intervals, and corresponding 1-CDF.
     trackllname<-c()
     n<-c()
     ## Set time intervals according to the minimal acquisition time interval of input tracklls.
     ONE_CDF<-setNames(data.frame(seq(min(t.interval),2*x.max,by=min(t.interval))), "Time intervals (s)")
-    
+
     for(i in c(1:Totaltracklls)){
     trackll<-filterTrack(get(paste(trackll.labels[i])),filter=filter)
     trackllname<-append(trackllname,gsub("trackll.ST.ma.l.me.","",gsub("trackll.ST.ma.me.","",trackll.labels[i])))
@@ -120,21 +120,21 @@ compare.RT.CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),t.interva
     ## Record time intervals and corresponding 1-CDF into one data.frame
     ONE_CDF<-cbind(ONE_CDF,setNames(data.frame(one_CDF[1:(2*x.max/min(t.interval))]), trackllname[i]))
   }
-  
+
   ## Output time intervals and corrsponding 1-CDF in .csv format.
   if (output){
     filename<-paste("1-CDF","--",format(Sys.time(),"%Y%m%d.%H%M%S"),".csv",sep="")
     write.table(ONE_CDF, filename  , append= F, sep=',', row.names = F)
-    cat("    1-CDF of selected tracklls were output in the working directory. 
+    cat("    1-CDF of selected tracklls were output in the working directory.
     If using the same filter range, the curve is exactly the same as the raw data curve in compare.RT.CDF().
     Therefore, this output can be used for plotting and fitting in other programs such as Prism")
   }
-  
+
   ## Add legend and reset plot area.
   par(mar=c(0, 0, 0, 0),xpd=TRUE)
   legend("topright",legend =paste(trackllname," ( n =",n,")"), text.col = cl,col=cl, pch=NULL, lty=1, lwd=4,bty = "n",cex=2)
   par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=TRUE)
-  
+
   ## Return value: data.frame containing time intervals and corrsponding 1-CDF
   return(ONE_CDF)
 }

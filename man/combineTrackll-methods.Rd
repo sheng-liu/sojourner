@@ -33,14 +33,14 @@ Combine multiple track listw (tracklls) from multiple folders into one trackll, 
 # Generate trackll, and process, 
 # e.g. mask region of interest, merge tracks from multiple files.
 folder1=system.file("extdata","SWR1",package="smt")
-trackll1=createTrackll(interact=F,folder,input=1)
-trackll1=maskTracks(folder,trackll)
-trackll1=mergeTracks(folder,trackll)
+trackll1=createTrackll(interact=F,folder1,input=1)
+trackll1=maskTracks(folder1,trackll)
+trackll1=mergeTracks(folder1,trackll)
 
 folder2=system.file("extdata","SWR1_2",package="smt")
-trackll2=createTrackll(interact=F,folder,input=1)
-trackll2=maskTracks(folder,trackll)
-trackll2=mergeTracks(folder,trackll)
+trackll2=createTrackll(interact=F,folder2,input=1)
+trackll2=maskTracks(folder2,trackll)
+trackll2=mergeTracks(folder2,trackll)
 
 # Combine the tracklls together, input trackll names when prompted,
 trackll=combineTrackll(total=2,merged=T)
