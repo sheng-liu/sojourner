@@ -46,6 +46,9 @@
 ##' # Plot localization map,
 ##' plotLocalizations.Dense(scale=256,r=125,file.No=0,point.scale=0.15)
 
+##' @importFrom sp coordinates
+##' @importFrom sp over
+##' @importFrom sampSurf spCircle
 ##' @export plotLocalizations.Dense
 
 #####################################################################################
@@ -56,8 +59,8 @@
 
 .plotLocalizations.Dense<-function(scale=256,r=125,file.No=0,point.scale=0.15){
   
-  library(sp)
-  library(sampSurf)
+  #library(sp)
+  #library(sampSurf)
 
   ## Import trackll (un-merged) information  
   if (length(file.No)>1&min(file.No)==0){
@@ -96,10 +99,10 @@
       localizations<-rbind(localizations,setNames(data.frame(paste0(names(trackll[[i]][j])),trackll[[i]][[j]]$x[[1]]*0.107,trackll[[i]][[j]]$y[[1]]*0.107), c("Trajectory","x", "y")))
     }
     ## Calculate local molecule density by counting the molecule number within a given radius.
-    coordinates(localizations) <- c("x", "y")
+    sp::coordinates(localizations) <- c("x", "y")
     for (k in c(1:length(localizations$x))){
-      sp.n = spCircle(r/1000, centerPoint=c(x=localizations[k,]$x,y=localizations[k,]$y), spID='tree.1') 
-      count.n <- over(localizations, sp.n$spCircle)
+      sp.n = sampSurf::spCircle(r/1000, centerPoint=c(x=localizations[k,]$x,y=localizations[k,]$y), spID='tree.1') 
+      count.n <- sp::over(localizations, sp.n$spCircle)
       localizations$density[k]=sum(count.n,na.rm = T)
     }
     

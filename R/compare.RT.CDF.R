@@ -48,6 +48,7 @@
 ##' # Plot and output the survival curve,
 ##' compare.RT.CDF(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),t.interval=0.5,output=F)
 
+##' @importFrom mltools empirical_cdf
 ##' @export compare.RT.CDF
 ##' 
 #####################################################################################
@@ -56,7 +57,7 @@
 
 
 compare.RT.CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),t.interval=0.5,output=F){
-  library(mltools)
+  #library(mltools)
   
   ## Import trackll (merged) information
   if(is.null(trackll)){
@@ -112,7 +113,7 @@ compare.RT.CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),t.interva
     n<-append(n,length(trackll[[1]]))
     ## Calculate track length and 1-CDF
     trajLength<-sapply(trackll[[1]],function(x){(x$Frame[dim(x)[1]]-x$Frame[1]+1)*t.interval[i]})
-    CDF<-empirical_cdf(trajLength,ubounds=seq(min(t.interval), 2*x.max, by=min(t.interval)))
+    CDF<-mltools::empirical_cdf(trajLength,ubounds=seq(min(t.interval), 2*x.max, by=min(t.interval)))
     one_CDF<-(1-(CDF$CDF))
     ## Plot survival curve
     points(seq(min(t.interval),x.max,by=min(t.interval)),one_CDF[1:(x.max/min(t.interval))],type="l",lwd=4,col=cl[i])

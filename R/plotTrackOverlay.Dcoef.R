@@ -92,9 +92,6 @@
   
   ## Read in nuclei background data if the image folder is provided.
   if(!is.null(folder)){
-    library(lattice)
-    library(latticeExtra)
-    library(grid)
     nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
   }
   
@@ -141,6 +138,7 @@
     plot.new()
     ## If image folder is provided, add nuclei background to the plot.
     if(!is.null(folder)){
+      #library(EBImage)
       img=EBImage::readImage(nuclei.lst[[i]])
       d=img@.Data
       raster.img <- as.raster(t(d[,,1]))

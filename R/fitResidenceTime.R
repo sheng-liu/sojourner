@@ -48,6 +48,7 @@
 ##' # Fit the residence time of trackll
 ##' fitRT(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5)
 
+##' @importFrom mltools empirical_cdf
 ##' @export fitRT
 
 #####################################################################################
@@ -192,9 +193,9 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.125,maxiter.search=1
   
   
   ########## Generate 1-CDF of dwell time (trajectory length) ###############
-  library(mltools)
+  #library(mltools)
   trajLength<-sapply(trackll[[1]],function(x){(x$Frame[dim(x)[1]]-x$Frame[1]+1)*t.interval})
-  CDF<-empirical_cdf(trajLength,ubounds=seq(t.interval, max(trajLength), by=t.interval))
+  CDF<-mltools::empirical_cdf(trajLength,ubounds=seq(t.interval, max(trajLength), by=t.interval))
   P<-(1-(CDF$CDF))
   ## Remove multiple "1" of P values, leaving only one "1" value.
   ## The rest P values will be used for fitting.
