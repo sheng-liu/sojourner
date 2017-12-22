@@ -12,7 +12,7 @@
 ##' @title Fitting Residence time (1-CDF)
 ##' @rdname fitRT-methods
 ##' @docType methods
-##' @description Caclulate average residence time for trajecotries by 
+##' @description Caclulate average residence time for trajecotries by
 ##'              fitting 1-CDF (survival distribution).
 ##'
 ##' @usage
@@ -31,14 +31,14 @@
 ##' @details Calculating average residence time of particles by fitting 1-CDF (survival distribution) of its trajectorys.
 ##'
 ##' Upon running of the function, users will be prompted to input the name of the track list (trackll).
-##' Input processed, merged trackll and the fitting will start right away. 
-##' The maximum time range to be plotted can be set using x.max, this will not change the fitting result. 
+##' Input processed, merged trackll and the fitting will start right away.
+##' The maximum time range to be plotted can be set using x.max, this will not change the fitting result.
 ##' Fitting result is determined by the input trackll, and N.min (filtering of the trackll).
 
 ##'
 ##' @examples
 ##'
-##' # Generate trackll, and process, 
+##' # Generate trackll, and process,
 ##' # e.g. mask region of interest, merge tracks from multiple files.
 ##' folder=system.file("extdata","SWR1",package="smt")
 ##' trackll=createTrackll(interact=F,folder,input=1)
@@ -54,31 +54,31 @@
 #####################################################################################
 
 
-## Function for one component 1-CDF fitting. 
+## Function for one component 1-CDF fitting.
 ## Initial values are not flexible for users, but fitting result is quite consistent.
 .one.comp.fit.rt=function(name,t,P,t.interval=t.interval,start=list(k.s=c(1/600,1/t.interval)),maxiter.optim=1e3){
-  
-  ## Equation for one component 1-CDF fitting. shift the values of time points corresponding to each P value, 
+
+  ## Equation for one component 1-CDF fitting. shift the values of time points corresponding to each P value,
   ##so that the first time point is 0. This would make the fitting more accurate.
   p1 =function(t,k.s){
     exp(-k.s*(t-min(t)))}
-  
+
   title1=paste("One components fit for ",name)
   cat("\n\n","==>",title1,"\n")
-  
+
   # Determine an initial value
-  
+
   k.s=truncnorm::rtruncnorm(1,a=data.frame(start)[1,],b=data.frame(start)[2,])
   # this defaults normal distribution with mean = 0, sd = 1
-  
+
   start=list(k.s=k.s)
-  
+
   # fit equation 1 to data P
-  
+
   ocfit=nls(P ~ p1(t,k.s),start=start,control = nls.control(maxiter = maxiter.optim))
-  
+
   print(ocfit);cat("\n")
-  
+
   ## plot the fitting curve over raw data. Shift the time points back.
   p1.model =function(t,k.s){
     exp(-k.s*t)}
@@ -87,7 +87,7 @@
   ),
   add=T,col="green",lwd=4
   )
-  
+
   return(ocfit)
 }
 
@@ -95,23 +95,23 @@
 ## Initial values are not flexible for users, but fitting result is quite consistent.
 ## There is an option to fix the value of one of the two component k.ns.
 .two.comp.fit.rt=function(name,t,P,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),maxiter.search=1e3,maxiter.optim=1e3,k.ns=FALSE){
-  
-  ## Equation for two component 1-CDF fitting. shift the values of time points corresponding to each P value, 
+
+  ## Equation for two component 1-CDF fitting. shift the values of time points corresponding to each P value,
   ##so that the first time point is 0. This would make the fitting more accurate.
   p3 =function(t,k.s,k.ns,alpha){
     alpha*exp(-k.s*(t-min(t))) + (1-alpha)*exp(-k.ns*(t-min(t)))}
-  
+
   title2=paste("Two components fit for ",name)
   cat("\n\n","==>",title2,"\n")
-  
+
   #cat("\nBrute force random search start value...\n\n")
   k.search.tcfit=nls2::nls2(P ~ p3(t,k.s,k.ns,alpha),start=data.frame(start),
                             # algorithm="brute-force",
                             algorithm="random-search",
                             control = nls.control(maxiter = maxiter.search))
-  
+
   print(coef(k.search.tcfit))
-  
+
   ## Local optimization using nlsLM.
   cat("\nLocal optimization...\n\n")
   if(k.ns==FALSE){
@@ -127,9 +127,9 @@
                             lower=c(0,k.ns,0),
                             upper=c(Inf,k.ns,1))
   }
-  
+
   print(tcfit);cat("\n")
-  
+
   ## Plot the fitting curve over raw data. Shift the time points back.
   p3.model =function(t,k.s,k.ns,alpha){
     alpha*exp(-k.s*t) + (1-alpha)*exp(-k.ns*t)}
@@ -161,7 +161,7 @@
   }
   legend("bottomright",legend=result.text,pch=NULL,y.intersp=0.3,x.intersp=0.3,bty="n",cex=1.5)
   par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=FALSE)
-  
+
   return(tcfit)
 }
 
@@ -169,9 +169,9 @@
 ## Master function for residence time (1-CDF) fitting.
 fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.125,maxiter.search=1e3,
                maxiter.optim=1e3,k.ns=FALSE){
-  
-  #library(smt)  
-  
+
+  #library(smt)
+
   ############ Get trajectory information####################
   if(is.null(trackll)){
     trackll.label<-readline(cat("Enter the trackll you want to fit:    "))
@@ -189,8 +189,8 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.125,maxiter.search=1
     filter=c(min=N.min/t.interval,max=Inf)
     trackll<-filterTrack(trackll,filter=filter)
   }
-  
-  
+
+
   ########## Generate 1-CDF of dwell time (trajectory length) ###############
   library(mltools)
   trajLength<-sapply(trackll[[1]],function(x){(x$Frame[dim(x)[1]]-x$Frame[1]+1)*t.interval})
@@ -211,13 +211,13 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.125,maxiter.search=1
   }else{
     t.fit<-seq(t.interval,max(trajLength),by=t.interval)
   }
-  
+
   ##### Plot raw data ###############
   par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=FALSE)
   par(mfrow=c(1,1),bg="white",fg="black")
   plot(t.plot,P[1:length(t.plot)],main=title,xlab="Time (s)",ylab="Uncorrected survival probability (1-CDF)",
        cex.main=1.5,xlim=c(0,x.max),ylim=c(0,max(P)),cex.axis=1.5,cex.lab=1.5,pch=20,cex=1.5)
-  
+
   ###### Fitting and add fitting curves over raw data###############
   result.1=.one.comp.fit.rt(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval)),
                             maxiter.optim=maxiter.optim)
@@ -232,13 +232,13 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.125,maxiter.search=1
                               maxiter.search=maxiter.search,
                               maxiter.optim=maxiter.optim,k.ns=k.ns)
   }
-  
-  
+
+
   ####### Add legend to the plot ##################
   legend("topright",legend=c("Raw data","One component fit","Two component fit"),pch=NA,lty=c(3,1,1),lwd=4,col=c("black","green","red"),cex=1.5,
          y.intersp=0.3,x.intersp=0.3,bty = "n")
   legend("bottomleft",legend=bquote(italic('N'['min']==.(N.min))*' s'),bty = "n")
-  
+
   return(list("One-Component Fit"=result.1,"Two-Component Fit"=result.2))
-  
+
 }

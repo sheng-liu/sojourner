@@ -24,20 +24,20 @@ fitRT(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5)
 }
 }
 \description{
-Caclulate average residence time for trajecotries by 
+Caclulate average residence time for trajecotries by
              fitting 1-CDF (survival distribution).
 }
 \details{
 Calculating average residence time of particles by fitting 1-CDF (survival distribution) of its trajectorys.
 
 Upon running of the function, users will be prompted to input the name of the track list (trackll).
-Input processed, merged trackll and the fitting will start right away. 
-The maximum time range to be plotted can be set using x.max, this will not change the fitting result. 
+Input processed, merged trackll and the fitting will start right away.
+The maximum time range to be plotted can be set using x.max, this will not change the fitting result.
 Fitting result is determined by the input trackll, and N.min (filtering of the trackll).
 }
 \examples{
 
-# Generate trackll, and process, 
+# Generate trackll, and process,
 # e.g. mask region of interest, merge tracks from multiple files.
 folder=system.file("extdata","SWR1",package="smt")
 trackll=createTrackll(interact=F,folder,input=1)

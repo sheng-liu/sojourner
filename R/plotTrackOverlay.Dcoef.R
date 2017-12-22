@@ -11,9 +11,9 @@
 ##' @title plotTrackOverlay.Dcoef
 ##' @rdname plotTrackOverlay.Dcoef-methods
 ##' @docType methods
-##' @description Plot track/trajectory overlays from a list of files in a folder with color coded 
-##'              by the Diffusion Coefficient (Dcoef) of each track/trajectory. 
-##'              
+##' @description Plot track/trajectory overlays from a list of files in a folder with color coded
+##'              by the Diffusion Coefficient (Dcoef) of each track/trajectory.
+##'
 ##' @usage
 ##'
 ##' plotTrackOverlay.Dcoef(scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
@@ -34,23 +34,23 @@
 ##' \itemize{
 ##' \item{PDF:} One PDF file with one plot on each page.
 ##' }
-##' @details Plot track/trajectory overlays from a list of files in a folder with color coded 
+##' @details Plot track/trajectory overlays from a list of files in a folder with color coded
 ##'          by the Diffusion Coefficient (Dcoef) of each track/trajectory. The range of Dcoef can be defined. Nuclei backgrounds can be added to the plots.
 ##'          Tracks from each file will be plot in one plot, i.e., one plot per file. Colors are flexible.
-##'              
+##'
 ##'          Upon running of the function, users will be prompted to input the name of the track list (trackll).
-##'          Input un-merged trackll and the plotting will start. 
+##'          Input un-merged trackll and the plotting will start.
 ##'          The Dcoef is calculated by "static" method, which stabilizes the number of time lags used for fitting using time lag 2~ 5 despite the total time lags measured.
 
 ##'
 ##' @examples
 ##'
-##' # Generate trackll, and process, 
+##' # Generate trackll, and process,
 ##' # e.g. mask region of interest, tracks from multiple files should not be merged.
 ##' folder=system.file("extdata","SWR1",package="smt")
 ##' trackll=createTrackll(interact=F,folder,input=1)
 ##' trackll=maskTracks(folder,trackll)
-##' 
+##'
 ##' # Plot track overlays,
 ##' plotTrackOverlay.Dcoef(scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
 ##'                t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
@@ -71,25 +71,25 @@
   if (length(file.No)>1&min(file.No)==0){
     stop("Wrong file.No input. Ceased.",call. = FALSE, domain = NULL)
   }
-  
+
   trackll.label<-readline(cat("Enter the un-merged trackll you want to plot:    "))
   trackll<-get(paste(trackll.label))
-  
+
   if (length(file.No)>=1&file.No[1]>0){
     trackll<-trackll[file.No]
   }
-  
+
   trackll<-filterTrack(trackll,filter=c(min=dt+1,max=Inf))
   trackll<-filterTrack(trackll,filter=filter)
-  
+
   ## Set plot area as black background and white frontground.
   oldpar <- par
   par(mar=c(3, 4, 4, 4),xpd=FALSE)
-  
+
   par(mfrow=c(1,1),bg="black",fg="white")
-  
+
   cat("Plotting...A PDF file will be output in the working directory.\n")
-  
+
   ## Read in nuclei background data if the image folder is provided.
   if(!is.null(folder)){
     library(lattice)
@@ -97,25 +97,25 @@
     library(grid)
     nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
   }
-  
+
   ## Generate color gradient/ramp for trajectory plotting.
   #cl=grDevices::heat.colors(ceiling(max(Dcoef)-min(Dcoef))*10)
   #cl=rev(cl)
   #cl=colorspace::diverge_hsv(max(dense))
   #cl=colorspace::diverge_hcl(max(dense))
   cl <- colorRampPalette(color)(n = 101)
-  
+
   #Get trackl information in the un-merged trackll and filter by Dcoef range and rsquare.
   for (i in c(1:length(trackll))){
 
     x=(2:5)*t.interval
     dimension=2
     trackl=list()
-    
+
     for (j in c(1:length(trackll[[i]]))){
       track=trackll[[i]][[j]]
       msd.n=msd.track(track, dt=dt, at.dt=F)
-      
+
       fit=lm(msd.n[2:5]~x)
       MSDslope=coefficients(fit)[2]/(2*dimension)
       Log.D.coef=log(MSDslope)
@@ -124,7 +124,7 @@
       trackl[[j]]=list(track,Log.D.coef,MSDcorr)
     }
     #trackl=trackl[-which(sapply(trackl, is.null))]
-    
+
     Dcoef=sapply(trackl,function(x){x[[2]]})
     Dcoef[!is.finite(Dcoef)] <- NA
     trackl=trackl[which(sapply(Dcoef, !is.na))]
@@ -134,9 +134,9 @@
     trackl=trackl[which(Dcoef<=(Dcoef.range[2]))]
     Rsquare=sapply(trackl,function(x){x[[3]]})
     trackl=trackl[which(sapply(Rsquare, function(x){x>=rsquare}))]
-    
+
     Dcoef=sapply(trackl,function(x){x[[2]]})
-    
+
     ## Plot trackoverlay for each file (trackl) in the un-merged trackll.
     plot.new()
     ## If image folder is provided, add nuclei background to the plot.
@@ -147,8 +147,8 @@
       plot.window(xlim=c(0,scale),ylim=c(0,scale),xaxs = "i", yaxs = "i")
       plot(raster.img,add = TRUE)
     }
-    mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=2,col.main="white") 
-    
+    mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=2,col.main="white")
+
     ## Rescale the plotting area with resolution, changing the units from pixel to um.
     plot.window(xlim=c(0,scale*resolution),ylim=c(0,scale*resolution),xaxs = "i", yaxs = "i")
     axis(1,cex.axis=1,col.axis="white")
@@ -159,24 +159,24 @@
     for(k in c(1:length(trackl))){
       lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*resolution,
             col=cl[(Dcoef[k]-min(Dcoef))/(max(Dcoef)-min(Dcoef))*100+1],lwd=0.05)
-      
+
     }
-    
+
     ## Add color gradient legend to the right edge of each plot.
     .legend.col(col = cl, lev = Dcoef)
-    
+
     ## Add parameters and track number (n) as text legend to the topright corner of each plot.
-    legend=c(paste("dt = ",dt),as.expression(bquote('Rsquare'>=.(rsquare))), 
+    legend=c(paste("dt = ",dt),as.expression(bquote('Rsquare'>=.(rsquare))),
              paste("n = ",length(Dcoef)),paste('Dcoef range [',Dcoef.range[1],",",Dcoef.range[2],"]"))
-    
+
     temp <- legend("topright", legend = c(" ", " "," "," "),
                    text.width = strwidth("Rsquare>=0.8"),
                    xjust = 1, yjust = 1,bty="n",cex=2)
     text(temp$rect$left + temp$rect$w, temp$text$y,
          legend,col="white",pos = 2,cex=2)
-    
+
   }
-  
+
   ## Reset plotting area parameters.
   par(oldpar)
   par(mfrow=c(1,1),bg="white",fg="black")
@@ -184,32 +184,32 @@
 
 
 ## Function for adding color gradient legend.
-## Refernce: by Aur?lien. 
+## Refernce: by Aur?lien.
 ## From: https://aurelienmadouasse.wordpress.com/2012/01/13/legend-for-a-continuous-color-scale-in-r/
 .legend.col <- function(col, lev){
-  
+
   opar <- par
-  
+
   n <- length(col)
-  
+
   bx <- par("usr")
-  
+
   box.cx <- c(bx[2] + (bx[2] - bx[1]) / 1000,
               bx[2] + (bx[2] - bx[1]) / 1000 + (bx[2] - bx[1]) / 50)
   box.cy <- c(bx[3], bx[3])
   box.sy <- (bx[4] - bx[3]) / n
-  
+
   xx <- rep(box.cx, each = 2)
-  
+
   par(xpd = TRUE)
   for(i in 1:n){
-    
+
     yy <- c(box.cy[1] + (box.sy * (i - 1)),
             box.cy[1] + (box.sy * (i)),
             box.cy[1] + (box.sy * (i)),
             box.cy[1] + (box.sy * (i - 1)))
     polygon(xx, yy, col = col[i], border = col[i])
-    
+
   }
   par(new = TRUE)
   plot(0, 0, type = "n",
@@ -231,11 +231,9 @@ plotTrackOverlay.Dcoef<-function(scale=128,dt=6,filter=c(min=7,max=Inf),resoluti
   pdf(paste("plotTrackOverlay.Dcoef.Heatmap--",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
 
   .plotTrackOverlay.Dcoef(scale=scale,dt=dt,filter=filter,resolution=resolution,rsquare=rsquare,
-                  t.interval=t.interval,Dcoef.range=Dcoef.range,color=color, 
+                  t.interval=t.interval,Dcoef.range=Dcoef.range,color=color,
                   folder=folder,file.No=file.No)
-  
+
   dev.off()
-  
+
 }
-
-

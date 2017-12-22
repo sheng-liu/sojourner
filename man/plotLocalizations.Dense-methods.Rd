@@ -23,13 +23,13 @@ plotLocalizations.Dense(scale=256,r=125,file.No=0,point.scale=0.15)
 }
 }
 \description{
-Plot localization map of molecules from a list of files in a folder with color coded 
+Plot localization map of molecules from a list of files in a folder with color coded
              by local density of each molecule.
 }
 \details{
-Plot localization map of molecules from a list of files in a folder with color coded 
-             by local density of each molecule. The localization of molecule is considered as the first position of its track. 
-             
+Plot localization map of molecules from a list of files in a folder with color coded
+             by local density of each molecule. The localization of molecule is considered as the first position of its track.
+
          Upon running of the function, users will be prompted to input the name of the track list (trackll).
          Input un-merged trackll and the plotting will start.
          The local density of each molecule is calculated by counting the number of molecules within a given radius
@@ -37,7 +37,7 @@ Plot localization map of molecules from a list of files in a folder with color c
 }
 \examples{
 
-# Generate trackll, and process, 
+# Generate trackll, and process,
 # e.g. mask region of interest, tracks from multiple files should not be merged.
 folder=system.file("extdata","SWR1",package="smt")
 trackll=createTrackll(interact=F,folder,input=1)
