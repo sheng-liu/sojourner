@@ -33,12 +33,12 @@ Compare Residence time/Survival Curve of multiple trackll. Or simply plot the su
 
 Upon running of the function, users will be prompted to input the number of the track list (trackll) to compare/plot.
 Then users will be prompted to input the name and acquisition time interval of each trackll. The trackll should be masked and merged.
-The maximum time range to be plotted can be set using x.max, this will not change the curve/probabiltiy, 
+The maximum time range to be plotted can be set using x.max, this will not change the curve/probabiltiy,
 which is determined by all track information in the trackll.
 }
 \examples{
 
-# Generate trackll, and process, 
+# Generate trackll, and process,
 # e.g. mask region of interest, merge tracks from multiple files.
 folder=system.file("extdata","SWR1",package="smt")
 trackll=createTrackll(interact=F,folder,input=1)

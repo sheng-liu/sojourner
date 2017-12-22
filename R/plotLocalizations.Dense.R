@@ -45,9 +45,7 @@
 ##' 
 ##' # Plot localization map,
 ##' plotLocalizations.Dense(scale=256,r=125,file.No=0,point.scale=0.15)
-
-##' @importFrom sp coordinates
-##' @importFrom sp over
+##' 
 ##' @importFrom sampSurf spCircle
 ##' @export plotLocalizations.Dense
 
