@@ -5,12 +5,12 @@
 \alias{combineTrackll}
 \title{combineTrackll}
 \usage{
-combineTrackll(total=2,merged=T)
+combineTrackll(trackll=c(trackll1,trackll2),merged=T)
 }
 \arguments{
-\item{total}{The number of tracklls to combine.}
-
 \item{merged}{An Logical indicate if the tracklls to combine are merged or not.}
+
+\item{total}{The number of tracklls to combine.}
 }
 \value{
 \itemize{
@@ -22,26 +22,25 @@ Combine multiple tracklls into one trackll.
 }
 \details{
 Combine multiple track listw (tracklls) from multiple folders into one trackll, i.e. combining track infomation
-         from files in multiple folders (replicates) together as if they are in one folder. The tracklls
+         from files in multiple folders (replicates) together as if they are in one folder. The tracklls can be
          either merged or un-merged.
-
-         Users will be prompted to input the name of each trackll to combine.
-         If the combined tracklls are merged, users will also be prompted to input a combined attribute name for the combined trackll.
+         
+         If the combined tracklls are merged, users will be prompted to input a combined attribute name for the combined trackll.
 }
 \examples{
 
-# Generate trackll, and process,
+# Generate trackll, and process, 
 # e.g. mask region of interest, merge tracks from multiple files.
-folder1=system.file("extdata","SWR1",package="smt")
-trackll1=createTrackll(interact=F,folder1,input=1)
-trackll1=maskTracks(folder1,trackll)
-trackll1=mergeTracks(folder1,trackll)
+folder1=system.file("extdata","HSF",package="smt")
+trackll1=createTrackll(interact=F,folder1,input=2)
+trackll1=maskTracks(folder1,trackll1)
+trackll1=mergeTracks(folder1,trackll1)
 
-folder2=system.file("extdata","SWR1_2",package="smt")
-trackll2=createTrackll(interact=F,folder2,input=1)
-trackll2=maskTracks(folder2,trackll)
-trackll2=mergeTracks(folder2,trackll)
+folder2=system.file("extdata","HSF_2",package="smt")
+trackll2=createTrackll(interact=F,folder2,input=2)
+trackll2=maskTracks(folder2,trackll2)
+trackll2=mergeTracks(folder2,trackll2)
 
 # Combine the tracklls together, input trackll names when prompted,
-trackll=combineTrackll(total=2,merged=T)
+trackll=combineTrackll(trackll=c(trackll1,trackll2),merged=T)
 }

@@ -19,31 +19,30 @@ fitRT(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5)
 }
 \value{
 \itemize{
-\item{On the Console output:} Result and parameters of goodness of the fit.
+\item{On the Console output:} Result of both one and two-component fit and parameters of goodness of the fit.
 \item{Plot:} fitting curves will be plotted over the raw data, with the result of two-component fitting shown in the plot area.
 }
 }
 \description{
-Caclulate average residence time for trajecotries by
+Caclulate average residence time for trajecotries by 
              fitting 1-CDF (survival distribution).
 }
 \details{
 Calculating average residence time of particles by fitting 1-CDF (survival distribution) of its trajectorys.
 
-Upon running of the function, users will be prompted to input the name of the track list (trackll).
-Input processed, merged trackll and the fitting will start right away.
-The maximum time range to be plotted can be set using x.max, this will not change the fitting result.
+Input track list (trackll) should be processed, merged trackll, the fitting will start right away after running the function. 
+The maximum time range to be plotted can be set using x.max, this will not change the fitting result. The result of two-component fit will be shown on the plot as well as in the console.
 Fitting result is determined by the input trackll, and N.min (filtering of the trackll).
 }
 \examples{
 
-# Generate trackll, and process,
+# Generate trackll, and process, 
 # e.g. mask region of interest, merge tracks from multiple files.
-folder=system.file("extdata","SWR1",package="smt")
-trackll=createTrackll(interact=F,folder,input=1)
+folder=system.file("extdata","HSF",package="smt")
+trackll=createTrackll(interact=F,folder,input=2)
 trackll=maskTracks(folder,trackll)
 trackll=mergeTracks(folder,trackll)
 
 # Fit the residence time of trackll
-fitRT(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5)
+fitRT(trackll=trackll,x.max=30,N.min=1.5,t.interval=0.5)
 }
