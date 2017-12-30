@@ -155,12 +155,105 @@ maskTracks=function(folder, trackll){
     
     
     for (i in 1:length(trackll)){
+        
+        ## Finds all track centers
         track.center=trackCenter(trackll)[[i]]
+        
+        ## Returns all positive mask pixel locations
         pos.point=maskPoint(maskl[[i]],plot=F)
+        
+        ## Filters all positive track centers
         mask.track.index[[i]]=posTracks(track.center,pos.point)
         
+        ## Collects track indexes to keep 
         index=rownames(mask.track.index[[i]])
         
+        ## Filters only such indexes in the raw trackll[i]
+        masked.tracks[[i]]=lapply(trackll[i],function(x){x[as.numeric(index)]})[[1]]
+        
+    }
+    cat("\nAll files masked.\n")
+    return(masked.tracks)
+}
+
+maskTracksIndexed=function(folder, trackll, max.pixel = 128){
+    
+    # read in mask
+    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
+    
+    if (length(maskl)==0){
+        cat("No image mask file ending '_MASK.tif' found.\n")
+        
+    }
+    
+    if (length(maskl) > length(trackll)){
+        stop("More masks than trackl.\n")
+    }
+    # make mask list and trackll one-to-one, delete extra trackl
+    maskl.check = list()
+    maskl.names = gsub("_MASK.tif","",basename(maskl))
+    trackll.names = gsub("[.].*","",names(trackll))
+    for (i in 1:length(trackll.names)) {
+        found = FALSE
+        for (j in 1:length(maskl.names)) {
+            if (trackll.names[[i]] == maskl.names[[j]]) {
+                maskl.check[[length(maskl.check)+1]] = maskl[j]
+                found = TRUE
+                break
+            }
+        }
+        if (!found) {
+            cat(paste(names(trackll)[[i]], "mask not found. Trackl deleted from masked output.\n", sep = " "))
+            trackll[[i]] <- NULL
+        }
+    }
+    maskl = maskl.check
+    
+    
+    
+    mask.track.index=list()
+    length(mask.track.index)=length(trackll)
+    names(mask.track.index)=names(trackll)
+    
+    masked.tracks=list()
+    length(masked.tracks)=length(trackll)
+    names(masked.tracks)=names(trackll)
+    
+    
+    for (i in 1:length(trackll)){
+        
+        ## Finds all track centers
+        track.center=trackCenter(trackll)[[i]]
+        
+        ## Returns all positive mask pixel locations
+        pos.point=maskPoint(maskl[[i]],plot=F)
+        
+        #Instantiate empty
+        binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)
+        
+        #Fill with binary pospoints
+        for (i in 1:nrow(pos.point)){
+            binary.mat[pos.point[[1]][[i]], pos.point[[2]][[i]]] = 1
+        }
+        
+        labeled.mat <- SDMTools::ConnCompLabel(indexed.mat)
+        
+        #FOR VISUALIZING THE LABALED MASK
+        # image(t(labeled.mat[128:1,]),col=c('grey',rainbow(length(unique(ccl.mat))-1)))
+
+        
+        
+        
+        
+        
+        
+        ## Filters all positive track centers
+        mask.track.index[[i]]=posTracks(track.center,pos.point)
+        
+        ## Collects track indexes to keep 
+        index=rownames(mask.track.index[[i]])
+        
+        ## Filters only such indexes in the raw trackll[i]
         masked.tracks[[i]]=lapply(trackll[i],function(x){x[as.numeric(index)]})[[1]]
         
     }
