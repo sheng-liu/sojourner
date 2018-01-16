@@ -99,12 +99,15 @@
     ## Get the localization of each track (molecule) as the first position of the track.
     localizations<-data.frame(matrix(ncol = 3, nrow = 0))
     for (j in c(1:length(trackll[[i]]))){
-      localizations<-rbind(localizations,setNames(data.frame(paste0(names(trackll[[i]][j])),trackll[[i]][[j]]$x[[1]]*0.107,trackll[[i]][[j]]$y[[1]]*0.107), c("Trajectory","a", "b")))
+      localizations<-rbind(localizations,setNames(
+          data.frame(paste0(names(trackll[[i]][j])),
+            trackll[[i]][[j]]$x[[1]]*0.107,trackll[[i]][[j]]$y[[1]]*0.107), c("Trajectory","x", "y")))
     }
     ## Calculate local molecule density by counting the molecule number within a given radius.
-    sp::coordinates(localizations) <- c("a", "b")
-    for (k in c(1:length(localizations$a))){
-      sp.n = sampSurf::spCircle(r/1000, centerPoint=c(x=localizations[k,]$a, y=localizations[k,]$b), spID='tree.1') 
+    sp::coordinates(localizations) <- c("x", "y")
+    for (k in c(1:length(localizations$x))){
+        z=c(localizations[k,]$x,localizations[k,]$y)
+      sp.n = sampSurf::spCircle(r/1000, centerPoint=z, spID='tree.1') 
       count.n <- sp::over(localizations, sp.n$spCircle)
       localizations$density[k]=sum(count.n,na.rm = T)
     }
@@ -116,8 +119,8 @@
     cl <- colorRampPalette(c("blue4", "white", "red"))(n = max(localizations$density))
     
     ## plot the molecules as dots color coded by it's local density.
-    for(i in c(1:length(localizations$a))){
-      points(localizations[i,]$a,localizations[i,]$b,pch=16,col=cl[localizations[i,]$density],cex=point.scale)
+    for(i in c(1:length(localizations$x))){
+      points(localizations[i,]$x,localizations[i,]$y,pch=16,col=cl[localizations[i,]$density],cex=point.scale)
     }
     ## Add color gradient legend to the right edge of each plot.
     .legend.col(col = cl, lev = localizations$density)
