@@ -102,6 +102,9 @@ posTracks=function(track.center,pos.point){
     # convert list to data.frame
     track.center.df=do.call(rbind.data.frame,track.center)
     names(track.center.df)=c("x","y","z", "Frame")
+    
+    # change rownames to number to avoid PC mac difference in rowname when do.call rbind
+    rownames(track.center.df)=seq(1,dim(track.center.df)[1])
     pos.tracks=plyr::match_df(track.center.df,pos.point,on=c("x","y"))
     return(pos.tracks)
     
