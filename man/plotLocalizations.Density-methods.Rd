@@ -47,6 +47,7 @@ trackll=maskTracks(folder,trackll)
 
 # Plot localization map,
 plotLocalizations.Density(trackll=trackll,scale=128,r=125,file.No=0,point.scale=0.3)
+# Plot only file No. 2 and increase the point size,
 plotLocalizations.Density(trackll=trackll,scale=128,r=125,file.No=2,point.scale=1)
 
 }
