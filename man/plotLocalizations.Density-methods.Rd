@@ -13,7 +13,7 @@ plotLocalizations.Density(trackll=trackll,scale=256,r=125,file.No=0,point.scale=
 
 \item{scale}{The pixel scale of image data.}
 
-\item{r}{Radius within each molecule to calculate density.}
+\item{r}{Radius within each molecule to calculate density in nano meter (nm).}
 
 \item{file.No}{Select file(s) in the folder to plot. Default 0 for plotting all files in the folder.}
 
@@ -42,7 +42,7 @@ Plot localization map of molecules from a list of files in a folder with color c
 # Generate trackll, and process, 
 # e.g. mask region of interest, tracks from multiple files should not be merged.
 folder=system.file("extdata","HSF",package="smt")
-trackll=createTrackll(interact=F,folder,input=2)
+trackll=createTrackll(interact=F,folder,input=2, cores = 2)
 trackll=maskTracks(folder,trackll)
 
 # Plot localization map,
