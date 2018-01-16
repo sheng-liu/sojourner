@@ -106,8 +106,10 @@
     ## Calculate local molecule density by counting the molecule number within a given radius.
     sp::coordinates(localizations) <- c("x", "y")
     for (k in c(1:length(localizations$x))){
-        z=c(localizations[k,]$x,localizations[k,]$y)
-      sp.n = sampSurf::spCircle(r/1000, centerPoint=z, spID='tree.1') 
+        ## Generate a named vector "cp" to make this loop work in both Mac and PC version of R.
+        cp=c(localizations[k,]$x,localizations[k,]$y)
+        names(cp)=c("x","y")
+      sp.n = sampSurf::spCircle(r/1000, centerPoint=cp, spID='tree.1') 
       count.n <- sp::over(localizations, sp.n$spCircle)
       localizations$density[k]=sum(count.n,na.rm = T)
     }
