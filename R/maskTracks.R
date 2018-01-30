@@ -239,14 +239,15 @@ maskTracksIndexed=function(folder, trackll, max.pixel = 128){
             binary.mat[pos.point[[1]][[i]], pos.point[[2]][[i]]] = 1
         }
         
-        labeled.mat <- SDMTools::ConnCompLabel(indexed.mat)
+        labeled.mat <- SDMTools::ConnCompLabel(binary.mat)
         
         #FOR VISUALIZING THE LABALED MASK
-        # image(t(labeled.mat[128:1,]),col=c('grey',rainbow(length(unique(ccl.mat))-1)))
+        #image(t(labeled.mat[128:1,]),col=c('grey',rainbow(length(unique(labeled.mat))-1)))
 
         
-        
-        
+        for (i in 1:max(labeled.mat)){
+            
+        }
         
         
         
