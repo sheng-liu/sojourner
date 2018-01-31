@@ -12,7 +12,7 @@
 ##'   summarize on trajectories.
 
 ##' @usage msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F)
-##' @param dt Time intervals.
+##' @param dt Time intervals. Default 6. 
 ##' @param resolution ratio of pixel to µM.
 ##' @param trackll Track list output from readDiatrack().
 ##' @param summarize An logical indicate if MSD should be calculated on

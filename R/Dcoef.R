@@ -15,7 +15,7 @@
 ##'        plot=F,output=F,t.interval=0.01,profile=NULL)
 ##' @param MSD Mean Square Displacement calculated using msd() function. Either MSD or trackll can be passed into Dcoef for calculation of diffusion coefficient.
 ##' @param trackll Track list output from readDiatrack().
-##' @param dt Time intervals.
+##' @param dt Time intervals. Default 6.
 ##' @param filter a vector specifies the minimum and max length of trajecotries
 ##'   to be analyzed. Take only trajectories that has number of frames greater
 ##'   than (>=) min and less than (<) max.
