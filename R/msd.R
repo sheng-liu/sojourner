@@ -11,8 +11,11 @@
 ##' @description calculate mean square displacement for individual trajectory or
 ##'   summarize on trajectories.
 
+##' @usage
+##'   msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F)
+##' @param dt Time intervals. Default 6.
 ##' @usage msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F)
-##' @param dt Time intervals.
+##' @param dt Time intervals. Default 6. 
 ##' @param resolution ratio of pixel to µM.
 ##' @param trackll Track list output from readDiatrack().
 ##' @param summarize An logical indicate if MSD should be calculated on
@@ -27,10 +30,8 @@
 ##'   detail.
 ##' @param output An logical indicate if output should be generated. See Values
 ##'   for detail.
-##' @return
-##' \itemize{
-##' \item{SummarizedMSD} MSD summarized over all trajectories as a function of
-##' dt.
+##' @return \itemize{ \item{SummarizedMSD} MSD summarized over all trajectories
+##' as a function of dt.
 ##'
 ##' \item{InidvidualMSD} MSD of individual trajectories at specified dt. Row
 ##' number corresponding to its dt. Notice only the trajectories that satisfies
@@ -44,6 +45,9 @@
 ##'
 ##' \item{SampleSize} The sample size (number of tracks/trajectories) used for
 ##' calculating the msd and standard error.
+##'
+##' \item{Trackll} The msd function also returns the processed trackll. If passed
+##' to a variable, one can then export the trackll with this variable.
 ##' }
 
 

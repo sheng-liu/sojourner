@@ -9,7 +9,7 @@
 msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F)
 }
 \arguments{
-\item{dt}{Time intervals.}
+\item{dt}{Time intervals. Default 6.}
 
 \item{resolution}{ratio of pixel to µM.}
 
@@ -33,9 +33,8 @@ detail.}
 for detail.}
 }
 \value{
-\itemize{
-\item{SummarizedMSD} MSD summarized over all trajectories as a function of
-dt.
+\itemize{ \item{SummarizedMSD} MSD summarized over all trajectories
+as a function of dt.
 
 \item{InidvidualMSD} MSD of individual trajectories at specified dt. Row
 number corresponding to its dt. Notice only the trajectories that satisfies
@@ -49,6 +48,9 @@ SE=SD/sqrt(N).
 
 \item{SampleSize} The sample size (number of tracks/trajectories) used for
 calculating the msd and standard error.
+
+\item{Trackll} The msd function also returns the processed trackll. If passed
+to a variable, one can then export the trackll with this variable.
 }
 }
 \description{

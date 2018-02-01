@@ -14,7 +14,7 @@ Dcoef( MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,resolution
 
 \item{trackll}{Track list output from readDiatrack().}
 
-\item{dt}{Time intervals.}
+\item{dt}{Time intervals. Default 6.}
 
 \item{filter}{a vector specifies the minimum and max length of trajecotries
 to be analyzed. Take only trajectories that has number of frames greater
