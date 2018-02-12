@@ -13,6 +13,8 @@ msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F)
 
 \item{resolution}{ratio of pixel to µM.}
 
+\item{dt}{Time intervals. Default 6.}
+
 \item{trackll}{Track list output from readDiatrack().}
 
 \item{summarize}{An logical indicate if MSD should be calculated on

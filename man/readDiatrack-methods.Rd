@@ -35,9 +35,9 @@ the absolute coordinates trajectory has moved
 
 trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
 
-This "indexPerFile" is the index within a diatrackFile.
+This "indexPerFile" is the index within a diatrackFile, which translate to "index per movie".
 
-This "indexPerTrackll" is the index within a trackll, which is unique.
+This "indexPerTrackll" is a unique index within a trackll, which can be translated to "index per folder".
 }
 \examples{
 folder=system.file("extdata","SWR1",package="smt")
