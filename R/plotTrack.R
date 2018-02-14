@@ -14,19 +14,19 @@
 ##' @usage
 ##'
 ##' plotTrack(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,
-##'           frame.start=1,frame.end=500)
+##' frame.start=1,frame.end=500)
 ##'
 ##' plotTrackFromIndex(index.file, movie.folder=c(folder1,folder2,...),
-##'                    resolution=0.107,frame.min=1,frame.max=100,
-##'                    frame.start=1,frame.end=500,input=0)
+##' resolution=0.107,frame.min=1,frame.max=100,
+##' frame.start=1,frame.end=500,input=0)
 ##'
 ##' plotTrackOverlay(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
 ##' plotNucTrackOverlay(folder,trackll=NULL,mask=F,cores=1,
-##'                     max.pixel=128,nrow=2,ncol=2,width=16,height=16)
+##' max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
 ##' plotComponentTrackOverlay(folder,trackll.sel=NULL,
-##'                     max.pixel=128,nrow=2,ncol=2,width=16,height=16)
+##' max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
 ##' plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
@@ -51,7 +51,9 @@
 ##' @param height Height of the page for plotting.
 ##' @param trackll.sel Selected component trajectory output by
 ##'   selComponentTracks().
-##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).
+##'
+##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session
+##'   file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).
 
 ##' @return
 ##' \itemize{
@@ -59,6 +61,10 @@
 ##' \item{PDF} One PDF file with all the frames satisfy the creteria. If trackll
 ##' has multiple items, it ouptus mutiple PDF files each corresponding to one
 ##' item.
+##'
+##' \item{csv} Outputs csv file of the coordiantes of the trajectory, which
+##' users can use other plotting software (e.g. Prism or Excel) to plot tracks
+##' in their favor.
 
 ##' }
 ##' @details
@@ -339,7 +345,7 @@ plotTrackFromIndex=function(index.file, movie.folder=c(folder1,folder2,...),reso
 
 }
 
-
+# return(trackll.plot)
 ##------------------------------------------------------------------------------
 ##
 
