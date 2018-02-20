@@ -44,8 +44,8 @@
 ##' Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
 
 ##' @export maskTracks
-##' @export indexMaskedNuc
-##' @export filterCells
+##' @export indexCell
+##' @export filterOnCell
 ##' @export sampleTracks
 
 ##------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ maskTracks=function(folder, trackll){
     return(masked.tracks)
 }
 
-indexMaskedNuc=function(folder, trackll, max.pixel = 128){
+indexCell=function(folder, trackll, max.pixel = 128){
     
     # Read in mask
     maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
@@ -284,7 +284,7 @@ indexMaskedNuc=function(folder, trackll, max.pixel = 128){
     return(masked.trackll)
 }
 
-filterCells=function(trackll, numTracks = 0){
+filterOnCell=function(trackll, numTracks = 0){
     if (numTracks == 0) {
         cat("\nEnter a lower limit for number of tracks.\n")
     } else {
@@ -300,10 +300,13 @@ filterCells=function(trackll, numTracks = 0){
     return(trackll)
 }
 
-sampleTracks = function(trackll, proportion = 1){
-    for (i in 1:length(trackll)){
-        p = as.integer(length(trackll[[i]]) * proportion)
-        trackll[[i]] <- sample(trackll[[i]], p)
+sampleTracks = function(trackll, num = 0){
+    if (num == 0) {
+        cat("\nEnter sample size.\n")
+    } else {
+        for (i in 1:length(trackll)){
+            trackll[[i]] <- sample(trackll[[i]], num)
+        }
+        return(trackll)
     }
-    return(trackll)
 }

@@ -62,6 +62,7 @@
 ##' @importFrom dplyr bind_rows
 ##' @importFrom dplyr select
 ##' @importFrom dplyr lag
+##' @importFrom dplyr one_of
 ##' 
 ##' 
 ##' @importFrom MASS kde2d
