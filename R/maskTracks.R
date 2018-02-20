@@ -44,6 +44,9 @@
 ##' Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
 
 ##' @export maskTracks
+##' @export indexMaskedNuc
+##' @export filterCells
+##' @export sampleTracks
 
 ##------------------------------------------------------------------------------
 ##
@@ -146,8 +149,6 @@ maskTracks=function(folder, trackll){
     }
     maskl = maskl.check
     
-    
-    
     mask.track.index=list()
     length(mask.track.index)=length(trackll)
     names(mask.track.index)=names(trackll)
@@ -155,7 +156,6 @@ maskTracks=function(folder, trackll){
     masked.tracks=list()
     length(masked.tracks)=length(trackll)
     names(masked.tracks)=names(trackll)
-    
     
     for (i in 1:length(trackll)){
         
@@ -179,9 +179,9 @@ maskTracks=function(folder, trackll){
     return(masked.tracks)
 }
 
-IndexMaskedNuc=function(folder, trackll, max.pixel = 128){
+indexMaskedNuc=function(folder, trackll, max.pixel = 128){
     
-    # read in mask
+    # Read in mask
     maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
     
     if (length(maskl)==0){
@@ -192,7 +192,8 @@ IndexMaskedNuc=function(folder, trackll, max.pixel = 128){
     if (length(maskl) > length(trackll)){
         stop("More masks than trackl.\n")
     }
-    # make mask list and trackll one-to-one, delete extra trackl
+
+    # Make mask list and trackll one-to-one and onto, delete extra trackl
     maskl.check = list()
     maskl.names = gsub("_MASK.tif","",basename(maskl))
     trackll.names = gsub("[.].*","",names(trackll))
@@ -212,12 +213,17 @@ IndexMaskedNuc=function(folder, trackll, max.pixel = 128){
     }
     maskl = maskl.check
     
+    # Instantiate new variables
     masked.trackll=list()
     raw.names=names(trackll)
+    cell.count = list()
+    length(cell.count)=length(trackll)
     
+    ## Find all track centers
+    track.center=trackCenter(trackll)
+    
+    # Loop through each trackl
     for (i in 1:length(trackll)){
-        ## Finds all track centers
-        track.center=trackCenter(trackll)[[i]]
         
         ## Returns all positive mask pixel locations
         pos.point=maskPoint(maskl[[i]],plot=F)
@@ -226,48 +232,78 @@ IndexMaskedNuc=function(folder, trackll, max.pixel = 128){
         binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)
         
         #Fill with binary pospoints
-        for (i in 1:nrow(pos.point)){
-            binary.mat[pos.point[[1]][[i]], pos.point[[2]][[i]]] = 1
+        for (m in 1:nrow(pos.point)){
+            binary.mat[pos.point[[1]][[m]], pos.point[[2]][[m]]] = 1
         }
         
+        # Calculate connected components and label accordingly
         labeled.mat <- SDMTools::ConnCompLabel(binary.mat)
         
-        #FOR VISUALIZING THE LABALED MASK
-        #image(t(labeled.mat[128:1,]),col=c('grey',rainbow(length(unique(labeled.mat))-1)))
+        # FOR VISUALIZING THE LABALED MASK
+        # image(t(labeled.mat[128:1,]),col=c('grey',rainbow(length(unique(labeled.mat))-1)))
+        
         pos.points.indexed = list()
         length(pos.points.indexed) = max(labeled.mat)
-        for (i in 1:max(labeled.mat)){
-            pos.points.indexed[i] = list()
-        }
+
+        # Convert labeled.mat to lists of pos.points per cell
         for (j in 1:nrow(pos.point)) {
             pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]] <- rbind( pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]], pos.point[j,])
         }
         
-        ## Good up to here
+        # Update cell count per trackl
+        cell.count[[i]] <- length(pos.points.indexed)
         
-        for (i in 1:max(labeled.mat)){
+        # Loop through each cell
+        for (k in 1:length(pos.points.indexed)){
+            
+            mask.track.index=list()
+            length(mask.track.index)=length(trackll)
+            names(mask.track.index)=names(trackll)
+            
             ## Filters all positive track centers
-            mask.track.index[[i]]=posTracks(track.center,pos.points.indexed[[i]])
+            mask.track.index[[k]]=posTracks(track.center[[i]], pos.points.indexed[[k]])
             
             ## Collects track indexes to keep 
-            index=rownames(mask.track.index[[i]])
+            index=rownames(mask.track.index[[k]])
             
             ## Filters only such indexes in the raw trackll[i]
-            masked.trackll[[i]]=lapply(trackll[i],function(x){x[as.numeric(index)]})[[1]]
+            masked.trackll[[length(masked.trackll)+1]]=lapply(trackll[i],function(x){x[as.numeric(index)]})[[1]]
         }
         
-        
-        
-        ## Filters all positive track centers
-        mask.track.index[[i]]=posTracks(track.center,pos.point)
-        
-        ## Collects track indexes to keep 
-        index=rownames(mask.track.index[[i]])
-        
-        ## Filters only such indexes in the raw trackll[i]
-        masked.tracks[[i]]=lapply(trackll[i],function(x){x[as.numeric(index)]})[[1]]
-        
     }
+
+    # Edit the names with concatenated cell number to trackl names
+    masked.names = list()
+    for (c in 1:length(cell.count)){
+        for (v in 1:cell.count[[c]]){
+            masked.names[[length(masked.names)+1]] <- paste(raw.names[c], toString(v), sep = "_")
+        }
+    }
+    names(masked.trackll) <- masked.names
     cat("\nAll files masked.\n")
-    return(masked.tracks)
+    return(masked.trackll)
+}
+
+filterCells=function(trackll, numTracks = 0){
+    if (numTracks == 0) {
+        cat("\nEnter a lower limit for number of tracks.\n")
+    } else {
+        i = 1
+        while(i != length(trackll)){
+            if (length(trackll[[i]]) < numTracks){
+                trackll[[i]] <- NULL
+            } else {
+                i = i + 1
+            }
+        }
+    }
+    return(trackll)
+}
+
+sampleTracks = function(trackll, proportion = 1){
+    for (i in 1:length(trackll)){
+        p = as.integer(length(trackll[[i]]) * proportion)
+        trackll[[i]] <- sample(trackll[[i]], p)
+    }
+    return(trackll)
 }
