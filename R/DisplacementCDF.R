@@ -9,9 +9,12 @@
 ##' @rdname displacementCDF-methods
 ##' @docType methods
 ##'
-##' @description calculate cumulative distribution function of all displacement for individual trajectories.
+##' @description calculate cumulative distribution function of all displacement
+##'   for individual trajectories.
 
-##' @usage displacementCDF(trackll,dt=6,resolution=0.107,plot=F,output=F)
+##' @usage displacementCDF(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F)
+
+
 ##' @param dt Time intervals.
 ##' @param resolution ratio of pixel to µM.
 ##' @param trackll Track list output from readDiatrack().
@@ -19,17 +22,29 @@
 ##'   detail.
 ##' @param output An logical indicate if output should be generated. See Values
 ##'   for detail.
-##' @details The cumulative radial distribution function, P(r, i△t), is the probability of finding the diffusing particle within a radius r from the origin at time lag i△t:
+##' @param bivar bivar=F, view displacement r as single variable; bivar=T, view
+##'   x,y as bivarate. Default value F.
+##' @details The cumulative radial distribution function, P(r, i△t), is the
+##'   probability of finding the diffusing particle within a radius r from the
+##'   origin at time lag i△t:
 ##'
 ##' P(r,iΔt) = 1− e^(-r^2/4*D*(iΔt))
 ##'
-##' the CDF and UniqueDisplacement in the output file is corresponding to P and r in this formula. If intend to generate the CDF plot from the output file, the CDF and UniqueDisplacement is corresponding to the y and x values in the CDF output plot.
+##' the CDF and UniqueDisplacement in the output file is corresponding to P and
+##' r in this formula. If intend to generate the CDF plot from the output file,
+##' the CDF and UniqueDisplacement is corresponding to the y and x values in the
+##' CDF output plot.
 
 ##' @return
 ##' \itemize{
-##' \item{ list of "stepwise.displacement" and "CDF.displacement",} {A list of stepwise.displacement" and "CDF.displacement". the name of the list is the Diatrack folder name.}
-##'
-##' \item{Output file,} {Displacement of individual trajectoreis at specified dt. The output file is for user to plot in other applications. The column "UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a CDF plot. The distribution of "UniqueDisplacement" is the density plot. }
+##' \item{ list of "stepwise.displacement" and "CDF.displacement",} {A list of
+##' stepwise.displacement" and "CDF.displacement". the name of the list is the
+##' Diatrack folder name.}
+##' 
+##' \item{Output file,} {Displacement of individual trajectoreis at specified
+##' dt. The output file is for user to plot in other applications. The column
+##' "UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a CDF
+##' plot. The distribution of "UniqueDisplacement" is the density plot. }
 ##'
 ##'
 ##' \item{CDF plot,} {CDF plot of displacement for individual files. 
@@ -45,18 +60,23 @@
 
 ##' @export displacementCDF
 
-# do a cdf on single steps ( make step adjustable). already have all the steps, just need a CDF function. for each dt. better have a table of dt as first column, sqrt(square disp) as rows. then one can easily call CDF on this table's rows.
+# do a cdf on single steps ( make step adjustable). already have all the steps,
+# just need a CDF function. for each dt. better have a table of dt as first
+# column, sqrt(square disp) as rows. then one can easily call CDF on this
+# table's rows.
 
 
 # it is of different length at different dt,
-# for each dt for all trajectories, can use a matrix/data.frame as it is of same length, and dt number of such matrix/data.frame
+# for each dt for all trajectories, can use a matrix/data.frame as it is of same
+# length, and dt number of such matrix/data.frame
 
 
 ## calculate displacement for tracks (data.frame)
 ## track, data.frame, xyz
 ## resolution 107nm=1 pixel
 
-# focus only on displacement, however a one step displacement is also a track, for the consistancy in naming, also called displacement.track
+# focus only on displacement, however a one step displacement is also a track,
+# for the consistancy in naming, also called displacement.track
 
 ##------------------------------------------------------------------------------
 ## displacement.track
@@ -71,7 +91,8 @@ displacement.track=function(track,dt=6,resolution=0.107,bivar=F){
              "\nTime interval (dt) greater than track length-1\n")
     }
     # instead of stop, calculate the maximum steps
-    # cat("Time interval (dt) greater than track length-1, calculating the maximum time interval")
+    # cat("Time interval (dt) greater than track length-1, calculating the
+    # maximum time interval")
 
     # summarize displacement for track at all dt
     # note this function calculates only "at" all dt
@@ -170,7 +191,8 @@ displacement.trackl=function(trackl,dt=6,resolution=0.107,bivar=F){
 
         num.tracks[i]=length(trackl.dt)
         displacement.individual=sapply(trackl.dt,function(x){
-            displacement.track(track=x,dt=i,resolution=resolution,bivar=bivar)},simplify = F)
+            displacement.track(
+                track=x,dt=i,resolution=resolution,bivar=bivar)},simplify = F)
 
         # as the result is of different length, the output is a list
     }
@@ -185,7 +207,7 @@ displacement.trackl=function(trackl,dt=6,resolution=0.107,bivar=F){
                 displacement.individual[[i]],mean,na.rm=T,simplify=F))
 
             std.summarized[i]=list(sapply(
-                #displacement.individual[[i]],function(x){sd(x)/N},na.rm=T,simplify=F))
+        #displacement.individual[[i]],function(x){sd(x)/N},na.rm=T,simplify=F))
             displacement.individual[[i]],sd,na.rm=T,simplify=F))
         }
 
@@ -210,7 +232,8 @@ displacement.trackll=function(trackll,dt=6,resolution=0.107,bivar=F){
 
 
     displacement.trackll.lst=lapply(trackll,function(x){
-        displacement=displacement.trackl(trackl=x,dt=dt,resolution=resolution,bivar=bivar)
+        displacement=displacement.trackl(
+            trackl=x,dt=dt,resolution=resolution,bivar=bivar)
         cat("\n...\n") # a seperator to make output clearer
 
         return(displacement)
@@ -222,9 +245,11 @@ displacement.trackll=function(trackll,dt=6,resolution=0.107,bivar=F){
 ##------------------------------------------------------------------------------
 ## plot CDF of individual displacement
 
-# the minimum tracks to include for the dt is recommended as 50. Users can see the screen output, or NumTracksAtDt of displacement.trackll to decide the dt that suits.
+# the minimum tracks to include for the dt is recommended as 50. Users can see
+# the screen output, or NumTracksAtDt of displacement.trackll to decide the dt
+# that suits.
 
-displacementCDF=function(trackll,dt=6,resolution=0.107,plot=F,output=F,bivar=F){
+displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
     dp=displacement.trackll(trackll,dt=dt,resolution=resolution,bivar=bivar)
 
     # take "InidvidualDisplacement" out
@@ -250,20 +275,43 @@ displacementCDF=function(trackll,dt=6,resolution=0.107,plot=F,output=F,bivar=F){
     }
 
     # reshape for plotting and output
-    p=melt(dp.dt)
+    p=reshape2::melt(dp.dt)
 
     ## plotting
 
         ecdf=ggplot(p,aes(x=value,group=L1,colour=L1))+stat_ecdf()+
             labs(x="Displacement (µm)",y="CDF")+
-            theme_bw()+
+            theme_classic()+
             theme(legend.title=element_blank())
-        # can use stat_ecdf(pad=F) to remove first -Inf and Inf dded on x in ggplot2::stat_cdf, however it seems not working in current version ggplot2 2.1.10, remove it manually in "preprocessing of data for output"
+        # can use stat_ecdf(pad=F) to remove first -Inf and Inf dded on x in
+        # ggplot2::stat_cdf, however it seems not working in current version
+        # ggplot2 2.1.10, remove it manually in "preprocessing of data for
+        # output"
 
-        histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+geom_density()+
+        # histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+geom_density()+
+        #     labs(x="Displacement (µm)",y="Density")+
+        #     theme_bw()+
+        #     theme(legend.title=element_blank())
+        
+        histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+
+            stat_density(adjust=2,fill=NA)+
             labs(x="Displacement (µm)",y="Density")+
-            theme_bw()+
+            theme_classic()+
             theme(legend.title=element_blank())
+        
+        # plot normal distribution and cumulative normal distribution
+        # histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+
+        #     stat_function(fun = dnorm,args=list())+xlim(-4,4)+
+        #     labs(x="Displacement (µm)",y="Density")+
+        #     theme_classic()+
+        #     theme(legend.title=element_blank())
+        
+        # cdf=ggplot(p,aes(x=value,group=L1,colour=L1))+
+        #     stat_function(fun = pnorm,args=list())+xlim(-4,4)+
+        #     labs(x="Displacement (µm)",y="Density")+
+        #     theme_classic()+
+        #     theme(legend.title=element_blank())
+    
         if (plot==T){
         multiplot(ecdf,histogram,cols=1)
     }
@@ -304,7 +352,8 @@ displacementCDF=function(trackll,dt=6,resolution=0.107,plot=F,output=F,bivar=F){
 
     for (i in 1:length(stepwise.displacement)){
         stepwise.displacement[[i]]["L2"]=NULL
-        colnames(stepwise.displacement[[i]])=c("stepwiseDisplacement","trackIndex")
+        colnames(stepwise.displacement[[i]])=c(
+            "stepwiseDisplacement","trackIndex")
     }
 
     if (output==T){
@@ -335,5 +384,6 @@ displacementCDF=function(trackll,dt=6,resolution=0.107,plot=F,output=F,bivar=F){
 
 ## -----
 
-# DONE: output dat V
-# DONE: base:ecdf 1228 seems to be more accurate as ggplot2::stat_ecdf also have two outside values, one is negative at zero, the other is extra 1 at the end, which should be removed.  V
+# DONE: output dat V DONE: base:ecdf 1228 seems to be more accurate as
+# ggplot2::stat_ecdf also have two outside values, one is negative at zero, the
+# other is extra 1 at the end, which should be removed.  V

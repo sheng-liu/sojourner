@@ -6,12 +6,15 @@
 \alias{displacement.track}
 \title{displacementCDF}
 \usage{
-displacementCDF(trackll,dt=6,resolution=0.107,plot=F,output=F)
+displacementCDF(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F)
 }
 \arguments{
 \item{dt}{Time intervals.}
 
 \item{resolution}{ratio of pixel to µM.}
+
+\item{bivar}{bivar=F, view displacement r as single variable; bivar=T, view
+x,y as bivarate. Default value F.}
 
 \item{trackll}{Track list output from readDiatrack().}
 
@@ -23,9 +26,14 @@ for detail.}
 }
 \value{
 \itemize{
-\item{ list of "stepwise.displacement" and "CDF.displacement",} {A list of stepwise.displacement" and "CDF.displacement". the name of the list is the Diatrack folder name.}
+\item{ list of "stepwise.displacement" and "CDF.displacement",} {A list of
+stepwise.displacement" and "CDF.displacement". the name of the list is the
+Diatrack folder name.}
 
-\item{Output file,} {Displacement of individual trajectoreis at specified dt. The output file is for user to plot in other applications. The column "UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a CDF plot. The distribution of "UniqueDisplacement" is the density plot. }
+\item{Output file,} {Displacement of individual trajectoreis at specified
+dt. The output file is for user to plot in other applications. The column
+"UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a CDF
+plot. The distribution of "UniqueDisplacement" is the density plot. }
 
 
 \item{CDF plot,} {CDF plot of displacement for individual files. 
@@ -33,14 +41,20 @@ for detail.}
 }
 }
 \description{
-calculate cumulative distribution function of all displacement for individual trajectories.
+calculate cumulative distribution function of all displacement
+  for individual trajectories.
 }
 \details{
-The cumulative radial distribution function, P(r, i△t), is the probability of finding the diffusing particle within a radius r from the origin at time lag i△t:
+The cumulative radial distribution function, P(r, i△t), is the
+  probability of finding the diffusing particle within a radius r from the
+  origin at time lag i△t:
 
 P(r,iΔt) = 1− e^(-r^2/4*D*(iΔt))
 
-the CDF and UniqueDisplacement in the output file is corresponding to P and r in this formula. If intend to generate the CDF plot from the output file, the CDF and UniqueDisplacement is corresponding to the y and x values in the CDF output plot.
+the CDF and UniqueDisplacement in the output file is corresponding to P and
+r in this formula. If intend to generate the CDF plot from the output file,
+the CDF and UniqueDisplacement is corresponding to the y and x values in the
+CDF output plot.
 }
 \examples{
 folder1=system.file("extdata","SWR1",package="smt")
