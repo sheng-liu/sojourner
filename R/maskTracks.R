@@ -47,6 +47,7 @@
 ##' @export indexCell
 ##' @export filterOnCell
 ##' @export sampleTracks
+##' @export cellIntensity
 
 ##------------------------------------------------------------------------------
 ##
@@ -309,4 +310,36 @@ sampleTracks = function(trackll, num = 0){
         }
         return(trackll)
     }
+}
+
+cellIntensity = function(mask.file, glow.file, pix){
+    
+    #Extract raw pixel intensities
+    glow = matrix(getChannels(rtiff::readTiff(glow.file)), nrow = pix, ncol = pix)
+    
+    ## Returns all positive mask pixel locations
+    pos.point=maskPoint(mask.file,plot=F)
+    #Instantiate empty
+    binary.mat = matrix( rep( 0, len=pix*pix), nrow = pix)
+    #Fill with binary pospoints
+    for (m in 1:nrow(pos.point)){
+        binary.mat[pos.point[[1]][[m]], pos.point[[2]][[m]]] = 1
+    }
+    
+    # Calculate connected components and label accordingly
+    labeled.mat <- t(SDMTools::ConnCompLabel(binary.mat))
+    
+    raw.intensities = rep(list(list()), max(labeled.mat))
+    
+    for(row in 1:nrow(labeled.mat)) {
+        for(col in 1:ncol(labeled.mat)) {
+            if (labeled.mat[row, col] != 0){
+                raw.intensities[[labeled.mat[row, col]]][[length(raw.intensities[[labeled.mat[row, col]]])+1]] = glow[row, col]
+            }
+        }
+    }
+    for (cell in 1:length(raw.intensities)){
+        cat(paste("Cell", cell, "mean intensity:", mean(unlist(raw.intensities[[cell]])), "\n"))
+    }
+    
 }
