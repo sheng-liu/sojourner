@@ -12,9 +12,18 @@
 #
 ##' @usage
 ##' maskTracks(folder, trackll)
+##' 
+##' indexCell(folder, trackll, max.pixel = 128)
+##' 
+##' filterOnCell(trackll, numTracks = 0)
+##' 
+##' sampleTracks(trackll, num = 0)
 
 ##' @param folder Full path to the output files.
 ##' @param trackll A list of track lists.
+##' @param max.pixel Pixel dimension of image
+##' @param numTracks Minimum number of required tracks in the trackll
+##' @param num Number of tracks to randomly sample per trackl in trackll
 
 ##' @examples
 ##' #Basic masking with folder path with image masks
@@ -42,6 +51,12 @@
 ##' Note the mask file should have the same name as the output files with a "_MASK.tif" ending. 
 ##' If there are more mask files than trackll, masking will fail. If there are less mask files, trackls without masks will be deleted.
 ##' Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
+##' 
+##' indexCell() separates each trackl by each distinct and separate cell on the mask and combines them together to form the trackll. The cell number is added to the end of the trackl name.
+##' 
+##' filterOnCell() eliminates all trackl in trackll that has less than numTracks.
+##' 
+##' sampleTracks() simply randomly samples num number of tracks for each trackl in trackll.
 
 ##' @export maskTracks
 ##' @export indexCell
