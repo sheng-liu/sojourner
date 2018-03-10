@@ -15,19 +15,22 @@
 ##'
 ##' @usage
 ##'
-##' combineTrackll(trackll=c(trackll1,trackll2),merged=T)
+##' combineTrackll(trackll=c(trackll1,trackll2),name="combined trackll",merged=T)
 ##'
-##' @param total The number of tracklls to combine.
+##' @param trackll The tracklls to be combined together.
+##' @param name a character string given to set the "names" attribute for the combined trackll
 ##' @param merged An Logical indicate if the tracklls to combine are merged or not.
 ##' @return
 ##' \itemize{
 ##' \item{trackll:} combined trackll.
 ##' }
-##' @details Combine multiple track listw (tracklls) from multiple folders into one trackll, i.e. combining track infomation
+##' @details Combine multiple track lists (tracklls) from multiple folders into one trackll, i.e. combining track infomation
 ##'          from files in multiple folders (replicates) together as if they are in one folder. The tracklls can be
 ##'          either merged or un-merged.
 ##'          
-##'          If the combined tracklls are merged, users will be prompted to input a combined attribute name for the combined trackll. 
+##'          The name argument sets the "names" attribute for the combined trackll, which will be used in the same way
+##'          as the folder names for the original tracklls, e.g., displayed as legend when plotting Dcoef or MSD for 
+##'          the combined trackll. 
 ##'
 ##'
 ##' @examples
@@ -54,25 +57,25 @@
 
 
 
-combineTrackll<-function(trackll=c(trackll1,trackll2),merged=T){
-  totalTracklls <- as.numeric(length(trackll))
-  temp<-c()
-  if(merged==T){
-    for (i in 1:totalTracklls){
-      temp<-append(temp,trackll[i][[1]])
+combineTrackll<-function(trackll=c(trackll1,trackll2),name="combined trackll",merged=T){
+    totalTracklls <- as.numeric(length(trackll))
+    temp<-c()
+    if(merged==T){
+        for (i in 1:totalTracklls){
+            temp<-append(temp,trackll[i][[1]])
+        }
+        temp<-list(temp)
+        names(temp)<-name
     }
-    temp<-list(temp)
-    names(temp)<-readline(cat("Set the attribute name of the combined trackll, \ne.g. HSF_WT_combined trackll:   "))
-  }
-  else if(merged==F){
-    for (i in 1:totalTracklls){
-      temp<-append(temp,trackll[i])
+    else if(merged==F){
+        for (i in 1:totalTracklls){
+            temp<-append(temp,trackll[i])
+        }
     }
-  }
-  else{
-    cat("Wrong input. Start again.\n")
-    stop()
-  }
-  return (temp)
-  
+    else{
+        cat("Wrong input. Start again.\n")
+        stop()
+    }
+    return (temp)
+    
 }

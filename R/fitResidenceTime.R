@@ -26,7 +26,7 @@
 ##' @return
 ##' \itemize{
 ##' \item{On the Console output:} Result of both one and two-component fit and parameters of goodness of the fit.
-##' \item{Plot:} fitting curves will be plotted over the raw data, with the result of two-component fitting shown in the plot area.
+##' \item{Plot:} fitting curves will be plotted over the raw data, with the number of tracks and result of two-component fitting shown in the plot area.
 ##' }
 ##' @details Calculating average residence time of particles by fitting 1-CDF (survival distribution) of its trajectorys.
 ##'
@@ -159,7 +159,7 @@
                   " "
     )
   }
-  legend("right",legend=result.text,pch=NULL,y.intersp=0.3,x.intersp=0.3,bty="n",cex=1.5)
+  legend("right",legend=result.text,pch=NULL,y.intersp=0.3,x.intersp=0.3,bty="n",cex=1)
   par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=FALSE)
   
   return(tcfit)
@@ -167,7 +167,7 @@
 
 
 ## Master function for residence time (1-CDF) fitting.
-fitRT=function(trackll=trackll,x.max=30,N.min=1.5,t.interval=0.125,maxiter.search=1e3,
+fitRT=function(trackll=trackll,x.max=30,N.min=1.5,t.interval=0.5,maxiter.search=1e3,
                maxiter.optim=1e3,k.ns=FALSE){
   
   #library(smt)  
@@ -232,8 +232,9 @@ fitRT=function(trackll=trackll,x.max=30,N.min=1.5,t.interval=0.125,maxiter.searc
   
   
   ####### Add legend to the plot ##################
-  legend("topright",legend=c("Raw data","One component fit","Two component fit"),pch=NA,lty=c(3,1,1),lwd=4,col=c("black","green","red"),cex=1.5,
-         y.intersp=0.3,x.intersp=0.3,bty = "n")
+  legend("topright",legend=c("Raw data","One component fit","Two component fit",paste0("n = ",length(trackll[[1]]))),
+         pch=NA,lty=c(3,1,1,NA),lwd=4,col=c("black","green","red"),cex=1,
+         y.intersp=0.5,x.intersp=0.3,bty = "n")
   legend("bottomleft",legend=bquote(italic('N'['min']==.(N.min))*' s'),bty = "n")
   
   return(list("One-Component Fit"=result.1,"Two-Component Fit"=result.2))

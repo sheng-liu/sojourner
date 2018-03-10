@@ -85,6 +85,7 @@ compare.RT.CDF<-function(trackll=c(trackll1,trackll2),x.max=30,filter=c(min=3,ma
           trackll.label<-readline(cat("Enter the trackll you want to plot:    "))
           t.interval[i]<-as.numeric(readline(cat("What's the t.interval for this trackll in sec:    ")))
           trackll[i]<-get(paste(trackll.label))
+          names(trackll)[i]<-names(get(paste(trackll.label)))
       }
   }
     else{
@@ -116,7 +117,7 @@ compare.RT.CDF<-function(trackll=c(trackll1,trackll2),x.max=30,filter=c(min=3,ma
     
     for(i in c(1:Totaltracklls)){
     trackll.n<-filterTrack(trackll[i],filter=filter)
-    trackllname<-append(trackllname,names(trackll[i]))
+    trackllname<-append(trackllname,gsub("ST_","",names(trackll)[i]))
     n<-append(n,length(trackll.n[[1]]))
     ## Calculate track length and 1-CDF
     trajLength<-sapply(trackll.n[[1]],function(x){(x$Frame[dim(x)[1]]-x$Frame[1]+1)*t.interval[i]})
@@ -130,7 +131,7 @@ compare.RT.CDF<-function(trackll=c(trackll1,trackll2),x.max=30,filter=c(min=3,ma
   
   ## Output time intervals and corrsponding 1-CDF in .csv format.
   if (output){
-    filename<-paste("1-CDF","--",format(Sys.time(),"%Y%m%d.%H%M%S"),".csv",sep="")
+    filename<-paste("1-CDF-DwellTime","--",format(Sys.time(),"%Y%m%d.%H%M%S"),".csv",sep="")
     write.table(ONE_CDF, filename  , append= F, sep=',', row.names = F)
     cat("    1-CDF of selected tracklls were output in the working directory. 
     If using the same filter range, the curve is exactly the same as the raw data curve in compare.RT.CDF().
@@ -139,7 +140,17 @@ compare.RT.CDF<-function(trackll=c(trackll1,trackll2),x.max=30,filter=c(min=3,ma
   
   ## Add legend and reset plot area.
   par(mar=c(0, 0, 0, 0),xpd=TRUE)
-  legend("topright",legend =paste(trackllname," ( n =",n,")"), text.col = cl,col=cl, pch=NULL, lty=1, lwd=4,bty = "n",cex=2)
+  temp <- legend("topright", legend = rep(" ", Totaltracklls),
+                 text.width = max(strwidth(trackllname)),
+                 xjust = 1, yjust = 1, y.intersp = 2,bty="n")
+  text(temp$rect$left + temp$rect$w, temp$text$y,
+       paste(rep(trackllname), 
+             rep(" ( n=",Totaltracklls),
+             rep(n),
+             rep(")",Totaltracklls)), 
+       col=cl,pos = 2,cex=1.5)
+  
+  #legend("topright",legend =paste(trackllname," ( n =",n,")"), text.col = cl,col=cl, pch=NULL, lty=1, lwd=4,bty = "n",cex=2)
   par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=TRUE)
   
   ## Return value: data.frame containing time intervals and corrsponding 1-CDF
