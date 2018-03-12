@@ -1,21 +1,21 @@
-# smt help (environment)
+# sojourner help (environment)
 #
 #
 ###############################################################################
 
 
 ## -----------------------------------------------------------------------------
-## smt Roxygen help
-##' @name smt
-##' @aliases smt
-##' @title smt-simple parameters for single molecule tracking analysis
-##' @rdname smt
+## sojourner Roxygen help
+##' @name sojourner
+##' @aliases sojourner
+##' @title sojourner-simple parameters for single molecule tracking analysis
+##' @rdname sojourner
 ##' @docType package
 ##' @description simple analysis on single molecule tracking data using parameters based on mean square displacement (MSD).
 ## @usage
-## smt()
+## sojourner()
 
-##' @details smt provide a simple analysis on single molecule tracking data using parameters based on mean square displacement (MSD). Currently includes:
+##' @details sojourner provide a simple analysis on single molecule tracking data using parameters based on mean square displacement (MSD). Currently includes:
 ##' - duration of the tracks (dwellTime),
 ##'
 ##' - square displacement (squareDisp),
@@ -69,12 +69,12 @@
 ##' @importFrom sp point.in.polygon
 
 ##' @import shiny
-##' @export smtGUI
+##' @export sojournerGUI
 
-smt=function(){}
+sojourner=function(){}
 
-smtGUI=function(){
-    appPath=system.file("myapp",package="smt")
+sojournerGUI=function(){
+    appPath=system.file("myapp",package="sojourner")
     shiny::runApp(appPath)
 f
 }
