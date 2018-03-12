@@ -279,7 +279,8 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
 
     ## plotting
 
-        ecdf=ggplot(p,aes(x=value,group=L1,colour=L1))+stat_ecdf()+
+        ecdf=ggplot(p,aes(x=value,group=L1,colour=L1))+
+            stat_ecdf(position="identity")+
             labs(x="Displacement (µm)",y="CDF")+
             theme_classic()+
             theme(legend.title=element_blank())
@@ -293,11 +294,31 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
         #     theme_bw()+
         #     theme(legend.title=element_blank())
         
-        histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+
-            stat_density(adjust=2,fill=NA)+
-            labs(x="Displacement (µm)",y="Density")+
-            theme_classic()+
-            theme(legend.title=element_blank())
+        # histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+
+        #     stat_density(adjust=2,fill=NA)+
+        #     labs(x="Displacement (µm)",y="Density")+
+        #     theme_classic()+
+        #     theme(legend.title=element_blank())
+        
+        # normalized PDF using ..scaled..
+   
+            
+        # extrapolate
+            # ggplot(p,aes(x=value,y=..scaled..,colour=L1))+
+            # stat_density(position="identity",adjust=2,fill=NA)+
+            # scale_x_continuous(trans="log10",limits=c(-6,1))
+            # labs(x="Displacement (µm)",y="Density")+
+            # theme_classic()+
+            # theme(legend.title=element_blank())
+        histogram=
+            ggplot(p,aes(x=value,y=..scaled..,colour=L1))+
+                stat_density(position="identity",adjust=2,fill=NA)+
+                scale_x_continuous(trans="log10",limits = c(-2,0.5),
+                                   breaks=scales::pretty_breaks(n=5))+
+                annotation_logticks(sides="b")+
+                labs(x="Displacement (µm)",y="Density")+
+                theme_classic()+
+                theme(legend.title=element_blank())
         
         # plot normal distribution and cumulative normal distribution
         # histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+

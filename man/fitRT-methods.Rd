@@ -20,7 +20,7 @@ fitRT(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5)
 \value{
 \itemize{
 \item{On the Console output:} Result of both one and two-component fit and parameters of goodness of the fit.
-\item{Plot:} fitting curves will be plotted over the raw data, with the result of two-component fitting shown in the plot area.
+\item{Plot:} fitting curves will be plotted over the raw data, with the number of tracks and result of two-component fitting shown in the plot area.
 }
 }
 \description{

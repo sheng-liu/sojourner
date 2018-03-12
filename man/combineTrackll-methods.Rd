@@ -5,12 +5,14 @@
 \alias{combineTrackll}
 \title{combineTrackll}
 \usage{
-combineTrackll(trackll=c(trackll1,trackll2),merged=T)
+combineTrackll(trackll=c(trackll1,trackll2),name="combined trackll",merged=T)
 }
 \arguments{
-\item{merged}{An Logical indicate if the tracklls to combine are merged or not.}
+\item{trackll}{The tracklls to be combined together.}
 
-\item{total}{The number of tracklls to combine.}
+\item{name}{a character string given to set the "names" attribute for the combined trackll}
+
+\item{merged}{An Logical indicate if the tracklls to combine are merged or not.}
 }
 \value{
 \itemize{
@@ -21,11 +23,13 @@ combineTrackll(trackll=c(trackll1,trackll2),merged=T)
 Combine multiple tracklls into one trackll.
 }
 \details{
-Combine multiple track listw (tracklls) from multiple folders into one trackll, i.e. combining track infomation
+Combine multiple track lists (tracklls) from multiple folders into one trackll, i.e. combining track infomation
          from files in multiple folders (replicates) together as if they are in one folder. The tracklls can be
          either merged or un-merged.
          
-         If the combined tracklls are merged, users will be prompted to input a combined attribute name for the combined trackll.
+         The name argument sets the "names" attribute for the combined trackll, which will be used in the same way
+         as the folder names for the original tracklls, e.g., displayed as legend when plotting Dcoef or MSD for 
+         the combined trackll.
 }
 \examples{
 
