@@ -33,8 +33,8 @@
 ##' @examples
 ##'
 ##' # compare folders
-##' folder1=system.file("extdata","SWR1",package="smt")
-##' folder2=system.file("extdata","HTZ1",package="smt")
+##' folder1=system.file("extdata","SWR1",package="sojourner")
+##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' trackll=compareFolder(c(folder1,folder2))
 ##' MSD=msd(trackll=trackll)
 ##' dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
@@ -101,7 +101,7 @@
 
         if (components.int==1){
 
-            cat("\nSMT v0.3 currently does not deal with fitting one component,\ncomponents sets to 2 automatically.\n")
+            cat("\nsojourner v0.5 currently does not deal with fitting one component,\ncomponents sets to 2 automatically.\n")
             components.int=2
 
 

@@ -33,8 +33,8 @@ Select trajectory based on component fitting on diffusion
 # 2. select componentTracks per movie base, use plotComponentTracks to plot component tracks back to initial Nuclei image.
 
 ## 1. select componentTracks per folder (cross movie) by using compareFolders
-folder1=system.file("extdata","SWR1",package="smt")
-folder2=system.file("extdata","HTZ1",package="smt")
+folder1=system.file("extdata","SWR1",package="sojourner")
+folder2=system.file("extdata","HTZ1",package="sojourner")
 trackll=createTrackll(folder=c(folder1,folder2),input=1)
 MSD=msd(trackll=trackll)
 dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
@@ -57,16 +57,16 @@ dwellTime(trackll.swr1)
 # Output trajectory index to plot individually
 # trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = T)
 # specify index file path.
-index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",package="smt")
-index.file2=system.file("extdata","INDEX","componentTrackID-SWR1.comp.2.csv",package="smt")
-movie.folder=system.file("extdata","SWR1_2",package="smt")
+index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",package="sojourner")
+index.file2=system.file("extdata","INDEX","componentTrackID-SWR1.comp.2.csv",package="sojourner")
+movie.folder=system.file("extdata","SWR1_2",package="sojourner")
 plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder)
 plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder)
 
 
 ## 2. select componentTracks per movie base, use plotComponentTracks to plot component tracks back to initial Nuclei image.
 ## plotComponentTrackOverlay
-folder3=system.file("extdata","SWR1_2",package="smt")
+folder3=system.file("extdata","SWR1_2",package="sojourner")
 trackll=readDiatrack(folder3)
 
 ## use merge=T for per folder comparison, the analsyis result can't be plot back to original image

@@ -39,7 +39,7 @@
 ##'
 ##' # Generate trackll, and process, 
 ##' # e.g. mask region of interest, merge tracks from multiple files.
-##' folder=system.file("extdata","HSF",package="smt")
+##' folder=system.file("extdata","HSF",package="sojourner")
 ##' trackll=createTrackll(interact=F,folder,input=2, cores = 2)
 ##' trackll=maskTracks(folder,trackll)
 ##' trackll=mergeTracks(folder,trackll)
@@ -170,7 +170,7 @@
 fitRT=function(trackll=trackll,x.max=30,N.min=1.5,t.interval=0.5,maxiter.search=1e3,
                maxiter.optim=1e3,k.ns=FALSE){
   
-  #library(smt)  
+  #library(sojourner)  
   
   ############ Get trajectory information####################
   if(is.null(trackll)){

@@ -30,7 +30,7 @@ filter is used to filter out tracks that has length within a
   (default 1~32).
 }
 \examples{
-folder=system.file("extdata","SWR1",package="smt")
+folder=system.file("extdata","SWR1",package="sojourner")
 trackll=readDiatrack(folder)
 
 trackll.filter=filterTrack(trackll,filter=c(7,Inf))

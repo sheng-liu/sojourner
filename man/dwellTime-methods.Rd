@@ -28,7 +28,7 @@ dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=F)
 Caclulate dwell time (/residence time) for trajecotries.
 }
 \examples{
-folder=system.file("extdata","SWR1",package="smt")
+folder=system.file("extdata","SWR1",package="sojourner")
 trackll=readDiatrack(folder)
 dwellTime(trackll,plot=TRUE)
 }

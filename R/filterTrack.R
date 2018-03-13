@@ -31,7 +31,7 @@
 ##'
 ##'
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="smt")
+##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=readDiatrack(folder)
 ##'
 ##' trackll.filter=filterTrack(trackll,filter=c(7,Inf))

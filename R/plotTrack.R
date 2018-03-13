@@ -95,23 +95,23 @@
 ##' }
 
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="smt")
+##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll.ab=readDiatrack(folder,ab.track=TRUE)
 ##' plotTrack(trackll.ab)
 ##'
 ##' ## plot from index file
-##' index.file=system.file("extdata","INDEX","indexFile.csv",package="smt")
-##' movie.folder=system.file("extdata","SWR1",package="smt")
+##' index.file=system.file("extdata","INDEX","indexFile.csv",package="sojourner")
+##' movie.folder=system.file("extdata","SWR1",package="sojourner")
 ##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder)
 ##'
 ##' ## index file contain trajectories from multiple movie folders
-##' folder1=system.file("extdata","SWR1",package="smt")
-##' folder2=system.file("extdata","HTZ1",package="smt")
-##' index.file2=system.file("extdata","INDEX","indexFile2.csv",package="smt")
+##' folder1=system.file("extdata","SWR1",package="sojourner")
+##' folder2=system.file("extdata","HTZ1",package="sojourner")
+##' index.file2=system.file("extdata","INDEX","indexFile2.csv",package="sojourner")
 ##' plotTrackFromIndex(index.file=index.file2,movie.folder = c(folder1,folder2))
 ##'
 ##' ## masking with image mask
-##' track.folder=system.file("extdata","SWR1_2",package="smt")
+##' track.folder=system.file("extdata","SWR1_2",package="sojourner")
 ##' trackll=readDiatrack(folder=track.folder,merge=F,mask=F)
 ##' trackll.masked=readDiatrack(folder=track.folder,merge=F,mask=T)
 ##' str(trackll,1)
@@ -132,7 +132,7 @@
 ##'
 ##'
 ##' ## plotComponentTrackOverlay (see selComponentTracks() for more details)
-##' folder2=system.file("extdata","SWR1_2",package="smt")
+##' folder2=system.file("extdata","SWR1_2",package="sojourner")
 ##' trackll=readDiatrack(folder2,merge=F)
 ##'
 ##' ## use merge=T for per folder comparison, the analsyis result can't be plot

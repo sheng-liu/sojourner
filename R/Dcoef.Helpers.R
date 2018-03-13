@@ -221,7 +221,7 @@ D.coef.roll=function(MSD,window.size=4,t.interval=0.010){
 ## "The short-range diffusion coefficients D*(0: 4) and D*(O: 8) are well determined; the longest-range diffusion coefficients D*(0: 512) and D*(0: 1024) are so broadly dis- tributed as to be useless (Fig. 2 a)" (Saxton, 1997)
 ## from this the maximum track length used for determining diffusion coefficient should be restricted to 32, which yeilds 1/4*32=8. We can then use the trimTrack() to realize this cut-off.
 
-## 0~4 frames equals 4 steps, so the minimum frame taken into account in smt's numbering system (which start with frame 1 rather than 0) should be 1~5, D(1:5) and D(1:9) to allow sampling from 0~4. Anything below 8, should be directly using percentage =1, what tracks that has length 9
+## 0~4 frames equals 4 steps, so the minimum frame taken into account in sojourner's numbering system (which start with frame 1 rather than 0) should be 1~5, D(1:5) and D(1:9) to allow sampling from 0~4. Anything below 8, should be directly using percentage =1, what tracks that has length 9
 
 # "D*(2: 4), the short-range diffusion coefficient used by Kusumi et al. (1993).
 # A short-range D* has the advan- tages that it is accurately obtained and the
@@ -382,7 +382,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=F,filter=c(min=7,max=Inf),
 
 
 
-# would be nice to have a subsetting method for a smt class, there are so many levels of subsetting, each time it needs a lapply
+# would be nice to have a subsetting method for a sojourner class, there are so many levels of subsetting, each time it needs a lapply
 
 ## instead of trackll, it maybe better to store tracks in data.table, then folders
 ## instead of (second) list of data.frame, it may worth the effort simply making it a data.frame (data.table) with fourth column as trajectory numbers.

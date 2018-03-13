@@ -47,7 +47,7 @@
 ##' 
 ##' # Specify trackll folder path programably, specify the file format to be "2"
 ##' (i.e. Diatrack txt files ending with .txt), cores to be 2.
-##' folder=system.file("extdata","SWR1",package="smt")
+##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll <- createTrackll(folder=folder, input = 1, cores = 2)
 
 ##' @export createTrackll

@@ -40,7 +40,7 @@ This "indexPerFile" is the index within a diatrackFile, which translate to "inde
 This "indexPerTrackll" is a unique index within a trackll, which can be translated to "index per folder".
 }
 \examples{
-folder=system.file("extdata","SWR1",package="smt")
+folder=system.file("extdata","SWR1",package="sojourner")
 trackll=readDiatrack(folder)
 str(trackll,max.level=2)
 }

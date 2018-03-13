@@ -107,11 +107,13 @@ squareDispCpp = function(track, dt = 1, resolution = 0.107){
     track.out = data.matrix(track);
 
     #Compile source C++ file
-    file=system.file("cpp",package="smt", "squareDispRcpp.cpp");
+    file=system.file("cpp",package="sojourner", "squareDispRcpp.cpp");
     sourceCpp(file);
 
     #run squareDispRcpp.cpp
     track.dt = squareDispRcpp(track.out, dt, resolution);
     return (track.dt);
 }
+
+# TODO: Need to rewrite make 'file' an option rather than default calling in the function, this can leads to unexpected errors when the package change name or file changes location. 
 

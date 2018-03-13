@@ -27,7 +27,7 @@
 
 ##' @examples
 ##' # reading in tracks
-##' folder=system.file("extdata","ImageJ",package="smt")
+##' folder=system.file("extdata","ImageJ",package="sojourner")
 ##' trackll=readParticleTracker(folder)
 ##' str(trackll,max.level=2)
 
@@ -42,7 +42,7 @@
 ##'
 ##' This "indexPerTrackll" is the index within a trackll, which is unique.
 ##'
-##' The macro used for generating the csv file is also included in ImageJ folder of the package: folder=system.file("extdata","ImageJ",package="smt")
+##' The macro used for generating the csv file is also included in ImageJ folder of the package: folder=system.file("extdata","ImageJ",package="sojourner")
 ##'
 
 ##' @export readParticleTracker

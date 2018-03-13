@@ -87,7 +87,7 @@ during the program.
 \examples{
 
 # create trackll 
-track.folder=system.file("extdata","SWR1",package="smt")
+track.folder=system.file("extdata","SWR1",package="sojourner")
 trackll <- createTrackll(folder=track.folder, input = 1, cores = 2)
 
 # mask trackll using using default model (may not fit all data)

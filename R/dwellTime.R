@@ -25,7 +25,7 @@
 ##' }
 
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="smt")
+##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=readDiatrack(folder)
 ##' dwellTime(trackll,plot=TRUE)
 

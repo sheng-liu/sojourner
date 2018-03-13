@@ -31,8 +31,8 @@ compare folders with Diatrack output files. merge track files
   of the resulting list.
 }
 \examples{
-folder1=system.file("extdata","SWR1",package="smt")
-folder2=system.file("extdata","HTZ1",package="smt")
+folder1=system.file("extdata","SWR1",package="sojourner")
+folder2=system.file("extdata","HTZ1",package="sojourner")
 trackll=compareFolder(c(folder1,folder2))
 str(trackll,max.level=1)
 }

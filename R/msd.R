@@ -53,7 +53,7 @@
 
 ##' @examples
 ##' # read in using readDiatrack
-##' folder=system.file("extdata","SWR1",package="smt")
+##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=readDiatrack(folder)
 ##'
 ##' # filter track based length

@@ -55,16 +55,16 @@
 
 
 ##------------------------------------------------------------------------------
-## tracks.msda2smt
+## tracks.msda2sjr
 
-##' @export tracks.msda2smt
-tracks.msda2smt=function(file){
+##' @export tracks.msda2sjr
+tracks.msda2sjr=function(file){
 
     tracks.file=readMat(file)
     # file.name=basename(file)
     tracks.mat=tracks.file$tracks
 
-    trackl.smt=lapply(tracks.mat, function(x){
+    trackl.sjr=lapply(tracks.mat, function(x){
         x=data.frame(x)
         x=x[,-1] # remove time column
         x=x/0.107  # change µm to pixel
@@ -73,11 +73,14 @@ tracks.msda2smt=function(file){
         return(x)
     })
 
-    trackll.smt=list(trackl.smt)
-    names(trackll.smt)=basename(file)
-    return(trackll.smt)
+    trackll.sjr=list(trackl.sjr)
+    names(trackll.sjr)=basename(file)
+    return(trackll.sjr)
 
 }
+
+# convert msda to sojourner format
+# not used in functions yet
 
 ##------------------------------------------------------------------------------
 ## same.scale

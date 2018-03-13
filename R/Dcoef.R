@@ -40,7 +40,7 @@
 ##'   for detail.
 ##' @param t.interval time interval between frames, default 0.010 s (10ms).
 ##' @param profile Location of preference file. By default (NULL), it is stored
-##'   at : system.file("extdata","PREF","profile.csv",package="smt"). User can
+##'   at : system.file("extdata","PREF","profile.csv",package="sojourner"). User can
 ##'   provide preference file by specifying the location of the file, e.g.
 ##'   profile="/Users/shengliu/Desktop/profile.csv".
 ##'
@@ -55,7 +55,7 @@
 ##'   as lag.start, lag.end for method = "static"), are stored in profile.csv in
 ##'   PREF folder under extdata. To change preference parameter, can either
 ##'   programably or manually go to folder
-##'   system.file("extdata","PREF","profile.csv",package="smt"), and change the
+##'   system.file("extdata","PREF","profile.csv",package="sojourner"), and change the
 ##'   profile.csv.
 ##'
 ##'   method for calculating Dcoef:
@@ -80,14 +80,14 @@
 ##'
 ##' @examples
 ##' # compare files
-##' folder=system.file("extdata","SWR1",package="smt")
+##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=readDiatrack(folder)
 ##' MSD=msd(trackll=trackll)
 ##' Dcoef(MSD=MSD,method="static",plot=TRUE)
 ##'
 ##' # compare folders
-##' folder1=system.file("extdata","SWR1",package="smt")
-##' folder2=system.file("extdata","HTZ1",package="smt")
+##' folder1=system.file("extdata","SWR1",package="sojourner")
+##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' trackll2=compareFolder(c(folder1,folder2))
 ##' Dcoef(trackll=trackll2,method="percentage",plot=TRUE)
 ##' Dcoef(trackll=trackll2,method="rolling.window",plot=TRUE)
@@ -127,7 +127,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
     ## enable user provided preference file
     if (is.null(profile)){
-        profile=system.file("extdata","PREF","profile.csv",package="smt")
+        profile=system.file("extdata","PREF","profile.csv",package="sojourner")
     }
 
     PARAM=read.csv(file=profile,header=T,row.names="PARAMETER")
@@ -282,7 +282,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 #            variance={
 #                if (method=="static"||method=="percentage"){
 #
-#                    cat("\n\nvariance plot for method static and percentage not available for smt v0.2 \n\n")
+#                    cat("\n\nvariance plot for method static and percentage not available for sojourner v0.2 \n\n")
 #
 # #                    cat("variance plot for method static and percentage does not use rsquare filter. \n")
 # #                    Log.D.coef.nofilter=Dcoef.log(D.coef,static=T)

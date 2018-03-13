@@ -45,8 +45,8 @@
 ##' @examples
 ##'
 ##' # compare folders
-##' folder1=system.file("extdata","SWR1",package="smt")
-##' folder2=system.file("extdata","HTZ1",package="smt")
+##' folder1=system.file("extdata","SWR1",package="sojourner")
+##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' trackll=compareFolder(c(folder1,folder2))
 ##' cdf=displacementCDF(trackll,dt=1,plot=F,output=F)
 ##'

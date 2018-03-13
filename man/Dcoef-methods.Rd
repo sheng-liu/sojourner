@@ -44,7 +44,7 @@ for detail.}
 \item{t.interval}{time interval between frames, default 0.010 s (10ms).}
 
 \item{profile}{Location of preference file. By default (NULL), it is stored
-at : system.file("extdata","PREF","profile.csv",package="smt"). User can
+at : system.file("extdata","PREF","profile.csv",package="sojourner"). User can
 provide preference file by specifying the location of the file, e.g.
 profile="/Users/shengliu/Desktop/profile.csv".}
 
@@ -68,7 +68,7 @@ Generic parameters (parameter applied to all methods, such as
   as lag.start, lag.end for method = "static"), are stored in profile.csv in
   PREF folder under extdata. To change preference parameter, can either
   programably or manually go to folder
-  system.file("extdata","PREF","profile.csv",package="smt"), and change the
+  system.file("extdata","PREF","profile.csv",package="sojourner"), and change the
   profile.csv.
 
   method for calculating Dcoef:
@@ -91,14 +91,14 @@ Generic parameters (parameter applied to all methods, such as
 }
 \examples{
 # compare files
-folder=system.file("extdata","SWR1",package="smt")
+folder=system.file("extdata","SWR1",package="sojourner")
 trackll=readDiatrack(folder)
 MSD=msd(trackll=trackll)
 Dcoef(MSD=MSD,method="static",plot=TRUE)
 
 # compare folders
-folder1=system.file("extdata","SWR1",package="smt")
-folder2=system.file("extdata","HTZ1",package="smt")
+folder1=system.file("extdata","SWR1",package="sojourner")
+folder2=system.file("extdata","HTZ1",package="sojourner")
 trackll2=compareFolder(c(folder1,folder2))
 Dcoef(trackll=trackll2,method="percentage",plot=TRUE)
 Dcoef(trackll=trackll2,method="rolling.window",plot=TRUE)
