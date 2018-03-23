@@ -18,6 +18,10 @@
 ##' filterOnCell(trackll, numTracks = 0)
 ##' 
 ##' sampleTracks(trackll, num = 0)
+##' 
+##' displayCellIntensity(folder, max.pixel = 128)
+##' 
+##' displayCellArea(folder, max.pixel = 128)
 
 ##' @param folder Full path to the output files.
 ##' @param trackll A list of track lists.
@@ -57,12 +61,17 @@
 ##' filterOnCell() eliminates all trackl in trackll that has less than numTracks.
 ##' 
 ##' sampleTracks() simply randomly samples num number of tracks for each trackl in trackll.
+##' 
+##' From a given folder, displayCellIntensity() displays the average grayscale intensities of each cell
+##' 
+##' From a given folder, displayCellArea() displays the pixel area of each cell
 
 ##' @export maskTracks
 ##' @export indexCell
 ##' @export filterOnCell
 ##' @export sampleTracks
-##' @export cellIntensity
+##' @export displayCellIntensity
+##' @export displayCellArea
 
 ##------------------------------------------------------------------------------
 ##
@@ -195,6 +204,7 @@ maskTracks=function(folder, trackll){
     return(masked.tracks)
 }
 
+# TODO: Add area/intensity/track filters on range
 indexCell=function(folder, trackll, max.pixel = 128){
     
     # Read in mask
@@ -255,7 +265,7 @@ indexCell=function(folder, trackll, max.pixel = 128){
         # Calculate connected components and label accordingly
         labeled.mat <- SDMTools::ConnCompLabel(binary.mat)
         
-        # FOR VISUALIZING THE LABALED MASK
+        # FOR VISUALIZING THE LABELED MASK
         # image(t(labeled.mat[128:1,]),col=c('grey',rainbow(length(unique(labeled.mat))-1)))
         
         pos.points.indexed = list()
@@ -327,34 +337,85 @@ sampleTracks = function(trackll, num = 0){
     }
 }
 
-cellIntensity = function(mask.file, glow.file, pix){
+displayCellIntensity = function(folder, max.pixel = 128){
     
-    #Extract raw pixel intensities
-    glow = matrix(getChannels(rtiff::readTiff(glow.file)), nrow = pix, ncol = pix)
+    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
+    maskl.names = gsub("_MASK.tif","",basename(maskl))
+    glowl=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
     
-    ## Returns all positive mask pixel locations
-    pos.point=maskPoint(mask.file,plot=F)
-    #Instantiate empty
-    binary.mat = matrix( rep( 0, len=pix*pix), nrow = pix)
-    #Fill with binary pospoints
-    for (m in 1:nrow(pos.point)){
-        binary.mat[pos.point[[1]][[m]], pos.point[[2]][[m]]] = 1
-    }
-    
-    # Calculate connected components and label accordingly
-    labeled.mat <- t(SDMTools::ConnCompLabel(binary.mat))
-    
-    raw.intensities = rep(list(list()), max(labeled.mat))
-    
-    for(row in 1:nrow(labeled.mat)) {
-        for(col in 1:ncol(labeled.mat)) {
-            if (labeled.mat[row, col] != 0){
-                raw.intensities[[labeled.mat[row, col]]][[length(raw.intensities[[labeled.mat[row, col]]])+1]] = glow[row, col]
+    for (i in 1:length(maskl)){
+        #Extract raw pixel intensities
+        glow = matrix(pixmap::getChannels(rtiff::readTiff(glowl[[i]])), nrow = max.pixel, ncol = max.pixel)
+        
+        ## Returns all positive mask pixel locations
+        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],plot=F)))
+        #Instantiate empty
+        binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)
+        #Fill with binary pospoints
+        for (m in 1:nrow(pos.point)){
+            binary.mat[pos.point[[1]][[m]], pos.point[[2]][[m]]] = 1
+        }
+        
+        # Calculate connected components and label accordingly
+        labeled.mat <- t(SDMTools::ConnCompLabel(binary.mat))
+        
+        raw.intensities = rep(list(list()), max(labeled.mat))
+        
+        for(row in 1:nrow(labeled.mat)) {
+            for(col in 1:ncol(labeled.mat)) {
+                if (labeled.mat[row, col] != 0){
+                    raw.intensities[[labeled.mat[row, col]]][[length(raw.intensities[[labeled.mat[row, col]]])+1]] = glow[row, col]
+                }
             }
         }
+        cat(maskl.names[[i]], "\n", "Cell Intensities (grayscale): ", "\n", sep = "")
+        for (cell in 1:length(raw.intensities)){
+            cat(paste(mean(unlist(raw.intensities[[cell]])), "\n"))
+        }
+        cat("\n")
     }
-    for (cell in 1:length(raw.intensities)){
-        cat(paste("Cell", cell, "mean intensity:", mean(unlist(raw.intensities[[cell]])), "\n"))
-    }
+}
+
+displayCellArea=function(folder, max.pixel = 128){
     
+    # Read in mask
+    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
+    maskl.names = gsub("_MASK.tif","",basename(maskl))
+    
+    if (length(maskl)==0){
+        cat("No image mask file ending '_MASK.tif' found.\n")
+        
+    }
+
+    # Loop through each trackl
+    for (i in 1:length(maskl)){
+        
+        ## Returns all positive mask pixel locations
+        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],plot=F)))
+        
+        #Instantiate empty
+        binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)
+        
+        #Fill with binary pospoints
+        for (m in 1:nrow(pos.point)){
+            binary.mat[pos.point[[1]][[m]], pos.point[[2]][[m]]] = 1
+        }
+        
+        # Calculate connected components and label accordingly
+        labeled.mat <- SDMTools::ConnCompLabel(binary.mat)
+        
+        # FOR VISUALIZING THE LABELED MASK
+        # image(t(labeled.mat[128:1,]),col=c('grey',rainbow(length(unique(labeled.mat))-1)))
+        
+        pos.points.indexed = list()
+        length(pos.points.indexed) = max(labeled.mat)
+        
+        # Convert labeled.mat to lists of pos.points per cell
+        for (j in 1:nrow(pos.point)) {
+            pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]] <- rbind( pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]], pos.point[j,])
+        }
+        
+        cat(maskl.names[[i]], "\n", "Cell Areas (pixels squared): ", "\n", sep = "")
+        cat(cat(sapply(pos.points.indexed, nrow), sep = "\n"), "\n", sep = "")
+    }
 }

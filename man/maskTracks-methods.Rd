@@ -13,6 +13,10 @@ indexCell(folder, trackll, max.pixel = 128)
 filterOnCell(trackll, numTracks = 0)
 
 sampleTracks(trackll, num = 0)
+
+displayCellIntensity(folder, max.pixel = 128)
+
+displayCellArea(folder, max.pixel = 128)
 }
 \arguments{
 \item{folder}{Full path to the output files.}
@@ -39,6 +43,10 @@ indexCell() separates each trackl by each distinct and separate cell on the mask
 filterOnCell() eliminates all trackl in trackll that has less than numTracks.
 
 sampleTracks() simply randomly samples num number of tracks for each trackl in trackll.
+
+From a given folder, displayCellIntensity() displays the average grayscale intensities of each cell
+
+From a given folder, displayCellArea() displays the pixel area of each cell
 }
 \examples{
 #Basic masking with folder path with image masks
