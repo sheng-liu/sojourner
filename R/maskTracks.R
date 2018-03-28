@@ -13,19 +13,18 @@
 ##' @usage
 ##' maskTracks(folder, trackll)
 ##' 
-##' indexCell(folder, trackll, max.pixel = 128)
+##' indexCell(folder, trackll, minArea = 0, minIntensity = 0, export = F, max.pixel = 128)
 ##' 
 ##' filterOnCell(trackll, numTracks = 0)
 ##' 
 ##' sampleTracks(trackll, num = 0)
-##' 
-##' displayCellIntensity(folder, max.pixel = 128)
-##' 
-##' displayCellArea(folder, max.pixel = 128)
+
 
 ##' @param folder Full path to the output files.
 ##' @param trackll A list of track lists.
 ##' @param max.pixel Pixel dimension of image
+##' @param minArea Minimum area of cell (pixel sq) for filtering
+##' @param minIntensity Minimum mean intensity of cell (grayscale) for filtering
 ##' @param numTracks Minimum number of required tracks in the trackll
 ##' @param num Number of tracks to randomly sample per trackl in trackll
 
@@ -56,22 +55,17 @@
 ##' If there are more mask files than trackll, masking will fail. If there are less mask files, trackls without masks will be deleted.
 ##' Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
 ##' 
-##' indexCell() separates each trackl by each distinct and separate cell on the mask and combines them together to form the trackll. The cell number is added to the end of the trackl name.
+##' indexCell() will mask a trackll, separate each cell into a trackl, display all cell areas and mean intensities, and then apply any area and intensity filters.
+##' There is also the capability to export the final areas/intensities as "indexCell.csv" to the home directory and the pixel dimensions can be changed.
 ##' 
-##' filterOnCell() eliminates all trackl in trackll that has less than numTracks.
+##' filterOnCell() eliminates all trackl in trackll that has less than numTracks tracks.
 ##' 
-##' sampleTracks() simply randomly samples num number of tracks for each trackl in trackll.
-##' 
-##' From a given folder, displayCellIntensity() displays the average grayscale intensities of each cell
-##' 
-##' From a given folder, displayCellArea() displays the pixel area of each cell
+##' sampleTracks() randomly samples num number of tracks for each trackl in trackll.
 
 ##' @export maskTracks
 ##' @export indexCell
 ##' @export filterOnCell
 ##' @export sampleTracks
-##' @export displayCellIntensity
-##' @export displayCellArea
 
 ##------------------------------------------------------------------------------
 ##
@@ -204,11 +198,14 @@ maskTracks=function(folder, trackll){
     return(masked.tracks)
 }
 
-# TODO: Add area/intensity/track filters on range
-indexCell=function(folder, trackll, max.pixel = 128){
+# Function masks, separates by cell, displays cell areas and mean intensities, and filters.
+indexCell=function(folder, trackll, minArea = 0, minIntensity = 0, export = F, max.pixel = 128){
     
     # Read in mask
     maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
+
+    # Read in nuclear image
+    glowl=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
     
     if (length(maskl)==0){
         cat("No image mask file ending '_MASK.tif' found.\n")
@@ -245,6 +242,9 @@ indexCell=function(folder, trackll, max.pixel = 128){
     cell.count = list()
     length(cell.count)=length(trackll)
     
+    areas=list()
+    intensities=list()
+    
     ## Find all track centers
     track.center=trackCenter(trackll)
     
@@ -252,7 +252,7 @@ indexCell=function(folder, trackll, max.pixel = 128){
     for (i in 1:length(trackll)){
         
         ## Returns all positive mask pixel locations
-        pos.point=maskPoint(maskl[[i]],plot=F)
+        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],plot=F)))
         
         #Instantiate empty
         binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)
@@ -275,7 +275,34 @@ indexCell=function(folder, trackll, max.pixel = 128){
         for (j in 1:nrow(pos.point)) {
             pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]] <- rbind( pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]], pos.point[j,])
         }
+
+        ## Display Area ##
+        cat(maskl.names[[i]], "\n", "Cell Areas (pixels squared): ", "\n", sep = "")
+        areal <- sapply(pos.points.indexed, nrow)
+        cat(cat(areal, sep = "\n"))
+        areas <- append(areas, areal) 
+
         
+        ## Display Intensity ##
+        glow = t(matrix(pixmap::getChannels(rtiff::readTiff(glowl[[i]])), nrow = max.pixel, ncol = max.pixel))
+        raw.intensities = rep(list(list()), max(labeled.mat))
+        for(row in 1:nrow(labeled.mat)) {
+            for(col in 1:ncol(labeled.mat)) {
+                if (labeled.mat[row, col] != 0){
+                    raw.intensities[[labeled.mat[row, col]]][[length(raw.intensities[[labeled.mat[row, col]]])+1]] = glow[row, col]
+                }
+            }
+        }
+        cat("Cell Intensities (grayscale): ", "\n", sep = "")
+        intensityl <- list()
+        for (cell in 1:length(raw.intensities)){
+            intensityl[[cell]] <- mean(unlist(raw.intensities[[cell]]))
+            cat(paste(intensityl[[cell]], "\n"))
+        }
+        cat("\n")
+        intensities <- append(intensities, intensityl) 
+
+
         # Update cell count per trackl
         cell.count[[i]] <- length(pos.points.indexed)
         
@@ -297,6 +324,9 @@ indexCell=function(folder, trackll, max.pixel = 128){
         }
         
     }
+    
+    #print(areas, row.names = FALSE)
+    #print(intensities, row.names = FALSE)
 
     # Edit the names with concatenated cell number to trackl names
     masked.names = list()
@@ -306,7 +336,34 @@ indexCell=function(folder, trackll, max.pixel = 128){
         }
     }
     names(masked.trackll) <- masked.names
-    cat("\nAll files masked.\n")
+    
+    if (export){
+        df <- data.frame(matrix(ncol = 3, nrow = 0))
+        colnames(df) <- c("Cell", "Area (pixel sq)", "Intensity (grayscale)")
+    }
+    
+    # Filter area
+    if (minArea > 0 || minIntensity > 0) {
+        j = 1
+        for(i in 1:length(areas)){
+            if (areas[[i]] < minArea || intensities[[i]] < minIntensity){
+                masked.trackll[[j]] <- NULL;
+            } else {
+                if (export){
+                    df[nrow(df) + 1,] = list(names(masked.trackll)[[j]], areas[[i]], intensities[[i]])
+                }
+                j = j + 1
+            }
+        }
+        cat("\nAll cell areas below ", minArea, " (pixels sq) removed.", sep = "")
+        cat("\nAll cell intensities below ", minIntensity, " (grayscale) removed.", sep = "")
+    }
+    if (export){
+        write.csv(df, file = "indexCell.csv")
+        cat("\nindexCell.csv exported to working directory.")
+    }
+    
+    cat("\n\nAll files masked, separated by cell indexes, and filters applied.\n")
     return(masked.trackll)
 }
 
@@ -334,88 +391,5 @@ sampleTracks = function(trackll, num = 0){
             trackll[[i]] <- sample(trackll[[i]], num)
         }
         return(trackll)
-    }
-}
-
-displayCellIntensity = function(folder, max.pixel = 128){
-    
-    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
-    maskl.names = gsub("_MASK.tif","",basename(maskl))
-    glowl=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
-    
-    for (i in 1:length(maskl)){
-        #Extract raw pixel intensities
-        glow = matrix(pixmap::getChannels(rtiff::readTiff(glowl[[i]])), nrow = max.pixel, ncol = max.pixel)
-        
-        ## Returns all positive mask pixel locations
-        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],plot=F)))
-        #Instantiate empty
-        binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)
-        #Fill with binary pospoints
-        for (m in 1:nrow(pos.point)){
-            binary.mat[pos.point[[1]][[m]], pos.point[[2]][[m]]] = 1
-        }
-        
-        # Calculate connected components and label accordingly
-        labeled.mat <- t(SDMTools::ConnCompLabel(binary.mat))
-        
-        raw.intensities = rep(list(list()), max(labeled.mat))
-        
-        for(row in 1:nrow(labeled.mat)) {
-            for(col in 1:ncol(labeled.mat)) {
-                if (labeled.mat[row, col] != 0){
-                    raw.intensities[[labeled.mat[row, col]]][[length(raw.intensities[[labeled.mat[row, col]]])+1]] = glow[row, col]
-                }
-            }
-        }
-        cat(maskl.names[[i]], "\n", "Cell Intensities (grayscale): ", "\n", sep = "")
-        for (cell in 1:length(raw.intensities)){
-            cat(paste(mean(unlist(raw.intensities[[cell]])), "\n"))
-        }
-        cat("\n")
-    }
-}
-
-displayCellArea=function(folder, max.pixel = 128){
-    
-    # Read in mask
-    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
-    maskl.names = gsub("_MASK.tif","",basename(maskl))
-    
-    if (length(maskl)==0){
-        cat("No image mask file ending '_MASK.tif' found.\n")
-        
-    }
-
-    # Loop through each trackl
-    for (i in 1:length(maskl)){
-        
-        ## Returns all positive mask pixel locations
-        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],plot=F)))
-        
-        #Instantiate empty
-        binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)
-        
-        #Fill with binary pospoints
-        for (m in 1:nrow(pos.point)){
-            binary.mat[pos.point[[1]][[m]], pos.point[[2]][[m]]] = 1
-        }
-        
-        # Calculate connected components and label accordingly
-        labeled.mat <- SDMTools::ConnCompLabel(binary.mat)
-        
-        # FOR VISUALIZING THE LABELED MASK
-        # image(t(labeled.mat[128:1,]),col=c('grey',rainbow(length(unique(labeled.mat))-1)))
-        
-        pos.points.indexed = list()
-        length(pos.points.indexed) = max(labeled.mat)
-        
-        # Convert labeled.mat to lists of pos.points per cell
-        for (j in 1:nrow(pos.point)) {
-            pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]] <- rbind( pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]], pos.point[j,])
-        }
-        
-        cat(maskl.names[[i]], "\n", "Cell Areas (pixels squared): ", "\n", sep = "")
-        cat(cat(sapply(pos.points.indexed, nrow), sep = "\n"), "\n", sep = "")
     }
 }

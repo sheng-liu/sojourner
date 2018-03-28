@@ -8,15 +8,11 @@
 \usage{
 maskTracks(folder, trackll)
 
-indexCell(folder, trackll, max.pixel = 128)
+indexCell(folder, trackll, minArea = 0, minIntensity = 0, export = F, max.pixel = 128)
 
 filterOnCell(trackll, numTracks = 0)
 
 sampleTracks(trackll, num = 0)
-
-displayCellIntensity(folder, max.pixel = 128)
-
-displayCellArea(folder, max.pixel = 128)
 }
 \arguments{
 \item{folder}{Full path to the output files.}
@@ -24,6 +20,10 @@ displayCellArea(folder, max.pixel = 128)
 \item{trackll}{A list of track lists.}
 
 \item{max.pixel}{Pixel dimension of image}
+
+\item{minArea}{Minimum area of cell (pixel sq) for filtering}
+
+\item{minIntensity}{Minimum mean intensity of cell (grayscale) for filtering}
 
 \item{numTracks}{Minimum number of required tracks in the trackll}
 
@@ -38,15 +38,12 @@ Note the mask file should have the same name as the output files with a "_MASK.t
 If there are more mask files than trackll, masking will fail. If there are less mask files, trackls without masks will be deleted.
 Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
 
-indexCell() separates each trackl by each distinct and separate cell on the mask and combines them together to form the trackll. The cell number is added to the end of the trackl name.
+indexCell() will mask a trackll, separate each cell into a trackl, display all cell areas and mean intensities, and then apply any area and intensity filters.
+There is also the capability to export the final areas/intensities as "indexCell.csv" to the home directory and the pixel dimensions can be changed.
 
-filterOnCell() eliminates all trackl in trackll that has less than numTracks.
+filterOnCell() eliminates all trackl in trackll that has less than numTracks tracks.
 
-sampleTracks() simply randomly samples num number of tracks for each trackl in trackll.
-
-From a given folder, displayCellIntensity() displays the average grayscale intensities of each cell
-
-From a given folder, displayCellArea() displays the pixel area of each cell
+sampleTracks() randomly samples num number of tracks for each trackl in trackll.
 }
 \examples{
 #Basic masking with folder path with image masks
