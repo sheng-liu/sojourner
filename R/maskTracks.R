@@ -13,7 +13,7 @@
 ##' @usage
 ##' maskTracks(folder, trackll)
 ##' 
-##' indexCell(folder, trackll, minArea = 0, minIntensity = 0, export = F, max.pixel = 128)
+##' indexCell(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(0, Inf), export = F, max.pixel = 128)
 ##' 
 ##' filterOnCell(trackll, numTracks = 0)
 ##' 
@@ -23,8 +23,8 @@
 ##' @param folder Full path to the output files.
 ##' @param trackll A list of track lists.
 ##' @param max.pixel Pixel dimension of image
-##' @param minArea Minimum area of cell (pixel sq) for filtering
-##' @param minIntensity Minimum mean intensity of cell (grayscale) for filtering
+##' @param areaFilter Range of cell areas (pixel sq) to keep in filtering
+##' @param intensityFilter Range of avg cell intensities (grayscale) to keep in filtering
 ##' @param numTracks Minimum number of required tracks in the trackll
 ##' @param num Number of tracks to randomly sample per trackl in trackll
 
@@ -199,7 +199,7 @@ maskTracks=function(folder, trackll){
 }
 
 # Function masks, separates by cell, displays cell areas and mean intensities, and filters.
-indexCell=function(folder, trackll, minArea = 0, minIntensity = 0, export = F, max.pixel = 128){
+indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(0, Inf), export = F, max.pixel = 128){
     
     # Read in mask
     maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
@@ -342,22 +342,20 @@ indexCell=function(folder, trackll, minArea = 0, minIntensity = 0, export = F, m
         colnames(df) <- c("Cell", "Area (pixel sq)", "Intensity (grayscale)")
     }
     
-    # Filter area
-    if (minArea > 0 || minIntensity > 0) {
-        j = 1
-        for(i in 1:length(areas)){
-            if (areas[[i]] < minArea || intensities[[i]] < minIntensity){
-                masked.trackll[[j]] <- NULL;
-            } else {
-                if (export){
-                    df[nrow(df) + 1,] = list(names(masked.trackll)[[j]], areas[[i]], intensities[[i]])
-                }
-                j = j + 1
+    # Filter
+    j = 1
+    for(i in 1:length(areas)){
+        if (areas[[i]] > areaFilter[[2]] || areas[[i]] < areaFilter[[1]] || intensities[[i]] > intensityFilter[[2]] || intensities[[i]] < intensityFilter[[1]]){
+            masked.trackll[[j]] <- NULL;
+        } else {
+            if (export){
+                df[nrow(df) + 1,] = list(names(masked.trackll)[[j]], areas[[i]], intensities[[i]])
             }
+            j = j + 1
         }
-        cat("\nAll cell areas below ", minArea, " (pixels sq) removed.", sep = "")
-        cat("\nAll cell intensities below ", minIntensity, " (grayscale) removed.", sep = "")
     }
+    cat("\nOnly cell with areas between ", areaFilter[[1]], " and ", areaFilter[[2]], " pixels sq kept.", sep = "")
+    cat("\nOnly cell with avg intensities between ", intensityFilter[[1]], " and ", intensityFilter[[2]], " grayscale kept.", sep = "")
     if (export){
         write.csv(df, file = "indexCell.csv")
         cat("\nindexCell.csv exported to working directory.")

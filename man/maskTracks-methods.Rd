@@ -8,7 +8,7 @@
 \usage{
 maskTracks(folder, trackll)
 
-indexCell(folder, trackll, minArea = 0, minIntensity = 0, export = F, max.pixel = 128)
+indexCell(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(0, Inf), export = F, max.pixel = 128)
 
 filterOnCell(trackll, numTracks = 0)
 
@@ -21,9 +21,9 @@ sampleTracks(trackll, num = 0)
 
 \item{max.pixel}{Pixel dimension of image}
 
-\item{minArea}{Minimum area of cell (pixel sq) for filtering}
+\item{areaFilter}{Range of cell areas (pixel sq) to keep in filtering}
 
-\item{minIntensity}{Minimum mean intensity of cell (grayscale) for filtering}
+\item{intensityFilter}{Range of avg cell intensities (grayscale) to keep in filtering}
 
 \item{numTracks}{Minimum number of required tracks in the trackll}
 
