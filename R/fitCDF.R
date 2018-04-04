@@ -14,13 +14,13 @@
 ##'
 ##' fitCDF((cdf, components=c("one","two","three"),
 ##'         start=list(
-##'             oneCompFit=list(D=c(1e-3,2)),
-##'             twoCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)),
-##'             threeCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
-##'                               alpha=c(1e-3,1),beta=c(1e-3,1))),
+##'             oneCompFit=list(D=c(0,2)),
+##'             twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
+##'             threeCompFit=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
+##'                               alpha=c(0,1),beta=c(0,1))),
 ##'         t.interval=0.01,
-##'         maxiter.search=1e3,
-##'         maxiter.optim=1e3,
+##'         maxiter.search=1000,
+##'         maxiter.optim=1000,
 ##'         output=F,
 ##'         seed=NULL)
 ##'
@@ -39,7 +39,7 @@
 ##' }
 ##' @details calculating Dceof by fitting displacementCDF.
 ##'
-##' Reducing the range can greatly increase the precision of the searching; alternatively, if the range are unavailable, increase the maxiter.search so more points will be searched through with the cost of computation time. maxiter.optim barely need to change, if it does not converge with default setting maxiter=1e3, most likely the problem is in the initial values.
+##' Reducing the range can greatly increase the precision of the searching; alternatively, if the range are unavailable, increase the maxiter.search so more points will be searched through with the cost of computation time. maxiter.optim barely need to change, if it does not converge with default setting maxiter=1000, most likely the problem is in the initial values.
 
 ##'
 ##' @examples
@@ -53,7 +53,7 @@
 ##' # specify ranges of parameter value of interest
 ##' fitCDF(cdf,components="two",
 ##'       start=list(
-##'                 twoCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)))
+##'                 twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)))
 ##'                 )
 ##'
 ##' # repeat a fit
@@ -89,7 +89,7 @@
 # one component fit
 # library(truncnorm)
 
-one.comp.fit=function(r,P,start=list(D=c(1e-3,3)),t.interval=0.01,maxiter.optim=1e3,name){
+one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,maxiter.optim=1000,name){
     # with one parameter, D
     p1 = function(r,D){1 - exp(-r^2/(4*D*t.interval))}
 
@@ -128,11 +128,13 @@ one.comp.fit=function(r,P,start=list(D=c(1e-3,3)),t.interval=0.01,maxiter.optim=
 # ------------------------------------------------------------------------------
 # two components fit
 
-two.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)),t.interval=0.01,maxiter.search=1e3,maxiter.optim=1e3,name){
+two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
+                      t.interval=0.01,maxiter.search=1000,maxiter.optim=1000,name){
 
     ## equation
     p3 =function(r,D1,D2,alpha){
-        1 - (alpha*exp(-r^2/(4*D1*t.interval)) + (1-alpha)*exp(-r^2/(4*D2*t.interval)))}
+        1 - (alpha*exp(-r^2/(4*D1*t.interval)) + 
+                 (1-alpha)*exp(-r^2/(4*D2*t.interval)))}
 
     title=paste("Two components fit -",name)
     cat("\n\n","==>",title,"\n")
@@ -145,12 +147,20 @@ two.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)),
 
     print(coef(r.search.tcfit))
 
-    ## local optimization using nlsLM
+    ## local optimization using minpack.lm::nlsLM
     cat("\nLocal optimization...\n\n")
-    tcfit=nlsLM(P ~ p3(r,D1,D2,alpha),
+
+    tcfit=minpack.lm::nlsLM(P ~ p3(r,D1,D2,alpha),
                 start=coef(r.search.tcfit),
-                lower=c(0,0,0),
-                upper=c(Inf,Inf,1))
+                # three paramert ~D1, D2, alpha
+                lower=c(start$D1[[1]],start$D2[[1]],start$alpha[[1]]),
+                upper=c(start$D1[[2]],start$D2[[2]],start$alpha[[2]]),
+                
+                # barely need control of maxiter for minpack.lm::nlsLM, if it does not
+                # converge with default setting maxiter=1024, most likely the
+                # problem is in the initial values
+                control = nls.control(maxiter = maxiter.optim)
+                )
 
     print(tcfit);cat("\n")
     
@@ -177,9 +187,9 @@ two.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)),
 # ------------------------------------------------------------------------------
 # three components fit
 
-three.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
-                                       alpha=c(1e-3,1),beta=c(1e-3,1)),
-                        t.interval=0.01,maxiter.search=1e3,maxiter.optim=1e3,name){
+three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
+                                       alpha=c(0,1),beta=c(0,1)),
+                        t.interval=0.01,maxiter.search=1000,maxiter.optim=1000,name){
 
 
     ## equation
@@ -206,15 +216,18 @@ three.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
 
     print(coef(r.search.thcfit))
 
-    ## local optimization using nlsLM
+    ## local optimization using minpack.lm::nlsLM
     ## from minpack.lm for low or zero noise data
     cat("\nLocal optimization...\n\n")
-    thcfit=nlsLM(P ~ p5(r,D1,D2,D3,alpha,beta),
+    thcfit=minpack.lm::nlsLM(P ~ p5(r,D1,D2,D3,alpha,beta),
                  start=coef(r.search.thcfit),
-                 lower=c(0,0,0,0,0),
-                 upper=c(Inf,Inf,Inf,1,1),
+                 # lower=c(0,0,0,0,0),
+                 # upper=c(Inf,Inf,Inf,1,1),
+                 
+                 lower=c(start$D1[[1]],start$D2[[1]],start$D3[[1]],start$alpha[1],start$beta[[1]]),
+                 upper=c(start$D1[[2]],start$D2[[2]],start$D3[[2]],start$alpha[[2]],start$beta[[2]]),
 
-                 # barely need control of maxiter for nlsLM, if it does not
+                 # barely need control of maxiter for minpack.lm::nlsLM, if it does not
                  # converge with default setting maxiter=1024, most likely the
                  # problem is in the initial values
                  control = nls.control(maxiter = maxiter.optim)
@@ -225,11 +238,13 @@ three.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
     pdf(paste(Sys.time(), ".pdf", sep = ""))
     ## plot
     plot(r,P,main=title,cex=0.3)
-    curve(p5(x,coef(thcfit)["D1"],coef(thcfit)["D2"],coef(thcfit)["D3"],coef(thcfit)["alpha"],coef(thcfit)["beta"]),add=T,col="red")
+    curve(p5(x,coef(thcfit)["D1"],coef(thcfit)["D2"],coef(thcfit)["D3"],
+             coef(thcfit)["alpha"],coef(thcfit)["beta"]),add=T,col="red")
     dev.off()
     
     plot(r,P,main=title,cex=0.3)
-    curve(p5(x,coef(thcfit)["D1"],coef(thcfit)["D2"],coef(thcfit)["D3"],coef(thcfit)["alpha"],coef(thcfit)["beta"]),add=T,col="red")
+    curve(p5(x,coef(thcfit)["D1"],coef(thcfit)["D2"],coef(thcfit)["D3"],
+             coef(thcfit)["alpha"],coef(thcfit)["beta"]),add=T,col="red")
 
     return(thcfit)
 
@@ -243,13 +258,13 @@ three.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
 ##' @export fitCDF
 .fitCDF=function(cdf, components=c("one","two","three"),
                 start=list(
-                    oneCompFit=list(D=c(1e-3,2)),
-                    twoCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)),
-                    threeCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
-                                      alpha=c(1e-3,1),beta=c(1e-3,1))),
+                    oneCompFit=list(D=c(0,2)),
+                    twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
+                    threeCompFit=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
+                                      alpha=c(0,1),beta=c(0,1))),
                 t.interval=0.01,
-                maxiter.search=1e3,
-                maxiter.optim=1e3,
+                maxiter.search=1000,
+                maxiter.optim=1000,
                 output=F){
 
     # use lapply to do it for all folders
@@ -323,13 +338,13 @@ three.comp.fit=function(r,P,start=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
 
 fitCDF=function(cdf, components=c("one","two","three"),
                 start=list(
-                    oneCompFit=list(D=c(1e-3,2)),
-                    twoCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)),
-                    threeCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
-                                      alpha=c(1e-3,1),beta=c(1e-3,1))),
+                    oneCompFit=list(D=c(0,2)),
+                    twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
+                    threeCompFit=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
+                                      alpha=c(0,1),beta=c(0,1))),
                 t.interval=0.01,
-                maxiter.search=1e3,
-                maxiter.optim=1e3,
+                maxiter.search=1000,
+                maxiter.optim=1000,
                 output=F,
                 seed=NULL){
 
@@ -369,3 +384,12 @@ fitCDF=function(cdf, components=c("one","two","three"),
 #   plot(density(r),main="distribution of displacement r")
 
 ## output summary into csv files
+
+
+# the range of diffusion coefficient
+# In dilute aqueous solutions the diffusion coefficients of most ions are
+# similar and have values that at room temperature are in the range of 0.6 ×
+# 10−9 to 2 × 10−9 m2/s. For biological molecules the diffusion coefficients
+# normally range from 10−11 to 10−10 m2/s.
+
+# https://en.wikipedia.org/wiki/Fick%27s_laws_of_diffusion

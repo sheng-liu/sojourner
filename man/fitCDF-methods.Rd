@@ -8,13 +8,13 @@
 \usage{
 fitCDF((cdf, components=c("one","two","three"),
         start=list(
-            oneCompFit=list(D=c(1e-3,2)),
-            twoCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)),
-            threeCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),D3=c(1e-3,2),
-                              alpha=c(1e-3,1),beta=c(1e-3,1))),
+            oneCompFit=list(D=c(0,2)),
+            twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
+            threeCompFit=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
+                              alpha=c(0,1),beta=c(0,1))),
         t.interval=0.01,
-        maxiter.search=1e3,
-        maxiter.optim=1e3,
+        maxiter.search=1000,
+        maxiter.optim=1000,
         output=F,
         seed=NULL)
 }
@@ -48,7 +48,7 @@ Caclulate apparent diffusion coefficient (Dcoef) for
 \details{
 calculating Dceof by fitting displacementCDF.
 
-Reducing the range can greatly increase the precision of the searching; alternatively, if the range are unavailable, increase the maxiter.search so more points will be searched through with the cost of computation time. maxiter.optim barely need to change, if it does not converge with default setting maxiter=1e3, most likely the problem is in the initial values.
+Reducing the range can greatly increase the precision of the searching; alternatively, if the range are unavailable, increase the maxiter.search so more points will be searched through with the cost of computation time. maxiter.optim barely need to change, if it does not converge with default setting maxiter=1000, most likely the problem is in the initial values.
 }
 \examples{
 
@@ -61,7 +61,7 @@ cdf=displacementCDF(trackll,dt=1,plot=F,output=F)
 # specify ranges of parameter value of interest
 fitCDF(cdf,components="two",
       start=list(
-                twoCompFit=list(D1=c(1e-3,2),D2=c(1e-3,2),alpha=c(1e-3,1)))
+                twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)))
                 )
 
 # repeat a fit
