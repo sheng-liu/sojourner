@@ -12,7 +12,7 @@ createTrackll(interact = F, folder, input = 1, ab.track = F, cores = 1, frameRec
 
 \item{folder}{Full path output file folder (if they are .txt, ensure that they are either all Diatrack or all SlimFast).}
 
-\item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).}
+\item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4; Utrack .mat file = 5).}
 
 \item{ab.track}{Use absolute coordinates for tracks.}
 
@@ -21,10 +21,10 @@ createTrackll(interact = F, folder, input = 1, ab.track = F, cores = 1, frameRec
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.}
 }
 \description{
-take in Diatrack (.txt or .mat), ImageJ (.csv), or SlimFast (.txt) input from a folder to output a list of track lists with the option to record frames and use multiple cores.
+take in Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or Utrack (.mat) input from a folder to output a list of track lists with the option to record frames and use multiple cores.
 }
 \details{
-It is highly advised that the frame record option be left on to preserve the most information, especially when linking frames.
+It is highly advised that the frame record option be left on to preserve the most information, especially when linking frames and when using Utrack.
 If the frame record option is turned on for reading Diatrack .txt files (input = 1), take note that the frame record is artificially created as consecutive frames after the given start frame.
 Otherwise, all other data types naturally record the frames of every coordinate point.
 
