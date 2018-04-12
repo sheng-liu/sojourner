@@ -82,7 +82,7 @@
 ## displacement.track
 ## displacement for a single data.frame
 ##' @export displacement.track
-displacement.track=function(track,dt=6,resolution=0.107,bivar=F){
+displacement.track=function(track,dt=1,resolution=0.107,bivar=F){
 
     # validity check for dt less than track length
     if (dt >(dim(track)[1]-1)){
@@ -119,6 +119,7 @@ displacement.track=function(track,dt=6,resolution=0.107,bivar=F){
         if(bivar==T){
 
             # get the displacement at that dt
+            # FIX: this appears no use in this calculation, as it is not returned in anyway
             displacement=track.disp[[dt]]["displacement"]
             displacement=displacement[!is.na(displacement)]
 
@@ -153,7 +154,7 @@ displacement.track=function(track,dt=6,resolution=0.107,bivar=F){
 ## calculate displacement for a list of data.frame
 
 ## calculate displacement.track for trackl (list of data.frame) one level
-displacement.trackl=function(trackl,dt=6,resolution=0.107,bivar=F){
+displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=F){
 
     # validity check for max track length greater than dt
     track.len=sapply(trackl,function(x) dim(x)[1])
@@ -190,9 +191,12 @@ displacement.trackl=function(trackl,dt=6,resolution=0.107,bivar=F){
         cat("\n",length(trackl.dt),"tracks satisfy dt =",i,"\n")
 
         num.tracks[i]=length(trackl.dt)
-        displacement.individual=sapply(trackl.dt,function(x){
-            displacement.track(
-                track=x,dt=i,resolution=resolution,bivar=bivar)},simplify = F)
+        
+
+            displacement.individual=sapply(trackl.dt,function(x){
+                displacement.track(
+                    track=x,dt=i,resolution=resolution,bivar=bivar)},simplify = F)
+        
 
         # as the result is of different length, the output is a list
     }
@@ -227,8 +231,8 @@ displacement.trackl=function(trackl,dt=6,resolution=0.107,bivar=F){
 
 ##------------------------------------------------------------------------------
 ## displacement.trackll
-
-displacement.trackll=function(trackll,dt=6,resolution=0.107,bivar=F){
+##'@export displacement.trackll
+displacement.trackll=function(trackll,dt=1,resolution=0.107,bivar=F){
 
 
     displacement.trackll.lst=lapply(trackll,function(x){
@@ -261,6 +265,14 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
         InidvidualDisplacement[[i]]=dp[[i]]["InidvidualDisplacement"]
     }
 
+    # FIXed: this collaps does not work for bivariate, it only outputs dx
+    # when collaps into one variable,dx dy shoudl be changed to displacement
+    # which was not output from displacment.trackll, however one can de novo calculate it here
+    # now if it is bivar, it changes it (dx, dy) into single virate r
+    # cause for CDF, we are only looking at single variable displacement
+    # it is only for hmm, the model was build on bivariable x, y, rather than displacement alone
+    # use displacement.trackll for that purpose. 
+    
     # collapse all dp at dt
     dp.dt=list()
     length(dp.dt)=length(dp)
@@ -268,10 +280,14 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
     for ( i in 1:length(dp)){
         # InidvidualDisplacement[[i]][[1]] # the [[1]] is to move it one level
         # off "IndividualDisplacement"
-        dp.dt[[i]]=lapply(InidvidualDisplacement[[i]][[1]],function(x){
-            x[dt]
-        })
-
+        if (bivar==F){
+            dp.dt[[i]]=lapply(InidvidualDisplacement[[i]][[1]],function(x){
+                x[dt]})
+            }else{
+                dp.dt[[i]]=lapply(InidvidualDisplacement[[i]][[1]],function(x){
+                    sqrt(x["dx"]^2+x["dy"]^2)
+                    })
+                }
     }
 
     # reshape for plotting and output
