@@ -22,6 +22,8 @@
 
 ##' @details
 ##' 
+##' (Note: When reading only Diatrack .mat sessipn files (input = 2), intensities will be saved after the frame column)
+##' 
 ##' It is highly advised that the frame record option be left on to preserve the most information, especially when linking frames and when using Utrack.
 ##' If the frame record option is turned on for reading Diatrack .txt files (input = 1), take note that the frame record is artificially created as consecutive frames after the given start frame.
 ##' Otherwise, all other data types naturally record the frames of every coordinate point.

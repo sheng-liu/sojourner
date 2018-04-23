@@ -28,6 +28,8 @@
 ##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
 ##' 
 ##' (Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+##' 
+##' (Note: readDiaSessions supports reading in intensity values)
 
 ##' @examples
 ##' #Basic function call of .readDiaSessions
@@ -160,10 +162,11 @@
             RefinedCooX = round(data[frame][[1]][[1]][[2]][[index]], 2);
             RefinedCooY = round(data[frame][[1]][[1]][[1]][[index]], 2);
             RefinedCooZ = round(data[frame][[1]][[1]][[3]][[index]], digits = 1);
+            Intensity = round(data[frame][[1]][[1]][[4]][[index]], 2);
             if (frameRecord){
-                track <- rbind(track, data.frame("x" = RefinedCooX, "y" = RefinedCooY, "z" = RefinedCooZ, "Frame" = frame));
+                track <- rbind(track, data.frame("x" = RefinedCooX, "y" = RefinedCooY, "z" = RefinedCooZ, "Frame" = frame, "Intensity" = Intensity));
             } else {
-                track <- rbind(track, data.frame("x" = RefinedCooX, "y" = RefinedCooY, "z" = RefinedCooZ));
+                track <- rbind(track, data.frame("x" = RefinedCooX, "y" = RefinedCooY, "z" = RefinedCooZ, "Intensity" = Intensity));
             }
             if (data[frame][[1]][[1]][[succ]][[index]] != 0) {
                 index = data[frame][[1]][[1]][[succ]][[index]];
