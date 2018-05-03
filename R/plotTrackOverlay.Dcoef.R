@@ -161,12 +161,12 @@
     box()
     for(k in c(1:length(trackl))){
       lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*resolution,
-            col=cl[(Dcoef[k]-min(Dcoef))/(max(Dcoef)-min(Dcoef))*100+1],lwd=0.05)
+            col=cl[(Dcoef[k]-Dcoef.range[1])/(Dcoef.range[2]-Dcoef.range[1])*100+1],lwd=0.05)
       
     }
     
     ## Add color gradient legend to the right edge of each plot.
-    .legend.col(col = cl, lev = Dcoef)
+    .legend.col(col = cl, lev = Dcoef.range)
     
     ## Add parameters and track number (n) as text legend to the topright corner of each plot.
     legend=c(paste("dt = ",dt),as.expression(bquote('Rsquare'>=.(rsquare))), 
@@ -221,7 +221,7 @@
        xaxt = "n", xlab = "",
        frame.plot = FALSE)
   axis(side = 4, las = 2, tick = FALSE, line = .25,col.axis="white")
-  par <- opar
+  par (opar)
 }
 
 
