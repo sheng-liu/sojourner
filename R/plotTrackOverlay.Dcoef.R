@@ -161,7 +161,7 @@
     box()
     for(k in c(1:length(trackl))){
       lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*resolution,
-            col=cl[(Dcoef[k]-min(Dcoef))/(max(Dcoef)-min(Dcoef))*100+1],lwd=0.05)
+            col=cl[(Dcoef[k]-Dcoef.range[1])/(Dcoef.range[2]-Dcoef.range[1])*100+1],lwd=0.05)
       
     }
     
@@ -221,7 +221,7 @@
        xaxt = "n", xlab = "",
        frame.plot = FALSE)
   axis(side = 4, las = 2, tick = FALSE, line = .25,col.axis="white")
-  par <- opar
+  par (opar)
 }
 
 
