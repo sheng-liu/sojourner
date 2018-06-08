@@ -31,6 +31,7 @@
 ##' @param color colors to interpolate to build the color gradient/ramp.
 ##' @param folder Path to provide nuclear glow backround. Images should end with "_Nuclei.tif". Default is NULL and not adding background.
 ##' @param file.No Select file(s) in the folder to plot. Default 0 for plotting all files in the folder.
+##' @param line.width Line width for plotted tracks, default is 0.1.
 ##' @return
 ##' \itemize{
 ##' \item{PDF:} One PDF file with one plot on each page.
@@ -68,7 +69,7 @@
 ## Function for plotting trajectory overlay with color coded by Dcoef
 .plotTrackOverlay.Dcoef<-function(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
                           t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
-                          folder=NULL,file.No=0){
+                          folder=NULL,file.No=0,line.width=0.1){
 
   ## Import trackll (un-merged) information
   if (length(file.No)>1&min(file.No)==0){
@@ -161,7 +162,7 @@
     box()
     for(k in c(1:length(trackl))){
       lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*resolution,
-            col=cl[(Dcoef[k]-Dcoef.range[1])/(Dcoef.range[2]-Dcoef.range[1])*100+1],lwd=0.05)
+            col=cl[(Dcoef[k]-Dcoef.range[1])/(Dcoef.range[2]-Dcoef.range[1])*100+1],lwd=line.width)
       
     }
     
@@ -229,13 +230,13 @@
 ## Function for outputting the plots into one multipage PDF file in the working directory.
 plotTrackOverlay.Dcoef<-function(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
                          t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
-                         folder=NULL,file.No=0){
+                         folder=NULL,file.No=0,line.width=0.1){
   ## Output the plots into one PDF file in the working directory.
   pdf(paste("plotTrackOverlay.Dcoef.Heatmap--",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
 
   .plotTrackOverlay.Dcoef(trackll=trackll,scale=scale,dt=dt,filter=filter,resolution=resolution,rsquare=rsquare,
                   t.interval=t.interval,Dcoef.range=Dcoef.range,color=color, 
-                  folder=folder,file.No=file.No)
+                  folder=folder,file.No=file.No,line.width = line.width)
   
   dev.off()
   
