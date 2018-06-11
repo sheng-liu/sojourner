@@ -275,7 +275,7 @@ msd.trackll=function(trackll,dt=6,resolution=0.107,cores=1){
 
     # detect number of cores
     # FUTURE: if cores more than one, automatic using multicore
-    max.cores=parallel::detectCores(logical=F)
+    max.cores=parallel::detectCores(logical=T)
 
     if (cores==1){
 

@@ -138,7 +138,7 @@
 exportTrackll = function(trackll, cores = 1){
     
     # detect number of cores
-    max.cores=parallel::detectCores(logical=F)
+    max.cores=parallel::detectCores(logical=T)
     
     if (cores==1){
         export = lapply(trackll,function(x){

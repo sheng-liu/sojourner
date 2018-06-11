@@ -228,7 +228,7 @@ readDiaSessions = function(folder, ab.track = F, cores = 1, frameRecord = T){
     # first level list of file names and
     # second level list of data.frames
     
-    max.cores = parallel::detectCores(logical = F)
+    max.cores = parallel::detectCores(logical=T)
     
     if (cores == 1){
         

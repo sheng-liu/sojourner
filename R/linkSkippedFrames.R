@@ -170,7 +170,7 @@
 linkSkippedFrames = function(trackll, tolerance, maxSkip, cores = 1){
     
     # detect number of cores
-    max.cores=parallel::detectCores(logical=F)
+    max.cores=parallel::detectCores(logical=T)
     
     if (cores==1){
         link.trackll = lapply(trackll,function(x){
