@@ -6,7 +6,7 @@
 \alias{dispVariance.track}
 \title{dispVariance}
 \usage{
-dispVariance(trackll, min=7)
+dispVariance(trackll, min=7, plot=F, limits=c(), log = F)
 }
 \arguments{
 \item{trackll}{Track list output from readDiatrack().}
@@ -59,7 +59,7 @@ dispVars = dispVariance(trackll)
 dispVars = dispVariance(trackll, min=3)
 
 # display plot only within certain range
-dispVariance(tt, plot=T, limits = c(0,0.002))
+dispVariance(trackll, plot=T, limits = c(0,0.002))
 
 # display plot with log-scale applied
 dispVars = dispVariance(trackll, min=3, plot=T, log=T)
