@@ -6,7 +6,7 @@
 \alias{dispVariance.track}
 \title{dispVariance}
 \usage{
-dispVariance(trackll, min=7)
+dispVariance(trackll, min=7, plot=F, limits=c(), log=F, output=F)
 }
 \arguments{
 \item{trackll}{Track list output from readDiatrack().}
@@ -20,6 +20,8 @@ This will not affect the returned result.}
 
 \item{log}{default: False, if true, apply log10 to variance value for new spread.
 like limits, this will only affect the plot, not the returned value.}
+
+\item{output}{if True, generate a csv output for each tracklist files that are in trackll.}
 }
 \value{
 \itemize{
@@ -59,9 +61,12 @@ dispVars = dispVariance(trackll)
 dispVars = dispVariance(trackll, min=3)
 
 # display plot only within certain range
-dispVariance(tt, plot=T, limits = c(0,0.002))
+dispVariance(trackll, plot=T, limits = c(0,0.002))
 
 # display plot with log-scale applied
 dispVars = dispVariance(trackll, min=3, plot=T, log=T)
+
+# display plot and get .csv files
+dispVars = dispVariance(trackll, min=3, plot=T, output=T)
 
 }

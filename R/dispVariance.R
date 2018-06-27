@@ -13,7 +13,7 @@
 ##'   and return the variances for the dispacements of each trajectories.
 ##' 
 ##' @usage
-##'   dispVariance(trackll, min=7)
+##'   dispVariance(trackll, min=7, plot=F, limits=c(), log=F, output=F)
 ##' @param trackll Track list output from readDiatrack().
 ##' @param min minimum points on trajectory, should be at least 3 to work.
 ##' @param plot default: False, if true, show density plot for variances.
@@ -21,6 +21,7 @@
 ##' This will not affect the returned result.
 ##' @param log default: False, if true, apply log10 to variance value for new spread.
 ##' like limits, this will only affect the plot, not the returned value.
+##' @param output if True, generate a csv output for each tracklist files that are in trackll.
 ##' @return \itemize{
 ##' \item{Variances} calculated variacne for all trakcs in trackll}
 ##' 
@@ -36,10 +37,13 @@
 ##' dispVars = dispVariance(trackll, min=3)
 ##' 
 ##' # display plot only within certain range
-##' dispVariance(tt, plot=T, limits = c(0,0.002))
+##' dispVariance(trackll, plot=T, limits = c(0,0.002))
 ##' 
 ##' # display plot with log-scale applied
 ##' dispVars = dispVariance(trackll, min=3, plot=T, log=T)
+##' 
+##' # display plot and get .csv files
+##' dispVars = dispVariance(trackll, min=3, plot=T, output=T)
 ##' 
 ##' @details 
 ##' dispVariance applies the squareDisp function to each dataframe
@@ -66,6 +70,7 @@
 
 ##calculate variance for displacements single track
 
+##' @export dispVariance.track
 dispVariance.track=function(track) {
     withDisp = squareDisp(track) # get displacement
     sqDisp = withDisp[[1]][7] #[[1]] is necessary b/c squaredisplacement give a list in result
@@ -97,7 +102,8 @@ dispVariance.trackl=function(trackl) {
 ##limits on the variance range can be set by providing a  vector
 ## of length 2.
 
-dispVariance=function(trackll, min=7, plot=F, limits=c(), log = F) {
+##' @export dispVariance
+dispVariance=function(trackll, min=7, plot=F, limits=c(), log=F, output=F) {
     if (min < 3) {
         stop("min value should be at least 3")
     }
@@ -106,24 +112,34 @@ dispVariance=function(trackll, min=7, plot=F, limits=c(), log = F) {
     filtered=filterTrack(trackll, filter=c(min=min, max=Inf))
     result=lapply(filtered, dispVariance.trackl)
     
-    if (plot) {
-       melted=melt(result) #convert to dataframe
-       #rename columns to more reasonable ones
-       names(melted)=c("variance", "track", "trackList")
-       
+    if (plot==T) {
+        melted=melt(result) #convert to dataframe
+        #rename columns to more reasonable ones
+        names(melted)=c("variance", "track.name", "trackList")
        if (log) {
-           #names(melted)=c("variance", "track", "trackList")
            melted$variance=log10(melted$variance)
        }
        
        #different tracklists will show up as different colors with some transparency
-       plt=ggplot(melted, aes(x=variance, fill=trackList)) + geom_density(alpha=0.5)
+       plt=ggplot(melted, aes(x=variance,  fill=trackList)) + geom_line(alpha=0.5, position="identity", stat="density")
        if (length(limits) != 2) {
            plot(plt)
        }
        else {
            plot(plt + xlim(limits)) #apply range limits
        }
+    }
+    
+    if (output==T) {
+        for (i in 1:length(result)) {
+            track.df = reshape2::melt(a[[i]])
+            names(track.df) = c("dispVariance", "track.name")
+            track.df = track.df[,c(2,1)]
+            fileName=paste("DispVariance Individual-",
+                           .timeStamp(names(a)[i]),".csv",sep="")
+            cat("\nOutput dispVariance for individual trajectories.\n")
+            write.csv(file=fileName,track.df)
+        }
     }
     return(result)
 }
