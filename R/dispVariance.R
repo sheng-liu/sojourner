@@ -13,7 +13,7 @@
 ##'   and return the variances for the dispacements of each trajectories.
 ##' 
 ##' @usage
-##'   dispVariance(trackll, min=7, plot=F, limits=c(), log=F, output=F)
+##' dispVariance(trackll, min=7, plot=F, limits=c(), log=F, output=F)
 ##' @param trackll Track list output from readDiatrack().
 ##' @param min minimum points on trajectory, should be at least 3 to work.
 ##' @param plot default: False, if true, show density plot for variances.
@@ -62,6 +62,8 @@
 ##' Generally, when plotting, you would want to use only one of limits
 ##' or log. Although you may use both, using only one of the two would
 ##' do the job.
+##' 
+##' @export dispVariance
 
 ##########################################################################################
 
