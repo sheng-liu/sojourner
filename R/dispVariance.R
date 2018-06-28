@@ -115,7 +115,7 @@ dispVariance=function(trackll, min=7, plot=F, limits=c(), log=F, output=F) {
     result=lapply(filtered, dispVariance.trackl)
     
     if (plot==T) {
-        melted=melt(result) #convert to dataframe
+        melted=reshape2::melt(result) #convert to dataframe
         #rename columns to more reasonable ones
         names(melted)=c("variance", "track.name", "trackList")
        if (log) {
@@ -123,22 +123,22 @@ dispVariance=function(trackll, min=7, plot=F, limits=c(), log=F, output=F) {
        }
        
        #different tracklists will show up as different colors with some transparency
-       plt=ggplot(melted, aes(x=variance,  fill=trackList)) + geom_line(alpha=0.5, position="identity", stat="density")
+       plt=ggplot2::ggplot(melted, ggplot2::aes(x=variance,  color=trackList)) + ggplot2::geom_line(alpha=0.5, position="identity", stat="density")
        if (length(limits) != 2) {
            plot(plt)
        }
        else {
-           plot(plt + xlim(limits)) #apply range limits
+           plot(plt + ggplot2::xlim(limits)) #apply range limits
        }
     }
     
     if (output==T) {
         for (i in 1:length(result)) {
-            track.df = reshape2::melt(a[[i]])
+            track.df = reshape2::melt(result[[i]])
             names(track.df) = c("dispVariance", "track.name")
             track.df = track.df[,c(2,1)]
             fileName=paste("DispVariance Individual-",
-                           .timeStamp(names(a)[i]),".csv",sep="")
+                           .timeStamp(names(result)[i]),".csv",sep="")
             cat("\nOutput dispVariance for individual trajectories.\n")
             write.csv(file=fileName,track.df)
         }
