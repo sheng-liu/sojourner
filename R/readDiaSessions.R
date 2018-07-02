@@ -100,6 +100,10 @@
         temp <- data[1][[1]][[1]][[8]]; 
         data[1][[1]][[1]][[8]] <- data[1][[1]][[1]][[7]];
         succ = 8;
+    } else if (length(data[1][[1]][[1]]) == 5){ #Edge case where first frame has one particle with new successor
+        temp <- c(0); 
+        data[1][[1]][[1]][[7]] <- c(0);
+        succ = 7
     } else {
         cat("ERROR: Use a different Diatrack version.")
     }
