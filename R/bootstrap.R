@@ -11,7 +11,7 @@
 ##' @description Bootstrap confidience intervals with standard errors. bootstrap resamples dataset (e.g. diffusion coefficients) to calculate confidience intervals for a statistic measure of dataset.  
 
 ##' @usage
-##'   bootstrap(dat,n.rep=10,ind=1,type="ordinary")
+##'   bootstrap(dat,attribute,n.rep=10,ind=1,type="ordinary")
 ##'   
 ##'   plotBootstrap(d.boot,alpha=1/2)
 ##'   
@@ -34,31 +34,31 @@
 ##'
 ##' # filter track based length
 ##' trackll.flt=filterTrack(trackll,filter=c(min=5,max=Inf))
-##' MSD=msd(trackll.flt,dt=6,summarize=TRUE,plot=TRUE)
-##' dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
+##' MSD=msd(trackll.flt,dt=6,summarize=FALSE,plot=TRUE)
+##' dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
 ##' 
 ##' # bootstrap new datasets
-##' d.boot=bootstrap(dcoef)
+##' d.boot=bootstrap(dcoef, attribute="slope")
 ##' 
 ##' # plot bootstrapped data
 ##' plotBootstrap(d.boot)
 
 ##' @details
 ##' A wrapper of boot::boot function adapted for data format in sojourner package. 
-##' 
+##' @import boot
 ###############################################################################
 
 
 ##------------------------------------------------------------------------------
 ## bootstrap
 
-library(boot)
+require(boot)
 
 
 # file="/Users/shengliu/OneDrive\ -\ Johns\ Hopkins\ University/OneDrive/DoScience/Projects/SWR1/_ParticleTracking/Data/2018-04-26/H2A.Z_Dcoefs.csv"
 # dat=read.csv(file=file,header = F)
 
-.bootstrap=function(dat,n.rep=10,ind=1,type="ordinary"){
+.bootstrap=function(dat,n.rep=10,ind=1,type="ordinary", attribute){
     
     # simple/ordinary resampling using sample()
     # the benefit is to do some customized manipulation, the down is the ways to resample is limited to ordinary
@@ -71,10 +71,9 @@ library(boot)
     
     # boot package allows "ordinary" (the default), "parametric", "balanced",
     # "permutation", or "antithetic"
-
     # a do-nothing function
     f=function(d,i){
-        dd=d[i,] # dat is data.frame/matrix
+        dd=d[i] # dat is data.frame/matrix
         # dd=d[i] # when dat is a vector
         # f=mean(dd)
         return(dd)
@@ -86,16 +85,22 @@ library(boot)
     return(boot.sample)
 }
 
-
-bootstrap=function(d,n.rep=10,ind=1,type="ordinary"){
-    d.boot=lapply(d,.bootstrap)
+##' @export bootstrap
+bootstrap=function(d,attribute,n.rep=10,ind=1,type="ordinary"){
+    if (attribute == "") {
+        stop("unclear Attribute, please give specific names to the data")
+    }
+    if (attribute != "") {
+        d.boot=lapply(d,.bootstrap, attribute=attribute)
+    }
     return(d.boot)
 }
 
-
+##' @export plotBootstrap
 plotBootstrap=function(d.boot,alpha=1/2){
     # transpose for plotting
-    bs=as.data.frame(t(boot.sample[[1]]))
+    #bs=as.data.frame(t(boot.sample[[1]]))
+    bs=as.data.frame(t(d.boot[[1]]))
     bsf=reshape2::melt(bs)
     
     # "alpha impacts the line of stat_ based geoms"

@@ -5,7 +5,7 @@
 \alias{bootstrap}
 \title{bootstrap}
 \usage{
-bootstrap(dat,n.rep=10,ind=1,type="ordinary")
+bootstrap(dat,attribute,n.rep=10,ind=1,type="ordinary")
   
   plotBootstrap(d.boot,alpha=1/2)
 }
@@ -42,11 +42,11 @@ trackll=readDiatrack(folder)
 
 # filter track based length
 trackll.flt=filterTrack(trackll,filter=c(min=5,max=Inf))
-MSD=msd(trackll.flt,dt=6,summarize=TRUE,plot=TRUE)
-dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
+MSD=msd(trackll.flt,dt=6,summarize=FALSE,plot=TRUE)
+dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
 
 # bootstrap new datasets
-d.boot=bootstrap(dcoef)
+d.boot=bootstrap(dcoef, attribute="slope")
 
 # plot bootstrapped data
 plotBootstrap(d.boot)
