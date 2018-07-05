@@ -5,12 +5,12 @@
 \alias{getCI}
 \title{getCI}
 \usage{
-getCI(dcoef,plot=F, output=F)
+getCI(samples,confidence=0.95,output=F)
 }
 \arguments{
-\item{dcoef}{diffusion coefficient calculated from Dcoef().}
+\item{samples}{diffusion coefficient calculated from Dcoef().}
 
-\item{plot}{Logical indicating if plot should be generated.}
+\item{confidence}{the level of confidence that is used to calculate the confidence interval.}
 
 \item{output}{Logical indicating if output file should be generated.}
 }

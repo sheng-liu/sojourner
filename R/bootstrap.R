@@ -11,12 +11,12 @@
 ##' @description Bootstrap confidience intervals with standard errors. bootstrap resamples dataset (e.g. diffusion coefficients) to calculate confidience intervals for a statistic measure of dataset.  
 
 ##' @usage
-##'   bootstrap(dat,attribute,n.rep=10,ind=1,type="ordinary")
+##'   bootstrap(dat,attribute,n.rep=10,type="ordinary")
 ##'   
 ##'   plotBootstrap(d.boot,alpha=1/2)
 ##'   
 ##' @param n.rep number of replicates
-##' @param ind the index of the column to be analyzed
+##' @param attribute column index or the part of data to bootstrap. For dcoef, use "slope"
 ##' @param dat data to be passed into bootstrap function, it needs to be in a data.frame format
 ##' @param type the type of resampling, can be "ordinary" (the default), "parametric", "balanced", "permutation", or "antithetic". See boot::boot parameter sim for details. 
 ##' @param d.boot bootstrapped data
@@ -39,6 +39,8 @@
 ##' 
 ##' # bootstrap new datasets
 ##' d.boot=bootstrap(dcoef, attribute="slope")
+##' # same as the previous line since the first column is named "slope"
+##' d.boot=bootstrap(dcoef, attribute=1)
 ##' 
 ##' # plot bootstrapped data
 ##' plotBootstrap(d.boot)
@@ -58,7 +60,7 @@ require(boot)
 # file="/Users/shengliu/OneDrive\ -\ Johns\ Hopkins\ University/OneDrive/DoScience/Projects/SWR1/_ParticleTracking/Data/2018-04-26/H2A.Z_Dcoefs.csv"
 # dat=read.csv(file=file,header = F)
 
-.bootstrap=function(dat,n.rep=10,ind=1,type="ordinary", attribute){
+.bootstrap=function(dat, n.rep=10, type="ordinary", attribute){
     
     # simple/ordinary resampling using sample()
     # the benefit is to do some customized manipulation, the down is the ways to resample is limited to ordinary
@@ -72,6 +74,8 @@ require(boot)
     # boot package allows "ordinary" (the default), "parametric", "balanced",
     # "permutation", or "antithetic"
     # a do-nothing function
+    # choose the selected part of data
+    dat = dat[,attribute]
     f=function(d,i){
         dd=d[i] # dat is data.frame/matrix
         # dd=d[i] # when dat is a vector
@@ -86,12 +90,13 @@ require(boot)
 }
 
 ##' @export bootstrap
-bootstrap=function(d,attribute,n.rep=10,ind=1,type="ordinary"){
+#TODO decide on using ind or attribute
+bootstrap=function(d, attribute, n.rep=10, type="ordinary"){
     if (attribute == "") {
         stop("unclear Attribute, please give specific names to the data")
     }
     if (attribute != "") {
-        d.boot=lapply(d,.bootstrap, attribute=attribute)
+        d.boot=lapply(d,.bootstrap, attribute=attribute, n.rep=n.rep)
     }
     return(d.boot)
 }

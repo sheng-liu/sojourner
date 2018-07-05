@@ -11,9 +11,9 @@
 ##' coefficient and the proportions of each components.
 ##'
 ##' @usage
-##' getCI(dcoef,plot=F, output=F)
-##' @param dcoef diffusion coefficient calculated from Dcoef().
-##' @param plot Logical indicating if plot should be generated.
+##' getCI(samples,confidence=0.95,output=F)
+##' @param samples diffusion coefficient calculated from Dcoef().
+##' @param confidence the level of confidence that is used to calculate the confidence interval.
 ##' @param output Logical indicating if output file should be generated.
 ##' @details
 ##' Supplied with number of samples as dcoef, uses that to calculate the confidence range.

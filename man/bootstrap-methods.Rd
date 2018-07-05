@@ -5,14 +5,14 @@
 \alias{bootstrap}
 \title{bootstrap}
 \usage{
-bootstrap(dat,attribute,n.rep=10,ind=1,type="ordinary")
+bootstrap(dat,attribute,n.rep=10,type="ordinary")
   
   plotBootstrap(d.boot,alpha=1/2)
 }
 \arguments{
 \item{n.rep}{number of replicates}
 
-\item{ind}{the index of the column to be analyzed}
+\item{attribute}{column index or the part of data to bootstrap. For dcoef, use "slope"}
 
 \item{dat}{data to be passed into bootstrap function, it needs to be in a data.frame format}
 
@@ -47,6 +47,8 @@ dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
 
 # bootstrap new datasets
 d.boot=bootstrap(dcoef, attribute="slope")
+# same as the previous line since the first column is named "slope"
+d.boot=bootstrap(dcoef, attribute=1)
 
 # plot bootstrapped data
 plotBootstrap(d.boot)
