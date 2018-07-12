@@ -3,13 +3,15 @@
 \docType{methods}
 \name{fitNormDistr}
 \alias{fitNormDistr}
-\alias{.fitNormDistr}
+\alias{.setSeed}
 \title{fitNormDistr}
 \usage{
 fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,
              combine.plot=F,output=F,seed=NULL)
 }
 \arguments{
+\item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=T.}
+
 \item{dcoef}{diffusion coefficient calculated from Dcoef().}
 
 \item{components}{parameter specifying the number of components to fit. If NULL (default), a components analysis is done to determine the most likely components and this number is then used for subsequent analysis.}
@@ -18,11 +20,9 @@ fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,
 
 \item{binwidth}{binwidth for the combined plot. If NULL (default), will automatic assign binwidth.}
 
-\item{combine.plot}{Logical indicating if all the plot should be combined into one, with same scale (/same axises breaks), same color theme, and same bin size for comparison.}
-
 \item{output}{Logical indicaring if output file should be generated.}
 
-\item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=T.}
+\item{combine.plot}{Logical indicating if all the plot should be combined into one, with same scale (/same axises breaks), same color theme, and same bin size for comparison.}
 }
 \value{
 \describe{
@@ -33,10 +33,11 @@ fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,
 }
 }
 \description{
-fit normal distribution to diffusion coefficient caclulated by Dcoef method.
+fit normal distributions to diffusion coefficient caclulated by Dcoef method.
 }
 \details{
 components analysis uses the likelihood ratio test (LRT) to assess the number of mixture components.
+Bad Random seed generation may cause normalmixEM to crash. running the function again would be the quickest solution to this issue.
 }
 \examples{
 
@@ -52,4 +53,6 @@ a=fitNormDistr(dcoef,components=NULL,log.transform=F,combine.plot=F,output=F)
 b=fitNormDistr(dcoef,components=NULL,log.transform=F,combine.plot=F,output=F,seed=attr(a,"seed"))
 # if a and b are the same
 mapply(identical,a[[1]],b[[1]])
+#try with log transformation
+c=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F)
 }

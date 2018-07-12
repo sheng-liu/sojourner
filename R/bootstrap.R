@@ -90,7 +90,6 @@ require(boot)
 }
 
 ##' @export bootstrap
-#TODO decide on using ind or attribute
 bootstrap=function(d, attribute, n.rep=10, type="ordinary"){
     if (attribute == "") {
         stop("unclear Attribute, please give specific names to the data")
