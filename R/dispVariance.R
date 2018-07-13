@@ -76,7 +76,7 @@
 dispVariance.track=function(track) {
     withDisp = squareDisp(track) # get displacement
     sqDisp = withDisp[[1]]$square.disp #[[1]] is necessary b/c squaredisplacement give a list in result
-    clean = sqDisp[!is.na(sqDisp)] #get rid of NA
+    clean = sqrt(sqDisp[!is.na(sqDisp)]) #get rid of NA and do the sqrt since it is currently dx^2 + dy^2
     var(clean) # return variance value
 }
 
