@@ -72,7 +72,8 @@ getCI=function(samples, confidence=0.95, output=F){
             #fitNormDistr has to recognize this column name.
             colnames(boot.matricies[[j]]) <- "slope"
         }
-        fit.result = fitNormDistr(boot.matricies, components = 2, combine.plot = T)
+        #fit.result = fitNormDistr(boot.matricies, components = 2)
+        fit.result=lapply(boot.matricies, fitNormDistr.manual, means=c(0.0,1.0))
         
         #calculate confidence intervals for each components.
         firstcompCI=.extractCI(fit.result, "mu", 1, confidence)

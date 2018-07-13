@@ -11,7 +11,7 @@
 ##' @description Bootstrap confidience intervals with standard errors. bootstrap resamples dataset (e.g. diffusion coefficients) to calculate confidience intervals for a statistic measure of dataset.  
 
 ##' @usage
-##'   bootstrap(dat,attribute,n.rep=10,type="ordinary")
+##'   bootstrap(dat,attribute,n.rep=100,type="ordinary")
 ##'   
 ##'   plotBootstrap(d.boot,alpha=1/2)
 ##'   
@@ -54,22 +54,16 @@
 ##------------------------------------------------------------------------------
 ## bootstrap
 
-require(boot)
+#require(boot)
 
 
 # file="/Users/shengliu/OneDrive\ -\ Johns\ Hopkins\ University/OneDrive/DoScience/Projects/SWR1/_ParticleTracking/Data/2018-04-26/H2A.Z_Dcoefs.csv"
 # dat=read.csv(file=file,header = F)
 
-.bootstrap=function(dat, n.rep=10, type="ordinary", attribute){
+.bootstrap=function(dat, n.rep, type="ordinary", attribute){
     
     # simple/ordinary resampling using sample()
     # the benefit is to do some customized manipulation, the down is the ways to resample is limited to ordinary
-    
-    # dat2=dat[,ind]
-    # n.row=length(dat2) # n.row=nrow(dat) #l=length(dd)
-    # boot.sample=matrix(data=sample(dat2,size=n.rep*n.row,replace=T),
-    #                    nrow=n.rep,ncol=n.row)
-    
     
     # boot package allows "ordinary" (the default), "parametric", "balanced",
     # "permutation", or "antithetic"
@@ -90,7 +84,7 @@ require(boot)
 }
 
 ##' @export bootstrap
-bootstrap=function(d, attribute, n.rep=10, type="ordinary"){
+bootstrap=function(d, attribute, n.rep=100, type="ordinary"){
     if (attribute == "") {
         stop("unclear Attribute, please give specific names to the data")
     }
@@ -103,24 +97,18 @@ bootstrap=function(d, attribute, n.rep=10, type="ordinary"){
 ##' @export plotBootstrap
 plotBootstrap=function(d.boot,alpha=1/2){
     # transpose for plotting
-    #bs=as.data.frame(t(boot.sample[[1]]))
-    bs=as.data.frame(t(d.boot[[1]]))
-    bsf=reshape2::melt(bs)
+    sample_names=names(d.boot)
+    for (i in 1:length(d.boot)){
+        bs=as.data.frame(t(d.boot[[i]]))
+        bsf=reshape2::melt(bs)
     
     # "alpha impacts the line of stat_ based geoms"
     # https://github.com/tidyverse/ggplot2/issues/1371
-    p=ggplot(bsf,aes(x=value,group=variable))+
-        geom_line(alpha=alpha,position="identity",stat="density")
-    
-    # fill with no lines
-    # ggplot(bsf,aes(x=value,group=variable,fill=variable))+
-    #     geom_density(alpha=1/10,linetype="blank")
-
-    plot(p)
-    return(p)
+        p=ggplot(bsf,aes(x=value,group=variable))+
+            geom_line(alpha=alpha,position="identity",stat="density")+
+            ggtitle(sample_names[i])+
+            theme(plot.title = element_text(hjust = 0.5))
+        plot(p)
+    }
+    #return(p)
 }
-
-
-
-
-

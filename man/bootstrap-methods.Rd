@@ -3,20 +3,21 @@
 \docType{methods}
 \name{bootstrap}
 \alias{bootstrap}
+\alias{.bootstrap}
 \title{bootstrap}
 \usage{
-bootstrap(dat,attribute,n.rep=10,type="ordinary")
+bootstrap(dat,attribute,n.rep=100,type="ordinary")
   
   plotBootstrap(d.boot,alpha=1/2)
 }
 \arguments{
-\item{n.rep}{number of replicates}
-
-\item{attribute}{column index or the part of data to bootstrap. For dcoef, use "slope"}
-
 \item{dat}{data to be passed into bootstrap function, it needs to be in a data.frame format}
 
+\item{n.rep}{number of replicates}
+
 \item{type}{the type of resampling, can be "ordinary" (the default), "parametric", "balanced", "permutation", or "antithetic". See boot::boot parameter sim for details.}
+
+\item{attribute}{column index or the part of data to bootstrap. For dcoef, use "slope"}
 
 \item{d.boot}{bootstrapped data}
 

@@ -75,7 +75,7 @@
 ##' @export dispVariance.track
 dispVariance.track=function(track) {
     withDisp = squareDisp(track) # get displacement
-    sqDisp = withDisp[[1]][7] #[[1]] is necessary b/c squaredisplacement give a list in result
+    sqDisp = withDisp[[1]]$square.disp #[[1]] is necessary b/c squaredisplacement give a list in result
     clean = sqDisp[!is.na(sqDisp)] #get rid of NA
     var(clean) # return variance value
 }
