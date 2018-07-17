@@ -6,8 +6,8 @@
 \alias{.setSeed}
 \title{fitNormDistr}
 \usage{
-fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,
-             combine.plot=F,output=F,seed=NULL)
+fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,combine.plot=F,output=F,
+             seed=NULL,meanRange=NULL, proportion=NULL, means=NULL, sd=NULL)
 }
 \arguments{
 \item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=T.}
@@ -20,9 +20,17 @@ fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,
 
 \item{binwidth}{binwidth for the combined plot. If NULL (default), will automatic assign binwidth.}
 
-\item{output}{Logical indicaring if output file should be generated.}
+\item{combine.plot}{Logical indicate if all the plot should be combined into one, with same scale (/same axises breaks), same color theme, and same bin size for comparison.}
 
-\item{combine.plot}{Logical indicating if all the plot should be combined into one, with same scale (/same axises breaks), same color theme, and same bin size for comparison.}
+\item{output}{Logical indicate if output file should be generated.}
+
+\item{meanRange}{list of vectors, each of which have the min&max that estimates a range where a peak of the distribution should lie.}
+
+\item{proportion}{numeric vector with estimates of each component's proportion of the whole data.}
+
+\item{means}{numeric vector with estimates of mean(mu) values for each component.}
+
+\item{sd}{numeric vector with estimates of standard deviation(sigma) values for each component.}
 }
 \value{
 \describe{
@@ -37,10 +45,9 @@ fit normal distributions to diffusion coefficient caclulated by Dcoef method.
 }
 \details{
 components analysis uses the likelihood ratio test (LRT) to assess the number of mixture components.
-Bad Random seed generation may cause normalmixEM to crash. running the function again would be the quickest solution to this issue.
+Bad Random seed generation may cause normalmixEM to crash. Running the function again would be the quickest solution to this issue.
 }
 \examples{
-
 # compare folders
 folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
@@ -55,4 +62,6 @@ b=fitNormDistr(dcoef,components=NULL,log.transform=F,combine.plot=F,output=F,see
 mapply(identical,a[[1]],b[[1]])
 #try with log transformation
 c=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F)
+#trying with some parameters provided(this will be applied to all dcoef results)
+d=fitNormDistr(dcoef,meanRange=list(c(0.1,0.3), c(0.5,0.7)))
 }

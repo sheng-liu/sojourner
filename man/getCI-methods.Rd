@@ -3,19 +3,34 @@
 \docType{methods}
 \name{getCI}
 \alias{getCI}
+\alias{.get.seRange}
 \title{getCI}
 \usage{
-getCI(samples,confidence=0.95,output=F)
+getCI(samples,confidence=0.95,output=F,n.reps=100,meanRange=NULL,proportion=NULL,means=NULL,sd=NULL,log.transform=F,components=NULL)
 }
 \arguments{
-\item{samples}{diffusion coefficient calculated from Dcoef().}
-
 \item{confidence}{the level of confidence that is used to calculate the confidence interval.}
 
-\item{output}{Logical indicating if output file should be generated.}
+\item{samples}{diffusion coefficient calculated from Dcoef().}
+
+\item{output}{Logical indicate if output file should be generated.}
+
+\item{n.reps}{number of replicates for bootstrapping}
+
+\item{meanRange}{list of vectors, each of which have the min&max that estimates a range where a peak of the distribution should lie.}
+
+\item{proportion}{numeric vector with estimates of each component's proportion of the whole data.}
+
+\item{means}{numeric vector with estimates of mean(mu) values for each component.}
+
+\item{sd}{numeric vector with estimates of standard deviation(sigma) values for each component.}
+
+\item{log.transform}{logical indicate if log10 transformation is needed, default F.}
+
+\item{components}{parameter specifying the number of components to fit. If NULL (default), a components analysis is done to determine the most likely components and this number is then used for subsequent analysis.}
 }
 \value{
-list of items, each of which will contain:
+list of items, each of which will contain for each distribution component:
 \describe{
 \item{Estimate}{Mean estimated from sample}
 \item{CI lower}{Lower bound of the confidence interval}
@@ -31,9 +46,9 @@ coefficient and the proportions of each components.
 Supplied with number of samples as dcoef, uses that to calculate the confidence range.
 Each entry in dcoeflist will consist of number of samples regarding that data.
 May hit an error for bootstrapping due to random number generation, but re-running the function will do the job.
+The t-distribution/critical-t was used to calculate the Confidence Interval.
 }
 \examples{
-
 # compare folders
 folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
@@ -42,11 +57,13 @@ trackll=compareFolder(c(folder1,folder2))
 MSD=msd(trackll=trackll)
 #run Dcoef()
 dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
-#resample data with bootstrapping(get 10 resampled data)
-bootstraps=bootstrap(dcoef, attribute="slope")
-# get confidence interval for this bootstrapped samples
-a=getCI(bootstraps)
-# to manually set confidence to 80\% and generate output csv file
-b=getCI(bootstraps, confidence=0.8, output=T)
+# get confidence intervals for this dcoef result which contains data from two different folders
+a=getCI(dcoef)
+# to manually set confidence to 80\%
+b=getCI(dcoef, confidence=0.8, output=F)
+# get confidence interval with the some estimate values specified, same specification will be used for both data
+e=getCI(dcoef, confidence=0.95, means=c(0.1, 0.4))
+# If you want to apply to just one of this dcoef results
+f=getCI(dcoef[1], confidence=0.95, means=c(0.1,0.4))
 
 }
