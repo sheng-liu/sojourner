@@ -3,38 +3,41 @@
 \docType{methods}
 \name{bootstrap}
 \alias{bootstrap}
-\alias{.bootstrap}
+\alias{.boot.se.onecomp}
 \title{bootstrap}
 \usage{
-bootstrap(dat,attribute,n.rep=100,type="ordinary")
+bootstrap(normalFit,n.reps=100)
   
-  plotBootstrap(d.boot,alpha=1/2)
+  plotBootstrap(d.boot,alpha=1/2) -- not available in current version
 }
 \arguments{
-\item{dat}{data to be passed into bootstrap function, it needs to be in a data.frame format}
+\item{n.reps}{number of replicates for bootstrapping}
 
-\item{n.rep}{number of replicates}
+\item{normalFit}{output from fitNormDistr}
 
-\item{type}{the type of resampling, can be "ordinary" (the default), "parametric", "balanced", "permutation", or "antithetic". See boot::boot parameter sim for details.}
-
-\item{attribute}{column index or the part of data to bootstrap. For dcoef, use "slope"}
-
-\item{d.boot}{bootstrapped data}
+\item{d.boot}{bootstrapped data, or the output from bootstrap}
 
 \item{alpha}{transparency adjustment, between 0 to 1.}
 }
 \value{
 \itemize{ 
-
-\item{Inidvidualbootstrap} returns a matrix of bootstrapped samples, 
-each row is a bootstrapped replicate of original dataset, and the length of columns are matching the size of original dataset. for example, original data has 40 data points and you want to bootstrap 10 such datasets, you will have a 10 x 40 (row x col) datasets. 
-}
+List of length 2 containing:
+\item{Fit}
+results from fitNormDistr that was used as the input for the function
+\item{Bootstraps}
+results from bootstrapping. mean values of each samples,
+standard error for the mean, lambda(proportion)
+ }
 }
 \description{
 Bootstrap confidience intervals with standard errors. bootstrap resamples dataset (e.g. diffusion coefficients) to calculate confidience intervals for a statistic measure of dataset.
 }
 \details{
-A wrapper of boot::boot function adapted for data format in sojourner package.
+A wrapper of boot::boot and mixtools::boot.se adapted for data format in sojourner package. 
+Also returns stderr information by running boot.se from mixtools  
+and an additional method for one-component distribution calculates the stderr separately.
+For multi-component distributions, the boot.se function from the mixtools package was used.
+For single-component distributions, a separate function was used to calculate the stderr and confidence interval.
 }
 \examples{
 # read in using readDiatrack
@@ -45,12 +48,12 @@ trackll=readDiatrack(folder)
 trackll.flt=filterTrack(trackll,filter=c(min=5,max=Inf))
 MSD=msd(trackll.flt,dt=6,summarize=FALSE,plot=TRUE)
 dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
+# fit the dcoef result
+normalFit=fitNormDistr(dcoef)
 
 # bootstrap new datasets
-d.boot=bootstrap(dcoef, attribute="slope")
-# same as the previous line since the first column is named "slope"
-d.boot=bootstrap(dcoef, attribute=1)
+d.boot=bootstrap(normalFit)
+# manually set the number of bootstrap samples to 50
+d.boot=bootstrap(normalFit, n.reps=50)
 
-# plot bootstrapped data
-plotBootstrap(d.boot)
 }

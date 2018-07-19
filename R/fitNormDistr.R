@@ -286,4 +286,4 @@ fitNormDistr=function(dcoef,components=NULL,log.transform=F,binwidth=NULL,combin
 }
 # TODO:
 # 1 check how the se is calculated for the 1 component case and for the multi-component cases
-# 2 combine the output of seed into the df
+

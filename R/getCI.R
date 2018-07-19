@@ -11,23 +11,13 @@
 ##' coefficient and the proportions of each components.
 ##'
 ##' @usage
-##' getCI(dcoef.result,confidence=0.95,output=F,n.reps=100,meanRange=NULL,proportion=NULL,means=NULL,sd=NULL,log.transform=F,components=NULL)
+##' getCI(dcoef.result,confidence=0.95,output=F)
 ##' @param dcoef.result diffusion coefficient calculated from Dcoef().
 ##' @param confidence the level of confidence that is used to calculate the confidence interval.
 ##' @param output Logical indicate if output file should be generated.
-##' @param n.reps number of replicates for bootstrapping
-##' @param meanRange list of vectors, each of which have the min&max that estimates a range where a peak of the distribution should lie.
-##' @param proportion numeric vector with estimates of each component's proportion of the whole data. Values in the vector would add up to 1.
-##' @param means numeric vector with estimates of mean(mu) values for each component.
-##' @param sd numeric vector with estimates of standard deviation(sigma) values for each component.
-##' @param log.transform logical indicate if log10 transformation is needed, default F.
-##' @param components parameter specifying the number of components to fit. If NULL (default), a components analysis is done to determine the most likely components and this number is then used for subsequent analysis.
 ##' @details
-##' Supplied with a dcoef output, uses that to bootstrap and calculate the confidence range.
-##' May hit an error for bootstrapping due to random number generation, but re-running the function will very likely resolve the problem.
-##' The t-distribution/critical-t was used to calculate the Confidence Interval. 
-##' For multi-component distributions, the boot.se function from the mixtools package was used.
-##' For single-component distributions, a separate function was used to calculate the stderr and confidencet interval.
+##' Supplied with a bootstrap output, it calculates the confidence range.
+##' The t-distribution/critical-t was used to calculate the Confidence Interval.
 ##' 
 ##'
 ##' @return
@@ -48,14 +38,14 @@
 ##' MSD=msd(trackll=trackll)
 ##' #run Dcoef()
 ##' dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
+##' #fit the dcoef result
+##' normalFit=fitNormDistr(dcoef)
+##' # perform bootstrapping for this dcoef result
+##' d.boot = bootstrap(normalFit, n.reps=100)
 ##' # get confidence intervals for this dcoef result which contains data from two different folders
-##' a=getCI(dcoef)
+##' a=getCI(d.boot)
 ##' # to manually set confidence to 80%
-##' b=getCI(dcoef, confidence=0.8, output=F)
-##' # get confidence interval with the some estimate values specified, same specification will be used for both data
-##' e=getCI(dcoef, confidence=0.95, means=c(0.1, 0.4))
-##' # If you want to apply to just one of this dcoef results
-##' f=getCI(dcoef[1], confidence=0.95, means=c(0.1,0.4))
+##' b=getCI(d.boot, confidence=0.8, output=F)
 ##' 
 ###TODO add plot with confidence interval
 
@@ -64,41 +54,22 @@
     diff=(1-confidence)/2
     range.vector=c(diff, 1-diff)
     range.se=qt(range.vector, num.samples-1)
-    print(range.se)
     return(range.se)
 }
 
-##bootstrap and then return stderr for means 
-##Ref: http://www.stat.wisc.edu/~larget/stat302/chap3.pdf
-.boot.se.onecomp=function(fitResult, n.reps=100){
-    data=fitResult$x
-    #for choosing in bootstraps
-    f=function(d,i){d[i]}
-    bootstraps = boot::boot(data,f,n.reps)
-    means=apply(bootstraps$t, 1, mean)
-    list(mu.se=sd(means), lambda.se=0)
-}
-
-.boot.se.all=function(fitResult, B){
-    if(length(fitResult$mu) == 1){
-        return(.boot.se.onecomp(fitResult,B))
-    } else {
-        capture.output({multi.stderr=boot.se(fitResult, B)})
-        return(multi.stderr)
-    }
-}
-
 ##' @export getCI
-getCI=function(dcoef.result, confidence=0.95, output=F, n.reps=100, meanRange=NULL, proportion=NULL, means=NULL, sd=NULL, log.transform=F, components=NULL){
-    #from the desired confidecne lvl, calculate the crtitcal-t value
-    SE.range=.get.seRange(confidence, n.reps)
-    inputNames = names(dcoef.result)
+getCI=function(bootstrap.result, confidence=0.95, output=F){
+    inputNames = names(bootstrap.result$Fit)
     ciList = list()
-    #fit and get multiple components
-    fit.result=fitNormDistr(dcoef.result, meanRange=meanRange, proportion=proportion, means=means, sd=sd, log.transform=log.transform, components=components)
-    #generate std.err value
-    fit.se=lapply(fit.result, .boot.se.all, B=n.reps)
+    #get fit component
+    fit.result=bootstrap.result$Fit
+    #get std.err component
+    fit.se=bootstrap.result$Bootstraps
     for (i in 1:length(fit.result)){
+        
+        #from the desired confidecne lvl, calculate the crtitcal-t value
+        n.reps=fit.se[[i]]$n.reps
+        SE.range=.get.seRange(confidence, n.reps)
         out.df = data.frame()
         
         #Extract values form the fitting result and then apply the calculated critical-t values stored in SE.range
@@ -122,7 +93,6 @@ getCI=function(dcoef.result, confidence=0.95, output=F, n.reps=100, meanRange=NU
         ciList[i] = list(out.df)
     }
     
-    
     names(ciList) = inputNames
     #output .csv file has similar format as that of fitNormDistr
     if (output==T){
@@ -136,5 +106,6 @@ getCI=function(dcoef.result, confidence=0.95, output=F, n.reps=100, meanRange=NU
         }
         write.csv(whole.df, file = fileName)
     }
+    print(ciList)
     return(ciList)
 }

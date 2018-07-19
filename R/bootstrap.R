@@ -11,21 +11,22 @@
 ##' @description Bootstrap confidience intervals with standard errors. bootstrap resamples dataset (e.g. diffusion coefficients) to calculate confidience intervals for a statistic measure of dataset.  
 
 ##' @usage
-##'   bootstrap(dat,attribute,n.rep=100,type="ordinary")
+##'   bootstrap(normalFit,n.reps=100)
 ##'   
-##'   plotBootstrap(d.boot,alpha=1/2)
+##'   plotBootstrap(d.boot,alpha=1/2) -- not available in current version
 ##'   
-##' @param n.rep number of replicates
-##' @param attribute column index or the part of data to bootstrap. For dcoef, use "slope"
-##' @param dat data to be passed into bootstrap function, it needs to be in a data.frame format
-##' @param type the type of resampling, can be "ordinary" (the default), "parametric", "balanced", "permutation", or "antithetic". See boot::boot parameter sim for details. 
-##' @param d.boot bootstrapped data
+##' @param normalFit output from fitNormDistr
+##' @param n.reps number of replicates for bootstrapping
+##' @param d.boot bootstrapped data, or the output from bootstrap
 ##' @param alpha transparency adjustment, between 0 to 1.
 ##' @return \itemize{ 
-##'
-##' \item{Inidvidualbootstrap} returns a matrix of bootstrapped samples, 
-##' each row is a bootstrapped replicate of original dataset, and the length of columns are matching the size of original dataset. for example, original data has 40 data points and you want to bootstrap 10 such datasets, you will have a 10 x 40 (row x col) datasets. 
-##' }
+##' List of length 2 containing:
+##' \item{Fit}
+##' results from fitNormDistr that was used as the input for the function
+##' \item{Bootstraps}
+##' results from bootstrapping. mean values of each samples,
+##' standard error for the mean, lambda(proportion)
+##'  }
 
 ##' @examples
 ##' # read in using readDiatrack
@@ -36,65 +37,57 @@
 ##' trackll.flt=filterTrack(trackll,filter=c(min=5,max=Inf))
 ##' MSD=msd(trackll.flt,dt=6,summarize=FALSE,plot=TRUE)
 ##' dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
+##' # fit the dcoef result
+##' normalFit=fitNormDistr(dcoef)
 ##' 
 ##' # bootstrap new datasets
-##' d.boot=bootstrap(dcoef, attribute="slope")
-##' # same as the previous line since the first column is named "slope"
-##' d.boot=bootstrap(dcoef, attribute=1)
+##' d.boot=bootstrap(normalFit)
+##' # manually set the number of bootstrap samples to 50
+##' d.boot=bootstrap(normalFit, n.reps=50)
 ##' 
-##' # plot bootstrapped data
-##' plotBootstrap(d.boot)
 
 ##' @details
-##' A wrapper of boot::boot function adapted for data format in sojourner package. 
+##' A wrapper of boot::boot and mixtools::boot.se adapted for data format in sojourner package. 
+##' Also returns stderr information by running boot.se from mixtools  
+##' and an additional method for one-component distribution calculates the stderr separately.
+##' For multi-component distributions, the boot.se function from the mixtools package was used.
+##' For single-component distributions, a separate function was used to calculate the stderr and confidence interval.
+##' 
 ##' @import boot
 ###############################################################################
-
 
 ##------------------------------------------------------------------------------
 ## bootstrap
 
-#require(boot)
+##bootstrap and then return stderr for means 
+##Ref: http://www.stat.wisc.edu/~larget/stat302/chap3.pdf
+.boot.se.onecomp=function(fitResult, n.reps=100){
+    data=fitResult$x
+    #for choosing in bootstraps
+    f=function(d,i){d[i]}
+    bootstraps = boot::boot(data,f,n.reps)
+    means=apply(bootstraps$t, 1, mean)
+    list(mu.se=sd(means), lambda.se=0)
+}
 
-
-# file="/Users/shengliu/OneDrive\ -\ Johns\ Hopkins\ University/OneDrive/DoScience/Projects/SWR1/_ParticleTracking/Data/2018-04-26/H2A.Z_Dcoefs.csv"
-# dat=read.csv(file=file,header = F)
-
-.bootstrap=function(dat, n.rep, type="ordinary", attribute){
-    
-    # simple/ordinary resampling using sample()
-    # the benefit is to do some customized manipulation, the down is the ways to resample is limited to ordinary
-    
-    # boot package allows "ordinary" (the default), "parametric", "balanced",
-    # "permutation", or "antithetic"
-    # a do-nothing function
-    # choose the selected part of data
-    dat = dat[,attribute]
-    f=function(d,i){
-        dd=d[i] # dat is data.frame/matrix
-        # dd=d[i] # when dat is a vector
-        # f=mean(dd)
-        return(dd)
+# basically a wrapper for stderr calculation
+.boot.se.all=function(fitResult, B){
+    if(length(fitResult$mu) == 1){
+        boot.se.result = .boot.se.onecomp(fitResult,B)
+    } else {
+        capture.output({multi.stderr=mixtools::boot.se(fitResult, B)})
+        boot.se.result = multi.stderr
     }
-    
-    bt=boot::boot(dat,f,R=n.rep,sim=type)
-    boot.sample=bt$t
-    
-    return(boot.sample)
+    return(c(boot.se.result, n.reps=B))
 }
 
 ##' @export bootstrap
-bootstrap=function(d, attribute, n.rep=100, type="ordinary"){
-    if (attribute == "") {
-        stop("unclear Attribute, please give specific names to the data")
-    }
-    if (attribute != "") {
-        d.boot=lapply(d,.bootstrap, attribute=attribute, n.rep=n.rep)
-    }
-    return(d.boot)
+bootstrap=function(fittedObj, n.reps=100){
+    d.boot=lapply(fittedObj,.boot.se.all, B=n.reps)
+    return(list(Fit=fittedObj, Bootstraps=d.boot))
 }
 
-##' @export plotBootstrap
+## not ready yet
 plotBootstrap=function(d.boot,alpha=1/2){
     # transpose for plotting
     sample_names=names(d.boot)
@@ -110,5 +103,4 @@ plotBootstrap=function(d.boot,alpha=1/2){
             theme(plot.title = element_text(hjust = 0.5))
         plot(p)
     }
-    #return(p)
 }
