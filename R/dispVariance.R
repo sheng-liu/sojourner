@@ -114,7 +114,7 @@ dispVariance=function(trackll, min=7, plot=F, limits=c(), log=F, output=F) {
     filtered=filterTrack(trackll, filter=c(min=min, max=Inf))
     result=lapply(filtered, dispVariance.trackl)
     
-    if (plot==T) {
+    if (plot == T) {
         melted=reshape2::melt(result) #convert to dataframe
         #rename columns to more reasonable ones
         names(melted)=c("variance", "track.name", "trackList")
@@ -132,7 +132,7 @@ dispVariance=function(trackll, min=7, plot=F, limits=c(), log=F, output=F) {
        }
     }
     
-    if (output==T) {
+    if (output == T) {
         for (i in 1:length(result)) {
             track.df = reshape2::melt(result[[i]])
             names(track.df) = c("dispVariance", "track.name")

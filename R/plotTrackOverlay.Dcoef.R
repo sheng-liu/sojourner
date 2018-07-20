@@ -72,7 +72,7 @@
                           folder=NULL,file.No=0,line.width=0.1){
 
   ## Import trackll (un-merged) information
-  if (length(file.No)>1&min(file.No)==0){
+  if (length(file.No)>1&min(file.No) == 0){
     stop("Wrong file.No input. Ceased.",call. = FALSE, domain = NULL)
   }
   

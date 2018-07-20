@@ -95,7 +95,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
     
     cat("calculating displacement...\n")
 
-    # if (bivar==T){
+    # if (bivar == T){
         data=displacement.trackll(trackll,dt=1,bivar=T)
         
     # }else{
@@ -103,7 +103,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
     #     data=dp$stepwise.displacement
     # }
     
-    #if (numericIndex==F){
+    #if (numericIndex == F){
 
         dat=sapply(data,function(x){x["InidvidualDisplacement"]})
 

@@ -60,14 +60,14 @@
 combineTrackll<-function(trackll=c(trackll1,trackll2),name="combined trackll",merged=T){
     totalTracklls <- as.numeric(length(trackll))
     temp<-c()
-    if(merged==T){
+    if(merged == T){
         for (i in 1:totalTracklls){
             temp<-append(temp,trackll[i][[1]])
         }
         temp<-list(temp)
         names(temp)<-name
     }
-    else if(merged==F){
+    else if(merged == F){
         for (i in 1:totalTracklls){
             temp<-append(temp,trackll[i])
         }

@@ -323,7 +323,7 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     print(result.lst)
 
     # output
-    if (output==T){
+    if (output == T){
 
         result.df=do.call(rbind.data.frame,result.lst)
         fileName=paste("FitCDF-",
@@ -357,7 +357,7 @@ fitCDF=function(cdf, components=c("one","two","three"),
                                output=output),seed=seed)
 
     # output seed
-    if (output==T){
+    if (output == T){
 
         name=names(result)
         fileName=paste("FitCDF-",

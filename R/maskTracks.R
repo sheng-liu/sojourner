@@ -140,7 +140,7 @@ maskTracks=function(folder, trackll){
     # read in mask
     maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
     
-    if (length(maskl)==0){
+    if (length(maskl) == 0){
         cat("No image mask file ending '_MASK.tif' found.\n")
         
     }
@@ -207,7 +207,7 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(
     # Read in nuclear image
     glowl=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
     
-    if (length(maskl)==0){
+    if (length(maskl) == 0){
         cat("No image mask file ending '_MASK.tif' found.\n")
         
     }

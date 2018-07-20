@@ -3,7 +3,7 @@
 ##------------------------------------------------------------------------------
 ## automate binwidth
 auto.binwidth=function(x){
-    x=x[is.na(x)==F]
+    x=x[is.na(x) == F]
     xrange=range(x)
     nbins=median(c(nclass.Sturges(x),nclass.scott(x),nclass.FD(x)))
     binwidth=(xrange[2]-xrange[1])/nbins
@@ -17,7 +17,7 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
     p=reshape2::melt(Log.D.coef)
 
 
-    if (method=="static"||method=="percentage"){
+    if (method == "static"||method == "percentage"){
 
         colnames(p)=c("Log.D.coef","file.name")
 
@@ -47,7 +47,7 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
                                                     labels=xbreaks$labels)
 
         plot(Dcoef.plot)
-    }else if (method=="rolling.window"){
+    }else if (method == "rolling.window"){
 
         colnames(p)=c("Log.D.coef","window.name","file.name")
 
@@ -86,7 +86,7 @@ plotDensity=function(Log.D.coef,binwidth=0.5,method){
 
     p=reshape2::melt(Log.D.coef)
 
-    if (method=="static"||method=="percentage"){
+    if (method == "static"||method == "percentage"){
 
 
         colnames(p)=c("Log.D.coef","file.name")
@@ -121,7 +121,7 @@ plotDensity=function(Log.D.coef,binwidth=0.5,method){
         plot(Dcoef.plot)
 
 
-    }else if (method=="rolling.window"){
+    }else if (method == "rolling.window"){
 
         colnames(p)=c("Log.D.coef","window.name","file.name")
 
@@ -297,7 +297,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
                          ncol = cols, nrow = ceiling(numPlots/cols))
     }
 
-    if (numPlots==1) {
+    if (numPlots == 1) {
         print(plots[[1]])
 
     } else {
@@ -362,7 +362,7 @@ gg.mixEM <- function(EM,binwidth=NULL,reorder=T) {
 #
 #     }
 
-    if (reorder==T) EM=reorderEM(EM)
+    if (reorder == T) EM=reorderEM(EM)
 
     # reconstruct x, may use sample
     x       <- with(EM,seq(min(x),max(x),len=1000))

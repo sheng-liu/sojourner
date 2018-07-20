@@ -57,7 +57,7 @@ compareFolder=function(folders=c(folder1,folder2,...),
     sample.list=list()
 
 
-    if (ab.track==T){
+    if (ab.track == T){
 
         for (i in 1:length(folder.list)) {
             sample.list[i] = mergeTracks(

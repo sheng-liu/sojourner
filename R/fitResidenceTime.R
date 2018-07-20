@@ -114,7 +114,7 @@
   
   ## Local optimization using nlsLM.
   cat("\nLocal optimization...\n\n")
-  if(k.ns==FALSE){
+  if(k.ns == FALSE){
     tcfit=minpack.lm::nlsLM(P ~ p3(t,k.s,k.ns,alpha),
                             start=coef(k.search.tcfit),
                             lower=c(0,0,0),
@@ -142,7 +142,7 @@
   ## Usually two-component fitting is better. Output this fitting result on the final plot as figure legend.
   par(mar=c(0, 0, 0, 0),xpd=FALSE)
   if (coef(tcfit)["k.s"]<coef(tcfit)["k.ns"]){
-    result.text=c(expression(italic(P(t)==alpha*e^-k[s]*''^t+(1-alpha)*e^-k[ns]*''^t)),
+    result.text=c(expression(italic(P(t) == alpha*e^-k[s]*''^t+(1-alpha)*e^-k[ns]*''^t)),
                   as.expression(bquote(italic('k'['s']==.(coef(tcfit)["k.s"])))),
                   as.expression(bquote(italic('k'['ns']==.(coef(tcfit)["k.ns"])))),
                   as.expression(bquote(italic(alpha==.(coef(tcfit)["alpha"])))),
@@ -151,7 +151,7 @@
     )
   }
   else {
-    result.text=c(expression(italic(P(t)==alpha*e^-k[s]*''^t+(1-alpha)*e^-k[ns]*''^t)),
+    result.text=c(expression(italic(P(t) == alpha*e^-k[s]*''^t+(1-alpha)*e^-k[ns]*''^t)),
                   as.expression(bquote(italic('k'['s']==.(coef(tcfit)["k.ns"])))),
                   as.expression(bquote(italic('k'['ns']==.(coef(tcfit)["k.s"])))),
                   as.expression(bquote(italic(alpha==.(1-coef(tcfit)["alpha"])))),
@@ -195,16 +195,16 @@ fitRT=function(trackll=trackll,x.max=30,N.min=1.5,t.interval=0.5,maxiter.search=
   P<-(1-(CDF$CDF))
   ## Remove multiple "1" of P values, leaving only one "1" value.
   ## The rest P values will be used for fitting.
-  if(length(which(P==1))>=2){
-    P.fit<-P[-(1:(length(which(P==1))-1))]
+  if(length(which(P == 1))>=2){
+    P.fit<-P[-(1:(length(which(P == 1))-1))]
   }else{
     P.fit<-P
   }
   ## Set the x axis range according to user input (t.plot), only the part in the range will be plotted.
   ## However, all the P.fit and t.fit values will be used for fitting.
   t.plot<-seq(t.interval,x.max,by=t.interval)
-  if(length(which(P==1))>=2){
-    t.fit<-seq(t.interval*length(which(P==1)),max(trajLength),by=t.interval)
+  if(length(which(P == 1))>=2){
+    t.fit<-seq(t.interval*length(which(P == 1)),max(trajLength),by=t.interval)
   }else{
     t.fit<-seq(t.interval,max(trajLength),by=t.interval)
   }
@@ -218,7 +218,7 @@ fitRT=function(trackll=trackll,x.max=30,N.min=1.5,t.interval=0.5,maxiter.search=
   ###### Fitting and add fitting curves over raw data###############
   result.1=.one.comp.fit.rt(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval)),
                             maxiter.optim=maxiter.optim)
-  if(k.ns==FALSE){
+  if(k.ns == FALSE){
     result.2=.two.comp.fit.rt(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),
                               maxiter.search=maxiter.search,
                               maxiter.optim=maxiter.optim,k.ns=k.ns)

@@ -30,14 +30,18 @@ standard error for the mean, lambda(proportion)
  }
 }
 \description{
-Bootstrap confidience intervals with standard errors. bootstrap resamples dataset (e.g. diffusion coefficients) to calculate confidience intervals for a statistic measure of dataset.
+Bootstrap confidience intervals with standard errors. bootstrap resamples
+dataset (e.g. diffusion coefficients) to calculate confidience intervals for
+a statistic measure of dataset.
 }
 \details{
-A wrapper of boot::boot and mixtools::boot.se adapted for data format in sojourner package. 
-Also returns stderr information by running boot.se from mixtools  
-and an additional method for one-component distribution calculates the stderr separately.
-For multi-component distributions, the boot.se function from the mixtools package was used.
-For single-component distributions, a separate function was used to calculate the stderr and confidence interval.
+A wrapper of boot::boot and mixtools::boot.se adapted for data format in
+sojourner package. Also returns stderr information by running boot.se from
+mixtools and an additional method for one-component distribution calculates
+the stderr separately. For multi-component distributions, the boot.se
+function from the mixtools package was used. For single-component
+distributions, a separate function was used to calculate the stderr and
+confidence interval.
 }
 \examples{
 # read in using readDiatrack

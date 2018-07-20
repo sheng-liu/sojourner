@@ -148,19 +148,19 @@
         data=dcoef[[name[i]]][,"slope"]
 
         # log transformation
-        if (log.transform==T) {
+        if (log.transform == T) {
             data=log10(data)
             data=data[!is.na(data)]
         }
         
         components.int=0
         #components test
-        if (is.null(components)&length(param.len)==0){
+        if (is.null(components)&length(param.len) == 0){
             components.int = .getCompNum(data)
         }else{
-            if(length(param.len)==0){
+            if(length(param.len) == 0){
                 components.int=components
-            }else if(!all(as.vector(param.len)==param.len[[1]])){
+            }else if(!all(as.vector(param.len) == param.len[[1]])){
                 stop("Parameter vector lengths do not match")
             }
             if(is.null(components)){
@@ -178,7 +178,7 @@
             else{stop("Either only meanRange or any of proportion/mean/sd should be provided")}
         }
         
-        if (components.int==1){ #The single component is a special case here since it cannot be a mixEM class object
+        if (components.int == 1){ #The single component is a special case here since it cannot be a mixEM class object
             oneComp=.singlecompFit(data=data)
             fit.output=oneComp[[1]]
             fit.se=oneComp[[2]]
@@ -196,7 +196,7 @@
             plot.mixEM=gg.mixEM(mixmdl,binwidth=binwidth,reorder=T)
             # approximate standard error using parametic bootstrap
             cat("\napproximating standard error by parametic bootstrap...\n\n")
-            capture.output({mixmdl.se=boot.se(mixmdl, B = 100)})
+            capture.output({mixmdl.se=boot.se(mixmdl, B = 1)})
             # file="/dev/null" # this only for mac
             mixmdl.lst[[i]]=mixmdl
             mixmdl.se.lst[[i]]=mixmdl.se
@@ -215,7 +215,7 @@
 
     print(result.lst)
 
-    if (combine.plot==T){
+    if (combine.plot == T){
 
         # same scale, same binwidth, same breaks
         ss=same.scale(mixmdl.lst)
@@ -230,7 +230,7 @@
             cat("\ncombined binwidth =",binwidth,"\n")
         }
 
-        if(components.int==1){reorder=F}
+        if(components.int == 1){reorder=F}
         else{reorder=T}
         plot.lst=lapply(mixmdl.lst,function(x){
 
@@ -250,7 +250,7 @@
     }
 
     # output
-    if (output==T){
+    if (output == T){
         result.df=do.call(rbind.data.frame,result.lst)
         logTrans=""
         if(log.transform){logTrans=".logtrans"}
@@ -260,7 +260,7 @@
         write.csv(file=fileName,result.df)
         
         # output plot
-        if (combine.plot==T){
+        if (combine.plot == T){
 
             fileName=paste("FitNormDistr-combinePlot-",
                            .timeStamp(name[1]),".seed",seed,logTrans,"....pdf",sep="")

@@ -113,7 +113,7 @@
 ##' @export msd.track
 msd.track=function(track,dt=6,resolution=0.107,at.dt=F){
 
-    if (at.dt==F){
+    if (at.dt == F){
 
         # calculate msd for track at 1~dt
         msd_track=c()
@@ -185,7 +185,7 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
         num.tracks.sel[i]=length(trackl.sel)
 
         # stop if no tracks satisfys, otherwise output the number of tracks
-        if (num.tracks.sel[i]==0){
+        if (num.tracks.sel[i] == 0){
             stop("no track satisfies dt =",i,"\n")
         }else{
 
@@ -277,7 +277,7 @@ msd.trackll=function(trackll,dt=6,resolution=0.107,cores=1){
     # FUTURE: if cores more than one, automatic using multicore
     max.cores=parallel::detectCores(logical=T)
 
-    if (cores==1){
+    if (cores == 1){
 
         msd_trackll=lapply(trackll,function(x){
             msd=msd.trackl(trackl=x,dt=dt,resolution=resolution)
@@ -354,7 +354,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
     file.name=gsub('\\.', '_', file.name)
 
     # if summarize
-    if (summarize==T){
+    if (summarize == T){
 
         # remove the IndividualMSD
         MSD.summarized=lapply(MSD,function(x){x$SummarizedMSD})
@@ -426,9 +426,9 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
             theme_bw()+
             theme(legend.title=element_blank())
 
-        if (plot==T) plot(msd.plot)
+        if (plot == T) plot(msd.plot)
 
-        if (output==T){
+        if (output == T){
             fileName=paste("MSD Summarized-",
                            .timeStamp(file.name[1]),"....csv",sep="")
             cat("\nOutput MSD for summarized trajectories.\n")
@@ -444,7 +444,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
         # extract only IndividualMSD from list
         MSD.individual=lapply(MSD,function(x){x$IndividualMSD})
 
-        if(plot==T){
+        if(plot == T){
 
             # MSD.individual only has one variable (with 6 rows), use
             # reshape2::melt()
@@ -470,7 +470,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
         }
 
         # output csv, each list a seperate file
-        if (output==T){
+        if (output == T){
             # reformat output
             MSD.individual.output=lapply(MSD.individual,function(x){
                 x=reshape2::melt(x,na.rm=T)
@@ -543,7 +543,7 @@ msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=F){
     # add an extra "\n" outside of the loop to make system output in a new line.
     cat("\n")
 
-    if(output==T){
+    if(output == T){
 
         p=reshape2::melt(msd.lst)
         colnames(p)=c("frame.index","track.name","msd","track.number","file.name")

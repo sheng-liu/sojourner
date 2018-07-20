@@ -57,7 +57,7 @@ dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=
     ## reshape data for plot
     dwell.time.mlt=reshape2::melt(dwell.time)
 
-    if (length(trackll)==1){
+    if (length(trackll) == 1){
 
         colnames(dwell.time.mlt)=c("index","variable","value")
     }else{
@@ -81,10 +81,10 @@ dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=
         theme(legend.title=element_blank())+
         labs(x="Lifetime of trajectories (ms)", y="Frequency of trajectories")
 
-    if (plot==T) multiplot(histo.plot,density.plot,cols=1)
+    if (plot == T) multiplot(histo.plot,density.plot,cols=1)
 
     ## output
-    if (output==T){
+    if (output == T){
 
         # output csv
 #         for (i in 1:length(trackll)){

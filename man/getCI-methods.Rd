@@ -25,12 +25,14 @@ list of items, each of which will contain for each distribution component:
 }
 }
 \description{
-given a dcoef result, return Confidence Interval information(mean, bounds, std err) for diffusion
-coefficient and the proportions of each components.
+given a dcoef result, return Confidence Interval
+  information(mean, bounds, std err) for diffusion coefficient and the
+  proportions of each components.
 }
 \details{
-Supplied with a bootstrap output, it calculates the confidence range.
-The t-distribution/critical-t was used to calculate the Confidence Interval.
+Supplied with a bootstrap output, it calculates the confidence
+  range. The t-distribution/critical-t was used to calculate the Confidence
+  Interval.
 }
 \examples{
 # compare folders

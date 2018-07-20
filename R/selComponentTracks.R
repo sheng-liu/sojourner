@@ -161,7 +161,7 @@ selComponentTracks=function(
     # if log.transformed, remove negative
     # values to make the total index corresponding to..
 
-    if (log.transformed==T){
+    if (log.transformed == T){
         dcoef.log.trans=lapply(dcoef,function(x){x=x[(x[,"slope"]>0),]})
         dcoef=dcoef.log.trans
     }
@@ -199,7 +199,7 @@ selComponentTracks=function(
     #---------------------------------------------------------------------------
     # export as index file to plot individually
 
-    if (output==T){
+    if (output == T){
         for (i in 1:length(comp.trackID.lst)){
             for (j in 1:length(comp.trackID.lst[[i]])){
                 fileName=paste("componentTrackID-",

@@ -109,14 +109,14 @@ displacement.track=function(track,dt=1,resolution=0.107,bivar=F){
             x["square.disp"]=sqrt(x["square.disp"])
 
             # specifically change the modified column name
-            colnames(x)[which(colnames(x)=="square.disp")]="displacement"
+            colnames(x)[which(colnames(x) == "square.disp")]="displacement"
             return(x)
         })
 
         # pull all the displacement at this dt together
         # displacement=do.call(rbind,track.disp)$displacement
 
-        if(bivar==T){
+        if(bivar == T){
 
             # get the displacement at that dt
             # FIX: this appears no use in this calculation, as it is not returned in anyway
@@ -184,7 +184,7 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=F){
         trackl.dt=trackl[(track.len-1)>=i]
 
         # double check if tracks exist, calculate displacement for trackl
-        if (length(trackl.dt)==0){
+        if (length(trackl.dt) == 0){
             stop("no track satisfies dt =",i,"\n")
         }
 
@@ -280,7 +280,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
     for ( i in 1:length(dp)){
         # InidvidualDisplacement[[i]][[1]] # the [[1]] is to move it one level
         # off "IndividualDisplacement"
-        if (bivar==F){
+        if (bivar == F){
             dp.dt[[i]]=lapply(InidvidualDisplacement[[i]][[1]],function(x){
                 x[dt]})
             }else{
@@ -349,7 +349,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
         #     theme_classic()+
         #     theme(legend.title=element_blank())
     
-        if (plot==T){
+        if (plot == T){
         multiplot(ecdf,histogram,cols=1)
     }
 
@@ -393,7 +393,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
             "stepwiseDisplacement","trackIndex")
     }
 
-    if (output==T){
+    if (output == T){
 
         for (i in 1:length(stepwise.displacement)){
             fileName=paste("stepwiseDisplacement-",

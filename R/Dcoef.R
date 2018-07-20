@@ -109,14 +109,14 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
     # validity check for input
 
     # if neither MSD or trackll is provided
-    if (length(MSD)==0 & length(trackll)==0){
+    if (length(MSD) == 0 & length(trackll) == 0){
         stop("\nPlease provide either MSD or trackll")
     }
 
     method=match.arg(method)
 
     # if select percentage method but original trackll is not provided
-    if (method=="percentage" & length(trackll)==0){
+    if (method == "percentage" & length(trackll) == 0){
         stop("\nPlease provide 'trackll' when using percentage method")
     }
 
@@ -148,7 +148,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
 
                # if MSD is not provided
-               if (length(MSD)==0){
+               if (length(MSD) == 0){
                    # calculate MSD
                    MSD=msd(trackll,dt=dt,resolution=resolution,
                            filter=filter,summarize=F)
@@ -167,7 +167,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
                window.size=window.size
 
                # if MSD is not provided
-               if (length(MSD)==0){
+               if (length(MSD) == 0){
                    # calculate MSD
                    MSD=msd(trackll,dt=dt,resolution=resolution,
                            filter=filter,summarize=F)
@@ -189,7 +189,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
            })
 
-#     if (plot=="variance"){
+#     if (plot == "variance"){
 #         ## currently set rollingwindow only for variance plot
 #         cat("\nvariance = TRUE, applying rolling window, filter swtiched on\n")
 #         rolling.window=T
@@ -203,7 +203,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 ##------------------------------------------------------------------------------
 ## call corresponding functions
 
-#     if (rolling.window==T){
+#     if (rolling.window == T){
 #
 #         D.coef=Dcoef.roll(MSD,dt=dt)
 #         D.coef.subset=rsquare.filter(D.coef,static=F)
@@ -225,7 +225,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
     # further process dispatch on method
 
-    if(method=="static"||method=="percentage"){
+    if(method == "static"||method == "percentage"){
 
         # subset
         D.coef.subset=rsquare.filter(D.coef,rsquare=rsquare)
@@ -234,7 +234,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
         # logorithm
         Log.D.coef=lapply(D.coef.subset.slope,log10)
 
-    }else if(method=="rolling.window"){
+    }else if(method == "rolling.window"){
         # subset
         D.coef.subset=rsquare.filter.roll(D.coef,rsquare=rsquare)
         D.coef.subset.slope=lapply(D.coef.subset,function(x){
@@ -265,7 +265,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 ##------------------------------------------------------------------------------
 ## plot
 
-    if (plot==T){
+    if (plot == T){
 
         cat("\nPlotting histogram...\n")
         # see count inforamtion
@@ -280,7 +280,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 #     plot=match.arg(plot)
 #     switch(plot,
 #            variance={
-#                if (method=="static"||method=="percentage"){
+#                if (method == "static"||method == "percentage"){
 #
 #                    cat("\n\nvariance plot for method static and percentage not available for sojourner v0.2 \n\n")
 #
@@ -306,7 +306,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 ##------------------------------------------------------------------------------
 ## output
 
-    if (output==T){
+    if (output == T){
 
         # output csv
         for (i in 1:length(trackll)){

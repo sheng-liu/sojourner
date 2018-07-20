@@ -56,7 +56,7 @@
 .readDiatrack=function(file, interact=F,ab.track=F, frameRecord = F){
 
     # interactively open window
-    if (interact==T) {
+    if (interact == T) {
         file=file.choose()
     }
 
@@ -151,7 +151,7 @@
 
     cat("\n", file.subname, "read and processed.\n")
 
-    if (ab.track==T) return(ab.track.list) else return(track.list)
+    if (ab.track == T) return(ab.track.list) else return(track.list)
 
 }
 
@@ -182,7 +182,7 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
 
     max.cores=parallel::detectCores(logical=T)
 
-    if (cores==1){
+    if (cores == 1){
 
         for (i in 1:length(file.list)){
 
@@ -239,7 +239,7 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
     }
 
     # cleaning tracks by image mask
-    #if (mask==T){
+    #if (mask == T){
     #    trackll=maskTracks(folder = folder, trackll=trackll)
     #}
 
@@ -247,7 +247,7 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
     # merge has to be done after mask
 
     #Merge start##########################################################################################
-    # if (merge==T){
+    # if (merge == T){
     #     for (i in 1:length(file.list)){
     #         trackll[[i]]=track[[i]]
     #         names(trackll)[i]=file.name[i]
@@ -256,20 +256,20 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
     #Merge end##########################################################################################
 
     # trackll naming scheme
-    # if merge==F, list takes the name of individual file name within folder
+    # if merge == F, list takes the name of individual file name within folder
     # file.name > data.frame.name
-    # if merge==T, list takes the folder name
+    # if merge == T, list takes the folder name
     # folder.name > data.frame.name
     
     # merge masked tracks
     # merge has to be done after mask
     #Mask start##########################################################################################
-    #if (merge==T){
+    #if (merge == T){
 
         # trackll naming scheme
-        # if merge==F, list takes the name of individual file name within folder
+        # if merge == F, list takes the name of individual file name within folder
         # file.name > data.frame.name
-        # if merge==T, list takes the folder name
+        # if merge == T, list takes the folder name
         # folder.name > data.frame.name
 
         # concatenate track list into one list of data.frames
@@ -326,7 +326,7 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
 
     #
     #
-    #         if (mask==T){
+    #         if (mask == T){
     #             trackll=maskTracks(trackll,mask.list)
     #         }
     #

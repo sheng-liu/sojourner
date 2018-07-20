@@ -59,7 +59,7 @@
 
 
     # interactively open window
-    if (interact==T) {
+    if (interact == T) {
         file=file.choose()
     }
 
@@ -139,7 +139,7 @@
     # can be paralleled
     # this has to be a seperate function here, as reading in it is not going through loops.
 
-    if (ab.track==T) {
+    if (ab.track == T) {
 
         cat ("\nConverting to ab.trackl for plotting\n")
         abTrack=function(track){
@@ -152,7 +152,7 @@
 
     cat("\n", file.subname, "read and processed.\n")
 
-    if (ab.track==T) return(ab.track.list) else return(track.list)
+    if (ab.track == T) return(ab.track.list) else return(track.list)
 
 }
 
@@ -174,11 +174,11 @@ readParticleTracker=function(folder,ab.track=F,cores=1, frameRecord=T){
 
     max.cores=parallel::detectCores(logical=T)
 
-    if (cores==1){
+    if (cores == 1){
 
         # TODO: if cores are not assigned and detected cores more than one
         # automatic assign 1/4 of max.cores
-        # if (cores==1 & max.cores>1)
+        # if (cores == 1 & max.cores>1)
         # switch cores=c(1,n,auto)
 
         for (i in 1:length(file.list)){

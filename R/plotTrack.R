@@ -337,7 +337,7 @@ plotTrackFromIndex=function(index.file, movie.folder=c(folder1,folder2,...),reso
     ## remove zero length list
     for (i in 1:length(trackll.plot.narm)){
 
-        if (length(trackll.plot.narm[[i]])==0) trackll.plot.narm[[i]]=NULL
+        if (length(trackll.plot.narm[[i]]) == 0) trackll.plot.narm[[i]]=NULL
     }
 
     plotTrack(trackll.plot.narm,resolution=resolution,frame.min=frame.min,frame.max=frame.max,frame.start=frame.start,frame.end=frame.end)
@@ -376,7 +376,7 @@ trackOverlayData=function(trackl){
 
     # split rownames
     n=track.df
-    if (length(grep("txt",rownames(n)[1]))==0){
+    if (length(grep("txt",rownames(n)[1])) == 0){
         Index=strsplit(rownames(n),"\\.")
     }else{
         Index=strsplit(rownames(n),".txt.")
@@ -593,7 +593,7 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 #     +theme(line=element_blank(),
 #            text=element_blank())
 
-    if (color=="red") {p=p+theme(legend.position="none")}
+    if (color == "red") {p=p+theme(legend.position="none")}
     plot(p)
 
     return(p)
@@ -770,7 +770,7 @@ cmpOverlayData=function(component.lst){
     # split rownames
     n=cmp.df
 
-    if (length(grep("txt",rownames(n)[1]))==0){
+    if (length(grep("txt",rownames(n)[1])) == 0){
         Index=strsplit(rownames(n),"\\.")
     }else{
         Index=strsplit(rownames(n),".txt.")

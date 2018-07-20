@@ -192,7 +192,7 @@ D.coef.roll=function(MSD,window.size=4,t.interval=0.010){
     name2=names(MSD)
     l=list()
     for (j in name2 ){
-        ind=which(name2==j)
+        ind=which(name2 == j)
         l[[ind]]=lapply(D.coef.vec,function(x,i){x[i]},i=j)
     }
 
@@ -288,7 +288,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=F,filter=c(min=7,max=Inf),
             # exclude 1st x value for fitting
             x=seq(from=t.interval*2,to=(len+1)*t.interval,by=t.interval)
 
-            if (weighted==T){
+            if (weighted == T){
                 w=1:len; fit=lm(y~x,weights =w )
             }else{
                 fit=lm(y~x)
@@ -398,11 +398,11 @@ rsquare.filter=function(D.coef,rsquare=0.8){
 
     cat("\nApplying r square filter...",rsquare,"\n")
 
-    slope=lapply(D.coef,function(x){x[,"slope"]})   # x[colnames(x)=="slope"]
-    corr=lapply(D.coef,function(x){x[,"corr"]})    # x[colnames(x)=="corr"]
+    slope=lapply(D.coef,function(x){x[,"slope"]})   # x[colnames(x) == "slope"]
+    corr=lapply(D.coef,function(x){x[,"corr"]})    # x[colnames(x) == "corr"]
 
-    # the "still" molecule wil generate a NA in correlation, thus is.na(x)==F
-    corr.filter=lapply(corr,function(x){x>=rsquare & is.na(x)==F})
+    # the "still" molecule wil generate a NA in correlation, thus is.na(x) == F
+    corr.filter=lapply(corr,function(x){x>=rsquare & is.na(x) == F})
 
     # add corr and slope in the output
 
