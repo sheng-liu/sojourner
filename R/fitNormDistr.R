@@ -284,6 +284,13 @@ fitNormDistr=function(dcoef,components=NULL,log.transform=F,binwidth=NULL,combin
     structure(.fitNormDistr(dcoef=dcoef,components=components,log.transform=log.transform,binwidth=binwidth,combine.plot=combine.plot,output=output,
                             meanRange=meanRange,proportion=proportion,means=means,sd=sd,seed=seed),seed=seed)
 }
-# TODO:
-# 1 check how the se is calculated for the 1 component case and for the multi-component cases
 
+
+# Comment:
+# the calculation of means for the bootstrapped sample seems to be directly
+# using fitted posterior distributions, rather than fitted 100 times.
+
+
+# TODO: 
+# isolate the boot.se part from fitNormDistr(), so the bootstrap is all in one
+# place.

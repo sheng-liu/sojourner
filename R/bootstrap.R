@@ -8,7 +8,10 @@
 ##' @rdname bootstrap-methods
 ##' @docType methods
 ##'
-##' @description Bootstrap confidience intervals with standard errors. bootstrap resamples dataset (e.g. diffusion coefficients) to calculate confidience intervals for a statistic measure of dataset.  
+##' @description 
+##' Bootstrap confidience intervals with standard errors. bootstrap resamples
+##' dataset (e.g. diffusion coefficients) to calculate confidience intervals for
+##' a statistic measure of dataset.
 
 ##' @usage
 ##'   bootstrap(normalFit,n.reps=100)
@@ -47,11 +50,13 @@
 ##' 
 
 ##' @details
-##' A wrapper of boot::boot and mixtools::boot.se adapted for data format in sojourner package. 
-##' Also returns stderr information by running boot.se from mixtools  
-##' and an additional method for one-component distribution calculates the stderr separately.
-##' For multi-component distributions, the boot.se function from the mixtools package was used.
-##' For single-component distributions, a separate function was used to calculate the stderr and confidence interval.
+##' A wrapper of boot::boot and mixtools::boot.se adapted for data format in
+##' sojourner package. Also returns stderr information by running boot.se from
+##' mixtools and an additional method for one-component distribution calculates
+##' the stderr separately. For multi-component distributions, the boot.se
+##' function from the mixtools package was used. For single-component
+##' distributions, a separate function was used to calculate the stderr and
+##' confidence interval.
 ##' 
 ##' @import boot
 ###############################################################################
@@ -104,3 +109,18 @@ plotBootstrap=function(d.boot,alpha=1/2){
         plot(p)
     }
 }
+
+
+
+# TODO: isolate the boot.se part from fitNormDistr(), so the bootstrap is all in
+# one place.
+
+
+# Note the calculation of means for the bootstrapped sample seems to be directly
+# using fitted posterior distributions, rather than fitted 100 times.
+
+
+
+
+
+
