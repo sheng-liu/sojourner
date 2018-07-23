@@ -1,10 +1,10 @@
 ---
-title: "smt package"
+title: "sojourner package"
 author: "Sheng Liu"
 date: "`r Sys.Date()`"
-output: rmarkdown::pdf_document
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{smt package}
+  %\VignetteIndexEntry{sojourner package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

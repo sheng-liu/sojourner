@@ -14,11 +14,11 @@
 ##' a statistic measure of dataset.
 
 ##' @usage
-##'   bootstrap(normalFit,n.reps=100)
+##'   bootstrap(fittedObj,n.reps=100)
 ##'   
 ##'   plotBootstrap(d.boot,alpha=1/2) -- not available in current version
 ##'   
-##' @param normalFit output from fitNormDistr
+##' @param fittedObj output from fitNormDistr
 ##' @param n.reps number of replicates for bootstrapping
 ##' @param d.boot bootstrapped data, or the output from bootstrap
 ##' @param alpha transparency adjustment, between 0 to 1.
@@ -41,12 +41,12 @@
 ##' MSD=msd(trackll.flt,dt=6,summarize=FALSE,plot=TRUE)
 ##' dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
 ##' # fit the dcoef result
-##' normalFit=fitNormDistr(dcoef)
+##' fittedObj=fitNormDistr(dcoef)
 ##' 
 ##' # bootstrap new datasets
-##' d.boot=bootstrap(normalFit)
+##' d.boot=bootstrap(fittedObj)
 ##' # manually set the number of bootstrap samples to 50
-##' d.boot=bootstrap(normalFit, n.reps=50)
+##' d.boot=bootstrap(fittedObj, n.reps=50)
 ##' 
 
 ##' @details

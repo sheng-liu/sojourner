@@ -9,7 +9,8 @@
 getCI(dcoef.result,confidence=0.95,output=F)
 }
 \arguments{
-\item{confidence}{the level of confidence that is used to calculate the confidence interval.}
+\item{confidence}{the level of confidence that is used to calculate the
+confidence interval.}
 
 \item{dcoef.result}{diffusion coefficient calculated from Dcoef().}
 
@@ -26,13 +27,13 @@ list of items, each of which will contain for each distribution component:
 }
 \description{
 given a dcoef result, return Confidence Interval
-  information(mean, bounds, std err) for diffusion coefficient and the
-  proportions of each components.
+information(mean, bounds, std err) for diffusion coefficient and the
+proportions of each components.
 }
 \details{
 Supplied with a bootstrap output, it calculates the confidence
-  range. The t-distribution/critical-t was used to calculate the Confidence
-  Interval.
+range. The t-distribution/critical-t was used to calculate the Confidence
+Interval.
 }
 \examples{
 # compare folders

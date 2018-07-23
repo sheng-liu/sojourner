@@ -12,7 +12,7 @@
 ##'   summarize on trajectories.
 
 ##' @usage
-##'   msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F)
+##'   msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,filter=c(min=7,max=Inf))
 ##' @param dt Time intervals. Default 6.
 ##' @usage msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F)
 ##' @param dt Time intervals. Default 6. 

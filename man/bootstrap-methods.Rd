@@ -6,14 +6,14 @@
 \alias{.boot.se.onecomp}
 \title{bootstrap}
 \usage{
-bootstrap(normalFit,n.reps=100)
+bootstrap(fittedObj,n.reps=100)
   
   plotBootstrap(d.boot,alpha=1/2) -- not available in current version
 }
 \arguments{
 \item{n.reps}{number of replicates for bootstrapping}
 
-\item{normalFit}{output from fitNormDistr}
+\item{fittedObj}{output from fitNormDistr}
 
 \item{d.boot}{bootstrapped data, or the output from bootstrap}
 
@@ -53,11 +53,11 @@ trackll.flt=filterTrack(trackll,filter=c(min=5,max=Inf))
 MSD=msd(trackll.flt,dt=6,summarize=FALSE,plot=TRUE)
 dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
 # fit the dcoef result
-normalFit=fitNormDistr(dcoef)
+fittedObj=fitNormDistr(dcoef)
 
 # bootstrap new datasets
-d.boot=bootstrap(normalFit)
+d.boot=bootstrap(fittedObj)
 # manually set the number of bootstrap samples to 50
-d.boot=bootstrap(normalFit, n.reps=50)
+d.boot=bootstrap(fittedObj, n.reps=50)
 
 }

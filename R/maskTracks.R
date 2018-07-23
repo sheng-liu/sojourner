@@ -22,6 +22,7 @@
 
 ##' @param folder Full path to the output files.
 ##' @param trackll A list of track lists.
+##' @param export Logical indicate if .csv output file should be generated
 ##' @param max.pixel Pixel dimension of image
 ##' @param areaFilter Range of cell areas (pixel sq) to keep in filtering
 ##' @param intensityFilter Range of avg cell intensities (grayscale) to keep in filtering

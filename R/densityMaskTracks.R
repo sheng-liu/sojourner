@@ -18,7 +18,6 @@
 ##' @param removeEdge Remove edge clusters with incomplete contour lines/ploygons
 ##' @param separate Separate by cluster
 ##' @param buildModel Manually configure the kernel density probability (p), while continuously building a model. T to create a model or improve an existing model. F to load in a MODEL.csv for automatic masking.
-##' @param track.list A single uncensored/filtered track list.
 
 ##' @details
 ##' 

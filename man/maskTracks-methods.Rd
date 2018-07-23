@@ -19,6 +19,8 @@ sampleTracks(trackll, num = 0)
 
 \item{trackll}{A list of track lists.}
 
+\item{export}{Logical indicate if .csv output file should be generated}
+
 \item{max.pixel}{Pixel dimension of image}
 
 \item{areaFilter}{Range of cell areas (pixel sq) to keep in filtering}

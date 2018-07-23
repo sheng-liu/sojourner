@@ -47,10 +47,6 @@ for detail.}
 at : system.file("extdata","PREF","profile.csv",package="sojourner"). User can
 provide preference file by specifying the location of the file, e.g.
 profile="/Users/shengliu/Desktop/profile.csv".}
-
-\item{lag.start}{time lag used as start of dt for compute Dcoef. Default 2.}
-
-\item{lag.end}{Time lag used as end of dt for compute Dcoef. Default 2.}
 }
 \value{
 \itemize{
@@ -70,6 +66,9 @@ Generic parameters (parameter applied to all methods, such as
   programably or manually go to folder
   system.file("extdata","PREF","profile.csv",package="sojourner"), and change the
   profile.csv.
+  
+  lag.start: time lag used as start of dt for compute Dcoef. Default 2.
+  lag.end: Time lag used as end of dt for compute Dcoef. Default 2.
 
   method for calculating Dcoef:
 \itemize{

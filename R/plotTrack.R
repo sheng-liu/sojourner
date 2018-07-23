@@ -18,7 +18,7 @@
 ##'
 ##' plotTrackFromIndex(index.file, movie.folder=c(folder1,folder2,...),
 ##' resolution=0.107,frame.min=1,frame.max=100,
-##' frame.start=1,frame.end=500,input=0)
+##' frame.start=1,frame.end=500,input=1)
 ##'
 ##' plotTrackOverlay(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'

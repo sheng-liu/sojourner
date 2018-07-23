@@ -9,8 +9,6 @@
 densityMaskTracks(trackll, scale = 128, removeEdge = F, separate = F, buildModel = F)
 }
 \arguments{
-\item{track.list}{A single uncensored/filtered track list.}
-
 \item{scale}{X and Y scale (in pixels) of track video window}
 
 \item{trackll}{An uncensored/unfiltered list of track lists}

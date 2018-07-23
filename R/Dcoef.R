@@ -22,8 +22,6 @@
 ##' @param rsquare rsquare filter on Dcoef results. Default to be 0.8. Set value
 ##'   to 0 if rsquare filter is not desired.
 ##' @param resolution ratio of pixel to µM.
-##' @param lag.start time lag used as start of dt for compute Dcoef. Default 2.
-##' @param lag.end Time lag used as end of dt for compute Dcoef. Default 2.
 ##' @param plot A parameter for plotting. Default FALSE, no plot; If TRUE,
 ##'   automatically plots "histogram" with count information, binwidth can be
 ##'   set through parameter binwidth; as well as "density" with
@@ -57,6 +55,9 @@
 ##'   programably or manually go to folder
 ##'   system.file("extdata","PREF","profile.csv",package="sojourner"), and change the
 ##'   profile.csv.
+##'   
+##'   lag.start: time lag used as start of dt for compute Dcoef. Default 2.
+##'   lag.end: Time lag used as end of dt for compute Dcoef. Default 2.
 ##'
 ##'   method for calculating Dcoef:
 ##' \itemize{
