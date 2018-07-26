@@ -12,10 +12,9 @@
 ##'   summarize on trajectories.
 
 ##' @usage
-##'   msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,filter=c(min=7,max=Inf))
+##'   msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,
+##'   plot=F,output=F,filter=c(min=7,max=Inf))
 ##' @param dt Time intervals. Default 6.
-##' @usage msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F)
-##' @param dt Time intervals. Default 6. 
 ##' @param resolution ratio of pixel to µM.
 ##' @param trackll Track list output from readDiatrack().
 ##' @param summarize An logical indicate if MSD should be calculated on
@@ -413,13 +412,14 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
         # change dt from factor to integer/numeric
         # alternative as.numeric(levels(x))[x]
         p=transform(p,dt=as.integer(as.character(dt)))
+        #yMin=SummarizedMSD-StandardError
+        #yMax=SummarizedMSD+StandardError
         msd.plot=ggplot(
 
             # p,aes(x=as.integer(as.character(dt)), not work
-            p,aes(x=dt,y=SummarizedMSD,group=file.name,col=file.name))+
+            p,aes_string(x="dt",y="SummarizedMSD",group="file.name",col="file.name"))+
             geom_line()+geom_point()+
-            geom_errorbar(aes(ymin=SummarizedMSD-StandardError,
-                              ymax=SummarizedMSD+StandardError), width=.1)+
+            geom_errorbar(aes(ymin=SummarizedMSD-StandardError,ymax=SummarizedMSD+StandardError), width=.1)+
             # this makes integer breaks
             scale_x_continuous(breaks=scales::pretty_breaks())+
             labs(x="Time intervals", y="SummarizedMSD (µm^2)")+
@@ -456,8 +456,8 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
             # file.name) as track.name starts over again from a new file, use
             # interaction() realize it
 
-            msd.plot=ggplot(p,aes(x=index,y=msd,
-                                  group=interaction(file.name,track.name),
+            msd.plot=ggplot(p,aes_string(x="index",y=msd,
+                                  group=interaction(file.name,"track.name"),
                                   col=file.name))+
                 geom_line()+
                 # this makes integer breaks

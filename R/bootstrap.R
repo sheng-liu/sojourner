@@ -102,7 +102,7 @@ plotBootstrap=function(d.boot,alpha=1/2){
     
     # "alpha impacts the line of stat_ based geoms"
     # https://github.com/tidyverse/ggplot2/issues/1371
-        p=ggplot(bsf,aes(x=value,group=variable))+
+        p=ggplot(bsf,aes_string(x="value",group="variable"))+
             geom_line(alpha=alpha,position="identity",stat="density")+
             ggtitle(sample_names[i])+
             theme(plot.title = element_text(hjust = 0.5))

@@ -29,6 +29,11 @@
 ## @seealso
 
 ##' @import ggplot2
+##' @import utils
+##' @import stats
+##' @import graphics
+##' @import grDevices
+##' @import grid
 
 ##' 
 ##' 
@@ -53,6 +58,7 @@
 ##' @importFrom compiler cmpfun
 ##' @importFrom compiler enableJIT
 ##' @importFrom plyr rbind.fill
+##' @importFrom rlang .data
 
 ## @import dplyr
 
@@ -76,7 +82,6 @@ sojourner=function(){}
 sojournerGUI=function(){
     appPath=system.file("myapp",package="sojourner")
     shiny::runApp(appPath)
-f
 }
 
 

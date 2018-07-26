@@ -295,7 +295,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
 
     ## plotting
 
-        ecdf=ggplot(p,aes(x=value,group=L1,colour=L1))+
+        ecdf=ggplot(p,aes_string(x="value",group="L1",colour="L1"))+
             stat_ecdf(position="identity")+
             labs(x="Displacement (µm)",y="CDF")+
             theme_classic()+
@@ -327,7 +327,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
             # theme_classic()+
             # theme(legend.title=element_blank())
         histogram=
-            ggplot(p,aes(x=value,y=..scaled..,colour=L1))+
+            ggplot(p,aes_string(x="value",y="..scaled..",colour="L1"))+
                 stat_density(position="identity",adjust=2,fill=NA)+
                 scale_x_continuous(trans="log10",limits = c(-2,0.5),
                                    breaks=scales::pretty_breaks(n=5))+

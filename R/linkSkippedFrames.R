@@ -216,7 +216,7 @@ findMaxLinks = function(track.list, maxTolerance = 10, maxMaxSkip = 500){
     cat("Searching...");
     for (i in 1:maxTolerance){
         for (j in 1:maxMaxSkip){
-            length = length(linkSkippedFrames(track.list, tolerance = i, maxSkip = j, print = F));
+            length = length(linkSkippedFrames(track.list, tolerance = i, maxSkip = j));
             if (length < minLength){
                 minLength = length
                 minTolerance = i

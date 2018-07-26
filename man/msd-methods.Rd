@@ -6,14 +6,13 @@
 \alias{msd.track}
 \title{msd}
 \usage{
-msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,filter=c(min=7,max=Inf))
+msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,
+  plot=F,output=F,filter=c(min=7,max=Inf))
 }
 \arguments{
 \item{dt}{Time intervals. Default 6.}
 
 \item{resolution}{ratio of pixel to µM.}
-
-\item{dt}{Time intervals. Default 6.}
 
 \item{trackll}{Track list output from readDiatrack().}
 

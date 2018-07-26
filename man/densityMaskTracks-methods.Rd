@@ -96,18 +96,18 @@ plotTrackOverlay(trackll)
 plotTrackOverlay(trackll.masked)
 
 # create trackll by build model manually, useful when default model does not
-yield good masking either too strigent or too lose
+# yield good masking either too strigent or too lose
 trackll.masked.md <- densityMaskTracks(trackll, buildModel = T)
 
 # model building is recommended for new dataset, currently one needs to
-manually evaluate the goodness of the masking, and strength /lose it by
-specifying p value when prompted by the command.
+# manually evaluate the goodness of the masking, and strength /lose it by
+# specifying p value when prompted by the command.
 
 # This is an example of masking model building process
  
 # Masking mage6 ...
 # No initial model read. If desired, ensure there is one file ending in
-MODEL.csv in working directory.
+# MODEL.csv in working directory.
 # 2 clusters. mage6 masked at kernel density probability = 0.5 , eliminate = 0 
 
 # Done (1 = YES; 0 = NO)?: 0 # assume too strigent answer no. 
@@ -128,8 +128,8 @@ plotTrackOverlay(trackll.masked) # masked using default masking model
 plotTrackOverlay(trackll.masked.md) # masked using losened up masking model 
 
 # now one can used this modified Model.csv to process data that was not
-masked well using default model by simply putting Model.csv in the working
-directory and set buildModel=F
+# masked well using default model by simply putting Model.csv in the working
+# directory and set buildModel=F
 trackll.masked2 <- densityMaskTracks(trackll, buildModel = F)
 plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up) model
 plotTrackOverlay(trackll.masked2) # masked using provided (lossen up) model without building it

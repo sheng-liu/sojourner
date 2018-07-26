@@ -4,7 +4,8 @@
 ##
 ###############################################################################
 ##' @name plotTrack
-##' @aliases plotTrack
+##' @aliases plotTrack plotTrackFromIndex plotTrackOverlay plotNucTrackOverlay 
+##' plotComponentTrackOverlay plotMask
 ##' @title plotTrack
 ##' @rdname plotTrack-methods
 ##' @docType methods
@@ -16,7 +17,7 @@
 ##' plotTrack(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,
 ##' frame.start=1,frame.end=500)
 ##'
-##' plotTrackFromIndex(index.file, movie.folder=c(folder1,folder2,...),
+##' plotTrackFromIndex(index.file, movie.folder,
 ##' resolution=0.107,frame.min=1,frame.max=100,
 ##' frame.start=1,frame.end=500,input=1)
 ##'
@@ -112,8 +113,8 @@
 ##'
 ##' ## masking with image mask
 ##' track.folder=system.file("extdata","SWR1_2",package="sojourner")
-##' trackll=readDiatrack(folder=track.folder,merge=F,mask=F)
-##' trackll.masked=readDiatrack(folder=track.folder,merge=F,mask=T)
+##' trackll=readDiatrack(folder=track.folder)
+##' trackll.masked=readDiatrack(folder=track.folder)
 ##' str(trackll,1)
 ##' str(trackll.masked,1)
 ##'
@@ -133,7 +134,7 @@
 ##'
 ##' ## plotComponentTrackOverlay (see selComponentTracks() for more details)
 ##' folder2=system.file("extdata","SWR1_2",package="sojourner")
-##' trackll=readDiatrack(folder2,merge=F)
+##' trackll=readDiatrack(folder2)
 ##'
 ##' ## use merge=T for per folder comparison, the analsyis result can't be plot
 
@@ -279,7 +280,7 @@ plotTrack=function(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,frame.s
 ## plot trajectory according to index
 ## user need to put the corresponding movie files into a folder
 
-plotTrackFromIndex=function(index.file, movie.folder=c(folder1,folder2,...),resolution=0.107,frame.min=1,frame.max=100,frame.start=1,frame.end=500,input=1){
+plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,frame.min=1,frame.max=100,frame.start=1,frame.end=500,input=1){
 
     ## read trajectory index from the index.file
     index.df=read.csv(file=index.file,header=T)
@@ -409,8 +410,8 @@ trackOverlayData=function(trackl){
     # indexPerFile) as indexPerFile sometimes repeat when multiple files are
     # merged. interaction() realize it
 
-    p=ggplot(track.overlay.data,aes(
-        x=x,y=y,group=interaction(frameID,duration,indexPerFile)))+
+    p=ggplot(track.overlay.data,aes_string(
+        x="x",y="y",group=interaction("frameID","duration","indexPerFile")))+
             geom_path()+
 
         scale_x_continuous(
@@ -484,7 +485,7 @@ plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16
     # shape 22 is little square, when squeezed, they have misconsumption of smaller squres
     # shape 46 is the smallest dot, even when squeezed
 
-    pp=ggplot(pos.point,aes(x=x,y=y))+geom_point(alpha=1,shape=22)+
+    pp=ggplot(pos.point,aes_string(x="x",y="y"))+geom_point(alpha=1,shape=22)+
         scale_x_continuous(
             name="Pixel",
             breaks=seq(from=0, to=max.pixel,by=20),
@@ -562,11 +563,11 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
     d=img@.Data
 
     p=  ggplot()+
-        geom_raster(data=reshape2::melt(d), aes(Var1,Var2,fill=value),interpolate=FALSE)+
+        geom_raster(data=reshape2::melt(d), aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
         scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+
 
         geom_path(data=track.overlay.data,
-                  aes(x=x,y=y,group=indexPerFile,color=color))+
+                  aes_string(x="x",y="y",group="indexPerFile",color=color))+
         scale_x_continuous(
             name="Pixel",
             breaks=seq(from=0, to=max.pixel,by=20),
@@ -612,7 +613,7 @@ plotNucTrackOverlay=function(folder,trackll=NULL,mask=F,cores=1,
 
     if (is.null(trackll)){
         cat("\ntrackll not specified, read in Diatrack file\n")
-        trackll=readDiatrack(folder=folder,merge=F,mask=mask,cores=cores)
+        trackll=readDiatrack(folder=folder,cores=cores)
     }
 
 
@@ -674,6 +675,7 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
 
     color.lst=lapply(track.overlay.data.lst,function(x){x$component})
 
+    ###trackll or trackll.sel
     for (i in 1:length(trackll)) plot.lst[[i]]=.plotNucTrackOverlay(
         trackl=NULL,component.lst=trackll.sel[i],
         image.file=nuclei.lst[[i]],

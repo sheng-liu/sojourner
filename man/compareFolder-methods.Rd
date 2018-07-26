@@ -5,7 +5,7 @@
 \alias{compareFolder}
 \title{compareFolder}
 \usage{
-compareFolder(folders=c(folder1,folder2,...),input=1,ab.track=F,cores=1)
+compareFolder(folders,input=1,ab.track=F,cores=1)
 }
 \arguments{
 \item{folders}{a vector storing paths to the folders location."..."

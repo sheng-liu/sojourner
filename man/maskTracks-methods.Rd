@@ -4,11 +4,15 @@
 \name{maskTracks}
 \alias{maskTracks}
 \alias{maskPoint}
+\alias{indexCell}
+\alias{filterOnCell}
+\alias{sampleTracks}
 \title{maskTracks}
 \usage{
 maskTracks(folder, trackll)
 
-indexCell(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(0, Inf), export = F, max.pixel = 128)
+indexCell(folder, trackll, areaFilter = c(0, Inf), 
+intensityFilter = c(0, Inf), export = F, max.pixel = 128)
 
 filterOnCell(trackll, numTracks = 0)
 

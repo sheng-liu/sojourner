@@ -30,7 +30,8 @@ Select trajectory based on component fitting on diffusion
 
 ## selComponentTracks() usage
 # 1. select componentTracks per folder (cross movie) by using compareFolders
-# 2. select componentTracks per movie base, use plotComponentTracks to plot component tracks back to initial Nuclei image.
+# 2. select componentTracks per movie base, use plotComponentTracks to plot
+ component tracks back to initial Nuclei image.
 
 ## 1. select componentTracks per folder (cross movie) by using compareFolders
 folder1=system.file("extdata","SWR1",package="sojourner")
@@ -43,7 +44,8 @@ dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
 fit=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=484)
 
 # select component tracks from fitting
-trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,dcoef=dcoef,log.transformed=T,output=F)
+trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,
+dcoef=dcoef,log.transformed=T,output=F)
 # subset component tracks to further analyze msd, dcoef
 trackll.swr1=trackll.sel[["SWR1_WT_140mW_image6.txt"]]
 msd(trackll.swr1,plot=T)
@@ -55,7 +57,8 @@ plotTrackOverlay(trackll.swr1)
 dwellTime(trackll.swr1)
 
 # Output trajectory index to plot individually
-# trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = T)
+# trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
+dcoef = dcoef,log.transformed = T,output = T)
 # specify index file path.
 index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",package="sojourner")
 index.file2=system.file("extdata","INDEX","componentTrackID-SWR1.comp.2.csv",package="sojourner")
@@ -64,14 +67,16 @@ plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder)
 plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder)
 
 
-## 2. select componentTracks per movie base, use plotComponentTracks to plot component tracks back to initial Nuclei image.
+## 2. select componentTracks per movie base, use plotComponentTracks to plot 
+component tracks back to initial Nuclei image.
 ## plotComponentTrackOverlay
 folder3=system.file("extdata","SWR1_2",package="sojourner")
 trackll=readDiatrack(folder3)
 
 ## use merge=T for per folder comparison, the analsyis result can't be plot back to original image
 ## To see component tracks on original nuclei image, set merge=F (for per movie analysis)
-## may not make much sense to msd on individual movie, however for plot component track back to original nuclei image.
+## may not make much sense to msd on individual movie, 
+however for plot component track back to original nuclei image.
 
 ## compute MSD
 MSD=msd(trackll=trackll,plot=T)
@@ -85,7 +90,8 @@ dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
 fit=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=481)
 
 ## select component tracks based on fitting
-trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = F)
+trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
+dcoef = dcoef,log.transformed = T,output = F)
 ## plot component tracks
 plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
 

@@ -107,7 +107,7 @@ squareDispCpp = function(track, dt = 1, resolution = 0.107){
     track.out = data.matrix(track);
 
     #Compile source C++ file
-    file=system.file("cpp",package="sojourner", "squareDispRcpp.cpp");
+    file=system.file("cpp", "squareDispRcpp.cpp", package="sojourner");
     sourceCpp(file);
 
     #run squareDispRcpp.cpp

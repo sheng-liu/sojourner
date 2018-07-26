@@ -12,8 +12,8 @@
 ##' proportions of each components.
 ##'
 ##' @usage
-##' getCI(dcoef.result,confidence=0.95,output=F)
-##' @param dcoef.result diffusion coefficient calculated from Dcoef().
+##' getCI(bootstrap.result,confidence=0.95,output=F)
+##' @param bootstrap.result diffusion coefficient calculated from Dcoef().
 ##' @param confidence the level of confidence that is used to calculate the
 ##' confidence interval.
 ##' @param output Logical indicate if output file should be generated.

@@ -6,13 +6,13 @@
 \alias{.get.seRange}
 \title{getCI}
 \usage{
-getCI(dcoef.result,confidence=0.95,output=F)
+getCI(bootstrap.result,confidence=0.95,output=F)
 }
 \arguments{
 \item{confidence}{the level of confidence that is used to calculate the
 confidence interval.}
 
-\item{dcoef.result}{diffusion coefficient calculated from Dcoef().}
+\item{bootstrap.result}{diffusion coefficient calculated from Dcoef().}
 
 \item{output}{Logical indicate if output file should be generated.}
 }

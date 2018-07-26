@@ -13,8 +13,7 @@
 ##' readDiatrack(folder, ab.track = F, cores = 1, frameRecord = T)
 ##'
 ##' .readDiatrack(file, interact = F, ab.track = F, frameRecord = F)
-##' 
-##' maskTracks(folder, trackll)
+##'
 ##'
 ## @method # this roxygen directive does not working
 ##' @param folder Full path to Diatrack .txt session files output folder.

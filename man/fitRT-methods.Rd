@@ -6,7 +6,8 @@
 \alias{.one.comp.fit.rt}
 \title{Fitting Residence time (1-CDF)}
 \usage{
-fitRT(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5)
+fitRT(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5,maxiter.search=1e3,
+maxiter.optim=1e3,k.ns=FALSE)
 }
 \arguments{
 \item{t.interval}{time interval for image aquisition. Default 0.5 sec.}

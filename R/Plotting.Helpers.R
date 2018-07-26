@@ -25,7 +25,7 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
         if (is.null(binwidth)) binwidth=auto.binwidth(p$Log.D.coef)
 
         # overlay histogram and density plot without changing count as y axies
-        Dcoef.plot=ggplot(p,aes(x=Log.D.coef,group=file.name,col=file.name))+
+        Dcoef.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
             geom_histogram(aes(y = ..count..,fill=file.name),
                            binwidth=binwidth,position="dodge")+
 
@@ -54,8 +54,8 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
         # auto binwidth
         if (is.null(binwidth)) binwidth=auto.binwidth(p$Log.D.coef)
 
-        facet.plot=ggplot(p,aes(x=Log.D.coef,group=file.name,col=file.name))+
-            geom_histogram(aes(y = ..count..,fill=file.name),
+        facet.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
+            geom_histogram(aes_string(y = "..count..",fill="file.name"),
                            binwidth=binwidth,position="dodge")+
 
             # geom_density(aes(y=0.5*..count..,fill=file.name),alpha=0.2)+
@@ -65,8 +65,8 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
             theme(legend.title=element_blank())+
             facet_grid(window.name ~ .)
 
-        merged.plot=ggplot(p,aes(x=Log.D.coef,group=file.name,col=file.name))+
-            geom_histogram(aes(y = ..count..,fill=file.name),
+        merged.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
+            geom_histogram(aes_string(y = "..count..",fill="file.name"),
                            binwidth=binwidth,position="dodge")+
             geom_density(aes(y=0.5*..count..,fill=file.name),alpha=0.2)+
             theme_bw()+
@@ -95,15 +95,15 @@ plotDensity=function(Log.D.coef,binwidth=0.5,method){
         if (is.null(binwidth)) binwidth=auto.binwidth(p$Log.D.coef)
 
         Dcoef.plot=ggplot(p,
-                          aes(x=Log.D.coef,
-                              group=file.name,
+                          aes_string(x="Log.D.coef",
+                              group="file.name",
                               # col=file.name,
-                              fill=file.name))+
-            geom_histogram(aes(y = ..density..,fill=file.name),
+                              fill="file.name"))+
+            geom_histogram(aes_string(y = "..density..",fill="file.name"),
                            colour="white",
                            binwidth=binwidth,
                            position="dodge")+
-            geom_density(aes(y = ..density..,col=file.name),alpha = 0.2)+
+            geom_density(aes_string(y = "..density..",col="file.name"),alpha = 0.2)+
             theme_bw()+
             theme(legend.title=element_blank())
 
@@ -130,16 +130,16 @@ plotDensity=function(Log.D.coef,binwidth=0.5,method){
 
         # a perfect case for faceting
         facet.plot=ggplot(p,
-               aes(x=Log.D.coef,group=file.name,
-                   col=file.name,fill=file.name))+
+               aes_string(x="Log.D.coef",group="file.name",
+                   col="file.name",fill="file.name"))+
             geom_density(alpha = 0.2)+
             theme_bw()+
             theme(legend.title=element_blank())+
             facet_grid(window.name ~ .)
 
         merged.plot=ggplot(p,
-               aes(x=Log.D.coef,group=file.name,
-                   col=file.name,fill=file.name))+
+               aes_string(x="Log.D.coef",group="file.name",
+                   col="file.name",fill="file.name"))+
             geom_density(alpha = 0.2)+
             theme_bw()+
             theme(legend.title=element_blank())
@@ -281,7 +281,7 @@ plotVariance=function(Log.D.coef,method){
 ## .
 ## from Rcookbook
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-    library(grid)
+    #library(grid)
 
     # Make a list from the ... arguments and plotlist
     plots <- c(list(...), plotlist)
@@ -378,11 +378,11 @@ gg.mixEM <- function(EM,binwidth=NULL,reorder=T) {
     # auto binwidth
     if (is.null(binwidth)) binwidth=auto.binwidth(EM$x)
 
-    ggplot(data.frame(x=EM$x),aes(x,y=..density..)) +
+    ggplot(data.frame(x=EM$x),aes_string(x,y="..density..")) +
         geom_histogram(fill=NA,color="black",binwidth=binwidth)+
         # when distribution is truncated, it plots flippers
         # geom_polygon(data=em.df,aes(x,y,fill=comp),color="grey50", alpha=0.5)+
-        geom_area(data=em.df,aes(x,y,fill=comp),color="grey50", alpha=0.5,position = "identity")+
+        geom_area(data=em.df,aes_string(x,y="y",fill="comp"),color="grey50", alpha=0.5,position = "identity")+
         scale_fill_discrete("Component\nMeans",labels=format(em.df$mu,digits=3))+
         theme_bw()
 }

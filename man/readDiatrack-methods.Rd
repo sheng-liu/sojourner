@@ -9,8 +9,6 @@
 readDiatrack(folder, ab.track = F, cores = 1, frameRecord = T)
 
 .readDiatrack(file, interact = F, ab.track = F, frameRecord = F)
-
-maskTracks(folder, trackll)
 }
 \arguments{
 \item{file}{Full path to Diatrack .mat session file.}

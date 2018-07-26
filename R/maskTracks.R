@@ -3,7 +3,7 @@
 ##
 ###############################################################################
 ##' @name maskTracks
-##' @aliases maskTracks
+##' @aliases maskTracks indexCell filterOnCell sampleTracks
 ##' @title maskTracks
 ##' @rdname maskTracks-methods
 ##' @docType methods
@@ -13,7 +13,8 @@
 ##' @usage
 ##' maskTracks(folder, trackll)
 ##' 
-##' indexCell(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(0, Inf), export = F, max.pixel = 128)
+##' indexCell(folder, trackll, areaFilter = c(0, Inf), 
+##' intensityFilter = c(0, Inf), export = F, max.pixel = 128)
 ##' 
 ##' filterOnCell(trackll, numTracks = 0)
 ##' 
@@ -63,6 +64,8 @@
 ##' 
 ##' sampleTracks() randomly samples num number of tracks for each trackl in trackll.
 
+##' @importFrom pixmap getChannels
+##' @importFrom SDMTools ConnCompLabel
 ##' @export maskTracks
 ##' @export indexCell
 ##' @export filterOnCell

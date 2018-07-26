@@ -15,7 +15,7 @@
 ##'
 ##' @usage
 ##'
-##' combineTrackll(trackll=c(trackll1,trackll2),name="combined trackll",merged=T)
+##' combineTrackll(trackll,name="combined trackll",merged=T)
 ##'
 ##' @param trackll The tracklls to be combined together.
 ##' @param name a character string given to set the "names" attribute for the combined trackll
@@ -57,7 +57,9 @@
 
 
 
-combineTrackll<-function(trackll=c(trackll1,trackll2),name="combined trackll",merged=T){
+#combineTrackll<-function(trackll=c(trackll1,trackll2),name="combined trackll",merged=T){
+#combineTrackll: no visible binding for global variable ‘trackll1
+combineTrackll<-function(trackll,name="combined trackll",merged=T){
     totalTracklls <- as.numeric(length(trackll))
     temp<-c()
     if(merged == T){

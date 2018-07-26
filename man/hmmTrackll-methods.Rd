@@ -5,7 +5,7 @@
 \alias{hmmTrackll}
 \title{hmmTrackll}
 \usage{
-hmmTrackll(trackll)
+hmmTrackll(trackll, t.interval=0.01)
 }
 \arguments{
 \item{trackll}{list of trajectorise created by crreateTrackll().}

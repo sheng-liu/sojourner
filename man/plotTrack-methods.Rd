@@ -4,12 +4,17 @@
 \name{plotTrack}
 \alias{plotTrack}
 \alias{.plotTrack}
+\alias{plotTrackFromIndex}
+\alias{plotTrackOverlay}
+\alias{plotNucTrackOverlay}
+\alias{plotComponentTrackOverlay}
+\alias{plotMask}
 \title{plotTrack}
 \usage{
 plotTrack(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,
 frame.start=1,frame.end=500)
 
-plotTrackFromIndex(index.file, movie.folder=c(folder1,folder2,...),
+plotTrackFromIndex(index.file, movie.folder,
 resolution=0.107,frame.min=1,frame.max=100,
 frame.start=1,frame.end=500,input=1)
 
@@ -121,8 +126,8 @@ plotTrackFromIndex(index.file=index.file2,movie.folder = c(folder1,folder2))
 
 ## masking with image mask
 track.folder=system.file("extdata","SWR1_2",package="sojourner")
-trackll=readDiatrack(folder=track.folder,merge=F,mask=F)
-trackll.masked=readDiatrack(folder=track.folder,merge=F,mask=T)
+trackll=readDiatrack(folder=track.folder)
+trackll.masked=readDiatrack(folder=track.folder)
 str(trackll,1)
 str(trackll.masked,1)
 
@@ -142,7 +147,7 @@ plotMask(track.folder,nrow=1,ncol=1,width=8,height=8)
 
 ## plotComponentTrackOverlay (see selComponentTracks() for more details)
 folder2=system.file("extdata","SWR1_2",package="sojourner")
-trackll=readDiatrack(folder2,merge=F)
+trackll=readDiatrack(folder2)
 
 ## use merge=T for per folder comparison, the analsyis result can't be plot
 back to original image. To see component tracks on original nuclei image,

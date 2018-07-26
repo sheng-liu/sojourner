@@ -123,7 +123,7 @@ dispVariance=function(trackll, min=7, plot=F, limits=c(), log=F, output=F) {
        }
        
        #different tracklists will show up as different colors with some transparency
-       plt=ggplot2::ggplot(melted, ggplot2::aes(x=variance,  color=trackList)) + ggplot2::geom_line(alpha=0.5, position="identity", stat="density")
+       plt=ggplot2::ggplot(melted, ggplot2::aes_string(x="variance",  color="trackList")) + ggplot2::geom_line(alpha=0.5, position="identity", stat="density")
        if (length(limits) != 2) {
            plot(plt)
        }

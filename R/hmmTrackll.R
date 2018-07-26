@@ -10,7 +10,7 @@
 ##'
 ##' @description Convert trackll to a (bivarte) displacement format for Hidden Markove Model fitting.
 ##' @usage
-##' hmmTrackll(trackll)
+##' hmmTrackll(trackll, t.interval=0.01)
 
 ##' @param trackll list of trajectorise created by crreateTrackll(). 
 

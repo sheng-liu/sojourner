@@ -5,7 +5,7 @@
 \alias{combineTrackll}
 \title{combineTrackll}
 \usage{
-combineTrackll(trackll=c(trackll1,trackll2),name="combined trackll",merged=T)
+combineTrackll(trackll,name="combined trackll",merged=T)
 }
 \arguments{
 \item{trackll}{The tracklls to be combined together.}
