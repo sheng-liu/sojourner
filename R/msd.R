@@ -412,14 +412,14 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
         # change dt from factor to integer/numeric
         # alternative as.numeric(levels(x))[x]
         p=transform(p,dt=as.integer(as.character(dt)))
-        #yMin=SummarizedMSD-StandardError
-        #yMax=SummarizedMSD+StandardError
+        yMin=p$SummarizedMSD-p$StandardError
+        yMax=p$SummarizedMSD+p$StandardError
         msd.plot=ggplot(
 
             # p,aes(x=as.integer(as.character(dt)), not work
             p,aes_string(x="dt",y="SummarizedMSD",group="file.name",col="file.name"))+
             geom_line()+geom_point()+
-            geom_errorbar(aes(ymin=SummarizedMSD-StandardError,ymax=SummarizedMSD+StandardError), width=.1)+
+            geom_errorbar(aes_string(ymin="yMin",ymax="yMax"), width=.1)+
             # this makes integer breaks
             scale_x_continuous(breaks=scales::pretty_breaks())+
             labs(x="Time intervals", y="SummarizedMSD (µm^2)")+
@@ -456,9 +456,9 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
             # file.name) as track.name starts over again from a new file, use
             # interaction() realize it
 
-            msd.plot=ggplot(p,aes_string(x="index",y=msd,
-                                  group=interaction(file.name,"track.name"),
-                                  col=file.name))+
+            msd.plot=ggplot(p,aes_string(x="index",y="msd",
+                                  group=interaction("file.name","track.name"),
+                                  col="file.name"))+
                 geom_line()+
                 # this makes integer breaks
                 scale_x_continuous(breaks=scales::pretty_breaks())+

@@ -166,7 +166,7 @@ fit=fitNormDistr(
        dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=481)
 
 ## select component tracks based on fitting
-trackll.sel=selComponentTracks(
+trackll.sel=selComponentTracks(trackll,
       fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = F)
 
 ## plot component tracks

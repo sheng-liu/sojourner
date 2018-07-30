@@ -26,7 +26,7 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
 
         # overlay histogram and density plot without changing count as y axies
         Dcoef.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
-            geom_histogram(aes(y = ..count..,fill=file.name),
+            geom_histogram(aes_string(y = "..count..",fill="file.name"),
                            binwidth=binwidth,position="dodge")+
 
             # geom_density(aes(y=0.5*..count..,fill=file.name),alpha=0.2)+
@@ -378,11 +378,11 @@ gg.mixEM <- function(EM,binwidth=NULL,reorder=T) {
     # auto binwidth
     if (is.null(binwidth)) binwidth=auto.binwidth(EM$x)
 
-    ggplot(data.frame(x=EM$x),aes_string(x,y="..density..")) +
+    ggplot(data.frame(x=EM$x),aes_string(x="x",y="..density..")) +
         geom_histogram(fill=NA,color="black",binwidth=binwidth)+
         # when distribution is truncated, it plots flippers
         # geom_polygon(data=em.df,aes(x,y,fill=comp),color="grey50", alpha=0.5)+
-        geom_area(data=em.df,aes_string(x,y="y",fill="comp"),color="grey50", alpha=0.5,position = "identity")+
+        geom_area(data=em.df,aes_string(x="x",y="y",fill="comp"),color="grey50", alpha=0.5,position = "identity")+
         scale_fill_discrete("Component\nMeans",labels=format(em.df$mu,digits=3))+
         theme_bw()
 }

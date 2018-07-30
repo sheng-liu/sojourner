@@ -155,7 +155,7 @@
 ##'        dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=481)
 ##'
 ##' ## select component tracks based on fitting
-##' trackll.sel=selComponentTracks(
+##' trackll.sel=selComponentTracks(trackll,
 ##'       fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = F)
 ##'
 ##' ## plot component tracks
@@ -594,7 +594,7 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 #     +theme(line=element_blank(),
 #            text=element_blank())
 
-    if (color == "red") {p=p+theme(legend.position="none")}
+    if (!is.factor(color)) {p=p+theme(legend.position="none")}
     plot(p)
 
     return(p)
@@ -676,6 +676,9 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
     color.lst=lapply(track.overlay.data.lst,function(x){x$component})
 
     ###trackll or trackll.sel
+    print(track.overlay.data.lst)
+    print(color.lst)
+    print(class(color.lst[[1]]))
     for (i in 1:length(trackll)) plot.lst[[i]]=.plotNucTrackOverlay(
         trackl=NULL,component.lst=trackll.sel[i],
         image.file=nuclei.lst[[i]],
