@@ -22,7 +22,7 @@ fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,combine.plot=F,
 
 \item{combine.plot}{Logical indicate if all the plot should be combined into one, with same scale (/same axises breaks), same color theme, and same bin size for comparison.}
 
-\item{output}{Logical indicate if output file should be generated.}
+\item{output}{logical indicate if output file should be generated.}
 
 \item{meanRange}{list of vectors, each of which have the min&max that estimates a range where a peak of the distribution should lie.}
 
@@ -31,6 +31,8 @@ fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,combine.plot=F,
 \item{means}{numeric vector with estimates of mean(mu) values for each component.}
 
 \item{sd}{numeric vector with estimates of standard deviation(sigma) values for each component.}
+
+\item{constrain}{logical indicate if mean and std deviation are set to the given value. This will not work for the unimodal distribution.}
 }
 \value{
 \describe{
@@ -62,6 +64,13 @@ b=fitNormDistr(dcoef,components=NULL,log.transform=F,combine.plot=F,output=F,see
 mapply(identical,a[[1]],b[[1]])
 #try with log transformation
 c=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F)
-#trying with some parameters provided(this will be applied to all dcoef results)
+#trying with some parameters provided(this will be applied to all dcoef results). with constrain = F, this will be used as the starting values for the EM-algorithm
+#normally we should deal with only one dataset when working with constrains, since it will apply to all of them.
+folder3=system.file("extdata","HSF", package="sojourner")
+trackll=compareFolder(c(folder3),input=2)
+MSD=msd(trackll=trackll)
+dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
 d=fitNormDistr(dcoef,meanRange=list(c(0.1,0.3), c(0.5,0.7)))
+#try with constrain =T, the values will be forced to eqaul the provided ones.
+e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=T)
 }
