@@ -12,7 +12,7 @@
 ##'
 ##' @usage
 ##'
-##' fitCDF((cdf, components=c("one","two","three"),
+##' fitCDF(cdf, components=c("one","two","three"),
 ##'         start=list(
 ##'             oneCompFit=list(D=c(0,2)),
 ##'             twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
@@ -114,11 +114,15 @@ one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,maxiter.optim=100
     # plot
     pdf(paste(Sys.time(), ".pdf", sep = ""))
     plot(r,P,main=title,cex=0.3)
-    curve(p1(x,D=coef(ocfit)),add=TRUE,col="red")
+    p1.curve = function(x){
+        1 - exp(-x^2/(4*coef(ocfit)*t.interval)) 
+    }
+    curve(p1.curve,add=TRUE,col="red")
     dev.off()
     
     plot(r,P,main=title,cex=0.3)
-    curve(p1(x,D=coef(ocfit)),add=TRUE,col="red")
+    #curve(p1(x,D=coef(ocfit)),add=TRUE,col="red")
+    curve(p1.curve,add=TRUE,col="red")
     
     #coef(summary(ocfit))
 
@@ -166,19 +170,16 @@ two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
     
     pdf(paste(Sys.time(), ".pdf", sep = ""))
     ## plotting
+    p3.curve =function(x){
+        1 - (coef(tcfit)["alpha"]*exp(-x^2/(4*coef(tcfit)["D1"]*t.interval)) + 
+                 (1-coef(tcfit)["alpha"])*exp(-x^2/(4*coef(tcfit)["D2"]*t.interval)))}
     plot(r,P,main=title,cex=0.3)
-    curve(p3(x,
-             coef(tcfit)["D1"],
-             coef(tcfit)["D2"],
-             coef(tcfit)["alpha"]),
+    curve(p3.curve,
           add=T,col="red"
     )
     dev.off()
     plot(r,P,main=title,cex=0.3)
-    curve(p3(x,
-             coef(tcfit)["D1"],
-             coef(tcfit)["D2"],
-             coef(tcfit)["alpha"]),
+    curve(p3.curve,
           add=T,col="red"
     )
 
@@ -236,15 +237,19 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     print(thcfit);cat("\n") # needed for print when compiled as pacakge
     
     pdf(paste(Sys.time(), ".pdf", sep = ""))
+    p5.curve=function(x){
+        1 - (coef(thcfit)["alpha"]*exp(-x^2/(4*coef(thcfit)["D1"]*t.interval)) +
+            coef(thcfit)["beta"]*exp(-x^2/(4*coef(thcfit)["D2"]*t.interval)) +
+            (1-coef(thcfit)["alpha"]-coef(thcfit)["beta"])*exp(-x^2/(4*coef(thcfit)["D3"]*t.interval))
+        )
+    }
     ## plot
     plot(r,P,main=title,cex=0.3)
-    curve(p5(x,coef(thcfit)["D1"],coef(thcfit)["D2"],coef(thcfit)["D3"],
-             coef(thcfit)["alpha"],coef(thcfit)["beta"]),add=T,col="red")
+    curve(p5.curve,add=T,col="red")
     dev.off()
     
     plot(r,P,main=title,cex=0.3)
-    curve(p5(x,coef(thcfit)["D1"],coef(thcfit)["D2"],coef(thcfit)["D3"],
-             coef(thcfit)["alpha"],coef(thcfit)["beta"]),add=T,col="red")
+    curve(p5.curve,add=T,col="red")
 
     return(thcfit)
 

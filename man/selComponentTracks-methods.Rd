@@ -8,6 +8,8 @@
 selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=F,output=F)
 }
 \arguments{
+\item{trackll}{Track list output from readDiatrack().}
+
 \item{fit}{Component fitting result form fitNormDistr() function.}
 
 \item{likelihood}{The likelihood of a trajecotry to be in fitted group. This parameter specifies the strigency of selecting trajectories to be in the fitted group and therefore influence the number of trajectories been selected.}
@@ -31,7 +33,7 @@ Select trajectory based on component fitting on diffusion
 ## selComponentTracks() usage
 # 1. select componentTracks per folder (cross movie) by using compareFolders
 # 2. select componentTracks per movie base, use plotComponentTracks to plot
- component tracks back to initial Nuclei image.
+# component tracks back to initial Nuclei image.
 
 ## 1. select componentTracks per folder (cross movie) by using compareFolders
 folder1=system.file("extdata","SWR1",package="sojourner")
@@ -57,7 +59,7 @@ plotTrackOverlay(trackll.swr1)
 dwellTime(trackll.swr1)
 
 # Output trajectory index to plot individually
-# trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
+trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
 dcoef = dcoef,log.transformed = T,output = T)
 # specify index file path.
 index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",package="sojourner")
@@ -68,7 +70,7 @@ plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder)
 
 
 ## 2. select componentTracks per movie base, use plotComponentTracks to plot 
-component tracks back to initial Nuclei image.
+##component tracks back to initial Nuclei image.
 ## plotComponentTrackOverlay
 folder3=system.file("extdata","SWR1_2",package="sojourner")
 trackll=readDiatrack(folder3)
@@ -76,7 +78,7 @@ trackll=readDiatrack(folder3)
 ## use merge=T for per folder comparison, the analsyis result can't be plot back to original image
 ## To see component tracks on original nuclei image, set merge=F (for per movie analysis)
 ## may not make much sense to msd on individual movie, 
-however for plot component track back to original nuclei image.
+##however for plot component track back to original nuclei image.
 
 ## compute MSD
 MSD=msd(trackll=trackll,plot=T)
@@ -91,7 +93,6 @@ fit=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed
 
 ## select component tracks based on fitting
 trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
-dcoef = dcoef,log.transformed = T,output = F)
 ## plot component tracks
 plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
 

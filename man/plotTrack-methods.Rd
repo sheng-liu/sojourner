@@ -9,6 +9,7 @@
 \alias{plotNucTrackOverlay}
 \alias{plotComponentTrackOverlay}
 \alias{plotMask}
+\alias{trackOverlayData}
 \title{plotTrack}
 \usage{
 plotTrack(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,
@@ -20,16 +21,18 @@ frame.start=1,frame.end=500,input=1)
 
 plotTrackOverlay(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
-plotNucTrackOverlay(folder,trackll=NULL,mask=F,cores=1,
+plotNucTrackOverlay(folder,trackll=NULL,cores=1,
 max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
 plotComponentTrackOverlay(folder,trackll.sel=NULL,
 max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
 plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
+
+trackOverlayData(trackl)
 }
 \arguments{
-\item{resolution}{ratio of pixel to µM.}
+\item{resolution}{ratio of pixel to uM.}
 
 \item{frame.min}{minimum frame number for plotting.}
 
@@ -42,13 +45,17 @@ plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 \item{ab.trackll}{absolute coordinates for plotting, generated from
 readDiatrack(folder,ab.track=T).}
 
+\item{trackl}{Track list}
+
+\item{trackll}{Track list output from readDiatrack().}
+
+\item{folder}{folder containing desired input data.}
+
 \item{index.file}{a csv file that contains index of tracks in the first
 column. Leave a header line when preparing such a file.}
 
 \item{movie.folder}{the path to the folder which contains Diatrack output
 txt files (presumably it is the same folder with movie files).}
-
-\item{mask.file}{path to the mask file.}
 
 \item{max.pixel}{Number of pixels of imaging regime.}
 
@@ -59,6 +66,8 @@ txt files (presumably it is the same folder with movie files).}
 \item{width}{Width of the page for plotting.}
 
 \item{height}{Height of the page for plotting.}
+
+\item{cores}{Number of cores to be used.}
 
 \item{trackll.sel}{Selected component trajectory output by
 selComponentTracks().}
@@ -150,8 +159,8 @@ folder2=system.file("extdata","SWR1_2",package="sojourner")
 trackll=readDiatrack(folder2)
 
 ## use merge=T for per folder comparison, the analsyis result can't be plot
-back to original image. To see component tracks on original nuclei image,
-set merge=F, for per movie analysis.
+##back to original image. To see component tracks on original nuclei image,
+##set merge=F, for per movie analysis.
 
 ## compute MSD
 MSD=msd(trackll=trackll,plot=T)

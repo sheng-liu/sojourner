@@ -41,7 +41,7 @@
 ##'  
 ##' Track: [Last five characters of the file name].[Start frame].[Length].[Track].[Index in overall list (will differ from Track # when merging)]
 ##' 
-##' (Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 
 ##' @examples
 ##' # select track folder interactively and specify using 2 cores

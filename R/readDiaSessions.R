@@ -27,13 +27,14 @@
 ##' 
 ##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
 ##' 
-##' (Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 ##' 
 ##' (Note: readDiaSessions supports reading in intensity values)
 
 ##' @examples
 ##' #Basic function call of .readDiaSessions
-##' trackll <- readDiaSessions(folder = /FILEPATH/, cores = 2)
+##' hsf_folder=system.file("extdata", "HSF", package="sojourner")
+##' trackll <- readDiaSessions(folder=hsf_folder, cores = 2)
 ##' 
 ##' #Basic function call of .readDiaSessions
 ##' trackl <- .readDiaSessions(interact = T)

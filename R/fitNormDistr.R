@@ -11,7 +11,7 @@
 ##'
 ##' @usage
 ##' fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,combine.plot=F,output=F,
-##'              seed=NULL, proportion=NULL, means=NULL, sd=NULL)
+##'              seed=NULL, proportion=NULL, means=NULL, sd=NULL, constrain=F)
 ##' @param dcoef diffusion coefficient calculated from Dcoef().
 ##' @param components parameter specifying the number of components to fit. If NULL (default), a components analysis is done to determine the most likely components and this number is then used for subsequent analysis.
 ##' @param log.transform logical indicate if log10 transformation is needed, default F.
@@ -50,8 +50,10 @@
 ##' mapply(identical,a[[1]],b[[1]])
 ##' #try with log transformation
 ##' c=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F)
-##' #trying with some parameters provided(this will be applied to all dcoef results). with constrain = F, this will be used as the starting values for the EM-algorithm
-##' #normally we should deal with only one dataset when working with constrains, since it will apply to all of them.
+##' #trying with some parameters provided(this will be applied to all dcoef results). 
+##' #with constrain = F, this will be used as the starting values for the EM-algorithm
+##' #normally we should deal with only one dataset when working with constrains, 
+##' #since it will apply to all of them.
 ##' folder3=system.file("extdata","HSF", package="sojourner")
 ##' trackll=compareFolder(c(folder3),input=2)
 ##' MSD=msd(trackll=trackll)

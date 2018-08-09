@@ -30,11 +30,12 @@ The naming scheme for each track is as follows:
 
 [Last five characters of the file name].[Start frame #].[Length].[Track #]
 
-(Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+(Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 }
 \examples{
 #Basic function call of .readSlimFast
-trackll <- readSlimFast(folder = /FILEPATH/, cores = 2)
+txtfolder=system.file("extdata","HTZ1",package="sojourner")
+trackll <- readSlimFast(folder = txtfolder, cores = 2)
 
 #Basic function call of .readSlimFast
 trackl <- .readSlimFast(interact = T)

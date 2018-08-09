@@ -39,7 +39,7 @@ Track List: [full name of input file]
  
 Track: [Last five characters of the file name].[Start frame].[Length].[Track].[# of links].[Index in overall list (will differ from Track # when merging)]
 
-(Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+(Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 }
 \examples{
 #Basic function call of linkSkippedFrames

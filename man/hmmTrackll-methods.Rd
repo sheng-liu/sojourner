@@ -9,6 +9,8 @@ hmmTrackll(trackll, t.interval=0.01)
 }
 \arguments{
 \item{trackll}{list of trajectorise created by crreateTrackll().}
+
+\item{t.interval}{time interval.}
 }
 \description{
 Convert trackll to a (bivarte) displacement format for Hidden Markove Model fitting.
@@ -23,7 +25,7 @@ time, lenght of time a particle has being traveling.
 trackStepIndex, steps index within a track.
 }
 \examples{
-folder=system.file("extdata","SWR1",package="sojourner"
+folder=system.file("extdata","SWR1",package="sojourner")
 trackll=createTrackll(folder=folder)
 hTrackll=hmmTrackll(trackll)
 

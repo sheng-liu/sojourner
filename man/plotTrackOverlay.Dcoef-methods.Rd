@@ -19,7 +19,7 @@ color=c("blue", "white", "red"),folder=NULL,file.No=0,line.width=0.1)
 
 \item{filter}{Filter the tracks by step/frame number (length). Only tracks pass through filter will be selected.}
 
-\item{resolution}{ratio of pixel to µM.}
+\item{resolution}{ratio of pixel to uM.}
 
 \item{rsquare}{R square filter on Dcoef results. Default to be 0.8. Set value to 0 if rsquare filter is not desired.}
 

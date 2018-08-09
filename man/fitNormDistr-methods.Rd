@@ -7,7 +7,7 @@
 \title{fitNormDistr}
 \usage{
 fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,combine.plot=F,output=F,
-             seed=NULL,meanRange=NULL, proportion=NULL, means=NULL, sd=NULL)
+             seed=NULL, proportion=NULL, means=NULL, sd=NULL, constrain=F)
 }
 \arguments{
 \item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=T.}
@@ -23,8 +23,6 @@ fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,combine.plot=F,
 \item{combine.plot}{Logical indicate if all the plot should be combined into one, with same scale (/same axises breaks), same color theme, and same bin size for comparison.}
 
 \item{output}{logical indicate if output file should be generated.}
-
-\item{meanRange}{list of vectors, each of which have the min&max that estimates a range where a peak of the distribution should lie.}
 
 \item{proportion}{numeric vector with estimates of each component's proportion of the whole data.}
 
@@ -64,13 +62,14 @@ b=fitNormDistr(dcoef,components=NULL,log.transform=F,combine.plot=F,output=F,see
 mapply(identical,a[[1]],b[[1]])
 #try with log transformation
 c=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F)
-#trying with some parameters provided(this will be applied to all dcoef results). with constrain = F, this will be used as the starting values for the EM-algorithm
-#normally we should deal with only one dataset when working with constrains, since it will apply to all of them.
+#trying with some parameters provided(this will be applied to all dcoef results). 
+#with constrain = F, this will be used as the starting values for the EM-algorithm
+#normally we should deal with only one dataset when working with constrains, 
+#since it will apply to all of them.
 folder3=system.file("extdata","HSF", package="sojourner")
 trackll=compareFolder(c(folder3),input=2)
 MSD=msd(trackll=trackll)
 dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
-d=fitNormDistr(dcoef,meanRange=list(c(0.1,0.3), c(0.5,0.7)))
 #try with constrain =T, the values will be forced to eqaul the provided ones.
 e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=T)
 }

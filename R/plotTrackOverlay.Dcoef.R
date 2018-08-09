@@ -23,7 +23,7 @@
 ##' @param scale The pixel scale of image data.
 ##' @param dt Time inbervals.
 ##' @param filter Filter the tracks by step/frame number (length). Only tracks pass through filter will be selected.
-##' @param resolution ratio of pixel to µM.
+##' @param resolution ratio of pixel to uM.
 ##' @param rsquare R square filter on Dcoef results. Default to be 0.8. Set value to 0 if rsquare filter is not desired.
 ##' @param t.interval Time interval for image aquisition. Default 0.01 sec (10ms).
 ##' @param Dcoef.range Select tracks whose Dcoef is within the range. Other tracks will not be plotted.

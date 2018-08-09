@@ -3,10 +3,13 @@
 \docType{methods}
 \name{filterTrack}
 \alias{filterTrack}
+\alias{trimTrack}
+\alias{trackLength}
 \title{filterTrack}
 \usage{
-filterTrack(trackll,filter=c(min=7,max=Inf)))
-trimTrack(trackll,trimmer=c(min=1,max=32)))
+filterTrack(trackll,filter=c(min=7,max=Inf))
+trimTrack(trackll,trimmer=c(min=1,max=32))
+trackLength(trackll)
 }
 \arguments{
 \item{trackll}{Track list output from readDiatrack().}
@@ -18,6 +21,7 @@ trimTrack(trackll,trimmer=c(min=1,max=32)))
 \value{
 \itemize{
 \item{trackll} filtered or trimmed tracks.
+\item{len} list of track lengths.
 }
 }
 \description{

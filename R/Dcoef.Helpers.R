@@ -137,78 +137,78 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 
 # alternative treat Dcoef.roll as special case of Dcoef.static, except start and end is rolling
 
-D.coef.roll=function(MSD,window.size=4,t.interval=0.010){
-
-    dt=dim(MSD[[1]])[1]
-
-    start=1:(dt-window.size+1)
-    end=lag.start+window.size-1
-
-    D.coef=list()
-    D.coef.vec=c()
-    for (i in start){
-        dd=Dcoef.static(MSD,lag.start=start[i],lag.end=end[i],t.interval=0.010)
-        D.coef.vec=c(D.coef.vec,list(dd))
-    }
-
-
-    # rearrange
-    D.coef.vec
-
-    mapply(c,start,end)
-
-    # generate names
-    name.vec=c()
-    for (i in start) {
-        name=paste(start[[i]]:end[[i]],collapse=" ")
-        name.vec=c(name.vec,name)
-    }
-
-    names(D.coef.vec)=name.vec
-
-
-#n=c()
-    # take the first item of the list to form a new list
+# D.coef.roll=function(MSD,window.size=4,t.interval=0.010){
+# 
+#     dt=dim(MSD[[1]])[1]
+# 
+#     start=1:(dt-window.size+1)
+#     end=lag.start+window.size-1
+# 
+#     D.coef=list()
+#     D.coef.vec=c()
 #     for (i in start){
-#         for (file.number in 1:length(MSD)){
-#             n=c(n,list(D.coef.vec[[i]][file.number]))
-#         }
-#
+#         dd=Dcoef.static(MSD,lag.start=start[i],lag.end=end[i],t.interval=0.010)
+#         D.coef.vec=c(D.coef.vec,list(dd))
 #     }
-#
-#     n=c()
-#     for (file.number in 1:length(MSD)){
-#
-#         for (i in start){
-#
-#             n=c(n,list(D.coef.vec[[i]][file.number]))
-#
+# 
+# 
+#     # rearrange
+#     D.coef.vec
+# 
+#     mapply(c,start,end)
+# 
+#     # generate names
+#     name.vec=c()
+#     for (i in start) {
+#         name=paste(start[[i]]:end[[i]],collapse=" ")
+#         name.vec=c(name.vec,name)
+#     }
+# 
+#     names(D.coef.vec)=name.vec
+# 
+# 
+# #n=c()
+#     # take the first item of the list to form a new list
+# #     for (i in start){
+# #         for (file.number in 1:length(MSD)){
+# #             n=c(n,list(D.coef.vec[[i]][file.number]))
+# #         }
+# #
+# #     }
+# #
+# #     n=c()
+# #     for (file.number in 1:length(MSD)){
+# #
+# #         for (i in start){
+# #
+# #             n=c(n,list(D.coef.vec[[i]][file.number]))
+# #
+# #         }
+# #     }
+# #
+# 
+# 
+# 
+#     name2=names(MSD)
+#     l=list()
+#     for (j in name2 ){
+#         ind=which(name2 == j)
+#         l[[ind]]=lapply(D.coef.vec,function(x,i){x[i]},i=j)
+#     }
+# 
+#     names(l)=name2
+# 
+#     # remove last level of list
+#     z=l
+#     for (i in 1:length(l)){
+#         for (j in 1:length(l[[i]])){
+#             z[[i]][j]=l[[i]][[j]]
 #         }
 #     }
-#
-
-
-
-    name2=names(MSD)
-    l=list()
-    for (j in name2 ){
-        ind=which(name2 == j)
-        l[[ind]]=lapply(D.coef.vec,function(x,i){x[i]},i=j)
-    }
-
-    names(l)=name2
-
-    # remove last level of list
-    z=l
-    for (i in 1:length(l)){
-        for (j in 1:length(l[[i]])){
-            z[[i]][j]=l[[i]][[j]]
-        }
-    }
-
-    #z[[1]][[1]]=l[[1]][1]
-
-}
+# 
+#     #z[[1]][[1]]=l[[1]][1]
+# 
+# }
 
 
 
@@ -224,7 +224,7 @@ D.coef.roll=function(MSD,window.size=4,t.interval=0.010){
 ## 0~4 frames equals 4 steps, so the minimum frame taken into account in sojourner's numbering system (which start with frame 1 rather than 0) should be 1~5, D(1:5) and D(1:9) to allow sampling from 0~4. Anything below 8, should be directly using percentage =1, what tracks that has length 9
 
 # "D*(2: 4), the short-range diffusion coefficient used by Kusumi et al. (1993).
-# A short-range D* has the advan- tages that it is accurately obtained and the
+# A short-range D* has the advantages that it is accurately obtained and the
 # influence of directed and confined motion is minimized. D*(2: 4) advantageous
 # for analyzing experi- mental data. The range of D is wide enough that it is
 # convenient to plot the distribution of log D. (Saxton, 1997)
@@ -393,7 +393,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=F,filter=c(min=7,max=Inf),
 ## rsquare.filter
 ## r.squared >= rsquaae as quality control
 
-##'@export rsquare.filter
+##export rsquare.filter
 rsquare.filter=function(D.coef,rsquare=0.8){
 
     cat("\nApplying r square filter...",rsquare,"\n")
@@ -494,7 +494,7 @@ rsquare.filter.roll=function(D.coef,rsquare=0.8){
 
 ##------------------------------------------------------------------------------
 ## Dcoef.log
-##'@export Dcoef.log
+##@export Dcoef.log
 # Dcoef.log=function(D.coef.subset,static=T){
 #     if (static){
 #

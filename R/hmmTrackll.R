@@ -12,10 +12,11 @@
 ##' @usage
 ##' hmmTrackll(trackll, t.interval=0.01)
 
-##' @param trackll list of trajectorise created by crreateTrackll(). 
+##' @param trackll list of trajectorise created by crreateTrackll().
+##' @param t.interval time interval. 
 
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="sojourner"
+##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=createTrackll(folder=folder)
 ##' hTrackll=hmmTrackll(trackll)
 ##' 

@@ -10,7 +10,7 @@
 ##------------------------------------------------------------------------------
 ## .timeStamp
 # add time stamp and file name as a unique signature of the output file
-##'@export .timeStamp
+##@export .timeStamp
 .timeStamp=function(filename){
 
     basename=basename(filename)
@@ -57,7 +57,7 @@
 ##------------------------------------------------------------------------------
 ## tracks.msda2sjr
 
-##' @export tracks.msda2sjr
+## @export tracks.msda2sjr
 tracks.msda2sjr=function(file){
 
     tracks.file=readMat(file)
@@ -109,7 +109,7 @@ same.scale=function(mixmdl.lst){
 
 ##------------------------------------------------------------------------------
 ## seedIt
-##' @export seedIt
+## @export seedIt
 seedIt=function(expr,seed){
     if (is.null(seed)){
         seed=sample(0:647,1)
@@ -132,7 +132,7 @@ seedIt=function(expr,seed){
 #Note: Last five characters of the original file name without extension (cannot contain ".")
 #index = index of the track in the track list (track number)
 
-##'@export getStartFrame
+##@export getStartFrame
 getStartFrame = function(track.list, index){
     return(as.numeric(substr(names(track.list[index]),
                              gregexpr(pattern = '\\.', names(track.list[index]))[[1]][1]+1,
@@ -147,7 +147,7 @@ getStartFrame = function(track.list, index){
 #track.list = named track list output
 #Note: Last five characters of the original file name without extension (cannot contain ".")
 
-##'@export getTrackFileName
+##@export getTrackFileName
 getTrackFileName = function(track.list){
     return(substr(names(track.list[1]), 1, gregexpr(pattern = '\\.', names(track.list[1]))[[1]][1]-1));
 }
@@ -159,7 +159,7 @@ getTrackFileName = function(track.list){
 #PARAMETERS:
 #track = track input to be transformed into absolute coordinates
 
-##'@export abTrack
+##@export abTrack
 abTrack = function(track){
     min.x = min(track$x);
     min.y = min(track$y);
@@ -172,7 +172,7 @@ abTrack = function(track){
 #PARAMETERS:
 #track.list = track list with frame record in the fourth column
 
-##'@export removeFrameRecord
+##@export removeFrameRecord
 removeFrameRecord = function(track.list){
     for (i in 1:length(track.list)){
         track.list[[i]] <- track.list[[i]][-c(4)];

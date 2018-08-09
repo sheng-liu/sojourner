@@ -21,7 +21,7 @@
 ##'   than (>=) min and less than (<) max.
 ##' @param rsquare rsquare filter on Dcoef results. Default to be 0.8. Set value
 ##'   to 0 if rsquare filter is not desired.
-##' @param resolution ratio of pixel to µM.
+##' @param resolution ratio of pixel to uM.
 ##' @param plot A parameter for plotting. Default FALSE, no plot; If TRUE,
 ##'   automatically plots "histogram" with count information, binwidth can be
 ##'   set through parameter binwidth; as well as "density" with

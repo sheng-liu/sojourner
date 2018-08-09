@@ -13,6 +13,8 @@ dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=F)
 
 \item{trackll}{Track list output from readDiatrack().}
 
+\item{x.scale}{x-scale min and max range.}
+
 \item{plot}{An Logical indicate if plot should be generated. If plot = TRUE, the plot data will also be output.}
 
 \item{output}{An Logical indicate if output should be generated. 1) dwell time of tracks in the track list output to csv file. Each item in the list will have an individual csv file. 2) Plot PDF and plot data will be saved.}
