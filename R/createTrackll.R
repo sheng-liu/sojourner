@@ -61,7 +61,7 @@
 createTrackll=function(interact = F, folder, input = 1, ab.track = F, cores = 1, frameRecord = T){
     
     #Interactive menu to select file in desired folder and input type
-    if (interact){
+    if (interact == T){
         cat("Choose one file in the folder for processing... \n")
         folder = dirname(file.choose());
         input = 0;

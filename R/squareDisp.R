@@ -8,7 +8,7 @@
 ## squareDisp
 ###############################################################################
 ##' @name squareDisp
-##' @aliases squareDisp
+##' @aliases squareDisp squareDispCpp
 ##' @title squareDisp
 ##' @rdname squareDisp-methods
 ##' @docType methods
@@ -19,7 +19,7 @@
 ##' squareDispCpp is the cpp version of squareDisp
 ##' @usage 
 ##' squareDisp(track,dt=1,resolution=0.107)
-##' squareDispCpp(track,dt=1,resolution0.107)
+##' squareDispCpp(track,dt=1,resolution=0.107)
 ##' @param track track dataframe with x and y coordinates.
 ##' @param dt time step size(in frames).
 ##' @param resolution resolution value, default is 0.107.
@@ -30,7 +30,7 @@
 ##' values from 1 to dt}
 ##' }
 ##' 
-##' @example 
+##' @examples
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' trackll=compareFolder(c(folder1,folder2))
@@ -135,7 +135,8 @@ squareDispCpp = function(track, dt = 1, resolution = 0.107){
 
     #Compile source C++ file
     file=system.file("cpp", "squareDispRcpp.cpp", package="sojourner");
-    Rcpp::sourceCpp(file);
+    cpp.invisibles=Rcpp::sourceCpp(file);
+    squareDispRcpp=cpp.invisibles[[1]]
 
     #run squareDispRcpp.cpp
     track.dt = squareDispRcpp(track.out, dt, resolution);

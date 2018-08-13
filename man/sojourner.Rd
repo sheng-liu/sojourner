@@ -3,8 +3,7 @@
 \docType{package}
 \name{sojourner}
 \alias{sojourner}
-\alias{sojourner,}
-\alias{sojounerGUI}
+\alias{sojournerGUI}
 \alias{sojourner-package}
 \title{sojourner-simple parameters for single molecule tracking analysis}
 \usage{

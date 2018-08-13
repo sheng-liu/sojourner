@@ -7,7 +7,7 @@
 ## -----------------------------------------------------------------------------
 ## sojourner Roxygen help
 ##' @name sojourner
-##' @aliases sojourner, sojounerGUI
+##' @aliases sojourner sojournerGUI
 ##' @title sojourner-simple parameters for single molecule tracking analysis
 ##' @rdname sojourner
 ##' @docType package
