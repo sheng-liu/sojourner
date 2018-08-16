@@ -95,9 +95,11 @@ trajplot<-lattice::xyplot(traj.df$y~traj.df$x|traj.df$new.trajNo,type="l",col="r
                  xlim=c(1,grid.size[1]),ylim=c(1,grid.size[2]),
                  main=paste(names(trackll), "   n=",length(trackll[[1]])),
                  panel=function(x, y, ...) {
-                   panel.xyplot(x, y, ...);
-                   grid::grid.text(dwellTimes[panel.number()],just = "right", grid::unit(0.98, 'npc'), 
-                             grid::unit(0.9, 'npc'),gp=gpar(col="blue",fontface = "bold"))
+
+                 lattice::panel.xyplot(x, y, ...);
+                   grid::grid.text(dwellTimes[lattice::panel.number()],just = "right", grid::unit(0.98, 'npc'), 
+                             grid::unit(0.9, 'npc'),gp=grid::gpar(col="blue",fontface = "bold"))
+
                  },
                  layout=c(15,8),as.table=TRUE
 )
