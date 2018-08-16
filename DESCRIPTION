@@ -3,9 +3,9 @@ Type: Package
 Title: Single Molecule Tracking
 Version: 0.5.2
 Date: 2015-10-15
-Author: Sheng Liu, Sun Jay Yoo, Xiaona Tang
+Author: Sheng Liu, Sun Jay Yoo, Xiaona Tang, Youngsoo Sun
 Maintainer: Sheng Liu <sliu@jhu.edu>
-Description: single molecule tracking after imaging processing, it uses the outputs from image processing program, such as Diatrack, computes paramters that describes the movement of the moleclues.
+Description: single molecule tracking analysis tool. It imports trajectory from trajectory generation programs such as Diatrack, computes biophysical paramters of the moleclues.
 License: Artistic-2.0
 LazyData: TRUE
 Suggests: knitr, rmarkdown

@@ -15,7 +15,7 @@
 ##' @param trackll list of trajectorise created by crreateTrackll(). 
 
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="sojourner"
+##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=createTrackll(folder=folder)
 ##' hTrackll=hmmTrackll(trackll)
 ##' 

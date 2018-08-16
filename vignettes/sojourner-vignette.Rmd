@@ -10,16 +10,23 @@ vignette: >
 ---
 
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
 ```{r,eval=FALSE}
 ## load the library
-library(smt)
+library(sojurner)
 
 
 ## specify folder location
 
 # example file with the pacakge
-SWR1=system.file("extdata","SWR1",package="smt")
-HTZ1=system.file("extdata","HTZ1",package="smt")
+SWR1=system.file("extdata","SWR1",package="sojurner")
+HTZ1=system.file("extdata","HTZ1",package="sojurner")
 
 # local files
 SWR1="/Volumes/wulab/Users/ranjana/Data/2015-11-09/SWR1_Halo"
@@ -44,8 +51,4 @@ dwellTime(comp,plot=T,output=T)
 
 ## use ?function for help
 ?msd
-
-
 ```
-
-

@@ -23,7 +23,7 @@ time, lenght of time a particle has being traveling.
 trackStepIndex, steps index within a track.
 }
 \examples{
-folder=system.file("extdata","SWR1",package="sojourner"
+folder=system.file("extdata","SWR1",package="sojourner")
 trackll=createTrackll(folder=folder)
 hTrackll=hmmTrackll(trackll)
 
