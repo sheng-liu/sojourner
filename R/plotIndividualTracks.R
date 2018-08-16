@@ -6,10 +6,10 @@
 ## plotIndividualTracks-methods
 ##
 ###############################################################################
-##' @name plotTrackOverlay.Dcoef
+##' @name plotIndividualTracks
 ##' @aliases plotIndividualTracks
 ##' @title plotIndividualTracks
-##' @rdname plotTrackOverlay.Dcoef-methods
+##' @rdname plotIndividualTracks-methods
 ##' @docType methods
 ##' @description Plot individual tracks one by one, with grid layout.
 ##'              Tracks are sorted by their lengths.
@@ -29,10 +29,6 @@
 ##' }
 ##' @details Plot individual track/trajectory one by one, and the tracks will be layout in 15X8 grids.
 ##'              
-##'          Upon running of the function, users will be prompted to input the name of the track list (trackll).
-##'          Input un-merged trackll and the plotting will start. 
-##'          The Dcoef is calculated by "static" method, which stabilizes the number of time lags used for fitting using time lag 2~ 5 despite the total time lags measured.
-
 ##'
 ##' @examples
 ##'
@@ -44,7 +40,7 @@
 ##' trackll=mergeTracks(folder, trackll)
 ##' 
 ##' # Plot individual tracks,
-##' plotIndividualTracks<-function(trackll=trackll,grid.size=c(1000,1000),resolution=0.107,t.interval=0.5)
+##' plotIndividualTracks(trackll=trackll,grid.size=c(1000,1000),resolution=0.107,t.interval=0.5)
 
 ##' @export plotIndividualTracks
 
@@ -61,11 +57,10 @@ plotIndividualTracks<-function(trackll=trackll,grid.size=c(1000,1000),resolution
 #library(lattice)
 #library(grid)    
     
-trackll<-trackll[[1]]
 
 traj.df<-setNames(data.frame(matrix(ncol = 5, nrow = 0)), c("x", "y", "z","Frame","trajNo"))
-for(i in c(1:length(trackll))){
-  traj.n<-trackll[[i]][,c("x","y","z")]
+for(i in c(1:length(trackll[[1]]))){
+  traj.n<-trackll[[1]][[i]][,c("x","y","z")]
   traj.n$x<-(traj.n$x-min(traj.n$x))*resolution*1000
   traj.n$y<-(traj.n$y-min(traj.n$y))*resolution*1000
   f.n<-rep(i,length(traj.n$x))
@@ -85,7 +80,7 @@ traj.df$new.trajNo<-unlist(new.trajNo)
 traj.df<-transform(traj.df,new.trajNo=factor(new.trajNo))
 
 dwellTimes<-c()
-for(i in c(1:length(trackll))){
+for(i in c(1:length(trackll[[1]]))){
     dwellTimes=append(dwellTimes,paste(new.trajSeq[[i]]*t.interval,"s",sep=""))
 }
 

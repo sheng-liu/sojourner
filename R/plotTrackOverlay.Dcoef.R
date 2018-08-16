@@ -42,7 +42,7 @@
 ##'          Upon running of the function, users will be prompted to input the name of the track list (trackll).
 ##'          Input un-merged trackll and the plotting will start. 
 ##'          The Dcoef is calculated by "static" method, which stabilizes the number of time lags used for fitting using time lag 2~ 5 despite the total time lags measured.
-
+##'
 ##'
 ##' @examples
 ##'
