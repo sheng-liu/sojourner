@@ -5,7 +5,7 @@
 ###############################################################################
 ##' @name plotTrack
 ##' @aliases plotTrack plotTrackFromIndex plotTrackOverlay plotNucTrackOverlay 
-##' plotComponentTrackOverlay plotMask
+##' plotComponentTrackOverlay plotMask trackOverlayData
 ##' @title plotTrack
 ##' @rdname plotTrack-methods
 ##' @docType methods
@@ -23,7 +23,7 @@
 ##'
 ##' plotTrackOverlay(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
-##' plotNucTrackOverlay(folder,trackll=NULL,mask=F,cores=1,
+##' plotNucTrackOverlay(folder,trackll=NULL,cores=1,
 ##' max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
 ##' plotComponentTrackOverlay(folder,trackll.sel=NULL,
@@ -31,11 +31,14 @@
 ##'
 ##' plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
-##'
+##' trackOverlayData(trackl)
 ##'
 ##' @param ab.trackll absolute coordinates for plotting, generated from
 ##'   readDiatrack(folder,ab.track=T).
-##' @param resolution ratio of pixel to µM.
+##' @param trackl Track list
+##' @param trackll Track list output from readDiatrack().
+##' @param folder folder containing desired input data.
+##' @param resolution ratio of pixel to uM.
 ##' @param frame.min minimum frame number for plotting.
 ##' @param frame.max max frame number for plotting.
 ##' @param frame.start the first frame to plot. Default 1.
@@ -44,12 +47,12 @@
 ##'   column. Leave a header line when preparing such a file.
 ##' @param movie.folder the path to the folder which contains Diatrack output
 ##'   txt files (presumably it is the same folder with movie files).
-##' @param mask.file path to the mask file.
 ##' @param max.pixel Number of pixels of imaging regime.
 ##' @param nrow Number of rows in the final plot.
 ##' @param ncol Number of colums in the final plot.
 ##' @param width Width of the page for plotting.
 ##' @param height Height of the page for plotting.
+##' @param cores Number of cores to be used.
 ##' @param trackll.sel Selected component trajectory output by
 ##'   selComponentTracks().
 ##'
@@ -138,8 +141,8 @@
 ##'
 ##' ## use merge=T for per folder comparison, the analsyis result can't be plot
 
-##' back to original image. To see component tracks on original nuclei image,
-##' set merge=F, for per movie analysis.
+##' ##back to original image. To see component tracks on original nuclei image,
+##' ##set merge=F, for per movie analysis.
 
 ##'
 ##' ## compute MSD
@@ -228,8 +231,8 @@
         p=ab.trackl.res[[i]]
         frame.len=dim(p)[1]
         if (frame.len>frame.min & frame.len<frame.max)
-        plot(p$x,p$y,type="l",xlim=c(0,m),ylim=c(0,m),xlab="X (µM)",
-             ylab="Y (µM)",main=name[[i]])
+        plot(p$x,p$y,type="l",xlim=c(0,m),ylim=c(0,m),xlab="X (uM)",
+             ylab="Y (uM)",main=name[[i]])
         }
 
     # sub = name[[i]]
@@ -605,7 +608,7 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 
 # plotNucTrackOverlay
 
-plotNucTrackOverlay=function(folder,trackll=NULL,mask=F,cores=1,
+plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
                              max.pixel=128,
                              nrow=2,ncol=2,width=16,height=16){
 
@@ -675,11 +678,13 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
 
     color.lst=lapply(track.overlay.data.lst,function(x){x$component})
 
-    ###trackll or trackll.sel
+    ###trackll or trackll.sel 
+    ###plotComponentTrackOverlay: no visible binding for global variable ‘trackll’
     print(track.overlay.data.lst)
     print(color.lst)
     print(class(color.lst[[1]]))
-    for (i in 1:length(trackll)) plot.lst[[i]]=.plotNucTrackOverlay(
+    ### trackll -> trackll.sel
+    for (i in 1:length(trackll.sel)) plot.lst[[i]]=.plotNucTrackOverlay(
         trackl=NULL,component.lst=trackll.sel[i],
         image.file=nuclei.lst[[i]],
         max.pixel=max.pixel,color=color.lst[[i]])
@@ -698,7 +703,7 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
 
     cat("\nDone!")
 
-    return(invisible(trackll))
+    return(invisible(trackll.sel))
 
 }
 

@@ -3,7 +3,7 @@
 ##
 ###############################################################################
 ##' @name filterTrack
-##' @aliases filterTrack
+##' @aliases filterTrack trimTrack trackLength
 ##' @title filterTrack
 ##' @rdname filterTrack-methods
 ##' @docType methods
@@ -11,8 +11,9 @@
 ##' @description methods for filter and trim tracks based on track length.
 
 ##' @usage
-##' filterTrack(trackll,filter=c(min=7,max=Inf)))
-##' trimTrack(trackll,trimmer=c(min=1,max=32)))
+##' filterTrack(trackll,filter=c(min=7,max=Inf))
+##' trimTrack(trackll,trimmer=c(min=1,max=32))
+##' trackLength(trackll)
 
 ##' @param trackll Track list output from readDiatrack().
 ##' @param filter length of track used for filtration. Only tracks pass through filter will be selected.
@@ -22,6 +23,7 @@
 ##' @return
 ##' \itemize{
 ##' \item{trackll} filtered or trimmed tracks.
+##' \item{len} list of track lengths.
 ##' }
 
 ##' @details filter is used to filter out tracks that has length within a

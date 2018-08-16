@@ -6,7 +6,7 @@
 \alias{one.comp.fit}
 \title{fitCDF}
 \usage{
-fitCDF((cdf, components=c("one","two","three"),
+fitCDF(cdf, components=c("one","two","three"),
         start=list(
             oneCompFit=list(D=c(0,2)),
             twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),

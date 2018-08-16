@@ -41,7 +41,7 @@
 ##'  
 ##' Track: [Last five characters of the file name].[Start frame].[Length].[Track].[Index in overall list (will differ from Track # when merging)]
 ##' 
-##' (Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 
 ##' @examples
 ##' # select track folder interactively and specify using 2 cores
@@ -61,7 +61,7 @@
 createTrackll=function(interact = F, folder, input = 1, ab.track = F, cores = 1, frameRecord = T){
     
     #Interactive menu to select file in desired folder and input type
-    if (interact){
+    if (interact == T){
         cat("Choose one file in the folder for processing... \n")
         folder = dirname(file.choose());
         input = 0;

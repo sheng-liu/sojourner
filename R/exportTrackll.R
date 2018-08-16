@@ -46,7 +46,7 @@
 ##' 
 ##' #Import export save back into a trackll
 ##' trackll.2 <- createTrackll(folder = getwd(), input = 3, cores = 2)
-
+##' @importFrom rowr cbind.fill
 ##' @export .exportRowWise
 ##' @export exportTrackll
 

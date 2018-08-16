@@ -23,7 +23,7 @@ than (>=) min and less than (<) max.}
 \item{rsquare}{rsquare filter on Dcoef results. Default to be 0.8. Set value
 to 0 if rsquare filter is not desired.}
 
-\item{resolution}{ratio of pixel to µM.}
+\item{resolution}{ratio of pixel to uM.}
 
 \item{binwidth}{binwidth used for histogram. Default NULL, automatically
 assign binwidth.}

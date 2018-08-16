@@ -95,7 +95,7 @@
         triple=i*3
         track=dplyr::select(data,(triple-3+1):triple)
         colnames(track)=c("x","y","z")
-        track=dplyr::filter(track,x!=0,y!=0)
+        track=dplyr::filter(track,track$x!=0,track$y!=0)
 
         if (frameRecord){
             track <- cbind(track, "Frame" = c(frame.id[[i]]:(frame.id[[i]]+nrow(track)-1)))

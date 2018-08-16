@@ -4,15 +4,20 @@
 \name{msd}
 \alias{msd}
 \alias{msd.track}
+\alias{msd.perc}
+\alias{msd.track.vecdt}
 \title{msd}
 \usage{
 msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,
   plot=F,output=F,filter=c(min=7,max=Inf))
+  msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=F)
+  msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
+  trimmer=c(min=1,max=31),resolution=0.107,output=F)
 }
 \arguments{
 \item{dt}{Time intervals. Default 6.}
 
-\item{resolution}{ratio of pixel to µM.}
+\item{resolution}{ratio of pixel to uM.}
 
 \item{trackll}{Track list output from readDiatrack().}
 
@@ -32,6 +37,12 @@ detail.}
 
 \item{output}{An logical indicate if output should be generated. See Values
 for detail.}
+
+\item{vecdt}{A list containing varying dt values.}
+
+\item{percentage}{compute msd based on (tierd) percentage of its total length.}
+
+\item{trimmer}{vector used for trimming via trimTrack()}
 }
 \value{
 \itemize{ \item{SummarizedMSD} MSD summarized over all trajectories

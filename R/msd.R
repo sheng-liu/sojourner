@@ -3,7 +3,7 @@
 ##
 ###############################################################################
 ##' @name msd
-##' @aliases msd
+##' @aliases msd msd.perc msd.track.vecdt
 ##' @title msd
 ##' @rdname msd-methods
 ##' @docType methods
@@ -14,8 +14,12 @@
 ##' @usage
 ##'   msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,
 ##'   plot=F,output=F,filter=c(min=7,max=Inf))
+##'   msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=F)
+##'   msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
+##'   trimmer=c(min=1,max=31),resolution=0.107,output=F)
+##'   
 ##' @param dt Time intervals. Default 6.
-##' @param resolution ratio of pixel to µM.
+##' @param resolution ratio of pixel to uM.
 ##' @param trackll Track list output from readDiatrack().
 ##' @param summarize An logical indicate if MSD should be calculated on
 ##'   individual trajectories (Default) or summarized on all trajectories.
@@ -29,6 +33,9 @@
 ##'   detail.
 ##' @param output An logical indicate if output should be generated. See Values
 ##'   for detail.
+##' @param vecdt A list containing varying dt values.
+##' @param percentage compute msd based on (tierd) percentage of its total length.
+##' @param trimmer vector used for trimming via trimTrack()
 ##' @return \itemize{ \item{SummarizedMSD} MSD summarized over all trajectories
 ##' as a function of dt.
 ##'
@@ -422,7 +429,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
             geom_errorbar(aes_string(ymin="yMin",ymax="yMax"), width=.1)+
             # this makes integer breaks
             scale_x_continuous(breaks=scales::pretty_breaks())+
-            labs(x="Time intervals", y="SummarizedMSD (µm^2)")+
+            labs(x="Time intervals", y="SummarizedMSD (um^2)")+
             theme_bw()+
             theme(legend.title=element_blank())
 
@@ -462,7 +469,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
                 geom_line()+
                 # this makes integer breaks
                 scale_x_continuous(breaks=scales::pretty_breaks())+
-                labs(x="Time intervals", y="MSD (µm^2)")+
+                labs(x="Time intervals", y="MSD (um^2)")+
                 theme_bw()+
                 theme(legend.title=element_blank())
 
@@ -504,7 +511,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
 
 ## For all trajectories, because their length (N) can vary, the number of time
 ## intervals (dt) used for analysis (N/4) also varies; however, for each
-## trajectory, dt is a fixed number corresponding to ¼ of its length.
+## trajectory, dt is a fixed number corresponding to 1/4 of its length.
 
 
 ##' @export msd.track.vecdt

@@ -7,17 +7,11 @@
 \title{bootstrap}
 \usage{
 bootstrap(fittedObj,n.reps=100)
-  
-  plotBootstrap(d.boot,alpha=1/2) -- not available in current version
 }
 \arguments{
 \item{n.reps}{number of replicates for bootstrapping}
 
 \item{fittedObj}{output from fitNormDistr}
-
-\item{d.boot}{bootstrapped data, or the output from bootstrap}
-
-\item{alpha}{transparency adjustment, between 0 to 1.}
 }
 \value{
 \itemize{ 

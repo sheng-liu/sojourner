@@ -9,6 +9,8 @@ hmmTrackll(trackll, t.interval=0.01)
 }
 \arguments{
 \item{trackll}{list of trajectorise created by crreateTrackll().}
+
+\item{t.interval}{time interval.}
 }
 \description{
 Convert trackll to a (bivarte) displacement format for Hidden Markove Model fitting.

@@ -4,7 +4,7 @@
 ##
 ###############################################################################
 ##' @name displacementCDF
-##' @aliases displacementCDF
+##' @aliases displacementCDF displacement.trackll
 ##' @title displacementCDF
 ##' @rdname displacementCDF-methods
 ##' @docType methods
@@ -12,11 +12,13 @@
 ##' @description calculate cumulative distribution function of all displacement
 ##'   for individual trajectories.
 
-##' @usage displacementCDF(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F)
+##' @usage 
+##' displacementCDF(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F)
+##' displacement.trackll(trackll,dt=1,resolution=0.107,bivar=F)
 
 
 ##' @param dt Time intervals.
-##' @param resolution ratio of pixel to µM.
+##' @param resolution ratio of pixel to uM.
 ##' @param trackll Track list output from readDiatrack().
 ##' @param plot An logical indicate if plot should be generated. See Values for
 ##'   detail.
@@ -24,11 +26,11 @@
 ##'   for detail.
 ##' @param bivar bivar=F, view displacement r as single variable; bivar=T, view
 ##'   x,y as bivarate. Default value F.
-##' @details The cumulative radial distribution function, P(r, i△t), is the
+##' @details The cumulative radial distribution function, P(r, i*dt), is the
 ##'   probability of finding the diffusing particle within a radius r from the
-##'   origin at time lag i△t:
+##'   origin at time lag i*dt:
 ##'
-##' P(r,iΔt) = 1− e^(-r^2/4*D*(iΔt))
+##' P(r,i*dt) = 1 - e^(-r^2/4*D*(i*dt))
 ##'
 ##' the CDF and UniqueDisplacement in the output file is corresponding to P and
 ##' r in this formula. If intend to generate the CDF plot from the output file,
@@ -81,7 +83,7 @@
 ##------------------------------------------------------------------------------
 ## displacement.track
 ## displacement for a single data.frame
-##' @export displacement.track
+##@export displacement.track
 displacement.track=function(track,dt=1,resolution=0.107,bivar=F){
 
     # validity check for dt less than track length
@@ -297,7 +299,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
 
         ecdf=ggplot(p,aes_string(x="value",group="L1",colour="L1"))+
             stat_ecdf(position="identity")+
-            labs(x="Displacement (µm)",y="CDF")+
+            labs(x="Displacement (um)",y="CDF")+
             theme_classic()+
             theme(legend.title=element_blank())
         # can use stat_ecdf(pad=F) to remove first -Inf and Inf dded on x in
@@ -306,13 +308,13 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
         # output"
 
         # histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+geom_density()+
-        #     labs(x="Displacement (µm)",y="Density")+
+        #     labs(x="Displacement (um)",y="Density")+
         #     theme_bw()+
         #     theme(legend.title=element_blank())
         
         # histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+
         #     stat_density(adjust=2,fill=NA)+
-        #     labs(x="Displacement (µm)",y="Density")+
+        #     labs(x="Displacement (um)",y="Density")+
         #     theme_classic()+
         #     theme(legend.title=element_blank())
         
@@ -323,7 +325,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
             # ggplot(p,aes(x=value,y=..scaled..,colour=L1))+
             # stat_density(position="identity",adjust=2,fill=NA)+
             # scale_x_continuous(trans="log10",limits=c(-6,1))
-            # labs(x="Displacement (µm)",y="Density")+
+            # labs(x="Displacement (um)",y="Density")+
             # theme_classic()+
             # theme(legend.title=element_blank())
         histogram=
@@ -332,20 +334,20 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
                 scale_x_continuous(trans="log10",limits = c(-2,0.5),
                                    breaks=scales::pretty_breaks(n=5))+
                 annotation_logticks(sides="b")+
-                labs(x="Displacement (µm)",y="Density")+
+                labs(x="Displacement (um)",y="Density")+
                 theme_classic()+
                 theme(legend.title=element_blank())
         
         # plot normal distribution and cumulative normal distribution
         # histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+
         #     stat_function(fun = dnorm,args=list())+xlim(-4,4)+
-        #     labs(x="Displacement (µm)",y="Density")+
+        #     labs(x="Displacement (um)",y="Density")+
         #     theme_classic()+
         #     theme(legend.title=element_blank())
         
         # cdf=ggplot(p,aes(x=value,group=L1,colour=L1))+
         #     stat_function(fun = pnorm,args=list())+xlim(-4,4)+
-        #     labs(x="Displacement (µm)",y="Density")+
+        #     labs(x="Displacement (um)",y="Density")+
         #     theme_classic()+
         #     theme(legend.title=element_blank())
     

@@ -36,7 +36,7 @@
 ##'  
 ##' Track: [Last five characters of the file name].[Start frame].[Length].[Track].[# of links].[Index in overall list (will differ from Track # when merging)]
 ##' 
-##' (Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 
 ##' @examples
 ##' #Basic function call of linkSkippedFrames
@@ -226,7 +226,7 @@ findMaxLinks = function(track.list, maxTolerance = 10, maxMaxSkip = 500){
         }
     }
     cat("For the maximum number of links, with minimum tolerance and then minimum skips:")
-    cat("\nTolerance =",  tolerance)
+    cat("\nTolerance =",  minTolerance)
     cat("\nSkips =",  minSkip)
     cat("\nLength =",  minLength)
 }

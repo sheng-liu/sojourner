@@ -3,7 +3,7 @@
 ##
 ###############################################################################
 ##' @name densityMaskTracks
-##' @aliases densityMaskTracks
+##' @aliases densityMaskTracks plotLines plotPoints
 ##' @title densityMaskTracks
 ##' @rdname densityMaskTracks-methods
 ##' @docType methods
@@ -12,6 +12,8 @@
 
 ##' @usage 
 ##' densityMaskTracks(trackll, scale = 128, removeEdge = F, separate = F, buildModel = F)
+##' plotLines(trackll, scale = 128)
+##' plotPoints(trackll, scale = 128)
 ##' 
 ##' @param trackll An uncensored/unfiltered list of track lists
 ##' @param scale X and Y scale (in pixels) of track video window
@@ -194,7 +196,7 @@ createMask = function (track.list, scale = 128, kernel.density, p = NULL, elimin
     })
     
     #Create the countour polygon with using coordinate points
-    ls <- contourLines(kernel.density, level=levels)
+    ls <- contourLines(kernel.density, levels=levels)
     
     #Remove edge/border clusters by removing all contour lines that are not complete polygons
     if (removeEdge){
@@ -243,7 +245,7 @@ createMask = function (track.list, scale = 128, kernel.density, p = NULL, elimin
     #Plot with mask and contour
     if(plot){
         title = paste(getTrackFileName(track.list),"Mask with Kernel Density Probability (p) of", round(p, digits = 3), sep = " ");
-        plot(df[[2]] ~ df[[1]], col=region, data=df, xlim = c(0, scale), ylim = c(0, scale), xlab = "x (Pixels)", ylab = "y (Pixels)", main = title, cex = .1)
+        plot(df[[2]] ~ df[[1]], col=df$region, data=df, xlim = c(0, scale), ylim = c(0, scale), xlab = "x (Pixels)", ylab = "y (Pixels)", main = title, cex = .1)
         contour(kernel.density, levels=levels, labels=prob, add=T)
     }
     cat("\n", length(ls), "clusters.", getTrackFileName(track.list), "masked at kernel density probability =", round(p, digits = 3), ", eliminate =", eliminate, "\n")

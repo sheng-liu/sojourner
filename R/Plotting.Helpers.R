@@ -68,7 +68,7 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
         merged.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
             geom_histogram(aes_string(y = "..count..",fill="file.name"),
                            binwidth=binwidth,position="dodge")+
-            geom_density(aes(y=0.5*..count..,fill=file.name),alpha=0.2)+
+            geom_density(aes_string(y="0.5*..count..",fill="file.name"),alpha=0.2)+
             theme_bw()+
             theme(legend.title=element_blank())
 
@@ -338,7 +338,7 @@ reorderEM=function(EM){
 }
 
 ## the polygon approach
-##'@export gg.mixEM
+##@export gg.mixEM
 gg.mixEM <- function(EM,binwidth=NULL,reorder=T) {
 
     # To make multiple ggmixEM plot have the same color theme,  reorder EM's

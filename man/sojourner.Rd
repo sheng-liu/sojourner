@@ -3,10 +3,12 @@
 \docType{package}
 \name{sojourner}
 \alias{sojourner}
+\alias{sojournerGUI}
 \alias{sojourner-package}
 \title{sojourner-simple parameters for single molecule tracking analysis}
 \usage{
 sojourner()
+sojournerGUI()
 }
 \description{
 simple analysis on single molecule tracking data using parameters based on mean square displacement (MSD).

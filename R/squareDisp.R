@@ -6,10 +6,37 @@
 
 ##------------------------------------------------------------------------------
 ## squareDisp
-
-## calculate square displacement of a track/trajectory as a function of time/step
-## data.frame has two column, x and y
-## also calculate dx, dy bivariate
+###############################################################################
+##' @name squareDisp
+##' @aliases squareDisp squareDispCpp
+##' @title squareDisp
+##' @rdname squareDisp-methods
+##' @docType methods
+##' @description 
+##' calculate square displacement of a track/trajectory as a function of 
+##' time/step. data.frame has two column, x and y
+##' also calculate dx, dy bivariate
+##' squareDispCpp is the cpp version of squareDisp
+##' @usage 
+##' squareDisp(track,dt=1,resolution=0.107)
+##' squareDispCpp(track,dt=1,resolution=0.107)
+##' @param track track dataframe with x and y coordinates.
+##' @param dt time step size(in frames).
+##' @param resolution resolution value, default is 0.107.
+##' 
+##' @return 
+##' \itemize{
+##' \item{list of square displacements(dx^2 + dy^2) for varying dt
+##' values from 1 to dt}
+##' }
+##' 
+##' @examples
+##' folder1=system.file("extdata","SWR1",package="sojourner")
+##' folder2=system.file("extdata","HTZ1",package="sojourner")
+##' trackll=compareFolder(c(folder1,folder2))
+##' #use default filter with min=7
+##' filtered.trackll=filterTrack(trackll)
+##' track.dt=squareDisp(filtered.trackll[[1]][[1]],dt=6)
 
 ##' @export squareDisp
 ## such a basic function that has been used in msd and cdf, need to export
@@ -108,7 +135,8 @@ squareDispCpp = function(track, dt = 1, resolution = 0.107){
 
     #Compile source C++ file
     file=system.file("cpp", "squareDispRcpp.cpp", package="sojourner");
-    sourceCpp(file);
+    cpp.invisibles=Rcpp::sourceCpp(file);
+    squareDispRcpp=cpp.invisibles[[1]]
 
     #run squareDispRcpp.cpp
     track.dt = squareDispRcpp(track.out, dt, resolution);

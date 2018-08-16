@@ -16,12 +16,12 @@
 ##' @usage
 ##'   bootstrap(fittedObj,n.reps=100)
 ##'   
-##'   plotBootstrap(d.boot,alpha=1/2) -- not available in current version
+##   plotBootstrap(d.boot,alpha=1/2) -- not available in current version
 ##'   
 ##' @param fittedObj output from fitNormDistr
 ##' @param n.reps number of replicates for bootstrapping
-##' @param d.boot bootstrapped data, or the output from bootstrap
-##' @param alpha transparency adjustment, between 0 to 1.
+## @param d.boot bootstrapped data, or the output from bootstrap
+## @param alpha transparency adjustment, between 0 to 1.
 ##' @return \itemize{ 
 ##' List of length 2 containing:
 ##' \item{Fit}

@@ -4,9 +4,13 @@
 \name{densityMaskTracks}
 \alias{densityMaskTracks}
 \alias{kernelDensity}
+\alias{plotLines}
+\alias{plotPoints}
 \title{densityMaskTracks}
 \usage{
 densityMaskTracks(trackll, scale = 128, removeEdge = F, separate = F, buildModel = F)
+plotLines(trackll, scale = 128)
+plotPoints(trackll, scale = 128)
 }
 \arguments{
 \item{scale}{X and Y scale (in pixels) of track video window}

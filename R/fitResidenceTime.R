@@ -24,6 +24,9 @@
 ##' @param x.max The maximum range of X axis, i.e. time, for the output plot. Default 30 sec.
 ##' @param N.min The minimal duration of trajectory length in the unit of second, trajectories shorter than N.min will be filtered out. Default 1.5 sec.
 ##' @param t.interval time interval for image aquisition. Default 0.5 sec.
+##' @param k.ns Logical indicate or numeric used to control fitting.
+##' @param maxiter.optim A positive integer specifying the maximum number of iterations allowed for nls.
+##' @param maxiter.search A positive integer specifying the maximum number of iterations allowed for nls.
 ##' @return
 ##' \itemize{
 ##' \item{On the Console output:} Result of both one and two-component fit and parameters of goodness of the fit.
@@ -80,12 +83,15 @@
   
   print(ocfit);cat("\n")
   
+  ### tring to avoid r cmd check warning
   ## plot the fitting curve over raw data. Shift the time points back.
-  p1.model =function(t,k.s){
-    exp(-k.s*t)}
-  curve(p1.model(x-min(t),
-                 coef(ocfit)["k.s"]
-  ),
+  #p1.model =function(x,k.s){exp(-k.s*x-min(t))}
+  p1_model=function(x){exp(-coef(ocfit)["k.s"]*(x-min(t)))}
+  curve(p1_model,
+  #p1.model=function(t,k.s){
+  #    exp(-k.s*t)}
+  #curve(p1.model(x-min(t),
+  #               coef(ocfit)["k.s"]),
   add=T,col="green",lwd=4
   )
   
@@ -95,7 +101,7 @@
 ## Function for two component 1-CDF fitting.
 ## Initial values are not flexible for users, but fitting result is quite consistent.
 ## There is an option to fix the value of one of the two component k.ns.
-.two.comp.fit.rt=function(name,t,P,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),maxiter.search=1e3,maxiter.optim=1e3,k.ns=FALSE){
+.two.comp.fit.rt=function(name,t,P,t.interval,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),maxiter.search=1e3,maxiter.optim=1e3,k.ns=FALSE){
   
   ## Equation for two component 1-CDF fitting. shift the values of time points corresponding to each P value, 
   ##so that the first time point is 0. This would make the fitting more accurate.
@@ -132,12 +138,16 @@
   print(tcfit);cat("\n")
   
   ## Plot the fitting curve over raw data. Shift the time points back.
-  p3.model =function(t,k.s,k.ns,alpha){
-    alpha*exp(-k.s*t) + (1-alpha)*exp(-k.ns*t)}
-  curve(p3.model(x-min(t),
-                 coef(tcfit)["k.s"],
-                 coef(tcfit)["k.ns"],
-                 coef(tcfit)["alpha"]),
+  p3_model = function(x){
+      coef(tcfit)["alpha"]*exp(-coef(tcfit)["k.s"]*(x-min(t))) + (1- coef(tcfit)["alpha"])*exp(-coef(tcfit)["k.ns"]*(x-min(t)))
+  }
+  #p3.model =function(t,k.s,k.ns,alpha){
+  #  alpha*exp(-k.s*t) + (1-alpha)*exp(-k.ns*t)}
+  curve(p3_model,
+  #curve(p3.model(x-min(t),
+  #               coef(tcfit)["k.s"],
+  #               coef(tcfit)["k.ns"],
+  #               coef(tcfit)["alpha"]),
         add=T,col="red",lwd=4
   )
   ## Usually two-component fitting is better. Output this fitting result on the final plot as figure legend.
@@ -217,10 +227,10 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5,maxiter.search=1e3
        cex.main=1.5,xlim=c(0,x.max),ylim=c(0,max(P)),cex.axis=1.5,cex.lab=1.5,pch=20,cex=1.5)
   
   ###### Fitting and add fitting curves over raw data###############
-  result.1=.one.comp.fit.rt(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval)),
+  result.1=.one.comp.fit.rt(name,t=t.fit,t.interval,P=P.fit,start=list(k.s=c(1/600,1/t.interval)),
                             maxiter.optim=maxiter.optim)
   if(k.ns == FALSE){
-    result.2=.two.comp.fit.rt(name,t=t.fit,P=P.fit,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),
+    result.2=.two.comp.fit.rt(name,t=t.fit,t.interval,P=P.fit,start=list(k.s=c(1/600,1/t.interval),k.ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),
                               maxiter.search=maxiter.search,
                               maxiter.optim=maxiter.optim,k.ns=k.ns)
   }
