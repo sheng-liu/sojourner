@@ -38,9 +38,10 @@
 ##' trackll=createTrackll(interact=F,folder,input=2, cores = 2)
 ##' trackll=maskTracks(folder,trackll)
 ##' trackll=mergeTracks(folder, trackll)
+##' trackll=filterTrack(trackll,filter=c(7,Inf))
 ##' 
 ##' # Plot individual tracks,
-##' plotIndividualTracks(trackll=trackll,grid.size=c(1000,1000),resolution=0.107,t.interval=0.5)
+##' plotIndividualTracks(trackll,grid.size=c(1000,1000),resolution=0.107,t.interval=0.5)
 
 ##' @export plotIndividualTracks
 
@@ -92,11 +93,11 @@ pdf(paste("plotIndividualTraj-",names(trackll),"-",format(Sys.time(),"%Y%m%d.%H%
 trajplot<-lattice::xyplot(traj.df$y~traj.df$x|traj.df$new.trajNo,type="l",col="red",
                  xlab="x displacement (nm)",ylab="y displacement (nm)",
                  xlim=c(1,grid.size[1]),ylim=c(1,grid.size[2]),
-                 main=paste(names(trackll), "   n=",length(trackll)),
+                 main=paste(names(trackll), "   n=",length(trackll[[1]])),
                  panel=function(x, y, ...) {
-                   panel.xyplot(x, y, ...);
-                   grid::grid.text(dwellTimes[panel.number()],just = "right",unit(0.98, 'npc'), 
-                             unit(0.9, 'npc'),gp=gpar(col="blue",fontface = "bold"))
+                 lattice::panel.xyplot(x, y, ...);
+                   grid::grid.text(dwellTimes[lattice::panel.number()],just = "right", grid::unit(0.98, 'npc'), 
+                             grid::unit(0.9, 'npc'),gp=grid::gpar(col="blue",fontface = "bold"))
                  },
                  layout=c(15,8),as.table=TRUE
 )
