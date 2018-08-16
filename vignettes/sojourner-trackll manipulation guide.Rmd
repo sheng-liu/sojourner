@@ -1,5 +1,5 @@
 ---
-title: "smt trackll Manipulation Guide"
+title: "sojourner trackll Manipulation Guide"
 output:
   pdf_document: default
   html_document: default
@@ -11,8 +11,8 @@ date: "July 18, 2017"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## smt trackll manipulation
-![](smt Pipeline.png)
+## sojourner trackll manipulation
+![](sojourner_Pipeline.png)
 
 ## createTrackll()
 
@@ -149,4 +149,4 @@ exportTrackll(trackll.linked, cores = 2)
 
 * Each script has a help file availble in R Help.
 
-[here]: https://github.com/sheng-liu/smt-beta/blob/master/CHANGELOG.md
+[here]: https://github.com/sheng-liu/sojourner-beta/blob/master/CHANGELOG.md
