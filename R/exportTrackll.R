@@ -63,14 +63,14 @@
     track.file.name <- getTrackFileName(track.list);
     
     #Check for frame record column
-    if (ncol(track.list[[1]]) == 4){
+    if (ncol(track.list[[1]]) != 3){
         
         #Rename track list as trajectory numbers
         names(track.list) <- c(1:length(track.list));
         
         #Combine track data frames by trajectory and reorder column
         df <- bind_rows(track.list, .id = "Trajectory")[, c("Trajectory", "Frame", "x", "y", "z")]
-    
+        
     } else{
         #Empty data frame df to be written into the .csv
         df <- NULL;
@@ -80,7 +80,7 @@
             
             #Create a data frame temp with trajectory, frame, and track coordinate data 
             temp <- data.frame("Trajectory" = i, "Frame" = getStartFrame(track.list, i), track.list[[i]][1:3]);
-
+            
             #Append data frame df with data frame temp
             df <- rbind(df, temp);
         }
@@ -102,7 +102,7 @@
     
     #Confirmation text of function call
     cat("\nWriting .csv column-wise output in current directory for", getTrackFileName(track.list), "...\n");
-
+    
     frame.list <- list()
     
     #Loop through every trajectory in input track.list
@@ -124,7 +124,7 @@
     colnames(df) <- frame.list
     
     #header = "format (columnwise): Frame1 row n+1: (y(tn) x(tn) z(tn)), row n+1: (y(t(n+1)) x(t(n+1)) z(t(n+1))), row n+2: (y(t(n+2)) x(t(n+2) z(t(n+2)) y(t(n+3)).... where Frame1 is the frame number where the target is seen for the first time, and the columns define trajectories. Beware! the number of tracks is limited by the width of the widest text file on your machine. Rowwise export preferred"
-
+    
     #Write the data frame df into the .csv and display confirmation text
     file.name = paste("COL", getTrackFileName(track.list), ".csv", sep = "")
     #write(header, file = file.name, append = T)
