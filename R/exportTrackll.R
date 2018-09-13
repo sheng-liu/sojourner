@@ -65,7 +65,7 @@
     track.file.name <- getTrackFileName(track.list);
     
     #Check for frame record column
-    if (ncol(track.list[[1]]) == 4){
+    if (ncol(track.list[[1]]) != 3){
         
         #Rename track list as trajectory numbers
         names(track.list) <- c(1:length(track.list));
