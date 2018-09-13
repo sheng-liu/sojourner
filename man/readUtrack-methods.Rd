@@ -38,5 +38,5 @@ The naming scheme for each track is as follows:
 #trackll <- readUtrack(folder = /FILEPATH/, cores = 2)
 
 #Basic function call of .readUtrack
-trackl <- .readUtrack(interact = T)
+#trackl <- .readUtrack(interact = TRUE)
 }

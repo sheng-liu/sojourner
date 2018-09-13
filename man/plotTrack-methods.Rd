@@ -163,8 +163,8 @@ trackll=readDiatrack(folder2)
 ##set merge=F, for per movie analysis.
 
 ## compute MSD
-MSD=msd(trackll=trackll,plot=T)
-msd(trackll=trackll,summarize=T,plot=T)
+MSD=msd(trackll=trackll,plot=TRUE)
+msd(trackll=trackll,summarize=TRUE,plot=TRUE)
 
 ## calculate Dcoef
 dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
@@ -172,11 +172,11 @@ dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
 ## fit normal distribution to define component
 ## set seed to reproduce results (see fitNormalDistr() for details on seed)
 fit=fitNormDistr(
-       dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=481)
+      dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
 
 ## select component tracks based on fitting
 trackll.sel=selComponentTracks(trackll,
-      fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = F)
+      fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 
 ## plot component tracks
 plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)

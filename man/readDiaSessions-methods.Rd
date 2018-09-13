@@ -41,5 +41,5 @@ hsf_folder=system.file("extdata", "HSF", package="sojourner")
 trackll <- readDiaSessions(folder=hsf_folder, cores = 2)
 
 #Basic function call of .readDiaSessions
-trackl <- .readDiaSessions(interact = T)
+#trackl <- .readDiaSessions(interact = T)
 }

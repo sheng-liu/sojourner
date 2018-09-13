@@ -101,7 +101,7 @@ plotTrackOverlay(trackll.masked)
 
 # create trackll by build model manually, useful when default model does not
 # yield good masking either too strigent or too lose
-trackll.masked.md <- densityMaskTracks(trackll, buildModel = T)
+###trackll.masked.md <- densityMaskTracks(trackll, buildModel = TRUE)
 
 # model building is recommended for new dataset, currently one needs to
 # manually evaluate the goodness of the masking, and strength /lose it by
@@ -127,14 +127,14 @@ trackll.masked.md <- densityMaskTracks(trackll, buildModel = T)
 # All tracks lists masked.
 
 # compare results
-plotTrackOverlay(trackll) # original
-plotTrackOverlay(trackll.masked) # masked using default masking model
-plotTrackOverlay(trackll.masked.md) # masked using losened up masking model 
+###plotTrackOverlay(trackll) # original
+###plotTrackOverlay(trackll.masked) # masked using default masking model
+###plotTrackOverlay(trackll.masked.md) # masked using losened up masking model 
 
 # now one can used this modified Model.csv to process data that was not
 # masked well using default model by simply putting Model.csv in the working
 # directory and set buildModel=F
-trackll.masked2 <- densityMaskTracks(trackll, buildModel = F)
-plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up) model
-plotTrackOverlay(trackll.masked2) # masked using provided (lossen up) model without building it
+###trackll.masked2 <- densityMaskTracks(trackll, buildModel = FALSE)
+###plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up) model
+###plotTrackOverlay(trackll.masked2) # masked using provided (lossen up) model without building it
 }

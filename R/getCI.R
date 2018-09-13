@@ -39,7 +39,7 @@
 ##' #get msd
 ##' MSD=msd(trackll=trackll)
 ##' #run Dcoef()
-##' dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
+##' dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 ##' #fit the dcoef result
 ##' normalFit=fitNormDistr(dcoef)
 ##' # perform bootstrapping for this dcoef result
@@ -47,7 +47,7 @@
 ##' # get confidence intervals for this dcoef result which contains data from two different folders
 ##' a=getCI(d.boot)
 ##' # to manually set confidence to 80%
-##' b=getCI(d.boot, confidence=0.8, output=F)
+##' b=getCI(d.boot, confidence=0.8, output=FALSE)
 ##' 
 ###TODO add plot with confidence interval
 

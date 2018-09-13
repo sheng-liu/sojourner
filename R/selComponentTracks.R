@@ -36,19 +36,19 @@
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' trackll=createTrackll(folder=c(folder1,folder2),input=1)
 ##' MSD=msd(trackll=trackll)
-##' dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
+##' dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 ##' # fit dcoef
 ##' # for replication purpose set seed to fix number
-##' fit=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=484)
+##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=484)
 ##'
 ##' # select component tracks from fitting
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,
-##' dcoef=dcoef,log.transformed=T,output=F)
+##' dcoef=dcoef,log.transformed=TRUE,output=FALSE)
 ##' # subset component tracks to further analyze msd, dcoef
 ##' trackll.swr1=trackll.sel[["SWR1_WT_140mW_image6.txt"]]
-##' msd(trackll.swr1,plot=T)
-##' msd(trackll.swr1,summarize=T,plot=T)
-##' Dcoef(trackll=trackll.swr1,plot=T)
+##' msd(trackll.swr1,plot=TRUE)
+##' msd(trackll.swr1,summarize=TRUE,plot=TRUE)
+##' Dcoef(trackll=trackll.swr1,plot=TRUE)
 ##' plotTrackOverlay(trackll.swr1)
 ##'
 ##' # plotNucTrackOverlay(folder=folder1, trackll=trackll.swr1)
@@ -56,7 +56,7 @@
 ##'
 ##' # Output trajectory index to plot individually
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
-##' dcoef = dcoef,log.transformed = T,output = T)
+##' dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 ##' # specify index file path.
 ##' index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",package="sojourner")
 ##' index.file2=system.file("extdata","INDEX","componentTrackID-SWR1.comp.2.csv",package="sojourner")
@@ -77,15 +77,15 @@
 ##' ##however for plot component track back to original nuclei image.
 ##'
 ##' ## compute MSD
-##' MSD=msd(trackll=trackll,plot=T)
-##' msd(trackll=trackll,summarize=T,plot=T)
+##' MSD=msd(trackll=trackll,plot=TRUE)
+##' msd(trackll=trackll,summarize=TRUE,plot=TRUE)
 ##'
 ##' ## calculate Dcoef
 ##' dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
 ##'
 ##' ## fit normal distribution to define component
 ##' ## set seed to reproduce results (see fitNormalDistr() for details on seed)
-##' fit=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=481)
+##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
 ##'
 ##' ## select component tracks based on fitting
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,

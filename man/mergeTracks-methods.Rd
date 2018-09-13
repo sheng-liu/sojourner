@@ -26,6 +26,7 @@ If merged, the single merged track list takes the folder name.
 }
 \examples{
 #Basic masking with folder path with image masks
-folder = "/FOLDERPATH"
+folder = system.file("extdata", "SWR1", package = "sojourner")
+trackll = readDiatrack(folder)
 trackll.merged <- mergeTracks(folder = folder, trackll = trackll)
 }

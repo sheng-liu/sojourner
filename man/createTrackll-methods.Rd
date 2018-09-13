@@ -5,12 +5,12 @@
 \alias{createTrackll}
 \title{createTrackll}
 \usage{
-createTrackll(interact = F, folder, input = 1, ab.track = F, cores = 1, frameRecord = T)
+createTrackll(folder, interact = F, input = 1, ab.track = F, cores = 1, frameRecord = T)
 }
 \arguments{
-\item{interact}{Open interactive menu to choose the desired folder by selecting any file in it and select input type (script will process all files of that type in this folder).}
-
 \item{folder}{Full path output file folder (if they are .txt, ensure that they are either all Diatrack or all SlimFast).}
+
+\item{interact}{Open interactive menu to choose the desired folder by selecting any file in it and select input type (script will process all files of that type in this folder).}
 
 \item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4; Utrack .mat file = 5).}
 
@@ -47,7 +47,7 @@ Track: [Last five characters of the file name].[Start frame].[Length].[Track].[I
 }
 \examples{
 # select track folder interactively and specify using 2 cores
-trackll <- createTrackll(interact = T, cores = 2)
+# trackll <- createTrackll(interact = TRUE, cores = 2)
 
 # Specify trackll folder path programably, specify the file format to be "2"
 #(i.e. Diatrack txt files ending with .txt), cores to be 2.

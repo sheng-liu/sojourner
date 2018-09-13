@@ -53,7 +53,8 @@ sampleTracks() randomly samples num number of tracks for each trackl in trackll.
 }
 \examples{
 #Basic masking with folder path with image masks
-folder = "/FOLDERPATH"
+folder = system.file("extdata","ImageJ",package="sojourner")
+trackll = createTrackll(folder, input = 3)
 trackll.masked <- maskTracks(folder = folder, trackll = trackll)
 
 #Compare the masking effect
@@ -61,8 +62,8 @@ plotTrackOverlay(trackll)
 plotTrackOverlay(trackll.masked)
 
 #Plot mask
-mask.list=list.files(path=folder,pattern="_MASK.tif",full.names=T)
-plotMask(mask.file=mask.list[[1]])
+mask.list=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
+plotMask(folder)
 
 #If Nuclear image is available
 plotNucTrackOverlay(folder=folder,trackll=trackll)

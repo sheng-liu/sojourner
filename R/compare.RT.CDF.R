@@ -53,7 +53,7 @@
 ##'
 ##' # Plot and output the survival curve,
 ##' compare.RT.CDF(trackll=c(trackll1,trackll2),x.max=30,
-##' filter=c(min=3,max=Inf),t.interval=0.5,output=F)
+##' filter=c(min=3,max=Inf),t.interval=0.5,output=FALSE)
 
 ##' @importFrom mltools empirical_cdf
 ##' @export compare.RT.CDF

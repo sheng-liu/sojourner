@@ -58,7 +58,7 @@
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' trackll=compareFolder(c(folder1,folder2))
-##' displacementCDF(trackll,dt=1,plot=T)
+##' displacementCDF(trackll,dt=1,plot=TRUE)
 
 ##' @export displacementCDF
 

@@ -48,7 +48,7 @@
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' trackll=compareFolder(c(folder1,folder2))
-##' cdf=displacementCDF(trackll,dt=1,plot=F,output=F)
+##' cdf=displacementCDF(trackll,dt=1,plot=FALSE,output=FALSE)
 ##'
 ##' # specify ranges of parameter value of interest
 ##' fitCDF(cdf,components="two",
@@ -57,8 +57,8 @@
 ##'                 )
 ##'
 ##' # repeat a fit
-##' a=fitCDF(cdf,components="two",output=F)
-##' b=fitCDF(cdf,components="two",output=F,seed=attr(a,"seed"))
+##' a=fitCDF(cdf,components="two",output=FALSE)
+##' b=fitCDF(cdf,components="two",output=FALSE,seed=attr(a,"seed"))
 ##'
 ##' # if result are identical
 ##' x=summary(a[[1]])

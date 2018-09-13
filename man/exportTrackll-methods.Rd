@@ -35,11 +35,13 @@ The naming scheme for each export is as follows:
 [Last five characters of the file name]_[yy-MM-dd]_[HH-mm-ss].csv
 }
 \examples{
+folder=system.file("extdata","SWR1",package="sojourner")
+trackll=readDiatrack(folder)
 #Basic function call to exportTrackll with 2 cores into current directory
 exportTrackll(trackll, cores = 2)
 
 #Export one track list
-.exportRowWise(trackl)
+.exportRowWise(trackll[[1]])
 
 #Get current working directory
 getwd()

@@ -38,6 +38,6 @@ txtfolder=system.file("extdata","HTZ1",package="sojourner")
 trackll <- readSlimFast(folder = txtfolder, cores = 2)
 
 #Basic function call of .readSlimFast
-trackl <- .readSlimFast(interact = T)
+# trackl <- .readSlimFast(interact = TRUE)
 
 }

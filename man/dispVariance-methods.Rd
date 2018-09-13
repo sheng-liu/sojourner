@@ -61,12 +61,12 @@ dispVars = dispVariance(trackll)
 dispVars = dispVariance(trackll, min=3)
 
 # display plot only within certain range
-dispVariance(trackll, plot=T, limits = c(0,0.002))
+dispVariance(trackll, plot=TRUE, limits = c(0,0.002))
 
 # display plot with log-scale applied
-dispVars = dispVariance(trackll, min=3, plot=T, log=T)
+dispVars = dispVariance(trackll, min=3, plot=TRUE, log=TRUE)
 
-# display plot and get .csv files
-dispVars = dispVariance(trackll, min=3, plot=T, output=T)
+# display plot. Could get csv files if output = TRUE
+dispVars = dispVariance(trackll, min=3, plot=TRUE, output=FALSE)
 
 }

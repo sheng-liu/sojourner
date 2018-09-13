@@ -53,15 +53,16 @@ folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
 trackll=compareFolder(c(folder1,folder2))
 MSD=msd(trackll=trackll)
-dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
+dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 # fit dcoef
-a=fitNormDistr(dcoef,components=NULL,log.transform=F,combine.plot=F,output=F)
+a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,combine.plot=FALSE,output=FALSE)
 # to repeat a
-b=fitNormDistr(dcoef,components=NULL,log.transform=F,combine.plot=F,output=F,seed=attr(a,"seed"))
+b=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,
+combine.plot=FALSE,output=FALSE,seed=attr(a,"seed"))
 # if a and b are the same
 mapply(identical,a[[1]],b[[1]])
 #try with log transformation
-c=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F)
+c=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
 #trying with some parameters provided(this will be applied to all dcoef results). 
 #with constrain = F, this will be used as the starting values for the EM-algorithm
 #normally we should deal with only one dataset when working with constrains, 
@@ -69,7 +70,7 @@ c=fitNormDistr(dcoef,components=2,log.transform=T,combine.plot=F,output=F)
 folder3=system.file("extdata","HSF", package="sojourner")
 trackll=compareFolder(c(folder3),input=2)
 MSD=msd(trackll=trackll)
-dcoef=Dcoef(MSD,dt=6,plot=T,output=F)
+dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 #try with constrain =T, the values will be forced to eqaul the provided ones.
-e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=T)
+e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=TRUE)
 }

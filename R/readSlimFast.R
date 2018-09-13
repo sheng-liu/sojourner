@@ -34,7 +34,7 @@
 ##' trackll <- readSlimFast(folder = txtfolder, cores = 2)
 ##'
 ##' #Basic function call of .readSlimFast
-##' trackl <- .readSlimFast(interact = T)
+##' # trackl <- .readSlimFast(interact = TRUE)
 ##' 
 
 ##' @export .readSlimFast

@@ -39,6 +39,8 @@
 ##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 
 ##' @examples
+##' folder=system.file("extdata","SWR1",package="sojourner")
+##' trackll=readDiatrack(folder)
 ##' #Basic function call of linkSkippedFrames
 ##' trackll.linked <- linkSkippedFrames(trackll, tolerance = 5, maxSkip = 10)
 ##' 

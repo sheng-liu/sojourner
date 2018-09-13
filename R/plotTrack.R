@@ -146,8 +146,8 @@
 
 ##'
 ##' ## compute MSD
-##' MSD=msd(trackll=trackll,plot=T)
-##' msd(trackll=trackll,summarize=T,plot=T)
+##' MSD=msd(trackll=trackll,plot=TRUE)
+##' msd(trackll=trackll,summarize=TRUE,plot=TRUE)
 ##'
 ##' ## calculate Dcoef
 ##' dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
@@ -155,11 +155,11 @@
 ##' ## fit normal distribution to define component
 ##' ## set seed to reproduce results (see fitNormalDistr() for details on seed)
 ##' fit=fitNormDistr(
-##'        dcoef,components=2,log.transform=T,combine.plot=F,output=F,seed=481)
+##'       dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
 ##'
 ##' ## select component tracks based on fitting
 ##' trackll.sel=selComponentTracks(trackll,
-##'       fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed = T,output = F)
+##'       fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 ##'
 ##' ## plot component tracks
 ##' plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
@@ -565,12 +565,14 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
     img=EBImage::readImage(image.file)
     d=img@.Data
 
+    print(track.overlay.data)
+    print(track.overlay.data$x)
     p=  ggplot()+
         geom_raster(data=reshape2::melt(d), aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
         scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+
 
         geom_path(data=track.overlay.data,
-                  aes_string(x="x",y="y",group="indexPerFile",color=color))+
+                  aes_string(x="x", y="y",group="indexPerFile",color=shQuote(color)))+
         scale_x_continuous(
             name="Pixel",
             breaks=seq(from=0, to=max.pixel,by=20),

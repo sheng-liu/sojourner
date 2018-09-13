@@ -37,7 +37,7 @@
 ##' trackll <- readDiaSessions(folder=hsf_folder, cores = 2)
 ##' 
 ##' #Basic function call of .readDiaSessions
-##' trackl <- .readDiaSessions(interact = T)
+##' #trackl <- .readDiaSessions(interact = T)
 
 ##' @export .readDiaSessions
 ##' @export readDiaSessions

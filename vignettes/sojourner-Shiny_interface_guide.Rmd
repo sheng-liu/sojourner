@@ -1,10 +1,11 @@
 ---
 title: "sojourner Shiny Interface Guide"
-output:
-  html_document: default
-  pdf_document: default
-  word_document: default
+output: rmarkdown::html_vignette
 date: "September 7, 2017"
+vignette: >
+  %\VignetteIndexEntry{sojourner package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}

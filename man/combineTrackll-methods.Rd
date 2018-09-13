@@ -46,5 +46,5 @@ trackll2=maskTracks(folder2,trackll2)
 trackll2=mergeTracks(folder2,trackll2)
 
 # Combine the tracklls together, input trackll names when prompted,
-trackll=combineTrackll(trackll=c(trackll1,trackll2),merged=T)
+trackll=combineTrackll(trackll=c(trackll1,trackll2),merged=TRUE)
 }
