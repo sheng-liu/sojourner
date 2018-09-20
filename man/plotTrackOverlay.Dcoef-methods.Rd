@@ -58,7 +58,7 @@ Plot track/trajectory overlays from a list of files in a folder with color coded
 # Generate trackll, and process, 
 # e.g. mask region of interest, tracks from multiple files should not be merged.
 folder=system.file("extdata","HSF",package="sojourner")
-trackll=createTrackll(interact=F,folder,input=2, cores = 2)
+trackll=createTrackll(interact=FALSE,folder,input=2, cores = 2)
 trackll=maskTracks(folder,trackll)
 
 # Plot track overlays,

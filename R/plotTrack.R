@@ -564,15 +564,17 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 
     img=EBImage::readImage(image.file)
     d=img@.Data
-
+    print(reshape2::melt(d))
+    
     print(track.overlay.data)
     print(track.overlay.data$x)
+    print(class(track.overlay.data))
     p=  ggplot()+
         geom_raster(data=reshape2::melt(d), aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
         scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+
 
-        geom_path(data=track.overlay.data,
-                  aes_string(x="x", y="y",group="indexPerFile",color=shQuote(color)))+
+        geom_path(data=track.overlay.data, aes(x=track.overlay.data$x, y=track.overlay.data$y,group="indexPerFile", color = shQuote(color)))+
+        #geom_path(aes_string(x="x", y="y",group="indexPerFile", color = shQuote(color)))+
         scale_x_continuous(
             name="Pixel",
             breaks=seq(from=0, to=max.pixel,by=20),
@@ -682,9 +684,9 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
 
     ###trackll or trackll.sel 
     ###plotComponentTrackOverlay: no visible binding for global variable ‘trackll’
-    print(track.overlay.data.lst)
-    print(color.lst)
-    print(class(color.lst[[1]]))
+    #print(track.overlay.data.lst)
+    #print(color.lst)
+    #print(class(color.lst[[1]]))
     ### trackll -> trackll.sel
     for (i in 1:length(trackll.sel)) plot.lst[[i]]=.plotNucTrackOverlay(
         trackl=NULL,component.lst=trackll.sel[i],

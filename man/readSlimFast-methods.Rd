@@ -34,8 +34,8 @@ The naming scheme for each track is as follows:
 }
 \examples{
 #Basic function call of .readSlimFast
-txtfolder=system.file("extdata","HTZ1",package="sojourner")
-trackll <- readSlimFast(folder = txtfolder, cores = 2)
+#txtfolder=system.file("extdata","HTZ1",package="sojourner")
+#trackll <- readSlimFast(folder = txtfolder, cores = 1)
 
 #Basic function call of .readSlimFast
 # trackl <- .readSlimFast(interact = TRUE)

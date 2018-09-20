@@ -30,8 +30,8 @@
 
 ##' @examples
 ##' #Basic function call of .readSlimFast
-##' txtfolder=system.file("extdata","HTZ1",package="sojourner")
-##' trackll <- readSlimFast(folder = txtfolder, cores = 2)
+##' #txtfolder=system.file("extdata","HTZ1",package="sojourner")
+##' #trackll <- readSlimFast(folder = txtfolder, cores = 1)
 ##'
 ##' #Basic function call of .readSlimFast
 ##' # trackl <- .readSlimFast(interact = TRUE)
@@ -60,7 +60,7 @@
     cat("\nReading SlimFast file: ",file.name,"...\n");
     
     #Read first four columns of input SLIMFAST file
-    data <- as.data.frame(subset(read.table(file), select=c(1:4)));
+    data <- as.data.frame(subset(read.table(file,skip=1), select=c(1:4)));
     
     #Name columns and add z column of 1s in the appropriate location
     colnames(data) <- c("x","y","Frame", "track");
@@ -108,7 +108,9 @@
         }
         
         #Rename row names of track to appropriate index values
-        rownames(track) <- 1:nrow(track);
+        print(track)
+        print(nrow(track))
+        rownames(track) <- sapply(1:nrow(track),toString);
         
         #Add start frame of track to frame list
         frame.list[[length(frame.list) + 1]] <- track[[4]][[1]];
