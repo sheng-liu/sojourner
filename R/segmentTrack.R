@@ -14,6 +14,7 @@
 ##' indicated seg value will be sorted out.
 
 #helper function for single track segmentation. Used in segmentTrackll
+
 segmentTrack=function(track,seg){
     segs=list()
     track.len = dim(track)[1]
@@ -40,6 +41,30 @@ segmentTrackll=function(trackll,seg=7){
     }
     names(segmentll)=names(trackll)
     return(segmentll)
+}
+
+rebuildTrackll=function(segll){
+    segnames = names(segll[[1]])
+    nns = lapply(sapply(segnames,function(x){strsplit(x,split="[.]")}),function(y){strtoi(y[6])})
+    tll = list()#output trackll
+    startseg = segll[[1]][[1]]
+    midpt = round(dim(startseg)[1]/2)
+    for (i in 2:length(nns)){
+        if (nns[[i]] == 1){
+            tll = c(tll,list(startseg))
+            startseg = segll[[1]][[i]]
+        } else{
+            startseg = rbind(startseg, tail(segll[[1]][[i]],1))
+            if (nns[[i]]>7){
+                print(startseg$name)
+                print(startseg$state[nns[[i]]-midpt])
+                startseg$state[nns[[i]]-midpt] = startseg$state[nns[[i]]]
+            }
+        }
+            
+    }
+    tll = c(tll,list(startseg))
+    return (tll)
 }
 
 #dcoef calculation for each segment in segmentll
@@ -215,3 +240,4 @@ plotSeg=function(segll){
     ab.segll=convert.abtrackll(segll)
     plotTrack(ab.segll, frame.min = 1)
 }
+
