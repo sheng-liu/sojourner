@@ -90,14 +90,10 @@
 ##' ## select component tracks based on fitting
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
 ##' ## plot component tracks
-##' plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
-##'
-##'
-
+##' #plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
 
 
 ##' @export selComponentTracks
-##'
 
 ###############################################################################
 
