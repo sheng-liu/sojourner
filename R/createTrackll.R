@@ -11,7 +11,7 @@
 ##' @description take in Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or Utrack (.mat) input from a folder to output a list of track lists with the option to record frames and use multiple cores.
 
 ##' @usage 
-##' createTrackll(folder, interact = F, input = 1, ab.track = F, cores = 1, frameRecord = T)
+##' createTrackll(folder, interact = FALSE, input = 1, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 
 ##' @param interact Open interactive menu to choose the desired folder by selecting any file in it and select input type (script will process all files of that type in this folder).
 ##' @param folder Full path output file folder (if they are .txt, ensure that they are either all Diatrack or all SlimFast).
@@ -58,10 +58,10 @@
 
 ### createTrackll ###
 
-createTrackll=function(folder, interact = F, input = 1, ab.track = F, cores = 1, frameRecord = T){
+createTrackll=function(folder, interact = FALSE, input = 1, ab.track = FALSE, cores = 1, frameRecord = TRUE){
     
     #Interactive menu to select file in desired folder and input type
-    if (interact == T){
+    if (interact == TRUE){
         cat("Choose one file in the folder for processing... \n")
         folder = dirname(file.choose());
         input = 0;

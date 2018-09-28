@@ -172,7 +172,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
             # xx=as.data.frame(mapply(cbind.data.frame,time.lst,dat[[i]]))
             
             # mapply(cbind,time.lst,dat[[i]]) # returns a matrix
-           # Map(cbind,time.lst,dat[[i]])
+            # Map(cbind,time.lst,dat[[i]])
             
             # with Map, no need for the converstion
             # time.df=reshape2::melt(time.lst)
@@ -181,7 +181,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
 
             #             # notice the effect of subsetting using ["name"] vs $
             #             > str(as.vector(dat[[i]]["trackIndex"]))
-            #             'data.frame':	1249 obs. of  1 variable:
+            #            'data.frame':1249 obs. of  1 variable:
             #                 $ trackIndex: chr  "mage6.1.4.1.1" "mage6.1.4.1.1" "mage6.1.4.1.1"
             #             > str(as.vector(dat[[i]]$trackIndex))
             #             chr [1:1249] "mage6.1.4.1.1" "mage6.1.4.1.1" "mage6.1.4.1.1" ...

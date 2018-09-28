@@ -284,7 +284,7 @@ applyMask = function(track.list, mask){
             masked.track.list[index.mask] <- track.list[i];
             index.mask = index.mask + 1;
             masked.track.list.names[1 + length(masked.track.list.names)] = names(track.list[i]);
-        }		
+        }
     }
     names(masked.track.list) <- masked.track.list.names;
     #Return masked track list

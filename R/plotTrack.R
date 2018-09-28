@@ -163,9 +163,8 @@
 ##'
 ##' ## plot component tracks
 ##' plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
-##'
 
-## @import reshape2
+
 ##' @export plotTrack
 ##' @export .plotTrack
 ##' @export plotTrackFromIndex
@@ -566,9 +565,6 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
     d=img@.Data
     print(reshape2::melt(d))
     
-    print(track.overlay.data)
-    print(track.overlay.data$x)
-    print(class(track.overlay.data))
     p=  ggplot()+
         geom_raster(data=reshape2::melt(d), aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
         scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+

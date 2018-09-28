@@ -20,7 +20,7 @@ List of length 2 containing:
 results from fitNormDistr that was used as the input for the function
 \item{Bootstraps}
 results from bootstrapping. mean values of each samples,
-standard error for the mean, lambda(proportion)
+standard error for the mean, lambda
  }
 }
 \description{

@@ -180,5 +180,4 @@ trackll.sel=selComponentTracks(trackll,
 
 ## plot component tracks
 plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
-
 }

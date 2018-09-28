@@ -29,7 +29,6 @@
 ##' - emperical cumulative distribution function (eCDF) of MSD over time.
 
 ## @seealso
-
 ##' @import ggplot2
 ##' @import utils
 ##' @import stats
@@ -39,7 +38,7 @@
 
 ##' 
 ##' 
-##' 
+
 ##' 
 ##' @import reshape2
 ## @import gridExtra

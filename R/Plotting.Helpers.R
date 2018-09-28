@@ -367,7 +367,7 @@ gg.mixEM <- function(EM,binwidth=NULL,reorder=T) {
     # reconstruct x, may use sample
     x       <- with(EM,seq(min(x),max(x),len=1000))
     # parameters holder
-    pars    <- with(EM,data.frame(comp=colnames(posterior), mu, sigma,lambda))
+    pars    <- with(EM,data.frame(comp=colnames(EM$posterior), mu, sigma,lambda))
 
     em.df   <- data.frame(x=rep(x,each=nrow(pars)),pars)
 

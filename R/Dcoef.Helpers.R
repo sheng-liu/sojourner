@@ -42,7 +42,7 @@ Dcoef.static=function(MSD,lag.start=2,lag.end=5,t.interval=0.010){
     # and its comparison
 
     # change shape of the matrix
-    D.coef=sapply(D.coef,function(x){t(x)},simplify = F)
+    D.coef=sapply(D.coef,function(x){t(x)},simplify = FALSE)
 
     return(D.coef)
 }
@@ -71,7 +71,7 @@ Dcoef.static=function(MSD,lag.start=2,lag.end=5,t.interval=0.010){
 #         x=t(x)
 #         # colnames(x)=c("slope","corr")
 #         return(x)
-#     },simplify = F)
+#     },simplify = FALSE)
 
 
 
@@ -128,7 +128,7 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 
 #     # alternative
 #     D.coef=lapply(D.coef,function(x){
-#         sapply(x,function(x){t(x)},simplify = F)
+#         sapply(x,function(x){t(x)},simplify = FALSE)
 #
 #     })
 
@@ -244,12 +244,12 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 
 
 
-Dcoef.perc=function(trackll,percentage=0.25,weighted=F,filter=c(min=7,max=Inf),
+Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,filter=c(min=7,max=Inf),
                     trimmer=c(min=1,max=31),resolution=0.107,t.interval=0.010){
 
     # calculate msd using msd.perc()
     msd.lst=msd.perc(trackll,percentage=percentage,filter=filter,trimmer=trimmer,
-                     resolution=resolution,output=F)
+                     resolution=resolution,output=FALSE)
 
     # exclude the first time lag for fitting for all category
     msd.remove1st=lapply(msd.lst,function(x){
@@ -288,7 +288,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=F,filter=c(min=7,max=Inf),
             # exclude 1st x value for fitting
             x=seq(from=t.interval*2,to=(len+1)*t.interval,by=t.interval)
 
-            if (weighted == T){
+            if (weighted == TRUE){
                 w=1:len; fit=lm(y~x,weights =w )
             }else{
                 fit=lm(y~x)
@@ -317,7 +317,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=F,filter=c(min=7,max=Inf),
 
     # this changes shape/format into a matrix
     D.coef=sapply(D.coef,function(x){
-        do.call(rbind,x)},simplify=F)
+        do.call(rbind,x)},simplify=FALSE)
 
     return(D.coef)
 
@@ -401,17 +401,17 @@ rsquare.filter=function(D.coef,rsquare=0.8){
     slope=lapply(D.coef,function(x){x[,"slope"]})   # x[colnames(x) == "slope"]
     corr=lapply(D.coef,function(x){x[,"corr"]})    # x[colnames(x) == "corr"]
 
-    # the "still" molecule wil generate a NA in correlation, thus is.na(x) == F
-    corr.filter=lapply(corr,function(x){x>=rsquare & is.na(x) == F})
+    # the "still" molecule wil generate a NA in correlation, thus is.na(x) == FALSE
+    corr.filter=lapply(corr,function(x){x>=rsquare & is.na(x) == FALSE})
 
     # add corr and slope in the output
 
-    # mapply("[",D.coef,corr.filter,SIMPLIFY=F)
+    # mapply("[",D.coef,corr.filter,SIMPLIFY=FALSE)
     # directly mapply to D.coef, lost the matrix structure
 
-    D.coef.slope.subset=mapply("[",slope,corr.filter,SIMPLIFY=F)
-    D.coef.corr.subset=mapply("[",corr,corr.filter,SIMPLIFY=F)
-    D.coef.subset=mapply(cbind,D.coef.slope.subset,D.coef.corr.subset,SIMPLIFY=F)
+    D.coef.slope.subset=mapply("[",slope,corr.filter,SIMPLIFY=FALSE)
+    D.coef.corr.subset=mapply("[",corr,corr.filter,SIMPLIFY=FALSE)
+    D.coef.subset=mapply(cbind,D.coef.slope.subset,D.coef.corr.subset,SIMPLIFY=FALSE)
 
     # add colnames
     D.coef.subset=lapply(D.coef.subset,function(x){
@@ -495,7 +495,7 @@ rsquare.filter.roll=function(D.coef,rsquare=0.8){
 ##------------------------------------------------------------------------------
 ## Dcoef.log
 ##@export Dcoef.log
-# Dcoef.log=function(D.coef.subset,static=T){
+# Dcoef.log=function(D.coef.subset,static=TRUE){
 #     if (static){
 #
 #         #Log.D.coef=suppressWarnings(lapply(D.coef,log))

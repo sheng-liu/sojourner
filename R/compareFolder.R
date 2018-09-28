@@ -41,7 +41,7 @@
 ###############################################################################
 
 
-compareFolder=function(folders, input=1, ab.track=F,cores=1){
+compareFolder=function(folders, input=1, ab.track=FALSE,cores=1){
 
     # the number of folder to compare can be extended using ... statement
     # folder.list=list(folder1,folder2,folder3,folder4,folder5)
@@ -49,20 +49,20 @@ compareFolder=function(folders, input=1, ab.track=F,cores=1){
     #     null.folder=sapply(folder.list,is.null)
     #     folder.list=folder.list[!null.folder]
 
-    folder.list=sapply(folders,list,simplify=T)
+    folder.list=sapply(folders,list,simplify=TRUE)
 
     names(folder.list)=sapply(folder.list,basename)
 
     sample.list=list()
 
 
-    if (ab.track == T){
+    if (ab.track == TRUE){
 
         for (i in 1:length(folder.list)) {
             sample.list[i] = mergeTracks(
                 folder=folder.list[[i]], 
                 createTrackll(folder=folder.list[[i]],input = input, 
-                              ab.track=T,cores=cores))
+                              ab.track=TRUE,cores=cores))
             cat("\n...\n") # seperator makes ouput clearer
             names(sample.list)[i]=names(folder.list)[i]
         }
@@ -74,7 +74,7 @@ compareFolder=function(folders, input=1, ab.track=F,cores=1){
             sample.list[i] = mergeTracks(
                 folder=folder.list[[i]], 
                 createTrackll(folder=folder.list[[i]],
-                              input = input, ab.track=F,cores=cores))
+                              input = input, ab.track=FALSE,cores=cores))
             cat("\n...\n") # seperator makes ouput clearer
             names(sample.list)[i]=names(folder.list)[i]
         }
