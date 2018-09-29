@@ -463,9 +463,11 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
             # file.name) as track.name starts over again from a new file, use
             # interaction() realize it
 
+            
+            p$inter=interaction(p$file.name,p$track.name)
+            
             msd.plot=ggplot(p,aes_string(x="index",y="msd",
-                                  group=interaction("file.name","track.name"),
-                                  col="file.name"))+
+                                  group="inter",col="file.name"))+
                 geom_line()+
                 # this makes integer breaks
                 scale_x_continuous(breaks=scales::pretty_breaks())+
