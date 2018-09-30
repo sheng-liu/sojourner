@@ -1,7 +1,7 @@
 Package: sojourner
 Type: Package
 Title: Single Molecule Tracking
-Version: 0.5.3.2
+Version: 0.5.3.3
 Date: 2015-10-15
 Author: Sheng Liu, Xiaona Tang, Sun Jay Yoo, Youngsoo Sun
 Maintainer: Sheng Liu <sliu@jhu.edu>
