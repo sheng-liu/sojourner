@@ -15,7 +15,7 @@
 
 ##' @param folder Full path to the output files.
 ##' @param trackll A list of track lists.
-
+##' @return modified trackll
 ##' @examples
 ##' #Basic masking with folder path with image masks
 ##' folder = system.file("extdata", "SWR1", package = "sojourner")
@@ -45,7 +45,7 @@ mergeTracks=function(folder, trackll){
     track.holder=c()
     
     # getting a file list of Diatrack files in a directory
-    file.list=list.files(path=folder,pattern=pattern,full.names=T)
+    file.list=list.files(path=folder,pattern=pattern,full.names=TRUE)
     folder.name=basename(folder)
     
     # concatenate track list into one list of data.frames
@@ -65,7 +65,7 @@ mergeTracks=function(folder, trackll){
     # add indexPerTrackll to track name
     indexPerTrackll=1:length(track.holder)
     names(track.holder)=mapply(paste,Index,
-                               indexPerTrackll,sep=".")
+                                indexPerTrackll,sep=".")
     
     # make the result a list of list with length 1
     trackll=list()

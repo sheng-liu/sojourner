@@ -8,7 +8,7 @@
 \alias{plotPoints}
 \title{densityMaskTracks}
 \usage{
-densityMaskTracks(trackll, scale = 128, removeEdge = F, separate = F, buildModel = F)
+densityMaskTracks(trackll, scale = 128, removeEdge = FALSE, separate = FALSE, buildModel = FALSE)
 plotLines(trackll, scale = 128)
 plotPoints(trackll, scale = 128)
 }
@@ -23,6 +23,9 @@ plotPoints(trackll, scale = 128)
 
 \item{buildModel}{Manually configure the kernel density probability (p), while continuously building a model. T to create a model or improve an existing model. F to load in a MODEL.csv for automatic masking.}
 }
+\value{
+masked trackll
+}
 \description{
 mask track lists and lists of track lists using kernel density clusters
 }
@@ -31,7 +34,7 @@ This algorithm relies on one parameter, the kernel density probability (p),
 to mask track lists. Following, describes a method to optimize a workflow to
 predict p actively.
 
-When densityMaskTracks() is called with buildModel = T, it will repeatedly
+When densityMaskTracks() is called with buildModel = TRUE, it will repeatedly
 ask the user for the kernel density probability (p) and the number of
 smallest clusters to elimnate. The kernel density probability (p) is a
 factor that determines how dense the cluster contours are. Low p creates
@@ -41,7 +44,7 @@ number of smallest clusters to eliminate accordingly (note: sometimes noise
 clusters are too small to see). Manual input will get progressively easier
 after 3 data points as the model is continuously being improved and applied.
 Building the model will create a MODEL.csv in the working directory that can
-be used to mask automatically if buildModel = F (this will look for one
+be used to mask automatically if buildModel = FALSE (this will look for one
 MODEL.csv in the working directory).
 
 The separate parameter allows users to separate each track list from one
@@ -108,7 +111,7 @@ plotTrackOverlay(trackll.masked)
 # specifying p value when prompted by the command.
 
 # This is an example of masking model building process
- 
+
 # Masking mage6 ...
 # No initial model read. If desired, ensure there is one file ending in
 # MODEL.csv in working directory.
@@ -133,7 +136,7 @@ plotTrackOverlay(trackll.masked)
 
 # now one can used this modified Model.csv to process data that was not
 # masked well using default model by simply putting Model.csv in the working
-# directory and set buildModel=F
+# directory and set buildModel=FALSE
 ###trackll.masked2 <- densityMaskTracks(trackll, buildModel = FALSE)
 ###plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up) model
 ###plotTrackOverlay(trackll.masked2) # masked using provided (lossen up) model without building it

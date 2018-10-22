@@ -14,9 +14,9 @@
 ##' a statistic measure of dataset.
 
 ##' @usage
-##'   bootstrap(fittedObj,n.reps=100)
-##'   
-##   plotBootstrap(d.boot,alpha=1/2) -- not available in current version
+##' bootstrap(fittedObj,n.reps=100)
+##' 
+##  plotBootstrap(d.boot,alpha=1/2) -- not available in current version
 ##'   
 ##' @param fittedObj output from fitNormDistr
 ##' @param n.reps number of replicates for bootstrapping
@@ -29,7 +29,7 @@
 ##' \item{Bootstraps}
 ##' results from bootstrapping. mean values of each samples,
 ##' standard error for the mean, lambda
-##'  }
+##' }
 
 ##' @examples
 ##' # read in using readDiatrack

@@ -6,9 +6,9 @@
 \alias{.readUtrack}
 \title{readUtrack}
 \usage{
-readUtrack(folder, ab.track = F, cores = 1, frameRecord = T)
+readUtrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 
-.readUtrack(file, interact = F, ab.track = F, frameRecord = F)
+.readUtrack(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
 \item{file}{Full path to Utrack file.}
@@ -22,6 +22,9 @@ readUtrack(folder, ab.track = F, cores = 1, frameRecord = T)
 \item{folder}{Full path to Utrack files output folder.}
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
+}
+\value{
+trackll
 }
 \description{
 take in a single channel Utrack file as input, along with several other user-configurable parameters and output options, to return a track list of all the trajectories found in the file

@@ -8,11 +8,11 @@
 \alias{msd.track.vecdt}
 \title{msd}
 \usage{
-msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,
-  plot=F,output=F,filter=c(min=7,max=Inf))
-  msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=F)
-  msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
-  trimmer=c(min=1,max=31),resolution=0.107,output=F)
+msd(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,
+plot=FALSE,output=FALSE,filter=c(min=7,max=Inf))
+msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=FALSE)
+msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
+trimmer=c(min=1,max=31),resolution=0.107,output=FALSE)
 }
 \arguments{
 \item{dt}{Time intervals. Default 6.}
@@ -67,7 +67,7 @@ to a variable, one can then export the trackll with this variable.
 }
 \description{
 calculate mean square displacement for individual trajectory or
-  summarize on trajectories.
+summarize on trajectories.
 }
 \details{
 msd() calculate track (/trajectory)'s mean square displacement as a function

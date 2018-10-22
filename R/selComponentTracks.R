@@ -9,14 +9,14 @@
 ##' @rdname selComponentTracks-methods
 ##' @docType methods
 ##'
-##' @description Select trajectory based on component fitting on diffusion
-##'   coefficient.
-##' @usage selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=F,output=F)
+##' @description Select trajectory based on component fitting on diffusion 
+##' coefficient.
+##' @usage selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=FALSE,output=FALSE)
 ##' @param trackll Track list output from readDiatrack().
 ##' @param fit Component fitting result form fitNormDistr() function.
 ##' @param likelihood The likelihood of a trajecotry to be in fitted group. This parameter specifies the strigency of selecting trajectories to be in the fitted group and therefore influence the number of trajectories been selected.
 ##' @param dcoef Diffusion coefficent calcualted by Dcoef, which provide the link between trajecotry index and diffusion coefficent.
-##' @param log.transformed A flag indicating if the fitting is been log transformed, select TRUE if fitting was done in fitNormDistr(log.transform = T,..). This parameter will be removed in later version by directly read the info from the output of fitNormalDistr() function.
+##' @param log.transformed A flag indicating if the fitting is been log transformed, select TRUE if fitting was done in fitNormDistr(log.transform = TRUE,..). This parameter will be removed in later version by directly read the info from the output of fitNormalDistr() function.
 ##' @param output A logical indicating if output of selected trajectory index, which can be used for plot individual trajectory using plotTrack.
 
 
@@ -71,8 +71,8 @@
 ##' folder3=system.file("extdata","SWR1_2",package="sojourner")
 ##' trackll=readDiatrack(folder3)
 ##'
-##' ## use merge=T for per folder comparison, the analsyis result can't be plot back to original image
-##' ## To see component tracks on original nuclei image, set merge=F (for per movie analysis)
+##' ## use merge=TRUE for per folder comparison, the analsyis result can't be plot back to original image
+##' ## To see component tracks on original nuclei image, set merge=FALSE (for per movie analysis)
 ##' ## may not make much sense to msd on individual movie, 
 ##' ##however for plot component track back to original nuclei image.
 ##'
@@ -100,7 +100,7 @@
 
 selComponentTracks=function(
     trackll,
-    fit,likelihood=0.9,dcoef,log.transformed=F,output=F){
+    fit,likelihood=0.9,dcoef,log.transformed=FALSE,output=FALSE){
 
     # trackll is not used for calculation but for subsetting tracks
     comp=list()
@@ -163,7 +163,7 @@ selComponentTracks=function(
     # if log.transformed, remove negative
     # values to make the total index corresponding to..
 
-    if (log.transformed == T){
+    if (log.transformed == TRUE){
         dcoef.log.trans=lapply(dcoef,function(x){x=x[(x[,"slope"]>0),]})
         dcoef=dcoef.log.trans
     }
@@ -201,13 +201,13 @@ selComponentTracks=function(
     #---------------------------------------------------------------------------
     # export as index file to plot individually
 
-    if (output == T){
+    if (output == TRUE){
         for (i in 1:length(comp.trackID.lst)){
             for (j in 1:length(comp.trackID.lst[[i]])){
                 fileName=paste("componentTrackID-",
-                               paste(names(comp.trackID.lst)[[i]],".",
-                                     names(comp.trackID.lst[[i]][j]),sep=""),
-                               .timeStamp("-"),".csv",sep="")
+                                paste(names(comp.trackID.lst)[[i]],".",
+                                        names(comp.trackID.lst[[i]][j]),sep=""),
+                                .timeStamp("-"),".csv",sep="")
                 write.csv(file=fileName,comp.trackID.lst[[i]][[j]])
             }
         }

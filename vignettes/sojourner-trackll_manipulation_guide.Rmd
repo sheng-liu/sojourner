@@ -3,9 +3,9 @@ title: "sojourner trackll Manipulation Guide"
 output: rmarkdown::html_vignette
 date: "July 18, 2017"
 vignette: >
-  %\VignetteIndexEntry{sojourner package}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{sojourner package}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}

@@ -10,7 +10,7 @@
 ##' @docType methods
 ##' @description Caclulate dwell time (/residence time) for trajecotries.
 
-##' @usage dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=F)
+##' @usage dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=FALSE)
 ##' @param trackll Track list output from readDiatrack().
 ##' @param t.interval t.interval time, default = 10ms.
 ##' @param x.scale x-scale min and max range.
@@ -20,7 +20,7 @@
 
 ##' @return
 ##' \itemize{
-##' \item{dwell time list} A list of dwell time for every trajectory, separated by file names of the trajectory file in Diatrack file folder. If combined dewell time is intended, use readDiatrack(folder, merge=T) to generate a single length list, then apply this function.
+##' \item{dwell time list} A list of dwell time for every trajectory, separated by file names of the trajectory file in Diatrack file folder. If combined dewell time is intended, use readDiatrack(folder, merge=TRUE) to generate a single length list, then apply this function.
 ##' \item{PDF} dwell time frequency plot in PDF format, when plot = TRUE.
 ##' \item{csv} dwell time output in csv format, when output = TRUE.
 ##' }
@@ -49,7 +49,7 @@
 }
 
 
-dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=F){
+dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=TRUE,output=FALSE){
 
     ## compute dwell time
     dwell.time=sapply(trackll,function(x){.dwellTime(x,t.interval)})
@@ -67,7 +67,7 @@ dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=
     }
 
     histo.plot=ggplot(dwell.time.mlt,
-                      aes_string(x="value",group="variable",fill="variable"))+
+                    aes_string(x="value",group="variable",fill="variable"))+
         geom_histogram(binwidth=t.interval,position="dodge",colour="white")+ ##change from white to red?
         xlim(x.scale["min"],x.scale["max"])+
         theme_bw()+
@@ -82,10 +82,10 @@ dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=
         theme(legend.title=element_blank())+
         labs(x="Lifetime of trajectories (ms)", y="Frequency of trajectories")
 
-    if (plot == T) multiplot(histo.plot,density.plot,cols=1)
+    if (plot == TRUE) multiplot(histo.plot,density.plot,cols=1)
 
     ## output
-    if (output == T){
+    if (output == TRUE){
 
         # output csv
 #         for (i in 1:length(trackll)){

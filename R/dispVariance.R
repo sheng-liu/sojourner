@@ -10,10 +10,10 @@
 ##' @docType methods
 ##' 
 ##' @description calculate square displacements for all tracks in a trackll datatype,
-##'   and return the variances for the dispacements of each trajectories.
+##' and return the variances for the dispacements of each trajectories.
 ##' 
 ##' @usage
-##' dispVariance(trackll, min=7, plot=F, limits=c(), log=F, output=F)
+##' dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE)
 ##' @param trackll Track list output from readDiatrack().
 ##' @param min minimum points on trajectory, should be at least 3 to work.
 ##' @param plot default: False, if true, show density plot for variances.
@@ -100,12 +100,12 @@ dispVariance.trackl=function(trackl) {
 
 ##calculate displacement variance for all tracks in given trackll
 ##also filter based on tracklength(must be greater than 2)
-##plotting feature can be enabled when plot=T is set.
+##plotting feature can be enabled when plot=TRUE is set.
 ##limits on the variance range can be set by providing a  vector
 ## of length 2.
 
 ##' @export dispVariance
-dispVariance=function(trackll, min=7, plot=F, limits=c(), log=F, output=F) {
+dispVariance=function(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE) {
     if (min < 3) {
         stop("min value should be at least 3")
     }
@@ -114,31 +114,32 @@ dispVariance=function(trackll, min=7, plot=F, limits=c(), log=F, output=F) {
     filtered=filterTrack(trackll, filter=c(min=min, max=Inf))
     result=lapply(filtered, dispVariance.trackl)
     
-    if (plot == T) {
+    if (plot == TRUE) {
         melted=reshape2::melt(result) #convert to dataframe
         #rename columns to more reasonable ones
         names(melted)=c("variance", "track.name", "trackList")
-       if (log) {
-           melted$variance=log10(melted$variance)
-       }
-       
-       #different tracklists will show up as different colors with some transparency
-       plt=ggplot2::ggplot(melted, ggplot2::aes_string(x="variance",  color="trackList")) + ggplot2::geom_line(alpha=0.5, position="identity", stat="density")
-       if (length(limits) != 2) {
-           plot(plt)
-       }
-       else {
-           plot(plt + ggplot2::xlim(limits)) #apply range limits
-       }
+        if (log) {
+            melted$variance=log10(melted$variance)
+        }
+        #different tracklists will show up as different colors with some transparency
+        plt=ggplot2::ggplot(melted, ggplot2::aes_string(x="variance", 
+                                                        color="trackList"))
+        + ggplot2::geom_line(alpha=0.5, position="identity", stat="density")
+        if (length(limits) != 2) {
+            plot(plt)
+        }
+        else {
+            plot(plt + ggplot2::xlim(limits)) #apply range limits
+        }
     }
     
-    if (output == T) {
+    if (output == TRUE) {
         for (i in 1:length(result)) {
             track.df = reshape2::melt(result[[i]])
             names(track.df) = c("dispVariance", "track.name")
             track.df = track.df[,c(2,1)]
             fileName=paste("DispVariance Individual-",
-                           .timeStamp(names(result)[i]),".csv",sep="")
+                            .timeStamp(names(result)[i]),".csv",sep="")
             cat("\nOutput dispVariance for individual trajectories.\n")
             write.csv(file=fileName,track.df)
         }

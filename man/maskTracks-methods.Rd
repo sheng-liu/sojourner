@@ -12,7 +12,7 @@
 maskTracks(folder, trackll)
 
 indexCell(folder, trackll, areaFilter = c(0, Inf), 
-intensityFilter = c(0, Inf), export = F, max.pixel = 128)
+intensityFilter = c(0, Inf), export = FALSE, max.pixel = 128)
 
 filterOnCell(trackll, numTracks = 0)
 
@@ -34,6 +34,9 @@ sampleTracks(trackll, num = 0)
 \item{numTracks}{Minimum number of required tracks in the trackll}
 
 \item{num}{Number of tracks to randomly sample per trackl in trackll}
+}
+\value{
+masked tracks in trackll format
 }
 \description{
 apply binary image masks to lists of track lists

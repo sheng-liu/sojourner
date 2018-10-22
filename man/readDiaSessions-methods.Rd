@@ -6,9 +6,9 @@
 \alias{.readDiaSessions}
 \title{readDiaSessions}
 \usage{
-readDiaSessions(folder, ab.track = F, cores = 1, frameRecord = T)
+readDiaSessions(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 
-.readDiaSessions(file, interact = F, ab.track = F, frameRecord = F)
+.readDiaSessions(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
 \item{file}{Full path to Diatrack .mat session file.}
@@ -22,6 +22,9 @@ readDiaSessions(folder, ab.track = F, cores = 1, frameRecord = T)
 \item{folder}{Full path to Diatrack .mat session files output folder.}
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
+}
+\value{
+trackll
 }
 \description{
 take in a Diatrack .mat session file as input, along with several other user-configurable parameters and output options, to return a track list of all the trajectories found in the session file
@@ -41,5 +44,5 @@ hsf_folder=system.file("extdata", "HSF", package="sojourner")
 trackll <- readDiaSessions(folder=hsf_folder, cores = 2)
 
 #Basic function call of .readDiaSessions
-#trackl <- .readDiaSessions(interact = T)
+#trackl <- .readDiaSessions(interact = TRUE)
 }

@@ -6,11 +6,12 @@
 \alias{.setSeed}
 \title{fitNormDistr}
 \usage{
-fitNormDistr(dcoef,components=NULL,log.transform=F,binwidth=NULL,combine.plot=F,output=F,
-             seed=NULL, proportion=NULL, means=NULL, sd=NULL, constrain=F)
+fitNormDistr(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,
+combine.plot=FALSE,output=FALSE, seed=NULL, proportion=NULL, means=NULL,
+sd=NULL, constrain=F)
 }
 \arguments{
-\item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=T.}
+\item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=TRUE.}
 
 \item{dcoef}{diffusion coefficient calculated from Dcoef().}
 
@@ -64,13 +65,13 @@ mapply(identical,a[[1]],b[[1]])
 #try with log transformation
 c=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
 #trying with some parameters provided(this will be applied to all dcoef results). 
-#with constrain = F, this will be used as the starting values for the EM-algorithm
+#with constrain = FALSE, this will be used as the starting values for the EM-algorithm
 #normally we should deal with only one dataset when working with constrains, 
 #since it will apply to all of them.
 folder3=system.file("extdata","HSF", package="sojourner")
 trackll=compareFolder(c(folder3),input=2)
 MSD=msd(trackll=trackll)
 dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
-#try with constrain =T, the values will be forced to eqaul the provided ones.
+#try with constrain =TRUE, the values will be forced to eqaul the provided ones.
 e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=TRUE)
 }

@@ -12,7 +12,7 @@
 ##' @rdname plotTrackOverlay.Dcoef-methods
 ##' @docType methods
 ##' @description Plot track/trajectory overlays from a list of files in a folder with color coded 
-##'              by the Diffusion Coefficient (Dcoef) of each track/trajectory. 
+##' by the Diffusion Coefficient (Dcoef) of each track/trajectory. 
 ##'              
 ##' @usage
 ##' plotTrackOverlay.Dcoef(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),
@@ -36,12 +36,12 @@
 ##' \item{PDF:} One PDF file with one plot on each page.
 ##' }
 ##' @details Plot track/trajectory overlays from a list of files in a folder with color coded 
-##'          by the Diffusion Coefficient (Dcoef) of each track/trajectory. The range of Dcoef can be defined. Nuclei backgrounds can be added to the plots.
-##'          Tracks from each file will be plot in one plot, i.e., one plot per file. Colors are flexible.
-##'              
-##'          Upon running of the function, users will be prompted to input the name of the track list (trackll).
-##'          Input un-merged trackll and the plotting will start. 
-##'          The Dcoef is calculated by "static" method, which stabilizes the number of time lags used for fitting using time lag 2~ 5 despite the total time lags measured.
+##' by the Diffusion Coefficient (Dcoef) of each track/trajectory. The range of Dcoef can be defined. Nuclei backgrounds can be added to the plots.
+##' Tracks from each file will be plot in one plot, i.e., one plot per file. Colors are flexible.
+##' 
+##' Upon running of the function, users will be prompted to input the name of the track list (trackll).
+##' Input un-merged trackll and the plotting will start. 
+##' The Dcoef is calculated by "static" method, which stabilizes the number of time lags used for fitting using time lag 2~ 5 despite the total time lags measured.
 ##'
 ##'
 ##' @examples
@@ -67,63 +67,62 @@
 
 ## Function for plotting trajectory overlay with color coded by Dcoef
 .plotTrackOverlay.Dcoef<-function(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
-                          t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
-                          folder=NULL,file.No=0,line.width=0.1){
+                            t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
+                            folder=NULL,file.No=0,line.width=0.1){
 
-  ## Import trackll (un-merged) information
-  if (length(file.No)>1&min(file.No) == 0){
+    ## Import trackll (un-merged) information
+    if (length(file.No)>1&min(file.No) == 0){
     stop("Wrong file.No input. Ceased.",call. = FALSE, domain = NULL)
-  }
-  
-  if(is.null(trackll)){
+    }
+
+    if(is.null(trackll)){
     trackll.label<-readline(cat("Enter the un-merged trackll you want to plot:    "))
     trackll<-get(paste(trackll.label))
-  }
-  
-  if (length(file.No)>=1&file.No[1]>0){
+    }
+
+    if (length(file.No)>=1&file.No[1]>0){
     trackll<-trackll[file.No]
-  }
-  
-  trackll<-filterTrack(trackll,filter=c(min=dt+1,max=Inf))
-  trackll<-filterTrack(trackll,filter=filter)
-  
-  ## Set plot area as black background and white frontground.
-  oldpar <- par
-  par(mar=c(3, 4, 4, 4),xpd=FALSE)
-  
-  par(mfrow=c(1,1),bg="black",fg="white")
-  
-  cat("Plotting...A PDF file will be output in the working directory.\n")
-  
-  ## Read in nuclei background data if the image folder is provided.
-  if(!is.null(folder)){
-    nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
-  }
-  
-  ## Generate color gradient/ramp for trajectory plotting.
-  #cl=grDevices::heat.colors(ceiling(max(Dcoef)-min(Dcoef))*10)
-  #cl=rev(cl)
-  #cl=colorspace::diverge_hsv(max(dense))
-  #cl=colorspace::diverge_hcl(max(dense))
-  cl <- colorRampPalette(color)(n = 101)
-  
-  #Get trackl information in the un-merged trackll and filter by Dcoef range and rsquare.
-  for (i in c(1:length(trackll))){
+    }
+
+    trackll<-filterTrack(trackll,filter=c(min=dt+1,max=Inf))
+    trackll<-filterTrack(trackll,filter=filter)
+
+    ## Set plot area as black background and white frontground.
+    oldpar <- par
+    par(mar=c(3, 4, 4, 4),xpd=FALSE)
+
+    par(mfrow=c(1,1),bg="black",fg="white")
+
+    cat("Plotting...A PDF file will be output in the working directory.\n")
+
+    ## Read in nuclei background data if the image folder is provided.
+    if(!is.null(folder)){
+    nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
+    }
+
+    ## Generate color gradient/ramp for trajectory plotting.
+    #cl=grDevices::heat.colors(ceiling(max(Dcoef)-min(Dcoef))*10)
+    #cl=rev(cl)
+    #cl=colorspace::diverge_hsv(max(dense))
+    #cl=colorspace::diverge_hcl(max(dense))
+    cl <- colorRampPalette(color)(n = 101)
+
+    #Get trackl information in the un-merged trackll and filter by Dcoef range and rsquare.
+    for (i in c(1:length(trackll))){
 
     x=(2:5)*t.interval
     dimension=2
     trackl=list()
     
     for (j in c(1:length(trackll[[i]]))){
-      track=trackll[[i]][[j]]
-      msd.n=msd.track(track, dt=dt, at.dt=F)
-      
-      fit=lm(msd.n[2:5]~x)
-      MSDslope=coefficients(fit)[2]/(2*dimension)
-      Log.D.coef=log(MSDslope)
-      MSDcorr=summary(fit)$r.squared
-      #if((!is.na(Log.D.coef))&(MSDcorr>=rsquare))
-      trackl[[j]]=list(track,Log.D.coef,MSDcorr)
+        track=trackll[[i]][[j]]
+        msd.n=msd.track(track, dt=dt, at.dt=FALSE)
+        fit=lm(msd.n[2:5]~x)
+        MSDslope=coefficients(fit)[2]/(2*dimension)
+        Log.D.coef=log(MSDslope)
+        MSDcorr=summary(fit)$r.squared
+        #if((!is.na(Log.D.coef))&(MSDcorr>=rsquare))
+        trackl[[j]]=list(track,Log.D.coef,MSDcorr)
     }
     #trackl=trackl[-which(sapply(trackl, is.null))]
     
@@ -143,12 +142,12 @@
     plot.new()
     ## If image folder is provided, add nuclei background to the plot.
     if(!is.null(folder)){
-      #library(EBImage)
-      img=EBImage::readImage(nuclei.lst[[i]])
-      d=img@.Data
-      raster.img <- as.raster(t(d[,,1]))
-      plot.window(xlim=c(0,scale),ylim=c(0,scale),xaxs = "i", yaxs = "i")
-      plot(raster.img,add = TRUE)
+        #library(EBImage)
+        img=EBImage::readImage(nuclei.lst[[i]])
+        d=img@.Data
+        raster.img <- as.raster(t(d[,,1]))
+        plot.window(xlim=c(0,scale),ylim=c(0,scale),xaxs = "i", yaxs = "i")
+        plot(raster.img,add = TRUE)
     }
     mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=2,col.main="white") 
     
@@ -160,9 +159,9 @@
     mtext(expression(paste("Y (",mu,"m)")),side=2,line=2,cex.lab=1,col="white")
     box()
     for(k in c(1:length(trackl))){
-      lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*resolution,
+        lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*resolution,
             col=cl[(Dcoef[k]-Dcoef.range[1])/(Dcoef.range[2]-Dcoef.range[1])*100+1],lwd=line.width)
-      
+    
     }
     
     ## Add color gradient legend to the right edge of each plot.
@@ -170,19 +169,18 @@
     
     ## Add parameters and track number (n) as text legend to the topright corner of each plot.
     legend=c(paste("dt = ",dt),as.expression(bquote('Rsquare'>=.(rsquare))), 
-             paste("n = ",length(Dcoef)),paste('Dcoef range [',Dcoef.range[1],",",Dcoef.range[2],"]"))
+                paste("n = ",length(Dcoef)),paste('Dcoef range [',Dcoef.range[1],",",Dcoef.range[2],"]"))
     
     temp <- legend("topright", legend = c(" ", " "," "," "),
-                   text.width = strwidth("Rsquare>=0.8"),
-                   xjust = 1, yjust = 1,bty="n",cex=2)
+                    text.width = strwidth("Rsquare>=0.8"),
+                    xjust = 1, yjust = 1,bty="n",cex=2)
     text(temp$rect$left + temp$rect$w, temp$text$y,
-         legend,col="white",pos = 2,cex=2)
+            legend,col="white",pos = 2,cex=2)
     
-  }
-  
-  ## Reset plotting area parameters.
-  par(oldpar)
-  par(mfrow=c(1,1),bg="white",fg="black")
+    }
+    ## Reset plotting area parameters.
+    par(oldpar)
+    par(mfrow=c(1,1),bg="white",fg="black")
 }
 
 
@@ -190,55 +188,52 @@
 ## Refernce: by Aur?lien. 
 ## From: https://aurelienmadouasse.wordpress.com/2012/01/13/legend-for-a-continuous-color-scale-in-r/
 .legend.col <- function(col, lev){
-  
-  opar <- par
-  
-  n <- length(col)
-  
-  bx <- par("usr")
-  
-  box.cx <- c(bx[2] + (bx[2] - bx[1]) / 1000,
-              bx[2] + (bx[2] - bx[1]) / 1000 + (bx[2] - bx[1]) / 50)
-  box.cy <- c(bx[3], bx[3])
-  box.sy <- (bx[4] - bx[3]) / n
-  
-  xx <- rep(box.cx, each = 2)
-  
-  par(xpd = TRUE)
-  for(i in 1:n){
     
+    opar <- par
+
+    n <- length(col)
+
+    bx <- par("usr")
+
+    box.cx <- c(bx[2] + (bx[2] - bx[1]) / 1000,
+                bx[2] + (bx[2] - bx[1]) / 1000 + (bx[2] - bx[1]) / 50)
+    box.cy <- c(bx[3], bx[3])
+    box.sy <- (bx[4] - bx[3]) / n
+
+    xx <- rep(box.cx, each = 2)
+
+    par(xpd = TRUE)
+    for(i in 1:n){
+
     yy <- c(box.cy[1] + (box.sy * (i - 1)),
             box.cy[1] + (box.sy * (i)),
             box.cy[1] + (box.sy * (i)),
             box.cy[1] + (box.sy * (i - 1)))
     polygon(xx, yy, col = col[i], border = col[i])
     
-  }
-  par(new = TRUE)
-  plot(0, 0, type = "n",
-       ylim = c(min(lev), max(lev)),
-       yaxt = "n", ylab = "",
-       xaxt = "n", xlab = "",
-       frame.plot = FALSE)
-  axis(side = 4, las = 2, tick = FALSE, line = .25,col.axis="white")
-  par (opar)
+    }
+    par(new = TRUE)
+    plot(0, 0, type = "n",
+        ylim = c(min(lev), max(lev)),
+        yaxt = "n", ylab = "",
+        xaxt = "n", xlab = "",
+        frame.plot = FALSE)
+    axis(side = 4, las = 2, tick = FALSE, line = .25,col.axis="white")
+    par (opar)
 }
 
 
 
 ## Function for outputting the plots into one multipage PDF file in the working directory.
 plotTrackOverlay.Dcoef<-function(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
-                         t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
-                         folder=NULL,file.No=0,line.width=0.1){
-  ## Output the plots into one PDF file in the working directory.
-  pdf(paste("plotTrackOverlay.Dcoef.Heatmap--",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
+                            t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
+                            folder=NULL,file.No=0,line.width=0.1){
+    ## Output the plots into one PDF file in the working directory.
+    pdf(paste("plotTrackOverlay.Dcoef.Heatmap--",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
 
-  .plotTrackOverlay.Dcoef(trackll=trackll,scale=scale,dt=dt,filter=filter,resolution=resolution,rsquare=rsquare,
-                  t.interval=t.interval,Dcoef.range=Dcoef.range,color=color, 
-                  folder=folder,file.No=file.No,line.width = line.width)
-  
-  dev.off()
-  
+    .plotTrackOverlay.Dcoef(trackll=trackll,scale=scale,dt=dt,filter=filter,resolution=resolution,rsquare=rsquare,
+                    t.interval=t.interval,Dcoef.range=Dcoef.range,color=color, 
+                    folder=folder,file.No=file.No,line.width = line.width)
+
+    dev.off()
 }
-
-

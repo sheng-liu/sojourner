@@ -3,7 +3,7 @@
 ##------------------------------------------------------------------------------
 ## automate binwidth
 auto.binwidth=function(x){
-    x=x[is.na(x) == F]
+    x=x[is.na(x) == FALSE]
     xrange=range(x)
     nbins=median(c(nclass.Sturges(x),nclass.scott(x),nclass.FD(x)))
     binwidth=(xrange[2]-xrange[1])/nbins
@@ -16,7 +16,6 @@ auto.binwidth=function(x){
 plotHistogram=function(Log.D.coef,binwidth=0.5, method){
     p=reshape2::melt(Log.D.coef)
 
-
     if (method == "static"||method == "percentage"){
 
         colnames(p)=c("Log.D.coef","file.name")
@@ -27,7 +26,7 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
         # overlay histogram and density plot without changing count as y axies
         Dcoef.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
             geom_histogram(aes_string(y = "..count..",fill="file.name"),
-                           binwidth=binwidth,position="dodge")+
+                            binwidth=binwidth,position="dodge")+
 
             # geom_density(aes(y=0.5*..count..,fill=file.name),alpha=0.2)+
             # geom_density(aes(y=binwidth*..count..,fill=file.name),alpha=0.2)+
@@ -35,8 +34,8 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
             theme(legend.title=element_blank())
 
         # add visual aid for actual D.coef
-        xbreaks=scales::cbreaks(range=c(min(p$Log.D.coef,na.rm=T),
-                                max(p$Log.D.coef,na.rm=T)))
+        xbreaks=scales::cbreaks(range=c(min(p$Log.D.coef,na.rm=TRUE),
+                                max(p$Log.D.coef,na.rm=TRUE)))
 
         #xbreaks$labels=paste(xbreaks$breaks,10^(xbreaks$breaks),sep="\n")
 
@@ -56,7 +55,7 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
 
         facet.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
             geom_histogram(aes_string(y = "..count..",fill="file.name"),
-                           binwidth=binwidth,position="dodge")+
+                            binwidth=binwidth,position="dodge")+
 
             # geom_density(aes(y=0.5*..count..,fill=file.name),alpha=0.2)+
             # this dynamic binwidth does not work
@@ -67,13 +66,12 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
 
         merged.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
             geom_histogram(aes_string(y = "..count..",fill="file.name"),
-                           binwidth=binwidth,position="dodge")+
+                            binwidth=binwidth,position="dodge")+
             geom_density(aes_string(y="0.5*..count..",fill="file.name"),alpha=0.2)+
             theme_bw()+
             theme(legend.title=element_blank())
 
         multiplot(facet.plot,merged.plot,cols=2)
-
     }
 }
 ## TODO:
@@ -95,22 +93,22 @@ plotDensity=function(Log.D.coef,binwidth=0.5,method){
         if (is.null(binwidth)) binwidth=auto.binwidth(p$Log.D.coef)
 
         Dcoef.plot=ggplot(p,
-                          aes_string(x="Log.D.coef",
-                              group="file.name",
-                              # col=file.name,
-                              fill="file.name"))+
+                        aes_string(x="Log.D.coef",
+                            group="file.name",
+                            # col=file.name,
+                            fill="file.name"))+
             geom_histogram(aes_string(y = "..density..",fill="file.name"),
-                           colour="white",
-                           binwidth=binwidth,
-                           position="dodge")+
+                            colour="white",
+                            binwidth=binwidth,
+                            position="dodge")+
             geom_density(aes_string(y = "..density..",col="file.name"),alpha = 0.2)+
             theme_bw()+
             theme(legend.title=element_blank())
 
-        xbreaks=scales::cbreaks(range=c(min(p$Log.D.coef,na.rm=T),
-                                        max(p$Log.D.coef,na.rm=T)))
+        xbreaks=scales::cbreaks(range=c(min(p$Log.D.coef,na.rm=TRUE),
+                                        max(p$Log.D.coef,na.rm=TRUE)))
 
-         #xbreaks$labels=paste(xbreaks$breaks,10^(xbreaks$breaks),sep="\n")
+        #xbreaks$labels=paste(xbreaks$breaks,10^(xbreaks$breaks),sep="\n")
 
         lab=paste("(",round(10^(xbreaks$breaks),digits=2),")",sep="")
         xbreaks$labels=paste(xbreaks$breaks,lab,sep="\n")
@@ -130,16 +128,16 @@ plotDensity=function(Log.D.coef,binwidth=0.5,method){
 
         # a perfect case for faceting
         facet.plot=ggplot(p,
-               aes_string(x="Log.D.coef",group="file.name",
-                   col="file.name",fill="file.name"))+
+                aes_string(x="Log.D.coef",group="file.name",
+                    col="file.name",fill="file.name"))+
             geom_density(alpha = 0.2)+
             theme_bw()+
             theme(legend.title=element_blank())+
             facet_grid(window.name ~ .)
 
         merged.plot=ggplot(p,
-               aes_string(x="Log.D.coef",group="file.name",
-                   col="file.name",fill="file.name"))+
+                aes_string(x="Log.D.coef",group="file.name",
+                    col="file.name",fill="file.name"))+
             geom_density(alpha = 0.2)+
             theme_bw()+
             theme(legend.title=element_blank())
@@ -147,11 +145,7 @@ plotDensity=function(Log.D.coef,binwidth=0.5,method){
         ## could also add a merged without 1234
 
         multiplot(facet.plot,merged.plot,cols=2)
-
-
     }
-
-
 }
 
 # ggplot(p,
@@ -173,7 +167,7 @@ plotVariance=function(Log.D.coef,method){
     # when the list have same length, it maybe easier to work with when converted into data.frame
 
     Log.D.coef.df=do.call(rbind.data.frame,Log.D.coef)
-    MEAN=data.frame(apply(Log.D.coef.df,1,mean,na.rm=T))
+    MEAN=data.frame(apply(Log.D.coef.df,1,mean,na.rm=TRUE))
 
     folder=c()
     for (i in 1:dim(MEAN)[1])
@@ -182,7 +176,7 @@ plotVariance=function(Log.D.coef,method){
     colnames(MEAN)=c("mean","folder")
 
 
-    SD=data.frame(apply(Log.D.coef.df,1,sd,na.rm=T))
+    SD=data.frame(apply(Log.D.coef.df,1,sd,na.rm=TRUE))
     colnames(SD)=c("sd")
 
     data=cbind(MEAN,SD)
@@ -242,12 +236,12 @@ plotVariance=function(Log.D.coef,method){
 
 
 
-    # this would have worked if mapply takes na.rm=T
-    # mapply(mean,Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]],na.rm=T)
+    # this would have worked if mapply takes na.rm=TRUE
+    # mapply(mean,Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]],na.rm=TRUE)
 
 
     # or this one
-    # mapply(function(x){mean(x,na.rm=T)},Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]])
+    # mapply(function(x){mean(x,na.rm=TRUE)},Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]])
 
     # this means mapply is not taking the elements of each list into one vector, but used them as seperate
 
@@ -257,15 +251,15 @@ plotVariance=function(Log.D.coef,method){
     #
     #
     #
-    #             apply(C,2,mean,na.rm=T)
+    #             apply(C,2,mean,na.rm=TRUE)
     #             mapply(mean,a,b)
     #
     #             lapply(Log.D.coef[[1]])
     #
     #         }
     #
-    #         mapply(mean,Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]],na.rm=T)
-    #         mapply(function(x){mean(x,na.rm=T)},
+    #         mapply(mean,Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]],na.rm=TRUE)
+    #         mapply(function(x){mean(x,na.rm=TRUE)},
     #                      Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]])
     #
     #         mapply()
@@ -274,8 +268,6 @@ plotVariance=function(Log.D.coef,method){
     #         Log.D.coef=lapply(Log.D.coef,unlist)
 
 }
-
-
 
 ##------------------------------------------------------------------------------
 ## .
@@ -294,7 +286,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
         # ncol: Number of columns of plots
         # nrow: Number of rows needed, calculated from # of cols
         layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                         ncol = cols, nrow = ceiling(numPlots/cols))
+                        ncol = cols, nrow = ceiling(numPlots/cols))
     }
 
     if (numPlots == 1) {
@@ -334,12 +326,11 @@ reorderEM=function(EM){
     colnames(EM$posterior)=sort(colnames(EM$posterior))
 
     return(EM)
-
 }
 
 ## the polygon approach
 ##@export gg.mixEM
-gg.mixEM <- function(EM,binwidth=NULL,reorder=T) {
+gg.mixEM <- function(EM,binwidth=NULL,reorder=TRUE) {
 
     # To make multiple ggmixEM plot have the same color theme,  reorder EM's
     # posterior based on mu (how human eyes specify the order), also reorder
@@ -362,7 +353,7 @@ gg.mixEM <- function(EM,binwidth=NULL,reorder=T) {
 #
 #     }
 
-    if (reorder == T) EM=reorderEM(EM)
+    if (reorder == TRUE) EM=reorderEM(EM)
 
     # reconstruct x, may use sample
     x       <- with(EM,seq(min(x),max(x),len=1000))

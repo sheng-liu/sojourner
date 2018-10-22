@@ -31,11 +31,11 @@
 ## @seealso
 ##' @import ggplot2
 ##' @import utils
-##' @import stats
 ##' @import graphics
 ##' @import grDevices
 ##' @import grid
-
+##' @importFrom stats approx coef coefficients complete.cases sigma dnorm
+##' density deviance lm median nls nls.control qt sd setNames var
 ##' 
 ##' 
 
@@ -77,7 +77,7 @@
 
 ##' @import shiny
 ##' @export sojournerGUI
-
+##' @return launch sojourner
 sojourner=function(){}
 
 sojournerGUI=function(){

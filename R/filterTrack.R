@@ -27,9 +27,9 @@
 ##' }
 
 ##' @details filter is used to filter out tracks that has length within a
-##'   specified range (default 5~Inf); On the other hand, despite the lengths of
-##'   tracks, trimmer is used to trim /cutoff all tracks to a specified range
-##'   (default 1~32).
+##' specified range (default 5~Inf); On the other hand, despite the lengths of
+##' tracks, trimmer is used to trim /cutoff all tracks to a specified range
+##' (default 1~32).
 ##'
 ##'
 ##' @examples
@@ -53,7 +53,8 @@
 ##------------------------------------------------------------------------------
 ## filterTrack
 
-## a function to filter trackll based on specified fitler value (filterTrack on track length), default 6 frames/steps to Inf
+## a function to filter trackll based on specified fitler value 
+## (filterTrack on track length), default 6 frames/steps to Inf
 
 ##' @export filterTrack
 filterTrack=function(trackll,filter=c(min=7,max=Inf)){
@@ -69,16 +70,17 @@ filterTrack=function(trackll,filter=c(min=7,max=Inf)){
     track.len=list()
     for (i in 1:length(trackll)){
         track.len[[i]]=sapply(trackll[[i]],function(track){dim(track)[1]})
-        trackll[[i]]=trackll[[i]][ track.len[[i]]>=filter["min"] & track.len[[i]]<filter["max"] ]
+        trackll[[i]]=trackll[[i]][ track.len[[i]]>=filter["min"] & track.len[[i]]<filter["max"]]
     }
 
     return(trackll)
 }
 
 
-# no need for the focus swtich, as one can simply filter on a number that is bigger than the dt he wanted to draw on
+# no need for the focus swtich, as one can simply filter on a number that is 
+# bigger than the dt he wanted to draw on
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## trim long tracks into shorter ones
 
 .trimTrack=function(track,min=1,max=32){
@@ -102,7 +104,7 @@ trimTrack=function(trackll,trimmer=c(min=1,max=32)){
     names(trackll.trim)=names(trackll)
     for (i in 1:length(trackll)){
         trackll.trim[[i]]=lapply(trackll[[i]],.trimTrack,
-                                 min=trimmer["min"],max=trimmer["max"])
+                            min=trimmer["min"],max=trimmer["max"])
     }
 
     return(trackll.trim)

@@ -43,7 +43,7 @@ trackOverlayData(trackl)
 \item{frame.end}{last frame to plot. Default 500.}
 
 \item{ab.trackll}{absolute coordinates for plotting, generated from
-readDiatrack(folder,ab.track=T).}
+readDiatrack(folder,ab.track=TRUE).}
 
 \item{trackl}{Track list}
 
@@ -88,7 +88,7 @@ in their favor.
 }
 \description{
 Plot track/trajectory from track list. either randomly or
-  specified.
+specified.
 }
 \details{
 \itemize{
@@ -158,9 +158,9 @@ plotMask(track.folder,nrow=1,ncol=1,width=8,height=8)
 folder2=system.file("extdata","SWR1_2",package="sojourner")
 trackll=readDiatrack(folder2)
 
-## use merge=T for per folder comparison, the analsyis result can't be plot
+## use merge=TRUE for per folder comparison, the analsyis result can't be plot
 ##back to original image. To see component tracks on original nuclei image,
-##set merge=F, for per movie analysis.
+##set merge=FALSE, for per movie analysis.
 
 ## compute MSD
 MSD=msd(trackll=trackll,plot=TRUE)
@@ -172,11 +172,11 @@ dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
 ## fit normal distribution to define component
 ## set seed to reproduce results (see fitNormalDistr() for details on seed)
 fit=fitNormDistr(
-      dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
+    dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
 
 ## select component tracks based on fitting
 trackll.sel=selComponentTracks(trackll,
-      fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
+    fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 
 ## plot component tracks
 plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)

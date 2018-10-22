@@ -10,6 +10,9 @@
 sojourner()
 sojournerGUI()
 }
+\value{
+launch sojourner
+}
 \description{
 simple analysis on single molecule tracking data using parameters based on mean square displacement (MSD).
 }

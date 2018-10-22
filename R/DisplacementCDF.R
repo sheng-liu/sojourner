@@ -10,11 +10,11 @@
 ##' @docType methods
 ##'
 ##' @description calculate cumulative distribution function of all displacement
-##'   for individual trajectories.
+##' for individual trajectories.
 
 ##' @usage 
-##' displacementCDF(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F)
-##' displacement.trackll(trackll,dt=1,resolution=0.107,bivar=F)
+##' displacementCDF(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,bivar=FALSE)
+##' displacement.trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
 
 
 ##' @param dt Time intervals.
@@ -24,11 +24,11 @@
 ##'   detail.
 ##' @param output An logical indicate if output should be generated. See Values
 ##'   for detail.
-##' @param bivar bivar=F, view displacement r as single variable; bivar=T, view
+##' @param bivar bivar=FALSE, view displacement r as single variable; bivar=TRUE, view
 ##'   x,y as bivarate. Default value F.
 ##' @details The cumulative radial distribution function, P(r, i*dt), is the
-##'   probability of finding the diffusing particle within a radius r from the
-##'   origin at time lag i*dt:
+##' probability of finding the diffusing particle within a radius r from the
+##' origin at time lag i*dt:
 ##'
 ##' P(r,i*dt) = 1 - e^(-r^2/4*D*(i*dt))
 ##'
@@ -84,13 +84,13 @@
 ## displacement.track
 ## displacement for a single data.frame
 ##@export displacement.track
-displacement.track=function(track,dt=1,resolution=0.107,bivar=F){
+displacement.track=function(track,dt=1,resolution=0.107,bivar=FALSE){
 
     # validity check for dt less than track length
     if (dt >(dim(track)[1]-1)){
         stop("\ntrack length:\t",dim(track)[1],
-             "\ndt:\t\t",dt,
-             "\nTime interval (dt) greater than track length-1\n")
+            "\ndt:\t\t",dt,
+            "\nTime interval (dt) greater than track length-1\n")
     }
     # instead of stop, calculate the maximum steps
     # cat("Time interval (dt) greater than track length-1, calculating the
@@ -118,7 +118,7 @@ displacement.track=function(track,dt=1,resolution=0.107,bivar=F){
         # pull all the displacement at this dt together
         # displacement=do.call(rbind,track.disp)$displacement
 
-        if(bivar == T){
+        if(bivar == TRUE){
 
             # get the displacement at that dt
             # FIX: this appears no use in this calculation, as it is not returned in anyway
@@ -156,14 +156,14 @@ displacement.track=function(track,dt=1,resolution=0.107,bivar=F){
 ## calculate displacement for a list of data.frame
 
 ## calculate displacement.track for trackl (list of data.frame) one level
-displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=F){
+displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
 
     # validity check for max track length greater than dt
     track.len=sapply(trackl,function(x) dim(x)[1])
     if (dt>(max(track.len)-1)) {
         stop("\nmax track length:\t",max(track.len),
-             "\ndt:\t\t\t",dt,
-             "\nTime interval (dt) greater than max track length-1\n")
+            "\ndt:\t\t\t",dt,
+            "\nTime interval (dt) greater than max track length-1\n")
     }
 
     # subset trackl for each dt
@@ -197,7 +197,7 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=F){
 
             displacement.individual=sapply(trackl.dt,function(x){
                 displacement.track(
-                    track=x,dt=i,resolution=resolution,bivar=bivar)},simplify = F)
+                    track=x,dt=i,resolution=resolution,bivar=bivar)},simplify = FALSE)
         
 
         # as the result is of different length, the output is a list
@@ -210,11 +210,11 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=F){
         N=length(displacement.individual)
         for ( i in 1:N){
             displacement.summarized[i]=list(sapply(
-                displacement.individual[[i]],mean,na.rm=T,simplify=F))
+                displacement.individual[[i]],mean,na.rm=TRUE,simplify=FALSE))
 
             std.summarized[i]=list(sapply(
-        #displacement.individual[[i]],function(x){sd(x)/N},na.rm=T,simplify=F))
-            displacement.individual[[i]],sd,na.rm=T,simplify=F))
+        #displacement.individual[[i]],function(x){sd(x)/N},na.rm=TRUE,simplify=FALSE))
+            displacement.individual[[i]],sd,na.rm=TRUE,simplify=FALSE))
         }
 
         names(displacement.summarized)=names(displacement.individual)
@@ -234,7 +234,7 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=F){
 ##------------------------------------------------------------------------------
 ## displacement.trackll
 ##'@export displacement.trackll
-displacement.trackll=function(trackll,dt=1,resolution=0.107,bivar=F){
+displacement.trackll=function(trackll,dt=1,resolution=0.107,bivar=FALSE){
 
 
     displacement.trackll.lst=lapply(trackll,function(x){
@@ -255,7 +255,7 @@ displacement.trackll=function(trackll,dt=1,resolution=0.107,bivar=F){
 # the screen output, or NumTracksAtDt of displacement.trackll to decide the dt
 # that suits.
 
-displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
+displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,bivar=FALSE){
     dp=displacement.trackll(trackll,dt=dt,resolution=resolution,bivar=bivar)
 
     # take "InidvidualDisplacement" out
@@ -282,7 +282,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
     for ( i in 1:length(dp)){
         # InidvidualDisplacement[[i]][[1]] # the [[1]] is to move it one level
         # off "IndividualDisplacement"
-        if (bivar == F){
+        if (bivar == FALSE){
             dp.dt[[i]]=lapply(InidvidualDisplacement[[i]][[1]],function(x){
                 x[dt]})
             }else{
@@ -302,7 +302,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
             labs(x="Displacement (um)",y="CDF")+
             theme_classic()+
             theme(legend.title=element_blank())
-        # can use stat_ecdf(pad=F) to remove first -Inf and Inf dded on x in
+        # can use stat_ecdf(pad=FALSE) to remove first -Inf and Inf dded on x in
         # ggplot2::stat_cdf, however it seems not working in current version
         # ggplot2 2.1.10, remove it manually in "preprocessing of data for
         # output"
@@ -319,8 +319,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
         #     theme(legend.title=element_blank())
         
         # normalized PDF using ..scaled..
-   
-            
+        
         # extrapolate
             # ggplot(p,aes(x=value,y=..scaled..,colour=L1))+
             # stat_density(position="identity",adjust=2,fill=NA)+
@@ -332,12 +331,12 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
             ggplot(p,aes_string(x="value",y="..scaled..",colour="L1"))+
                 stat_density(position="identity",adjust=2,fill=NA)+
                 scale_x_continuous(trans="log10",limits = c(-2,0.5),
-                                   breaks=scales::pretty_breaks(n=5))+
+                                    breaks=scales::pretty_breaks(n=5))+
                 annotation_logticks(sides="b")+
                 labs(x="Displacement (um)",y="Density")+
                 theme_classic()+
                 theme(legend.title=element_blank())
-        
+
         # plot normal distribution and cumulative normal distribution
         # histogram=ggplot(p,aes(x=value,group=L1,colour=L1))+
         #     stat_function(fun = dnorm,args=list())+xlim(-4,4)+
@@ -351,7 +350,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
         #     theme_classic()+
         #     theme(legend.title=element_blank())
     
-        if (plot == T){
+        if (plot == TRUE){
         multiplot(ecdf,histogram,cols=1)
     }
 
@@ -382,12 +381,9 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
 
     # format output by removing group column and renaming x,y column
     CDF.displacement=lapply(CDF.displacement,function(x) {
-
         x$group=NULL
         names(x)=c("CDF","UniqueDisplacement")
         return(x)})
-
-
 
     for (i in 1:length(stepwise.displacement)){
         stepwise.displacement[[i]]["L2"]=NULL
@@ -395,33 +391,29 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F){
             "stepwiseDisplacement","trackIndex")
     }
 
-    if (output == T){
-
+    if (output == TRUE){
         for (i in 1:length(stepwise.displacement)){
             fileName=paste("stepwiseDisplacement-",
-                           .timeStamp(file.name[i]),"....csv",sep="")
+                            .timeStamp(file.name[i]),"....csv",sep="")
             cat("\nOutput stepwiseDisplacement for",file.name[i],"\n")
-            write.csv(file=fileName,stepwise.displacement[[i]],row.names = F)
+            write.csv(file=fileName,stepwise.displacement[[i]],row.names = FALSE)
         }
 
         for (i in 1:length(CDF.displacement)){
             fileName=paste("CDFDisplacement-",
-                           .timeStamp(file.name[i]),"....csv",sep="")
+                            .timeStamp(file.name[i]),"....csv",sep="")
             cat("\nOutput CDFDisplacement for",file.name[i],"\n")
-            write.csv(file=fileName,CDF.displacement[[i]],row.names = F)
+            write.csv(file=fileName,CDF.displacement[[i]],row.names = FALSE)
         }
-
     }
 
     output.lst=list(stepwise.displacement,CDF.displacement)
     names(output.lst)=c("stepwise.displacement","CDF.displacement")
 
-
     return(output.lst)
-
 }
 
-## -----
+## -------------------------------------------------------------------------
 
 # DONE: output dat V DONE: base:ecdf 1228 seems to be more accurate as
 # ggplot2::stat_ecdf also have two outside values, one is negative at zero, the

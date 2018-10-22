@@ -6,8 +6,8 @@
 \alias{.readSlimFast}
 \title{readSlimFast}
 \usage{
-readSlimFast(folder, ab.track = F, cores = 1, frameRecord = T)
-.readSlimFast(file, interact = F,  ab.track = F, frameRecord = F)
+readSlimFast(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
+.readSlimFast(file, interact = FALSE,  ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
 \item{file}{Full path to Diatrack .mat session file.}
@@ -21,6 +21,9 @@ readSlimFast(folder, ab.track = F, cores = 1, frameRecord = T)
 \item{folder}{Full path to SlimFast .txt files output folder.}
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
+}
+\value{
+trackll
 }
 \description{
 take in a SlimFast .txt session file as input, along with several other user-configurable parameters and output options, to return a track list of all the trajectories

@@ -19,7 +19,7 @@
 ##' @param ab.track Use absolute coordinates for tracks.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.
-
+##' @return trackll data (list of lists containing dataframes of tracks)
 ##' @details
 ##' 
 ##' (Note: When reading only Diatrack .mat sessipn files (input = 2), intensities will be saved after the frame column)
@@ -36,9 +36,9 @@
 ##' This error will not affect the trackll output, but to avoid it, one can input one less than the maximum number of cores available.
 ##'
 ##' The naming scheme for the list of track list is as follows:
-##'  
+##' 
 ##' Track List: [full name of input file]
-##'  
+##' 
 ##' Track: [Last five characters of the file name].[Start frame].[Length].[Track].[Index in overall list (will differ from Track # when merging)]
 ##' 
 ##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")

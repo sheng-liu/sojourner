@@ -12,6 +12,9 @@ mergeTracks(folder, trackll)
 
 \item{trackll}{A list of track lists.}
 }
+\value{
+modified trackll
+}
 \description{
 merge track lists in a list into one
 }

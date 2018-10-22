@@ -42,16 +42,16 @@ color=c("blue", "white", "red"),folder=NULL,file.No=0,line.width=0.1)
 }
 \description{
 Plot track/trajectory overlays from a list of files in a folder with color coded 
-             by the Diffusion Coefficient (Dcoef) of each track/trajectory.
+by the Diffusion Coefficient (Dcoef) of each track/trajectory.
 }
 \details{
 Plot track/trajectory overlays from a list of files in a folder with color coded 
-         by the Diffusion Coefficient (Dcoef) of each track/trajectory. The range of Dcoef can be defined. Nuclei backgrounds can be added to the plots.
-         Tracks from each file will be plot in one plot, i.e., one plot per file. Colors are flexible.
-             
-         Upon running of the function, users will be prompted to input the name of the track list (trackll).
-         Input un-merged trackll and the plotting will start. 
-         The Dcoef is calculated by "static" method, which stabilizes the number of time lags used for fitting using time lag 2~ 5 despite the total time lags measured.
+by the Diffusion Coefficient (Dcoef) of each track/trajectory. The range of Dcoef can be defined. Nuclei backgrounds can be added to the plots.
+Tracks from each file will be plot in one plot, i.e., one plot per file. Colors are flexible.
+
+Upon running of the function, users will be prompted to input the name of the track list (trackll).
+Input un-merged trackll and the plotting will start. 
+The Dcoef is calculated by "static" method, which stabilizes the number of time lags used for fitting using time lag 2~ 5 despite the total time lags measured.
 }
 \examples{
 

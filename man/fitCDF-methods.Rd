@@ -11,11 +11,11 @@ fitCDF(cdf, components=c("one","two","three"),
             oneCompFit=list(D=c(0,2)),
             twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
             threeCompFit=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
-                              alpha=c(0,1),beta=c(0,1))),
+                            alpha=c(0,1),beta=c(0,1))),
         t.interval=0.01,
         maxiter.search=1000,
         maxiter.optim=1000,
-        output=F,
+        output=FALSE,
         seed=NULL)
 }
 \arguments{
@@ -33,7 +33,7 @@ fitCDF(cdf, components=c("one","two","three"),
 
 \item{output}{Logical indicaring if output file should be generated.}
 
-\item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=T.}
+\item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=TRUE.}
 }
 \value{
 \itemize{
@@ -43,7 +43,7 @@ fitCDF(cdf, components=c("one","two","three"),
 }
 \description{
 Caclulate apparent diffusion coefficient (Dcoef) for
-  trajecotries by fitting displacementCDF.
+trajecotries by fitting displacementCDF.
 }
 \details{
 calculating Dceof by fitting displacementCDF.
@@ -60,7 +60,7 @@ cdf=displacementCDF(trackll,dt=1,plot=FALSE,output=FALSE)
 
 # specify ranges of parameter value of interest
 fitCDF(cdf,components="two",
-      start=list(
+    start=list(
                 twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)))
                 )
 

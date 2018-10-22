@@ -10,9 +10,9 @@
 ##' @docType methods
 ##' 
 ##' @description compare folders with Diatrack output files. merge track files
-##'   in each folder into one item of a track list. This list can then be fed
-##'   into other functions for comparison. It keeps folder information as names
-##'   of the resulting list.
+##' in each folder into one item of a track list. This list can then be fed
+##' into other functions for comparison. It keeps folder information as names
+##' of the resulting list.
 
 ##' @usage compareFolder(folders,input=1,ab.track=F,cores=1)
 ##' @param folders a vector storing paths to the folders location."..."
@@ -62,7 +62,7 @@ compareFolder=function(folders, input=1, ab.track=FALSE,cores=1){
             sample.list[i] = mergeTracks(
                 folder=folder.list[[i]], 
                 createTrackll(folder=folder.list[[i]],input = input, 
-                              ab.track=TRUE,cores=cores))
+                            ab.track=TRUE,cores=cores))
             cat("\n...\n") # seperator makes ouput clearer
             names(sample.list)[i]=names(folder.list)[i]
         }
@@ -74,7 +74,7 @@ compareFolder=function(folders, input=1, ab.track=FALSE,cores=1){
             sample.list[i] = mergeTracks(
                 folder=folder.list[[i]], 
                 createTrackll(folder=folder.list[[i]],
-                              input = input, ab.track=FALSE,cores=cores))
+                            input = input, ab.track=FALSE,cores=cores))
             cat("\n...\n") # seperator makes ouput clearer
             names(sample.list)[i]=names(folder.list)[i]
         }

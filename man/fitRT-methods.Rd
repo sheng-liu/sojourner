@@ -31,8 +31,8 @@ maxiter.optim=1e3,k.ns=FALSE)
 }
 }
 \description{
-Caclulate average residence time for trajecotries by 
-             fitting 1-CDF (survival distribution).
+Caclulate average residence time for trajecotries by  
+fitting 1-CDF (survival distribution).
 }
 \details{
 Calculating average residence time of particles by fitting 1-CDF (survival distribution) of its trajectorys.

@@ -57,7 +57,7 @@ squareDisp=function(track,dt=1,resolution=0.107){
     # validity check, stop if dt greater than track length
     if (dt >(dim(track)[1]-1)){
         stop("\ntrack length:\t",dim(track)[1],"\ndt:\t\t",dt,
-             "\nTime interval (dt) greater than track length-1\n")}
+                "\nTime interval (dt) greater than track length-1\n")}
 
     # store dt-wise sub tracks into a list
     track.dt=list()

@@ -12,7 +12,7 @@
 ##' proportions of each components.
 ##'
 ##' @usage
-##' getCI(bootstrap.result,confidence=0.95,output=F)
+##' getCI(bootstrap.result,confidence=0.95,output=FALSE)
 ##' @param bootstrap.result diffusion coefficient calculated from Dcoef().
 ##' @param confidence the level of confidence that is used to calculate the
 ##' confidence interval.
@@ -60,7 +60,7 @@
 }
 
 ##' @export getCI
-getCI=function(bootstrap.result, confidence=0.95, output=F){
+getCI=function(bootstrap.result, confidence=0.95, output=FALSE){
     inputNames = names(bootstrap.result$Fit)
     ciList = list()
     #get fit component
@@ -105,7 +105,7 @@ getCI=function(bootstrap.result, confidence=0.95, output=F){
                 )
             )
             proportionnames = c(proportionnames, paste(j, "-ProportionCI", sep =
-                                                           ""))
+                                                            ""))
         }
         
         #add column/row names to the dataframe and add the dataframe to list
@@ -116,10 +116,10 @@ getCI=function(bootstrap.result, confidence=0.95, output=F){
     
     names(ciList) = inputNames
     #output .csv file has similar format as that of fitNormDistr
-    if (output == T){
+    if (output == TRUE){
         whole.df = data.frame()
         fileName=paste("ConfidenceInterval-",
-                       .timeStamp(paste(names(ciList),sep = "")),".csv",sep="")
+                        .timeStamp(paste(names(ciList),sep = "")),".csv",sep="")
         for (i in 1:length(ciList)){
             single.df = data.frame(ciList[[i]])
             rownames(single.df) = paste(inputNames[[i]],rownames(single.df), sep = ".")

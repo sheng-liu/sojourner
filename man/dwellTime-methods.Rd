@@ -6,7 +6,7 @@
 \alias{.dwellTime}
 \title{dwellTime}
 \usage{
-dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=F)
+dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=FALSE)
 }
 \arguments{
 \item{t.interval}{t.interval time, default = 10ms.}
@@ -21,7 +21,7 @@ dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=F)
 }
 \value{
 \itemize{
-\item{dwell time list} A list of dwell time for every trajectory, separated by file names of the trajectory file in Diatrack file folder. If combined dewell time is intended, use readDiatrack(folder, merge=T) to generate a single length list, then apply this function.
+\item{dwell time list} A list of dwell time for every trajectory, separated by file names of the trajectory file in Diatrack file folder. If combined dewell time is intended, use readDiatrack(folder, merge=TRUE) to generate a single length list, then apply this function.
 \item{PDF} dwell time frequency plot in PDF format, when plot = TRUE.
 \item{csv} dwell time output in csv format, when output = TRUE.
 }

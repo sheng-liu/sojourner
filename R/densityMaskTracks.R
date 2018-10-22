@@ -11,7 +11,7 @@
 ##' @description mask track lists and lists of track lists using kernel density clusters
 
 ##' @usage 
-##' densityMaskTracks(trackll, scale = 128, removeEdge = F, separate = F, buildModel = F)
+##' densityMaskTracks(trackll, scale = 128, removeEdge = FALSE, separate = FALSE, buildModel = FALSE)
 ##' plotLines(trackll, scale = 128)
 ##' plotPoints(trackll, scale = 128)
 ##' 
@@ -20,14 +20,14 @@
 ##' @param removeEdge Remove edge clusters with incomplete contour lines/ploygons
 ##' @param separate Separate by cluster
 ##' @param buildModel Manually configure the kernel density probability (p), while continuously building a model. T to create a model or improve an existing model. F to load in a MODEL.csv for automatic masking.
-
+##' @return masked trackll
 ##' @details
 ##' 
 ##' This algorithm relies on one parameter, the kernel density probability (p),
 ##' to mask track lists. Following, describes a method to optimize a workflow to
 ##' predict p actively.
 ##' 
-##' When densityMaskTracks() is called with buildModel = T, it will repeatedly
+##' When densityMaskTracks() is called with buildModel = TRUE, it will repeatedly
 ##' ask the user for the kernel density probability (p) and the number of
 ##' smallest clusters to elimnate. The kernel density probability (p) is a
 ##' factor that determines how dense the cluster contours are. Low p creates
@@ -37,7 +37,7 @@
 ##' clusters are too small to see). Manual input will get progressively easier
 ##' after 3 data points as the model is continuously being improved and applied.
 ##' Building the model will create a MODEL.csv in the working directory that can
-##' be used to mask automatically if buildModel = F (this will look for one
+##' be used to mask automatically if buildModel = FALSE (this will look for one
 ##' MODEL.csv in the working directory).
 ##' 
 ##' The separate parameter allows users to separate each track list from one
@@ -106,7 +106,7 @@
 ##' # specifying p value when prompted by the command.
 ##'
 ##' # This is an example of masking model building process
-##'  
+##' 
 ##' # Masking mage6 ...
 ##' # No initial model read. If desired, ensure there is one file ending in
 ##' # MODEL.csv in working directory.
@@ -131,7 +131,7 @@
 ##'
 ##' # now one can used this modified Model.csv to process data that was not
 ##' # masked well using default model by simply putting Model.csv in the working
-##' # directory and set buildModel=F
+##' # directory and set buildModel=FALSE
 ##' ###trackll.masked2 <- densityMaskTracks(trackll, buildModel = FALSE)
 ##' ###plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up) model
 ##' ###plotTrackOverlay(trackll.masked2) # masked using provided (lossen up) model without building it
@@ -168,7 +168,7 @@ kernelDensity = function (track.list, scale = 128){
 
 #Returns binary mask and plots
 
-createMask = function (track.list, scale = 128, kernel.density, p = NULL, eliminate = NULL, plot = T, separate = F, removeEdge = F){
+createMask = function (track.list, scale = 128, kernel.density, p = NULL, eliminate = NULL, plot = TRUE, separate = FALSE, removeEdge = FALSE){
     #Store all merged track coordinate points into a dataframe
     df <- mergeAllPoints(track.list)
     
@@ -246,7 +246,7 @@ createMask = function (track.list, scale = 128, kernel.density, p = NULL, elimin
     if(plot){
         title = paste(getTrackFileName(track.list),"Mask with Kernel Density Probability (p) of", round(p, digits = 3), sep = " ");
         plot(df[[2]] ~ df[[1]], col=df$region, data=df, xlim = c(0, scale), ylim = c(0, scale), xlab = "x (Pixels)", ylab = "y (Pixels)", main = title, cex = .1)
-        contour(kernel.density, levels=levels, labels=prob, add=T)
+        contour(kernel.density, levels=levels, labels=prob, add=TRUE)
     }
     cat("\n", length(ls), "clusters.", getTrackFileName(track.list), "masked at kernel density probability =", round(p, digits = 3), ", eliminate =", eliminate, "\n")
     
@@ -305,7 +305,7 @@ mergeAllPoints = function(track.list){
 
 #### .densityMaskTracks ###
 
-.densityMaskTracks = function (track.list, scale = 128, removeEdge = F, separate = F, buildModel = F){
+.densityMaskTracks = function (track.list, scale = 128, removeEdge = FALSE, separate = FALSE, buildModel = FALSE){
     
     #Initial confirmation
     track.name = getTrackFileName(track.list)
@@ -323,7 +323,7 @@ mergeAllPoints = function(track.list){
     #Find initial model
     model.fit = NULL
     model = NULL;
-    model.file = list.files(path=getwd(),pattern="MODEL.csv",full.names=T, ignore.case = T)
+    model.file = list.files(path=getwd(),pattern="MODEL.csv",full.names=TRUE, ignore.case = TRUE)
     if (length(model.file) != 1){
         cat("\nNo initial model read. If desired, ensure there is one file ending in MODEL.csv in working directory.\n")
         p = 0.5;
@@ -410,9 +410,9 @@ mergeAllPoints = function(track.list){
         #Create new MODEL.csv or append new model accordingly
         if (is.null(model)){
             cat("\nNew MODEL.csv created.\n")
-            write.table(new.model, file = "MODEL.csv", sep = ",", row.names = F);
+            write.table(new.model, file = "MODEL.csv", sep = ",", row.names = FALSE);
         } else {
-            write.table(new.model, file = basename(model.file), sep = ",", append = T, col.names = F, row.names = F);
+            write.table(new.model, file = basename(model.file), sep = ",", append = TRUE, col.names = FALSE, row.names = FALSE);
             cat(paste("\nData point added to ", basename(model.file), ".\n", sep = ""))
         }
     }
@@ -446,7 +446,7 @@ mergeAllPoints = function(track.list){
 
 #### densityMaskTracks ####
 
-densityMaskTracks = function (trackll, scale = 128, removeEdge = F, separate = F, buildModel = F){
+densityMaskTracks = function (trackll, scale = 128, removeEdge = FALSE, separate = FALSE, buildModel = FALSE){
     
     #Instantiate empty list
     masked.trackll <- list()

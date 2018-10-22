@@ -21,6 +21,9 @@ linkSkippedFrames(trackll, tolerance, maxSkip, cores = 1)
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
 }
+\value{
+linked trackll
+}
 \description{
 link trajectories skipped (or do not appear for) a number of frames
 }
@@ -36,7 +39,7 @@ The naming scheme for each linked track is as follows:
 [Last five characters of the file name].[Start frame #].[Length].[Track #].[# of links]
 
 Track List: [full name of input file]
- 
+
 Track: [Last five characters of the file name].[Start frame].[Length].[Track].[# of links].[Index in overall list (will differ from Track # when merging)]
 
 (Note: The last five characters of the file name, excluding the extension, cannot contain ".")

@@ -5,7 +5,7 @@
 \alias{createTrackll}
 \title{createTrackll}
 \usage{
-createTrackll(folder, interact = F, input = 1, ab.track = F, cores = 1, frameRecord = T)
+createTrackll(folder, interact = FALSE, input = 1, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 }
 \arguments{
 \item{folder}{Full path output file folder (if they are .txt, ensure that they are either all Diatrack or all SlimFast).}
@@ -19,6 +19,9 @@ createTrackll(folder, interact = F, input = 1, ab.track = F, cores = 1, frameRec
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
 
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.}
+}
+\value{
+trackll data (list of lists containing dataframes of tracks)
 }
 \description{
 take in Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or Utrack (.mat) input from a folder to output a list of track lists with the option to record frames and use multiple cores.
@@ -38,9 +41,9 @@ This error is due to the requirement of some systems to have one core open for s
 This error will not affect the trackll output, but to avoid it, one can input one less than the maximum number of cores available.
 
 The naming scheme for the list of track list is as follows:
- 
+
 Track List: [full name of input file]
- 
+
 Track: [Last five characters of the file name].[Start frame].[Length].[Track].[Index in overall list (will differ from Track # when merging)]
 
 (Note: The last five characters of the file name, excluding the extension, cannot contain ".")

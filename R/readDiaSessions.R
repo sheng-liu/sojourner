@@ -9,11 +9,10 @@
 ##' @docType methods
 
 ##' @description take in a Diatrack .mat session file as input, along with several other user-configurable parameters and output options, to return a track list of all the trajectories found in the session file
-                                         
-##' @usage 
-##' readDiaSessions(folder, ab.track = F, cores = 1, frameRecord = T)
+##' @usage
+##' readDiaSessions(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 ##' 
-##' .readDiaSessions(file, interact = F, ab.track = F, frameRecord = F)
+##' .readDiaSessions(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 
 ##' @param folder Full path to Diatrack .mat session files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
@@ -21,7 +20,7 @@
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
 ##' @param file Full path to Diatrack .mat session file.
 ##' @param interact Open menu to interactively choose file.
-
+##' @return trackll
 ##' @details
 ##' The naming scheme for each track is as follows:
 ##' 
@@ -37,7 +36,7 @@
 ##' trackll <- readDiaSessions(folder=hsf_folder, cores = 2)
 ##' 
 ##' #Basic function call of .readDiaSessions
-##' #trackl <- .readDiaSessions(interact = T)
+##' #trackl <- .readDiaSessions(interact = TRUE)
 
 ##' @export .readDiaSessions
 ##' @export readDiaSessions
@@ -70,7 +69,7 @@
 #install.packages("R.matlab")
 #library(R.matlab)
 
-.readDiaSessions = function(file, interact = F, ab.track = F, frameRecord = F){
+.readDiaSessions = function(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE){
     
     #Interactively open window
     if (interact == TRUE) {
@@ -213,14 +212,14 @@
 
 #### readDiaSessions ####
 
-readDiaSessions = function(folder, ab.track = F, cores = 1, frameRecord = T){
+readDiaSessions = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
     
     trackll = list()
     track.holder = c()
     
     # getting a file list of Diatrack files in a directory
-    file.list = list.files(path = folder, pattern = ".mat", full.names = T)
-    file.name = list.files(path = folder, pattern = ".mat", full.names = F)
+    file.list = list.files(path = folder, pattern = ".mat", full.names = TRUE)
+    file.name = list.files(path = folder, pattern = ".mat", full.names = FALSE)
     folder.name=basename(folder)
     
     
@@ -229,7 +228,7 @@ readDiaSessions = function(folder, ab.track = F, cores = 1, frameRecord = T){
     # first level list of file names and
     # second level list of data.frames
     
-    max.cores = parallel::detectCores(logical=T)
+    max.cores = parallel::detectCores(logical=TRUE)
     
     if (cores == 1){
         

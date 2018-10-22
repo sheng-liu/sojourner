@@ -10,9 +10,9 @@
 ##'
 ##' @description read output file (tracks/trajecotries) from Diatrack.
 ##' @usage
-##' readDiatrack(folder, ab.track = F, cores = 1, frameRecord = T)
+##' readDiatrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 ##'
-##' .readDiatrack(file, interact = F, ab.track = F, frameRecord = F)
+##' .readDiatrack(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 ##'
 ##'
 ## @method # this roxygen directive does not working
@@ -22,7 +22,7 @@
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
 ##' @param file Full path to Diatrack .mat session file.
 ##' @param interact Open menu to interactively choose file.
-
+##' @return trackll 
 ##' @examples
 ##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=readDiatrack(folder)
@@ -52,10 +52,10 @@
 ## .readDiatrack
 ## a function to read one diatrack txt file and returns a list of tracks
 
-.readDiatrack=function(file, interact=F,ab.track=F, frameRecord = F){
+.readDiatrack=function(file, interact=FALSE,ab.track=FALSE, frameRecord = FALSE){
 
     # interactively open window
-    if (interact == T) {
+    if (interact == TRUE) {
         file=file.choose()
     }
 
@@ -63,7 +63,7 @@
     cat("\nReading Diatrack file: ",file.name,"...\n")
 
     ## skip the first 'comment line'
-    data=read.table(file=file, header=F, skip=1)
+    data=read.table(file=file, header=FALSE, skip=1)
 
     ## read in frame number line (for future use)
     frame.num=data[1,]
@@ -73,7 +73,7 @@
 
 
     # frame.id
-    frame.num.mx=matrix(frame.num,ncol=3,nrow=length(frame.num)/3,byrow=T)
+    frame.num.mx=matrix(frame.num,ncol=3,nrow=length(frame.num)/3,byrow=TRUE)
     frame.id=unlist(frame.num.mx[,1])
 
     ## process the data
@@ -121,7 +121,7 @@
 
 
     # frame.id
-    frame.num.mx=matrix(frame.num,ncol=3,nrow=length(frame.num)/3,byrow=T)
+    frame.num.mx=matrix(frame.num,ncol=3,nrow=length(frame.num)/3,byrow=TRUE)
     frame.id=unlist(frame.num.mx[,1])
 
     # duration
@@ -132,8 +132,8 @@
 
     # file.id
     file.subname=substr(file.name,
-           start=nchar(file.name)-8,
-           stop=nchar(file.name)-4)
+            start=nchar(file.name)-8,
+            stop=nchar(file.name)-4)
 
     file.id=rep(file.subname,length(duration))
 
@@ -150,7 +150,7 @@
 
     cat("\n", file.subname, "read and processed.\n")
 
-    if (ab.track == T) return(ab.track.list) else return(track.list)
+    if (ab.track == TRUE) return(ab.track.list) else return(track.list)
 
 }
 
@@ -162,15 +162,15 @@
 # correspondingly. as it is read into two list, file.list, and mask.list. there
 # is not direct comparison of file name function add in yet in v0.3.4
 
-readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
+readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
 
 
     trackll=list()
     track.holder=c()######MERGING
 
     # getting a file list of Diatrack files in a directory
-    file.list=list.files(path=folder,pattern=".txt",full.names=T)
-    file.name=list.files(path=folder,pattern=".txt",full.names=F)
+    file.list=list.files(path=folder,pattern=".txt",full.names=TRUE)
+    file.name=list.files(path=folder,pattern=".txt",full.names=FALSE)
     folder.name=basename(folder)
 
 
@@ -179,7 +179,7 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
     # first level list of file names and
     # second level list of data.frames
 
-    max.cores=parallel::detectCores(logical=T)
+    max.cores=parallel::detectCores(logical=TRUE)
 
     if (cores == 1){
 
@@ -238,7 +238,7 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
     }
 
     # cleaning tracks by image mask
-    #if (mask == T){
+    #if (mask == TRUE){
     #    trackll=maskTracks(folder = folder, trackll=trackll)
     #}
 
@@ -246,7 +246,7 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
     # merge has to be done after mask
 
     #Merge start##########################################################################################
-    # if (merge == T){
+    # if (merge == TRUE){
     #     for (i in 1:length(file.list)){
     #         trackll[[i]]=track[[i]]
     #         names(trackll)[i]=file.name[i]
@@ -255,20 +255,20 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
     #Merge end##########################################################################################
 
     # trackll naming scheme
-    # if merge == F, list takes the name of individual file name within folder
+    # if merge == FALSE, list takes the name of individual file name within folder
     # file.name > data.frame.name
-    # if merge == T, list takes the folder name
+    # if merge == TRUE, list takes the folder name
     # folder.name > data.frame.name
     
     # merge masked tracks
     # merge has to be done after mask
     #Mask start##########################################################################################
-    #if (merge == T){
+    #if (merge == TRUE){
 
         # trackll naming scheme
-        # if merge == F, list takes the name of individual file name within folder
+        # if merge == FALSE, list takes the name of individual file name within folder
         # file.name > data.frame.name
-        # if merge == T, list takes the folder name
+        # if merge == TRUE, list takes the folder name
         # folder.name > data.frame.name
 
         # concatenate track list into one list of data.frames
@@ -288,14 +288,14 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
         # add indexPerTrackll to track name
         #indexPerTrackll=1:length(track.holder)
         #names(track.holder)=mapply(paste,Index,
-                                   #indexPerTrackll,sep=".")
+                                    #indexPerTrackll,sep=".")
 
         # make the result a list of list with length 1
         #trackll=list()
         #trackll[[1]]=track.holder
         #names(trackll)[[1]]=folder.name
     #}
-      #Mask end ##########################################################################################
+        #Mask end ##########################################################################################
         # trackll=track.holder
 
     #     }else{
@@ -325,7 +325,7 @@ readDiatrack=function(folder,ab.track=F,cores=1, frameRecord = T){
 
     #
     #
-    #         if (mask == T){
+    #         if (mask == TRUE){
     #             trackll=maskTracks(trackll,mask.list)
     #         }
     #

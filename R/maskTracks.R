@@ -14,7 +14,7 @@
 ##' maskTracks(folder, trackll)
 ##' 
 ##' indexCell(folder, trackll, areaFilter = c(0, Inf), 
-##' intensityFilter = c(0, Inf), export = F, max.pixel = 128)
+##' intensityFilter = c(0, Inf), export = FALSE, max.pixel = 128)
 ##' 
 ##' filterOnCell(trackll, numTracks = 0)
 ##' 
@@ -29,7 +29,7 @@
 ##' @param intensityFilter Range of avg cell intensities (grayscale) to keep in filtering
 ##' @param numTracks Minimum number of required tracks in the trackll
 ##' @param num Number of tracks to randomly sample per trackl in trackll
-
+##' @return masked tracks in trackll format
 ##' @examples
 ##' #Basic masking with folder path with image masks
 ##' folder = system.file("extdata","ImageJ",package="sojourner")
@@ -75,7 +75,7 @@
 ##------------------------------------------------------------------------------
 ##
 # read in mask and derive positive pix form a mask
-maskPoint=function(mask.file,plot=F){
+maskPoint=function(mask.file,plot=FALSE){
     
     mask.file.name=basename(mask.file)
     # read in tiff mask
@@ -84,7 +84,7 @@ maskPoint=function(mask.file,plot=F){
     mask=rtiff::readTiff(fn=mask.file)
     # plot(mask)
     
-    pospt=which(mask@red!=0,arr.ind=T)
+    pospt=which(mask@red!=0,arr.ind=TRUE)
     pos.point=with(data.frame(pospt),data.frame(x=col,y=row))
     
     # horizontal is the same vertical is fliped as the pixels is counted from
@@ -143,7 +143,7 @@ posTracks=function(track.center,pos.point){
 maskTracks=function(folder, trackll){
     
     # read in mask
-    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
+    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
     
     if (length(maskl) == 0){
         cat("No image mask file ending '_MASK.tif' found.\n")
@@ -187,7 +187,7 @@ maskTracks=function(folder, trackll){
         track.center=trackCenter(trackll)[[i]]
         
         ## Returns all positive mask pixel locations
-        pos.point=maskPoint(maskl[[i]],plot=F)
+        pos.point=maskPoint(maskl[[i]],plot=FALSE)
         
         ## Filters all positive track centers
         mask.track.index[[i]]=posTracks(track.center,pos.point)
@@ -204,13 +204,13 @@ maskTracks=function(folder, trackll){
 }
 
 # Function masks, separates by cell, displays cell areas and mean intensities, and filters.
-indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(0, Inf), export = F, max.pixel = 128){
+indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(0, Inf), export = FALSE, max.pixel = 128){
     
     # Read in mask
-    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=T)
+    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
 
     # Read in nuclear image
-    glowl=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
+    glowl=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
     
     if (length(maskl) == 0){
         cat("No image mask file ending '_MASK.tif' found.\n")
@@ -257,7 +257,7 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(
     for (i in 1:length(trackll)){
         
         ## Returns all positive mask pixel locations
-        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],plot=F)))
+        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],plot=FALSE)))
         
         #Instantiate empty
         binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)

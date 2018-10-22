@@ -6,9 +6,9 @@
 \alias{.readParticleTracker}
 \title{readParticleTracker}
 \usage{
-readParticleTracker(folder, ab.track = F, cores = 1, frameRecord = T)
+readParticleTracker(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 
-.readParticleTracker(file, interact = F, ab.track = F, frameRecord = F)
+.readParticleTracker(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
 \item{file}{Full path to Diatrack .mat session file.}
@@ -22,6 +22,9 @@ readParticleTracker(folder, ab.track = F, cores = 1, frameRecord = T)
 \item{folder}{Full path to ImageJ .csv files output folder.}
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
+}
+\value{
+trackll
 }
 \description{
 Read output file (tracks/trajectories in csv format) from ParticleTracker (a program of ImageJ plugin MosaicSuit).

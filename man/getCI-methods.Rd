@@ -6,7 +6,7 @@
 \alias{.get.seRange}
 \title{getCI}
 \usage{
-getCI(bootstrap.result,confidence=0.95,output=F)
+getCI(bootstrap.result,confidence=0.95,output=FALSE)
 }
 \arguments{
 \item{confidence}{the level of confidence that is used to calculate the

@@ -12,8 +12,8 @@
 ##' @rdname plotLocalizations.Density-methods
 ##' @docType methods
 ##' @description Plot localization map of molecules from a list of files in a folder with color coded 
-##'              by local density of each molecule. 
-##'              
+##' by local density of each molecule. 
+##' 
 ##' @usage
 ##'
 ##' plotLocalizations.Density(trackll=trackll,scale=256,r=125,file.No=0,point.scale=0.15)
@@ -28,12 +28,12 @@
 ##' \item{PDF:} One PDF file with one plot on each page.
 ##' }
 ##' @details Plot localization map of molecules from a list of files in a folder with color coded 
-##'              by local density of each molecule. The localization of molecule is considered as the first position of its track. 
-##'              
-##'          Upon running of the function, users will be prompted to input the name of the track list (trackll).
-##'          Input un-merged trackll and the plotting will start.
-##'          The local density of each molecule is calculated by counting the number of molecules within a given radius
-##'          around the position of the molecule. The higher the number, the higher the local density.
+##'         by local density of each molecule. The localization of molecule is considered as the first position of its track. 
+##'         
+##'         Upon running of the function, users will be prompted to input the name of the track list (trackll).
+##'         Input un-merged trackll and the plotting will start.
+##'         The local density of each molecule is calculated by counting the number of molecules within a given radius
+##'         around the position of the molecule. The higher the number, the higher the local density.
 
 ##'
 ##' @examples
@@ -59,36 +59,34 @@
 ## Function for plotting molecule localizations with color coded by local molecule density.
 
 .plotLocalizations.Density<-function(trackll=trackll,scale=256,r=125,file.No=0,point.scale=0.15){
-  
-  #library(sp)
-  #library(sampSurf)
 
-  ## Import trackll (un-merged) information  
-  if (length(file.No)>1&min(file.No) == 0){
+
+    ## Import trackll (un-merged) information  
+    if (length(file.No)>1&min(file.No) == 0){
     stop("Wrong file.No input. Ceased.",call. = FALSE, domain = NULL)
-  }
-  
-  if(is.null(trackll)){
+    }
+
+    if(is.null(trackll)){
     trackll.label<-readline(cat("Enter the un-merged trackll you want to plot:    "))
     trackll<-get(paste(trackll.label))
-  }
-  
-  if (length(file.No)>=1&file.No[1]>0){
+    }
+
+    if (length(file.No)>=1&file.No[1]>0){
     trackll<-trackll[file.No]
-  }
-  
-  ## Set plot area as black background and white frontground.
-  oldpar <- par
-  par(mar=c(3, 4, 4, 3),xpd=FALSE)
-  
-  par(mfrow=c(1,1),bg="black",fg="white")
-  cat("Plotting...A PDF file will be output in the working directory.\n")
-  
-  ## Get trackl info and plot localization map for each file in the trackll.
-  for (i in c(1:length(trackll))){
+    }
+
+    ## Set plot area as black background and white frontground.
+    oldpar <- par
+    par(mar=c(3, 4, 4, 3),xpd=FALSE)
+
+    par(mfrow=c(1,1),bg="black",fg="white")
+    cat("Plotting...A PDF file will be output in the working directory.\n")
+
+    ## Get trackl info and plot localization map for each file in the trackll.
+    for (i in c(1:length(trackll))){
     plot.new()
     plot.window(xlim=c(0,scale*0.107),ylim=c(0,scale*0.107),xaxs = "i", yaxs = "i")
-    
+
     axis(1,cex.axis=1,col.axis="white")
     axis(2,cex.axis=1,col.axis="white")
     mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=2,col.main="white")             
@@ -99,8 +97,8 @@
     ## Get the localization of each track (molecule) as the first position of the track.
     localizations<-data.frame(matrix(ncol = 3, nrow = 0))
     for (j in c(1:length(trackll[[i]]))){
-      localizations<-rbind(localizations,setNames(
-          data.frame(paste0(names(trackll[[i]][j])),
+        localizations<-rbind(localizations,setNames(
+            data.frame(paste0(names(trackll[[i]][j])),
             trackll[[i]][[j]]$x[[1]]*0.107,trackll[[i]][[j]]$y[[1]]*0.107), c("Trajectory","x", "y")))
     }
     ## Calculate local molecule density by counting the molecule number within a given radius.
@@ -109,9 +107,9 @@
         ## Generate a named vector "cp" to make this loop work in both Mac and PC version of R.
         cp=c(localizations[k,]$x,localizations[k,]$y)
         names(cp)=c("x","y")
-      sp.n = sampSurf::spCircle(r/1000, centerPoint=cp, spID='tree.1') 
-      count.n <- sp::over(localizations, sp.n$spCircle)
-      localizations$density[k]=sum(count.n,na.rm = T)
+        sp.n = sampSurf::spCircle(r/1000, centerPoint=cp, spID='tree.1') 
+        count.n <- sp::over(localizations, sp.n$spCircle)
+        localizations$density[k]=sum(count.n,na.rm = TRUE)
     }
     
     ## Generate color gradient/ramp based on the highest molecule density in each file.
@@ -122,18 +120,18 @@
     
     ## plot the molecules as dots color coded by it's local density.
     for(i in c(1:length(localizations$x))){
-      points(localizations[i,]$x,localizations[i,]$y,pch=16,col=cl[localizations[i,]$density],cex=point.scale)
+        points(localizations[i,]$x,localizations[i,]$y,pch=16,col=cl[localizations[i,]$density],cex=point.scale)
     }
     ## Add color gradient legend to the right edge of each plot.
     .legend.col(col = cl, lev = localizations$density)
     ## Add radius and molecule number (n) as text legend to the topright corner of each plot.
     legend("topright",paste(rep(c("r = ","n = ")), rep(c(r,nrow(localizations))),rep(c(" nm",""))),col="white",bty = "n")
     
-  }
-  
-  ## Reset plotting area parameters.
-  par(oldpar)
-  par(mfrow=c(1,1),bg="white",fg="black")
+    }
+
+    ## Reset plotting area parameters.
+    par(oldpar)
+    par(mfrow=c(1,1),bg="white",fg="black")
 }
 
 
@@ -142,12 +140,10 @@
 ## Function for outputting the plots into one multipage PDF file in the working directory.
 
 plotLocalizations.Density<-function(trackll=trackll,scale=256, r=125, file.No=0, point.scale=0.15){
-  ## Output the plots into one PDF file in the working directory.
-  pdf(paste("plotLocalization.Density.Heatmap--",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
+    ## Output the plots into one PDF file in the working directory.
+    pdf(paste("plotLocalization.Density.Heatmap--",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
 
-  .plotLocalizations.Density(trackll=trackll,scale=scale, r=r, file.No=file.No, point.scale=point.scale)
+    .plotLocalizations.Density(trackll=trackll,scale=scale, r=r, file.No=file.No, point.scale=point.scale)
 
-  dev.off()
-  
+    dev.off()
 }
-

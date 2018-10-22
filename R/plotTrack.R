@@ -10,7 +10,7 @@
 ##' @rdname plotTrack-methods
 ##' @docType methods
 ##' @description Plot track/trajectory from track list. either randomly or
-##'   specified.
+##' specified.
 
 ##' @usage
 ##'
@@ -34,7 +34,7 @@
 ##' trackOverlayData(trackl)
 ##'
 ##' @param ab.trackll absolute coordinates for plotting, generated from
-##'   readDiatrack(folder,ab.track=T).
+##'   readDiatrack(folder,ab.track=TRUE).
 ##' @param trackl Track list
 ##' @param trackll Track list output from readDiatrack().
 ##' @param folder folder containing desired input data.
@@ -139,10 +139,10 @@
 ##' folder2=system.file("extdata","SWR1_2",package="sojourner")
 ##' trackll=readDiatrack(folder2)
 ##'
-##' ## use merge=T for per folder comparison, the analsyis result can't be plot
+##' ## use merge=TRUE for per folder comparison, the analsyis result can't be plot
 
 ##' ##back to original image. To see component tracks on original nuclei image,
-##' ##set merge=F, for per movie analysis.
+##' ##set merge=FALSE, for per movie analysis.
 
 ##'
 ##' ## compute MSD
@@ -155,11 +155,11 @@
 ##' ## fit normal distribution to define component
 ##' ## set seed to reproduce results (see fitNormalDistr() for details on seed)
 ##' fit=fitNormDistr(
-##'       dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
+##'     dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
 ##'
 ##' ## select component tracks based on fitting
 ##' trackll.sel=selComponentTracks(trackll,
-##'       fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
+##'     fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 ##'
 ##' ## plot component tracks
 ##' plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
@@ -231,7 +231,7 @@
         frame.len=dim(p)[1]
         if (frame.len>frame.min & frame.len<frame.max)
         plot(p$x,p$y,type="l",xlim=c(0,m),ylim=c(0,m),xlab="X (uM)",
-             ylab="Y (uM)",main=name[[i]])
+                ylab="Y (uM)",main=name[[i]])
         }
 
     # sub = name[[i]]
@@ -285,7 +285,7 @@ plotTrack=function(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,frame.s
 plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,frame.min=1,frame.max=100,frame.start=1,frame.end=500,input=1){
 
     ## read trajectory index from the index.file
-    index.df=read.csv(file=index.file,header=T)
+    index.df=read.csv(file=index.file,header=TRUE)
     index=as.character(index.df[,1])
 
 
@@ -309,14 +309,14 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,frame.min=
 #
 #         ## read in tracks in movie.folder with absolute coords,
 #         ## merge them as the input is merged csv files
-#         ab.trackll[i]=readDiatrack(folder=folder.list[[i]],merg=T,ab.track=T)
+#         ab.trackll[i]=readDiatrack(folder=folder.list[[i]],merg=TRUE,ab.track=TRUE)
 #         cat("\n...\n") # seperator makes ouput clearer
 #         names(ab.trackll)[i]=names(folder.list)[i]
 #
 #
 #     }
 
-    ab.trackll=compareFolder(folders=movie.folder,ab.track=T,input=input)
+    ab.trackll=compareFolder(folders=movie.folder,ab.track=TRUE,input=input)
 
     # as it is only for one folder
     # trackl.plot=ab.trackll[[1]][index]
@@ -369,7 +369,7 @@ trackOverlayData=function(trackl){
 
     track.df=do.call(rbind.data.frame,trackl[[1]])
 
-          # must use [[1]]
+            # must use [[1]]
 #     > str(trackll[[1]],0)
 #     List of 908
 #     [list output truncated]
@@ -478,7 +478,7 @@ plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16
     mask=rtiff::readTiff(fn=mask.file)
     # plot(mask)
 
-    pospt=which(mask@red!=0,arr.ind=T)
+    pospt=which(mask@red!=0,arr.ind=TRUE)
     pos.point=with(data.frame(pospt),data.frame(x=col,y=row))
 
     # horizontal is the same vertical is fliped as the pixels is counted from
@@ -512,7 +512,7 @@ plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16
 
 plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 
-    mask.lst=list.files(path=folder,pattern="_MASK.tif",full.names=T)
+    mask.lst=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
 
     mask.plot.lst=lapply(mask.lst,.plotMask,max.pixel=max.pixel)
 
@@ -609,10 +609,10 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 # plotNucTrackOverlay
 
 plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
-                             max.pixel=128,
-                             nrow=2,ncol=2,width=16,height=16){
+                                max.pixel=128,
+                                nrow=2,ncol=2,width=16,height=16){
 
-    nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
+    nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
 
     if (is.null(trackll)){
         cat("\ntrackll not specified, read in Diatrack file\n")
@@ -649,17 +649,17 @@ plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
 # plotComponentTrackOverlay
 
 plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
-                             max.pixel=128,
-                             nrow=2,ncol=2,width=16,height=16){
+                                max.pixel=128,
+                                nrow=2,ncol=2,width=16,height=16){
 
-    nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
+    nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
 
     # no need to read them in, as only plot trackll.sel to the images
     # the folder is only to provide image location
 
     # if (is.null(trackll)){
     #     cat("\ntrackll not specified, read in Diatrack file\n")
-    #     trackll=readDiatrack(folder=folder,merge=F,mask=mask,cores=cores)
+    #     trackll=readDiatrack(folder=folder,merge=FALSE,mask=mask,cores=cores)
     # }
 
     plot.lst=list()
@@ -819,8 +819,8 @@ cmpOverlayData=function(component.lst){
 #     cat("\nReading nuclei file",title,"\n")
 #     nuclei=EBImage::readImage(nuclei.file)
 #     # display(nuclei)
-#     # interpolate =F to make pixel clearer
-#     nucleiGrob= grid::rasterGrob(nuclei, interpolate=F)
+#     # interpolate =FALSE to make pixel clearer
+#     nucleiGrob= grid::rasterGrob(nuclei, interpolate=FALSE)
 #
 #     #     ggplot(data=pos.point,aes(x=x,y=y),shape=22)+
 #     #         annotation_custom(grob=g,xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)+
@@ -867,18 +867,18 @@ cmpOverlayData=function(component.lst){
 #
 # }
 
-# plotPicTrackOverlay=function(folder,mask=F,cores=1,
+# plotPicTrackOverlay=function(folder,mask=FALSE,cores=1,
 #                              max.pixel=128,
 #                              nrow=2,ncol=2,width=16,height=16){
 #
-#     nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
+#     nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
 #
 #     nucleiGrob.lst=lapply(nuclei.lst,.nucleiGrob)
 #     names(nucleiGrob.lst)=sapply(nuclei.lst,basename,
-#                                  simplify = TRUE, USE.NAMES = F)
+#                                  simplify = TRUE, USE.NAMES = FALSE)
 #
 #
-#     trackll=readDiatrack(folder=folder,merge=F,mask=mask,cores=cores)
+#     trackll=readDiatrack(folder=folder,merge=FALSE,mask=mask,cores=cores)
 #
 #     plot.lst=list()
 # #     for (i in 1:length(trackll)){

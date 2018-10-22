@@ -9,14 +9,14 @@
 ##' @docType methods
 ##'
 ##' @description calculate mean square displacement for individual trajectory or
-##'   summarize on trajectories.
+##' summarize on trajectories.
 
 ##' @usage
-##'   msd(trackll,dt=6,resolution=0.107,summarize=F,cores=1,
-##'   plot=F,output=F,filter=c(min=7,max=Inf))
-##'   msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=F)
-##'   msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
-##'   trimmer=c(min=1,max=31),resolution=0.107,output=F)
+##' msd(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,
+##' plot=FALSE,output=FALSE,filter=c(min=7,max=Inf))
+##' msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=FALSE)
+##' msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
+##' trimmer=c(min=1,max=31),resolution=0.107,output=FALSE)
 ##'   
 ##' @param dt Time intervals. Default 6.
 ##' @param resolution ratio of pixel to uM.
@@ -117,9 +117,9 @@
 # separate at.dt is to remove repeated calcualtion in msd.trackl
 
 ##' @export msd.track
-msd.track=function(track,dt=6,resolution=0.107,at.dt=F){
+msd.track=function(track,dt=6,resolution=0.107,at.dt=FALSE){
 
-    if (at.dt == F){
+    if (at.dt == FALSE){
 
         # calculate msd for track at 1~dt
         msd_track=c()
@@ -130,7 +130,7 @@ msd.track=function(track,dt=6,resolution=0.107,at.dt=F){
             # extract square.disp into a vector
             square.disp=do.call(rbind,track.sqd)$square.disp
             # remove NA and get the genuine mean
-            msd_track[i]=mean(square.disp,na.rm=T)
+            msd_track[i]=mean(square.disp,na.rm=TRUE)
         }
 
     }else{
@@ -140,7 +140,7 @@ msd.track=function(track,dt=6,resolution=0.107,at.dt=F){
         # extract square.disp into a vector
         square.disp=do.call(rbind,track.sqd)$square.disp
         # remove NA and get the genuine mean
-        msd_track=mean(square.disp,na.rm=T)
+        msd_track=mean(square.disp,na.rm=TRUE)
     }
 
     return(msd_track)
@@ -149,13 +149,13 @@ msd.track=function(track,dt=6,resolution=0.107,at.dt=F){
 
 # alternative more vectorized implementation
 # msd.dt.subtrack=sapply(track.sqd,function(x){
-#    mean(x$square.disp,na.rm=T)})
+#    mean(x$square.disp,na.rm=TRUE)})
 # msd.dt.track[i]=mean(msd.dt.subtrack)
 
 # get the sum of all subtrajectories then average them
 #         sum.square.disp=lapply(track.sqd,function(trk){
 #           # subsetting list with [["colnames]]
-#           sum(trk[["square.disp"]],na.rm=T)})
+#           sum(trk[["square.disp"]],na.rm=TRUE)})
 #         # get the msd
 #         msd=mean(do.call(rbind,sum.square.disp))
 
@@ -173,7 +173,7 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
     # stop if dt greater than max track length
     if (dt>(max(track.len)-1)) {
         stop("\nmax track length:\t",max(track.len),"\ndt:\t\t\t",dt,
-             "\nTime interval (dt) greater than max track length-1\n")
+                "\nTime interval (dt) greater than max track length-1\n")
         }
 
     msd=list()  # msd list
@@ -203,13 +203,13 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
 
         # calculate msd.track for dt=i
         msd.individual[[i]]=sapply(trackl.sel,function(x){
-            msd.track(track=x,dt=i,resolution=resolution,at.dt=T)
-            },simplify=T)
+            msd.track(track=x,dt=i,resolution=resolution,at.dt=TRUE)
+            },simplify=TRUE)
 
         # calculate summarized msd and se
         N=length(msd.individual[[i]])
-        msd.summarized[i]=mean(msd.individual[[i]],na.rm=T)
-        std.summarized[i]=sd(msd.individual[[i]],na.rm=T)/sqrt(N)
+        msd.summarized[i]=mean(msd.individual[[i]],na.rm=TRUE)
+        std.summarized[i]=sd(msd.individual[[i]],na.rm=TRUE)/sqrt(N)
 
     }
 
@@ -247,18 +247,18 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
 }
 
 # old version corrections
-# when sapply(...,SIMPLIFY=T)
+# when sapply(...,SIMPLIFY=TRUE)
 # i=1, sapply returns a vecotr
 # i>1, sapply returns a matrix
 
 # # convert result into unified matrix format
-# if (is.matrix(msd.individual)!=T){
+# if (is.matrix(msd.individual)!=TRUE){
 #     msd.individual=t(as.matrix(msd.individual))}
 #
 # # compute msd.summarized and std.summarized
 # N=length(msd.individual[i,][!is.na(msd.individual[i,])])
-# msd.summarized[i]=mean(msd.individual[i,],na.rm=T)
-# std.summarized[i]=sd(msd.individual[i,],na.rm=T)/sqrt(N)
+# msd.summarized[i]=mean(msd.individual[i,],na.rm=TRUE)
+# std.summarized[i]=sd(msd.individual[i,],na.rm=TRUE)/sqrt(N)
 
 
 # output
@@ -281,7 +281,7 @@ msd.trackll=function(trackll,dt=6,resolution=0.107,cores=1){
 
     # detect number of cores
     # FUTURE: if cores more than one, automatic using multicore
-    max.cores=parallel::detectCores(logical=T)
+    max.cores=parallel::detectCores(logical=TRUE)
 
     if (cores == 1){
 
@@ -296,7 +296,7 @@ msd.trackll=function(trackll,dt=6,resolution=0.107,cores=1){
             # parallel excecute above block of code
             if (cores>max.cores)
                 stop("Number of cores specified is greater than maxium: ",
-                     max.cores)
+                        max.cores)
 
             cat("Initiated parallel execution on", cores, "cores\n")
 
@@ -342,8 +342,8 @@ msd.trackll=function(trackll,dt=6,resolution=0.107,cores=1){
 
 ##' @export msd
 ##'
-msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
-             filter=c(min=7,max=Inf)){
+msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,output=FALSE,
+                filter=c(min=7,max=Inf)){
 
     ## keep this code here for backward compatability
     ## first remove documentation, code will be remove in next version
@@ -360,7 +360,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
     file.name=gsub('\\.', '_', file.name)
 
     # if summarize
-    if (summarize == T){
+    if (summarize == TRUE){
 
         # remove the IndividualMSD
         MSD.summarized=lapply(MSD,function(x){x$SummarizedMSD})
@@ -433,11 +433,11 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
             theme_bw()+
             theme(legend.title=element_blank())
 
-        if (plot == T) plot(msd.plot)
+        if (plot == TRUE) plot(msd.plot)
 
-        if (output == T){
+        if (output == TRUE){
             fileName=paste("MSD Summarized-",
-                           .timeStamp(file.name[1]),"....csv",sep="")
+                            .timeStamp(file.name[1]),"....csv",sep="")
             cat("\nOutput MSD for summarized trajectories.\n")
             write.csv(file=fileName,p)
         }
@@ -451,12 +451,12 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
         # extract only IndividualMSD from list
         MSD.individual=lapply(MSD,function(x){x$IndividualMSD})
 
-        if(plot == T){
+        if(plot == TRUE){
 
             # MSD.individual only has one variable (with 6 rows), use
             # reshape2::melt()
 
-            p=reshape2::melt(MSD.individual,level=1,na.rm=T)
+            p=reshape2::melt(MSD.individual,level=1,na.rm=TRUE)
             colnames(p)=c("index","track.name","msd","file.name")
 
             # note group needs to be on two variable (i.e. track.name and
@@ -464,8 +464,8 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
             # interaction() realize it
 
             msd.plot=ggplot(p,aes_string(x="index",y="msd",
-                                  group=interaction("file.name","track.name"),
-                                  col="file.name"))+
+                                    group=interaction("file.name","track.name"),
+                                    col="file.name"))+
                 geom_line()+
                 # this makes integer breaks
                 scale_x_continuous(breaks=scales::pretty_breaks())+
@@ -477,17 +477,17 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
         }
 
         # output csv, each list a seperate file
-        if (output == T){
+        if (output == TRUE){
             # reformat output
             MSD.individual.output=lapply(MSD.individual,function(x){
-                x=reshape2::melt(x,na.rm=T)
+                x=reshape2::melt(x,na.rm=TRUE)
                 colnames(x)=c("dt","track.name","msd")
                 return(x)
             })
 
             for (i in 1:length(MSD.individual.output)){
                 fileName=paste("MSD individual-",
-                               .timeStamp(file.name[i]),".csv",sep="")
+                                .timeStamp(file.name[i]),".csv",sep="")
                 cat("\nOutput MSD for individual trajectories.\n")
                 write.csv(file=fileName,MSD.individual.output[[i]])
             }
@@ -515,7 +515,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=F,cores=1,plot=F,output=F,
 
 
 ##' @export msd.track.vecdt
-msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=F){
+msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
 
     # copy trackll's structure
     msd.lst=list()
@@ -537,8 +537,8 @@ msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=F){
             cat("\rcalculating MSD for individual tracks...","folder ",i,
                 " track ",j)
             msd.lst[[i]][[j]]=as.matrix(msd.track(track=trackll[[i]][[j]],
-                                                  dt=vecdt[[i]][[j]],
-                                                  resolution=resolution))
+                                                    dt=vecdt[[i]][[j]],
+                                                    resolution=resolution))
 
             # use matrix as output to be uniform with msd.inividual output
             # names(vecdt[[i]][j]) subsets to list; names(msd.lst[[i]][[j]])
@@ -550,13 +550,13 @@ msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=F){
     # add an extra "\n" outside of the loop to make system output in a new line.
     cat("\n")
 
-    if(output == T){
+    if(output == TRUE){
 
         p=reshape2::melt(msd.lst)
         colnames(p)=c("frame.index","track.name","msd","track.number","file.name")
 
         fileName=paste("MSD individual-",
-                       .timeStamp("vecdt"),".csv",sep="")
+                        .timeStamp("vecdt"),".csv",sep="")
         cat("\nOutput MSD for individual trajectories.\n")
         write.csv(file=fileName,p)
     }
@@ -581,7 +581,7 @@ msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=F){
 
 ##' @export msd.perc
 msd.perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
-                  trimmer=c(min=1,max=31),resolution=0.107,output=F){
+                    trimmer=c(min=1,max=31),resolution=0.107,output=FALSE){
 
 
     cat("\napplying percentage,",percentage,"\n")

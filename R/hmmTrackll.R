@@ -8,12 +8,13 @@
 ##' @rdname hmmTrackll-methods
 ##' @docType methods
 ##'
-##' @description Convert trackll to a (bivarte) displacement format for Hidden Markove Model fitting.
+##' @description Convert trackll to a (bivarte) displacement format for Hidden Markov Model fitting.
 ##' @usage
 ##' hmmTrackll(trackll, t.interval=0.01)
 
 ##' @param trackll list of trajectorise created by crreateTrackll().
 ##' @param t.interval time interval. 
+##' @return Hidden Markov Model fitted trackll
 
 ##' @examples
 ##' folder=system.file("extdata","SWR1",package="sojourner")
@@ -90,21 +91,21 @@
 
 hmmTrackll=function(trackll,t.interval=0.01){
 
-    # numericIndex=F
-    # all the downstrain hmm analysis based on a bivariate model, so no need to have a bivar=T paramter
+    # numericIndex=FALSE
+    # all the downstrain hmm analysis based on a bivariate model, so no need to have a bivar=TRUE paramter
     
     
     cat("calculating displacement...\n")
 
-    # if (bivar == T){
-        data=displacement.trackll(trackll,dt=1,bivar=T)
+    # if (bivar == TRUE){
+        data=displacement.trackll(trackll,dt=1,bivar=TRUE)
         
     # }else{
-    #     dp=displacementCDF(trackll,dt=1,plot=F,bivar=bivar)
+    #     dp=displacementCDF(trackll,dt=1,plot=FALSE,bivar=bivar)
     #     data=dp$stepwise.displacement
     # }
     
-    #if (numericIndex == F){
+    #if (numericIndex == FALSE){
 
         dat=sapply(data,function(x){x["InidvidualDisplacement"]})
 
@@ -156,7 +157,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
                 t=data.frame(seq(from=t.interval,to=track.len[x]*t.interval,by=t.interval))
                 names(t)="time"
                 return(t)
-            },simplify = F, USE.NAMES = T)
+            },simplify = FALSE, USE.NAMES = TRUE)
 
             #         # lapply code is change from this for loop
             #         time=list()
@@ -191,7 +192,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
                 id=data.frame(seq(from=t.interval,to=track.len[x]*t.interval,by=t.interval))
                 names(id)="trackStepIndex"
                 return(id)
-            },simplify = F, USE.NAMES = TRUE)
+            },simplify = FALSE, USE.NAMES = TRUE)
 
             
             # with Mapp no need for these
@@ -255,7 +256,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
     #         # from tb.index generate time
     #         time.lst=sapply(names(track.len),function(x){
     #             seq(from=t.interval,to=track.len[x]*t.interval,by=t.interval)
-    #         },simplify = F, USE.NAMES = TRUE)
+    #         },simplify = FALSE, USE.NAMES = TRUE)
     # 
     #         #         # lapply code is change from this for loop
     #         #         time=list()

@@ -12,9 +12,9 @@
 ##' @description Read output file (tracks/trajectories in csv format) from ParticleTracker (a program of ImageJ plugin MosaicSuit).
 
 ##' @usage
-##' readParticleTracker(folder, ab.track = F, cores = 1, frameRecord = T)
+##' readParticleTracker(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 ##'
-##' .readParticleTracker(file, interact = F, ab.track = F, frameRecord = F)
+##' .readParticleTracker(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 ##'
 ## @method # this roxygen directive does not working
 ##' @param folder Full path to ImageJ .csv files output folder.
@@ -23,7 +23,7 @@
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
 ##' @param file Full path to Diatrack .mat session file.
 ##' @param interact Open menu to interactively choose file.
-
+##' @return trackll
 
 ##' @examples
 ##' # reading in tracks
@@ -55,11 +55,11 @@
 ## a function to read ParticleTracker (a program of ImageJ plugin MosaicSuit) output .csv file and returns a list of tracks
 
 
-.readParticleTracker=function(file,interact=F,ab.track=F, frameRecord=F){
+.readParticleTracker=function(file,interact=FALSE,ab.track=FALSE, frameRecord=FALSE){
 
 
     # interactively open window
-    if (interact == T) {
+    if (interact == TRUE) {
         file=file.choose()
     }
 
@@ -67,7 +67,7 @@
     cat("\nReading ParticleTracker file: ",file.name,"...\n")
 
     # reading in data
-    data=read.csv(file=file,header=T)
+    data=read.csv(file=file,header=TRUE)
 
     vars=c("Trajectory","Frame","x","y","z")
     track.data=dplyr::select(data,one_of(vars))
@@ -139,12 +139,12 @@
     # can be paralleled
     # this has to be a seperate function here, as reading in it is not going through loops.
 
-    if (ab.track == T) {
+    if (ab.track == TRUE) {
 
         cat ("\nConverting to ab.trackl for plotting\n")
         abTrack=function(track){
             data.frame(x=track$x-min(track$x),
-                       y=track$y-min(track$y))
+                        y=track$y-min(track$y))
         }
         ab.track.list=lapply(track.list,abTrack)
 
@@ -152,19 +152,19 @@
 
     cat("\n", file.subname, "read and processed.\n")
 
-    if (ab.track == T) return(ab.track.list) else return(track.list)
+    if (ab.track == TRUE) return(ab.track.list) else return(track.list)
 
 }
 
 
-readParticleTracker=function(folder,ab.track=F,cores=1, frameRecord=T){
+readParticleTracker=function(folder,ab.track=FALSE,cores=1, frameRecord=TRUE){
 
     trackll=list()
     track.holder=c()
 
     # getting a file list of Diatrack files in a directory
-    file.list=list.files(path=folder,pattern=".csv",full.names=T)
-    file.name=list.files(path=folder,pattern=".csv",full.names=F)
+    file.list=list.files(path=folder,pattern=".csv",full.names=TRUE)
+    file.name=list.files(path=folder,pattern=".csv",full.names=FALSE)
     folder.name=basename(folder)
 
     # read in tracks
@@ -172,7 +172,7 @@ readParticleTracker=function(folder,ab.track=F,cores=1, frameRecord=T){
     # first level list of file names and
     # second level list of data.frames
 
-    max.cores=parallel::detectCores(logical=T)
+    max.cores=parallel::detectCores(logical=TRUE)
 
     if (cores == 1){
 

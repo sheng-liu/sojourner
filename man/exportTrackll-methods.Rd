@@ -17,6 +17,9 @@ exportTrackll(trackll, cores = 1)
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
 }
+\value{
+.csv file output
+}
 \description{
 take in a list of track lists (trackll) and export it into row-wise (ImageJ/MOSAIC) .csv files in the working directory
 }

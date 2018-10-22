@@ -26,16 +26,16 @@ plotLocalizations.Density(trackll=trackll,scale=256,r=125,file.No=0,point.scale=
 }
 \description{
 Plot localization map of molecules from a list of files in a folder with color coded 
-             by local density of each molecule.
+by local density of each molecule.
 }
 \details{
 Plot localization map of molecules from a list of files in a folder with color coded 
-             by local density of each molecule. The localization of molecule is considered as the first position of its track. 
-             
-         Upon running of the function, users will be prompted to input the name of the track list (trackll).
-         Input un-merged trackll and the plotting will start.
-         The local density of each molecule is calculated by counting the number of molecules within a given radius
-         around the position of the molecule. The higher the number, the higher the local density.
+        by local density of each molecule. The localization of molecule is considered as the first position of its track. 
+        
+        Upon running of the function, users will be prompted to input the name of the track list (trackll).
+        Input un-merged trackll and the plotting will start.
+        The local density of each molecule is calculated by counting the number of molecules within a given radius
+        around the position of the molecule. The higher the number, the higher the local density.
 }
 \examples{
 

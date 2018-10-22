@@ -6,8 +6,8 @@
 \title{Dcoef}
 \usage{
 Dcoef( MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,resolution=0.107,
-       binwidth=NULL,method=c("static","percentage","rolling.window"),
-       plot=F,output=F,t.interval=0.01,profile=NULL)
+    binwidth=NULL,method=c("static","percentage","rolling.window"),
+    plot=FALSE,output=FALSE,t.interval=0.01,profile=NULL)
 }
 \arguments{
 \item{MSD}{Mean Square Displacement calculated using msd() function. Either MSD or trackll can be passed into Dcoef for calculation of diffusion coefficient.}
@@ -60,22 +60,22 @@ Caclulate diffusion coefficient (Dcoef) for trajecotries.
 }
 \details{
 Generic parameters (parameter applied to all methods, such as
-  resolution etc) are set in the function. Method dependent parameters (such
-  as lag.start, lag.end for method = "static"), are stored in profile.csv in
-  PREF folder under extdata. To change preference parameter, can either
-  programably or manually go to folder
-  system.file("extdata","PREF","profile.csv",package="sojourner"), and change the
-  profile.csv.
-  
-  lag.start: time lag used as start of dt for compute Dcoef. Default 2.
-  lag.end: Time lag used as end of dt for compute Dcoef. Default 2.
+resolution etc) are set in the function. Method dependent parameters (such
+as lag.start, lag.end for method = "static"), are stored in profile.csv in
+PREF folder under extdata. To change preference parameter, can either
+programably or manually go to folder
+system.file("extdata","PREF","profile.csv",package="sojourner"), and change the
+profile.csv.
 
-  method for calculating Dcoef:
+lag.start: time lag used as start of dt for compute Dcoef. Default 2.
+lag.end: Time lag used as end of dt for compute Dcoef. Default 2.
+
+method for calculating Dcoef:
 \itemize{
     \item \bold{static} stabilize the number of time lags used for fitting
     using time lag 2~ 5 despite the total time lags measured.
-   \item \bold{percentage} "percentage", uses (tierd) percentage (default
-   0.25) of time lags.
+    \item \bold{percentage} "percentage", uses (tierd) percentage (default
+    0.25) of time lags.
 \tabular{rlll}{
     [,1] \tab TrackLength \tab Percentage \tab TimeLagsForFitting\cr
     [,2] \tab 31~ \tab 0.25 \tab 2~5-2~7\cr
@@ -85,7 +85,7 @@ Generic parameters (parameter applied to all methods, such as
     [,6] \tab 7~9 \tab 1 \tab 2~5-2~7
 }
 
-   \item \bold{rolling.window}  time lags uses for Dcoef follows a rolling window with specified window size (default 4).
+    \item \bold{rolling.window}  time lags uses for Dcoef follows a rolling window with specified window size (default 4).
 }
 }
 \examples{

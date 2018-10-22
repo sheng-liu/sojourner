@@ -26,9 +26,9 @@ folder. This list can then be fed into other functions for comparison. }
 }
 \description{
 compare folders with Diatrack output files. merge track files
-  in each folder into one item of a track list. This list can then be fed
-  into other functions for comparison. It keeps folder information as names
-  of the resulting list.
+in each folder into one item of a track list. This list can then be fed
+into other functions for comparison. It keeps folder information as names
+of the resulting list.
 }
 \examples{
 folder1=system.file("extdata","SWR1",package="sojourner")

@@ -19,7 +19,7 @@
 ##' @param trackll A list of track lists.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param track.list A track list (a list of trajectory data frames).
-
+##' @return .csv file output
 ##' @details
 ##' The reason why ImageJ/MOSAIC style .csv export was chosen is because it fully preserves track frame data, while maintaining short computation time and easy readability in Excel/etc.
 ##' 
@@ -129,8 +129,8 @@
 
     #Write the data frame df into the .csv and display confirmation text
     file.name = paste("COL", getTrackFileName(track.list), ".csv", sep = "")
-    #write(header, file = file.name, append = T)
-    write.table(df, file = file.name, row.names = FALSE, sep = ","); #,append = T
+    #write(header, file = file.name, append = TRUE)
+    write.table(df, file = file.name, row.names = FALSE, sep = ","); #,append = TRUE
     
     cat(paste("\n", file.name, "placed in current directory.\n\n", sep =""))
 }
@@ -140,7 +140,7 @@
 exportTrackll = function(trackll, cores = 1){
     
     # detect number of cores
-    max.cores=parallel::detectCores(logical=T)
+    max.cores=parallel::detectCores(logical=TRUE)
     
     if (cores == 1){
         export = lapply(trackll,function(x){
@@ -150,7 +150,7 @@ exportTrackll = function(trackll, cores = 1){
         # parallel excecute above block of code
         if (cores>max.cores)
             stop("Number of cores specified is greater than maxium: ",
-                 max.cores)
+                max.cores)
         
         cat("Initiated parallel execution on", cores, "cores\n")
         

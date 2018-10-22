@@ -3,9 +3,9 @@ title: "sojourner Shiny Interface Guide"
 output: rmarkdown::html_vignette
 date: "September 7, 2017"
 vignette: >
-  %\VignetteIndexEntry{sojourner package}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{sojourner package}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}

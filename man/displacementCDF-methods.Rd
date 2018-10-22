@@ -7,15 +7,15 @@
 \alias{displacement.trackll}
 \title{displacementCDF}
 \usage{
-displacementCDF(trackll,dt=1,resolution=0.107,plot=F,output=F,bivar=F)
-displacement.trackll(trackll,dt=1,resolution=0.107,bivar=F)
+displacementCDF(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,bivar=FALSE)
+displacement.trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
 }
 \arguments{
 \item{dt}{Time intervals.}
 
 \item{resolution}{ratio of pixel to uM.}
 
-\item{bivar}{bivar=F, view displacement r as single variable; bivar=T, view
+\item{bivar}{bivar=FALSE, view displacement r as single variable; bivar=TRUE, view
 x,y as bivarate. Default value F.}
 
 \item{trackll}{Track list output from readDiatrack().}
@@ -44,12 +44,12 @@ plot. The distribution of "UniqueDisplacement" is the density plot. }
 }
 \description{
 calculate cumulative distribution function of all displacement
-  for individual trajectories.
+for individual trajectories.
 }
 \details{
 The cumulative radial distribution function, P(r, i*dt), is the
-  probability of finding the diffusing particle within a radius r from the
-  origin at time lag i*dt:
+probability of finding the diffusing particle within a radius r from the
+origin at time lag i*dt:
 
 P(r,i*dt) = 1 - e^(-r^2/4*D*(i*dt))
 

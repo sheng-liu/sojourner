@@ -20,7 +20,7 @@
 ##' @param maxSkip Maximum number of frames a trajectory can skip.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param track.list A track list (a list of trajectory data frames).
-
+##' @return linked trackll
 ##' @details
 ##' Given user input for a tolerance level to limit how far the next point after the skip can deviate from the last point in pixel distance 
 ##' and a maximum number of frame skips possible, all trajectories falling within these parameters are automatically linked, renamed, and ordered accordingly. 
@@ -33,7 +33,7 @@
 ##' [Last five characters of the file name].[Start frame #].[Length].[Track #].[# of links]
 ##' 
 ##' Track List: [full name of input file]
-##'  
+##' 
 ##' Track: [Last five characters of the file name].[Start frame].[Length].[Track].[# of links].[Index in overall list (will differ from Track # when merging)]
 ##' 
 ##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
@@ -172,7 +172,7 @@
 linkSkippedFrames = function(trackll, tolerance, maxSkip, cores = 1){
     
     # detect number of cores
-    max.cores=parallel::detectCores(logical=T)
+    max.cores=parallel::detectCores(logical=TRUE)
     
     if (cores == 1){
         link.trackll = lapply(trackll,function(x){
@@ -182,7 +182,7 @@ linkSkippedFrames = function(trackll, tolerance, maxSkip, cores = 1){
         # parallel excecute above block of code
         if (cores>max.cores)
             stop("Number of cores specified is greater than maxium: ",
-                 max.cores)
+                    max.cores)
         
         cat("Initiated parallel execution on", cores, "cores\n")
         

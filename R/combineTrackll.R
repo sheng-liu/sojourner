@@ -15,22 +15,26 @@
 ##'
 ##' @usage
 ##'
-##' combineTrackll(trackll,name="combined trackll",merged=T)
+##' combineTrackll(trackll,name="combined trackll",merged=TRUE)
 ##'
 ##' @param trackll The tracklls to be combined together.
-##' @param name a character string given to set the "names" attribute for the combined trackll
-##' @param merged An Logical indicate if the tracklls to combine are merged or not.
+##' @param name a character string given to set the "names" attribute
+##' for the combined trackll
+##' @param merged An Logical indicate if the tracklls to combine are 
+##' merged or not.
 ##' @return
 ##' \itemize{
 ##' \item{trackll:} combined trackll.
 ##' }
-##' @details Combine multiple track lists (tracklls) from multiple folders into one trackll, i.e. combining track infomation
-##'          from files in multiple folders (replicates) together as if they are in one folder. The tracklls can be
-##'          either merged or un-merged.
-##'          
-##'          The name argument sets the "names" attribute for the combined trackll, which will be used in the same way
-##'          as the folder names for the original tracklls, e.g., displayed as legend when plotting Dcoef or MSD for 
-##'          the combined trackll. 
+##' @details Combine multiple track lists (tracklls) from multiple folders
+##' into one trackll, i.e. combining track infomation from files in multiple 
+##' folders (replicates) together as if they are in one folder. The tracklls
+##' can be either merged or un-merged.
+##' 
+##' The name argument sets the "names" attribute for the combined trackll, 
+##' which will be used in the same way as the folder names for the original
+##' tracklls, e.g., displayed as legend when plotting Dcoef or MSD for 
+##' the combined trackll. 
 ##'
 ##'
 ##' @examples
@@ -51,15 +55,11 @@
 ##' trackll=combineTrackll(trackll=c(trackll1,trackll2),merged=TRUE)
 
 ##' @export combineTrackll
-
-#####################################################################################
-#####################################################################################
-
+##############################################################################
+##############################################################################
 
 
-#combineTrackll<-function(trackll=c(trackll1,trackll2),name="combined trackll",merged=T){
-#combineTrackll: no visible binding for global variable ‘trackll1
-combineTrackll<-function(trackll,name="combined trackll",merged=T){
+combineTrackll<-function(trackll,name="combined trackll",merged=TRUE){
     totalTracklls <- as.numeric(length(trackll))
     temp<-c()
     if(merged == TRUE){

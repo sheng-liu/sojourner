@@ -31,8 +31,8 @@
 
     if (dt >(tracklen-1)){
         stop("\ntrack length:\t",dim(track)[1],
-             "\ndt:\t\t",dt,
-             "\nTime interval (dt) greater than track length-1\n")
+                "\ndt:\t\t",dt,
+                "\nTime interval (dt) greater than track length-1\n")
     }
 }
 
@@ -44,8 +44,8 @@
 
     if (dt >(tracklen-1)){
         stop("\ntrack length:\t",dim(track)[1],
-             "\ndt:\t\t",dt,
-             "\nTime interval (dt) greater than track length-1\n")
+                "\ndt:\t\t",dt,
+                "\nTime interval (dt) greater than track length-1\n")
     }
 }
 
@@ -135,8 +135,8 @@ seedIt=function(expr,seed){
 ##@export getStartFrame
 getStartFrame = function(track.list, index){
     return(as.numeric(substr(names(track.list[index]),
-                             gregexpr(pattern = '\\.', names(track.list[index]))[[1]][1]+1,
-                             gregexpr(pattern = '\\.', names(track.list[index]))[[1]][2]-1)));
+                                gregexpr(pattern = '\\.', names(track.list[index]))[[1]][1]+1,
+                                gregexpr(pattern = '\\.', names(track.list[index]))[[1]][2]-1)));
 }
 
 ##------------------------------------------------------------------------------

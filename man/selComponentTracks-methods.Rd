@@ -5,7 +5,7 @@
 \alias{selComponentTracks}
 \title{selComponentTracks}
 \usage{
-selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=F,output=F)
+selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=FALSE,output=FALSE)
 }
 \arguments{
 \item{trackll}{Track list output from readDiatrack().}
@@ -16,7 +16,7 @@ selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=F,output=F)
 
 \item{dcoef}{Diffusion coefficent calcualted by Dcoef, which provide the link between trajecotry index and diffusion coefficent.}
 
-\item{log.transformed}{A flag indicating if the fitting is been log transformed, select TRUE if fitting was done in fitNormDistr(log.transform = T,..). This parameter will be removed in later version by directly read the info from the output of fitNormalDistr() function.}
+\item{log.transformed}{A flag indicating if the fitting is been log transformed, select TRUE if fitting was done in fitNormDistr(log.transform = TRUE,..). This parameter will be removed in later version by directly read the info from the output of fitNormalDistr() function.}
 
 \item{output}{A logical indicating if output of selected trajectory index, which can be used for plot individual trajectory using plotTrack.}
 }
@@ -25,8 +25,8 @@ selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=F,output=F)
 \item{combined list of trackll} The result is a combined list of selected trajectories. The list is one level higher than trackll, use subsetting to output trackll.e.g. trackll[[1]], or trackll[["SWR1"]]. }
 }
 \description{
-Select trajectory based on component fitting on diffusion
-  coefficient.
+Select trajectory based on component fitting on diffusion 
+coefficient.
 }
 \examples{
 
@@ -75,8 +75,8 @@ plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder)
 folder3=system.file("extdata","SWR1_2",package="sojourner")
 trackll=readDiatrack(folder3)
 
-## use merge=T for per folder comparison, the analsyis result can't be plot back to original image
-## To see component tracks on original nuclei image, set merge=F (for per movie analysis)
+## use merge=TRUE for per folder comparison, the analsyis result can't be plot back to original image
+## To see component tracks on original nuclei image, set merge=FALSE (for per movie analysis)
 ## may not make much sense to msd on individual movie, 
 ##however for plot component track back to original nuclei image.
 

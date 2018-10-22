@@ -6,7 +6,7 @@
 \alias{dispVariance.track}
 \title{dispVariance}
 \usage{
-dispVariance(trackll, min=7, plot=F, limits=c(), log=F, output=F)
+dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE)
 }
 \arguments{
 \item{trackll}{Track list output from readDiatrack().}
@@ -29,7 +29,7 @@ like limits, this will only affect the plot, not the returned value.}
 }
 \description{
 calculate square displacements for all tracks in a trackll datatype,
-  and return the variances for the dispacements of each trajectories.
+and return the variances for the dispacements of each trajectories.
 }
 \details{
 dispVariance applies the squareDisp function to each dataframe

@@ -14,7 +14,7 @@
 # first 2 comes from Einstein Brownian motion equation k = sqrt(2 * D * dT)
 # second 2 comes from dimension
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## Dcoef.static
 
 ## return a list of coefficients
@@ -97,16 +97,16 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
             print(window+j)
             x=window+j
             D.coef.roll[[j+1]]=apply(MSD[[i]][window+j,],
-                                     MARGIN=2,
-                                     function(y){
-                                         x=x*t.interval
-                                         fit=lm(y~x)
-                                         MSDslope=coefficients(fit)[2]/2/dimension
-                                         MSDcorr=summary(fit)$r.squared
-                                         sc=c(MSDslope,MSDcorr)
-                                         names(sc)=c("slope","corr")
-                                         return(sc)
-                                     })
+                                MARGIN=2,
+                                function(y){
+                                    x=x*t.interval
+                                    fit=lm(y~x)
+                                    MSDslope=coefficients(fit)[2]/2/dimension
+                                    MSDcorr=summary(fit)$r.squared
+                                    sc=c(MSDslope,MSDcorr)
+                                    names(sc)=c("slope","corr")
+                                    return(sc)
+                                    })
             names.D.coef.roll=c(names.D.coef.roll,
                                 paste(as.character(window+j),collapse=" "))
         }
@@ -135,7 +135,8 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
     return(D.coef)
 }
 
-# alternative treat Dcoef.roll as special case of Dcoef.static, except start and end is rolling
+# alternative treat Dcoef.roll as special case of Dcoef.static, 
+# except start and end is rolling
 
 # D.coef.roll=function(MSD,window.size=4,t.interval=0.010){
 # 
@@ -216,14 +217,25 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 
 ##------------------------------------------------------------------------------
 ## percentage
-## To determine the diffusion constant from a trajectory, a line was fit to MSD(n􏲄t) with n running from 1 to the largest integer less than or equal to L/4 (Saxton, 1997).
+## To determine the diffusion constant from a trajectory, a line was fit to 
+## MSD(n􏲄t) with n running from 1 to the largest integer less than or equal t
+## o L/4 (Saxton, 1997).
 
-## "The short-range diffusion coefficients D*(0: 4) and D*(O: 8) are well determined; the longest-range diffusion coefficients D*(0: 512) and D*(0: 1024) are so broadly dis- tributed as to be useless (Fig. 2 a)" (Saxton, 1997)
-## from this the maximum track length used for determining diffusion coefficient should be restricted to 32, which yeilds 1/4*32=8. We can then use the trimTrack() to realize this cut-off.
+## "The short-range diffusion coefficients D*(0: 4) and D*(O: 8) are well 
+## determined; the longest-range diffusion coefficients D*(0: 512) and 
+## D*(0: 1024) are so broadly dis- tributed as to be useless (Fig. 2 a)" 
+## (Saxton, 1997)
+## from this the maximum track length used for determining diffusion 
+## coefficient should be restricted to 32, which yeilds 1/4*32=8. 
+## We can then use the trimTrack() to realize this cut-off.
 
-## 0~4 frames equals 4 steps, so the minimum frame taken into account in sojourner's numbering system (which start with frame 1 rather than 0) should be 1~5, D(1:5) and D(1:9) to allow sampling from 0~4. Anything below 8, should be directly using percentage =1, what tracks that has length 9
+## 0~4 frames equals 4 steps, so the minimum frame taken into account in
+## sojourner's numbering system (which start with frame 1 rather than 0) 
+## should be 1~5, D(1:5) and D(1:9) to allow sampling from 0~4. Anything 
+## below 8, should be directly using percentage =1, what tracks 
+## that has length 9
 
-# "D*(2: 4), the short-range diffusion coefficient used by Kusumi et al. (1993).
+# "D*(2: 4), the short-range diffusion coefficient used by Kusumi et al.(1993).
 # A short-range D* has the advantages that it is accurately obtained and the
 # influence of directed and confined motion is minimized. D*(2: 4) advantageous
 # for analyzing experi- mental data. The range of D is wide enough that it is
@@ -240,7 +252,8 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 # (2) 7 frames, 6 time lags, exclude 1 st, 5 points for fitting.
 # (3) 5 frames, 4 time step, remove 2, left 2, use all points if less than 7
 
-# this tired percentage setup makes it always use first 2~4-2~8 points for fitting and deriving diffusion coefficient.
+# this tired percentage setup makes it always use first 2~4-2~8 points 
+# for fitting and deriving diffusion coefficient.
 
 
 
@@ -249,7 +262,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,filter=c(min=7,max=In
 
     # calculate msd using msd.perc()
     msd.lst=msd.perc(trackll,percentage=percentage,filter=filter,trimmer=trimmer,
-                     resolution=resolution,output=FALSE)
+                    resolution=resolution,output=FALSE)
 
     # exclude the first time lag for fitting for all category
     msd.remove1st=lapply(msd.lst,function(x){
@@ -428,7 +441,8 @@ rsquare.filter.roll=function(D.coef,rsquare=0.8){
     names(D.coef.subset)=names(D.coef)
     for (i in 1:length(D.coef)) {
         for(j in 1:length(D.coef[[i]])){
-            D.coef.subset[[i]][j]=rsquare.filter(D.coef[[i]][j],rsquare=rsquare)
+            D.coef.subset[[i]][j]=rsquare.filter(D.coef[[i]][j],
+                                                rsquare=rsquare)
             #names(D.coef.subset[[i]][j])=names(D.coef[[i]][j])
 
         }

@@ -8,7 +8,7 @@
 ##' @rdname fitCDF-methods
 ##' @docType methods
 ##' @description Caclulate apparent diffusion coefficient (Dcoef) for
-##'   trajecotries by fitting displacementCDF.
+##' trajecotries by fitting displacementCDF.
 ##'
 ##' @usage
 ##'
@@ -17,11 +17,11 @@
 ##'             oneCompFit=list(D=c(0,2)),
 ##'             twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
 ##'             threeCompFit=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
-##'                               alpha=c(0,1),beta=c(0,1))),
+##'                             alpha=c(0,1),beta=c(0,1))),
 ##'         t.interval=0.01,
 ##'         maxiter.search=1000,
 ##'         maxiter.optim=1000,
-##'         output=F,
+##'         output=FALSE,
 ##'         seed=NULL)
 ##'
 ##' @param cdf cdf calculated from displacementCDF().
@@ -31,7 +31,7 @@
 ##' @param maxiter.search maximum iteration in random search start value process. defual to 1000.
 ##' @param maxiter.optim maximum iteration in local optimization process. Default ot 1000.
 ##' @param output Logical indicaring if output file should be generated.
-##' @param seed Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=T.
+##' @param seed Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=TRUE.
 ##' @return
 ##' \itemize{
 ##' \item{on screen output and file} Result and parameters of goodness of the fit.
@@ -52,7 +52,7 @@
 ##'
 ##' # specify ranges of parameter value of interest
 ##' fitCDF(cdf,components="two",
-##'       start=list(
+##'     start=list(
 ##'                 twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)))
 ##'                 )
 ##'
@@ -133,21 +133,21 @@ one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,maxiter.optim=100
 # two components fit
 
 two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
-                      t.interval=0.01,maxiter.search=1000,maxiter.optim=1000,name){
+                        t.interval=0.01,maxiter.search=1000,maxiter.optim=1000,name){
 
     ## equation
     p3 =function(r,D1,D2,alpha){
         1 - (alpha*exp(-r^2/(4*D1*t.interval)) + 
-                 (1-alpha)*exp(-r^2/(4*D2*t.interval)))}
+                (1-alpha)*exp(-r^2/(4*D2*t.interval)))}
 
     title=paste("Two components fit -",name)
     cat("\n\n","==>",title,"\n")
 
     cat("\nBrute force random search start value...\n\n")
     r.search.tcfit=nls2(P ~ p3(r,D1,D2,alpha),start=data.frame(start),
-                       # algorithm="brute-force",
-                       algorithm="random-search",
-                       control = nls.control(maxiter = maxiter.search))
+                        # algorithm="brute-force",
+                        algorithm="random-search",
+                        control = nls.control(maxiter = maxiter.search))
 
     print(coef(r.search.tcfit))
 
@@ -172,15 +172,15 @@ two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
     ## plotting
     p3.curve =function(x){
         1 - (coef(tcfit)["alpha"]*exp(-x^2/(4*coef(tcfit)["D1"]*t.interval)) + 
-                 (1-coef(tcfit)["alpha"])*exp(-x^2/(4*coef(tcfit)["D2"]*t.interval)))}
+                (1-coef(tcfit)["alpha"])*exp(-x^2/(4*coef(tcfit)["D2"]*t.interval)))}
     plot(r,P,main=title,cex=0.3)
     curve(p3.curve,
-          add=T,col="red"
+        add=TRUE,col="red"
     )
     dev.off()
     plot(r,P,main=title,cex=0.3)
     curve(p3.curve,
-          add=T,col="red"
+        add=TRUE,col="red"
     )
 
     return(tcfit)
@@ -189,7 +189,7 @@ two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
 # three components fit
 
 three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
-                                       alpha=c(0,1),beta=c(0,1)),
+                                        alpha=c(0,1),beta=c(0,1)),
                         t.interval=0.01,maxiter.search=1000,maxiter.optim=1000,name){
 
 
@@ -221,18 +221,17 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     ## from minpack.lm for low or zero noise data
     cat("\nLocal optimization...\n\n")
     thcfit=minpack.lm::nlsLM(P ~ p5(r,D1,D2,D3,alpha,beta),
-                 start=coef(r.search.thcfit),
-                 # lower=c(0,0,0,0,0),
-                 # upper=c(Inf,Inf,Inf,1,1),
-                 
-                 lower=c(start$D1[[1]],start$D2[[1]],start$D3[[1]],start$alpha[1],start$beta[[1]]),
-                 upper=c(start$D1[[2]],start$D2[[2]],start$D3[[2]],start$alpha[[2]],start$beta[[2]]),
+                start=coef(r.search.thcfit),
+                # lower=c(0,0,0,0,0),
+                # upper=c(Inf,Inf,Inf,1,1),
+                lower=c(start$D1[[1]],start$D2[[1]],start$D3[[1]],start$alpha[1],start$beta[[1]]),
+                upper=c(start$D1[[2]],start$D2[[2]],start$D3[[2]],start$alpha[[2]],start$beta[[2]]),
 
-                 # barely need control of maxiter for minpack.lm::nlsLM, if it does not
-                 # converge with default setting maxiter=1024, most likely the
-                 # problem is in the initial values
-                 control = nls.control(maxiter = maxiter.optim)
-                 )
+                # barely need control of maxiter for minpack.lm::nlsLM, if it does not
+                # converge with default setting maxiter=1024, most likely the
+                # problem is in the initial values
+                control = nls.control(maxiter = maxiter.optim)
+                )
 
     print(thcfit);cat("\n") # needed for print when compiled as pacakge
     
@@ -245,18 +244,14 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     }
     ## plot
     plot(r,P,main=title,cex=0.3)
-    curve(p5.curve,add=T,col="red")
+    curve(p5.curve,add=TRUE,col="red")
     dev.off()
     
     plot(r,P,main=title,cex=0.3)
-    curve(p5.curve,add=T,col="red")
+    curve(p5.curve,add=TRUE,col="red")
 
     return(thcfit)
-
 }
-
-
-
 
 # ------------------------------------------------------------------------------
 # fitCDF
@@ -266,11 +261,11 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
                     oneCompFit=list(D=c(0,2)),
                     twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
                     threeCompFit=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
-                                      alpha=c(0,1),beta=c(0,1))),
+                                    alpha=c(0,1),beta=c(0,1))),
                 t.interval=0.01,
                 maxiter.search=1000,
                 maxiter.optim=1000,
-                output=F){
+                output=FALSE){
 
     # use lapply to do it for all folders
     cdf.displacement=cdf$CDF.displacement
@@ -289,20 +284,20 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
 
 
         fit[[i]]=switch(method,
-               one={one.comp.fit(r,P,start=start$oneCompFit,
-                                 t.interval=t.interval,name[i],
-                                 maxiter.optim=maxiter.optim)},
+                one={one.comp.fit(r,P,start=start$oneCompFit,
+                                t.interval=t.interval,name[i],
+                                maxiter.optim=maxiter.optim)},
 
-               two={two.comp.fit(r,P,start=start$twoCompFit,
-                                 t.interval=t.interval,name[i],
-                                 maxiter.search=maxiter.search,
-                                 maxiter.optim=maxiter.optim)},
+                two={two.comp.fit(r,P,start=start$twoCompFit,
+                                t.interval=t.interval,name[i],
+                                maxiter.search=maxiter.search,
+                                maxiter.optim=maxiter.optim)},
 
-               three={three.comp.fit(r,P,start=start$threeCompFit,
-                                     t.interval=t.interval,name[i],
-                                     maxiter.search=maxiter.search,
-                                     maxiter.optim=maxiter.optim)}
-               )
+                three={three.comp.fit(r,P,start=start$threeCompFit,
+                                t.interval=t.interval,name[i],
+                                maxiter.search=maxiter.search,
+                                maxiter.optim=maxiter.optim)}
+                )
 
     }
 
@@ -328,11 +323,11 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     print(result.lst)
 
     # output
-    if (output == T){
+    if (output == TRUE){
 
         result.df=do.call(rbind.data.frame,result.lst)
         fileName=paste("FitCDF-",
-                       .timeStamp(name[1]),"....csv",sep="")
+                        .timeStamp(name[1]),"....csv",sep="")
         cat("\nOutput FitCDF.\n")
         write.csv(file=fileName,result.df)
     }
@@ -346,39 +341,34 @@ fitCDF=function(cdf, components=c("one","two","three"),
                     oneCompFit=list(D=c(0,2)),
                     twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
                     threeCompFit=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
-                                      alpha=c(0,1),beta=c(0,1))),
+                                    alpha=c(0,1),beta=c(0,1))),
                 t.interval=0.01,
                 maxiter.search=1000,
                 maxiter.optim=1000,
-                output=F,
+                output=FALSE,
                 seed=NULL){
 
     # set seed
     result=seedIt(expr=.fitCDF(cdf=cdf, components=components,
-                               start=start,
-                               t.interval=t.interval,
-                               maxiter.search=maxiter.search,
-                               maxiter.optim=maxiter.optim,
-                               output=output),seed=seed)
+                                start=start,
+                                t.interval=t.interval,
+                                maxiter.search=maxiter.search,
+                                maxiter.optim=maxiter.optim,
+                                output=output),seed=seed)
 
     # output seed
-    if (output == T){
+    if (output == TRUE){
 
         name=names(result)
         fileName=paste("FitCDF-",
-                       .timeStamp(name[1]),"-Seed....txt",sep="")
+                        .timeStamp(name[1]),"-Seed....txt",sep="")
 
-        note <- paste("\nRandom number generation seed",attr(result,"seed"),"\n")
+        note<-paste("\nRandom number generation seed",attr(result,"seed"),"\n")
         writeLines(text=note,con=fileName)
     }
 
     return(result)
-
 }
-
-
-
-
 
 
 
