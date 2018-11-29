@@ -8,7 +8,8 @@
 \alias{plotPoints}
 \title{densityMaskTracks}
 \usage{
-densityMaskTracks(trackll, scale = 128, removeEdge = FALSE, separate = FALSE, buildModel = FALSE)
+densityMaskTracks(trackll, scale = 128, removeEdge = FALSE, 
+separate = FALSE, buildModel = FALSE)
 plotLines(trackll, scale = 128)
 plotPoints(trackll, scale = 128)
 }

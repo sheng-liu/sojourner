@@ -6,7 +6,7 @@
 \alias{.dwellTime}
 \title{dwellTime}
 \usage{
-dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=FALSE)
+dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=TRUE,output=FALSE)
 }
 \arguments{
 \item{t.interval}{t.interval time, default = 10ms.}

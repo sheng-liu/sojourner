@@ -10,7 +10,7 @@
 ##' @docType methods
 ##' @description Caclulate dwell time (/residence time) for trajecotries.
 
-##' @usage dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=T,output=FALSE)
+##' @usage dwellTime(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=TRUE,output=FALSE)
 ##' @param trackll Track list output from readDiatrack().
 ##' @param t.interval t.interval time, default = 10ms.
 ##' @param x.scale x-scale min and max range.

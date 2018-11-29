@@ -8,7 +8,7 @@
 \usage{
 fitNormDistr(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,
 combine.plot=FALSE,output=FALSE, seed=NULL, proportion=NULL, means=NULL,
-sd=NULL, constrain=F)
+sd=NULL, constrain=FALSE)
 }
 \arguments{
 \item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=TRUE.}

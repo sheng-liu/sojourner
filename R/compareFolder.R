@@ -14,7 +14,7 @@
 ##' into other functions for comparison. It keeps folder information as names
 ##' of the resulting list.
 
-##' @usage compareFolder(folders,input=1,ab.track=F,cores=1)
+##' @usage compareFolder(folders,input=1,ab.track=FALSE,cores=1)
 ##' @param folders a vector storing paths to the folders location."..."
 ##'   indicates multiple (unlimited) folders can be added into the function.
 ##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session

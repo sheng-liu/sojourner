@@ -46,6 +46,7 @@
 ##' @importFrom scales cbreaks
 ##' @importFrom mixtools normalmixEM
 ##' @importFrom mixtools boot.se
+##' @importFrom mixtools lambda
 ##' @importFrom fitdistrplus fitdist
 ##' @importFrom fitdistrplus denscomp
 ##' @importFrom nls2 nls2

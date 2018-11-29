@@ -11,7 +11,8 @@
 ##' @description take in Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or Utrack (.mat) input from a folder to output a list of track lists with the option to record frames and use multiple cores.
 
 ##' @usage 
-##' createTrackll(folder, interact = FALSE, input = 1, ab.track = FALSE, cores = 1, frameRecord = TRUE)
+##' createTrackll(folder, interact = FALSE, input = 1, ab.track = FALSE, 
+##' cores = 1, frameRecord = TRUE)
 
 ##' @param interact Open interactive menu to choose the desired folder by selecting any file in it and select input type (script will process all files of that type in this folder).
 ##' @param folder Full path output file folder (if they are .txt, ensure that they are either all Diatrack or all SlimFast).
@@ -19,7 +20,7 @@
 ##' @param ab.track Use absolute coordinates for tracks.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.
-##' @return trackll data (list of lists containing dataframes of tracks)
+##' @return trackll
 ##' @details
 ##' 
 ##' (Note: When reading only Diatrack .mat sessipn files (input = 2), intensities will be saved after the frame column)
@@ -45,7 +46,7 @@
 
 ##' @examples
 ##' # select track folder interactively and specify using 2 cores
-##' # trackll <- createTrackll(interact = TRUE, cores = 2)
+##' #trackll <- createTrackll(interact = TRUE, cores = 2)
 ##' 
 ##' # Specify trackll folder path programably, specify the file format to be "2"
 ##' #(i.e. Diatrack txt files ending with .txt), cores to be 2.

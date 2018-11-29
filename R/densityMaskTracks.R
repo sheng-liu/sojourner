@@ -11,7 +11,8 @@
 ##' @description mask track lists and lists of track lists using kernel density clusters
 
 ##' @usage 
-##' densityMaskTracks(trackll, scale = 128, removeEdge = FALSE, separate = FALSE, buildModel = FALSE)
+##' densityMaskTracks(trackll, scale = 128, removeEdge = FALSE, 
+##' separate = FALSE, buildModel = FALSE)
 ##' plotLines(trackll, scale = 128)
 ##' plotPoints(trackll, scale = 128)
 ##' 

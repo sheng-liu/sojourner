@@ -71,7 +71,8 @@
 ##' folder3=system.file("extdata","SWR1_2",package="sojourner")
 ##' trackll=readDiatrack(folder3)
 ##'
-##' ## use merge=TRUE for per folder comparison, the analsyis result can't be plot back to original image
+##' ## use merge=TRUE for per folder comparison, 
+##' ## the analsyis result can't be plot back to original image
 ##' ## To see component tracks on original nuclei image, set merge=FALSE (for per movie analysis)
 ##' ## may not make much sense to msd on individual movie, 
 ##' ##however for plot component track back to original nuclei image.
