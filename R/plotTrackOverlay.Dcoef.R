@@ -139,15 +139,17 @@
     Dcoef=sapply(trackl,function(x){x[[2]]})
     
     ## Plot trackoverlay for each file (trackl) in the un-merged trackll.
-    plot.new()
     ## If image folder is provided, add nuclei background to the plot.
     if(!is.null(folder)){
         #library(EBImage)
         img=EBImage::readImage(nuclei.lst[[i]])
         d=img@.Data
-        raster.img <- as.raster(t(d[,,1]))
-        plot.window(xlim=c(0,scale),ylim=c(0,scale),xaxs = "i", yaxs = "i")
-        plot(raster.img,add = TRUE)
+        if(length(dim(d))==3){d.m=as.matrix(d[,,1])}else{d.m=as.matrix(d)}        
+        d.n=apply(d.m,2,rev)
+        d.o=apply(d.n,1,rev)
+        d.p=apply(d.o,1,rev)
+        
+        image(d.p, useRaster=TRUE, axes=FALSE,col = grey(seq(0, 1, length = 256)))
     }
     mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=2,col.main="white") 
     
