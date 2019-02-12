@@ -23,7 +23,7 @@
 
 ##' @export diffusionMap
 
-##' @importFrom reticulate
+##' @import reticulate
 
 ##------------------------------------------------------------------------------
 ##
