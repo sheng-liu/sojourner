@@ -25,6 +25,8 @@
 
 ##' @importFrom reticulate
 
+##------------------------------------------------------------------------------
+##
 diffusionMap=function(filename){
     # Force python3 use... compatibility with Windows?
     # use_python('/usr/local/bin/python3', required = T)
