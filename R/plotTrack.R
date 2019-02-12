@@ -794,8 +794,8 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
     
     color.lst=lapply(track.overlay.data.lst,function(x){x$component})
     
-    ###trackll or trackll.sel 
-    ###plotComponentTrackOverlay: no visible binding for global variable ‘trackll’
+    # trackll or trackll.sel 
+    # plotComponentTrackOverlay: no visible binding for global variable "trackll"
     # print(track.overlay.data.lst)
     # print(color.lst)
     # print(class(color.lst[[1]]))

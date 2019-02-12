@@ -67,7 +67,7 @@ tracks.msda2sjr=function(file){
     trackl.sjr=lapply(tracks.mat, function(x){
         x=data.frame(x)
         x=x[,-1] # remove time column
-        x=x/0.107  # change µm to pixel
+        x=x/0.107  # change micrometer to pixel
         colnames(x)=c("x","y")
         x$z=rep(1,times=dim(x)[1])
         return(x)
