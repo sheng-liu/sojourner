@@ -36,7 +36,7 @@
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' trackll=createTrackll(folder=c(folder1,folder2),input=1)
 ##' MSD=msd(trackll=trackll)
-##' dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
+##' dcoef=Dcoef(MSD,dt=6,plot=FALSE,output=FALSE)
 ##' # fit dcoef
 ##' # for replication purpose set seed to fix number
 ##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=484)
@@ -46,9 +46,9 @@
 ##' dcoef=dcoef,log.transformed=TRUE,output=FALSE)
 ##' # subset component tracks to further analyze msd, dcoef
 ##' trackll.swr1=trackll.sel[["SWR1_WT_140mW_image6.txt"]]
-##' msd(trackll.swr1,plot=TRUE)
-##' msd(trackll.swr1,summarize=TRUE,plot=TRUE)
-##' Dcoef(trackll=trackll.swr1,plot=TRUE)
+##' msd(trackll.swr1,plot=FALSE)
+##' msd(trackll.swr1,summarize=TRUE,plot=FALSE)
+##' Dcoef(trackll=trackll.swr1,plot=FALSE)
 ##' plotTrackOverlay(trackll.swr1)
 ##'
 ##' # plotNucTrackOverlay(folder=folder1, trackll=trackll.swr1)
@@ -78,11 +78,11 @@
 ##' ##however for plot component track back to original nuclei image.
 ##'
 ##' ## compute MSD
-##' MSD=msd(trackll=trackll,plot=TRUE)
-##' msd(trackll=trackll,summarize=TRUE,plot=TRUE)
+##' MSD=msd(trackll=trackll,plot=FALSE)
+##' msd(trackll=trackll,summarize=TRUE,plot=FALSE)
 ##'
 ##' ## calculate Dcoef
-##' dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
+##' dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
 ##'
 ##' ## fit normal distribution to define component
 ##' ## set seed to reproduce results (see fitNormalDistr() for details on seed)
@@ -91,7 +91,7 @@
 ##' ## select component tracks based on fitting
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,dcoef)
 ##' ## plot component tracks
-##' #plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
+##' plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
 
 
 ##' @export selComponentTracks

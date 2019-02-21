@@ -17,36 +17,32 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r,eval=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 ## load the library
-library(sojurner)
-
+library(sojourner)
 
 ## specify folder location
-
 # example file with the pacakge
-SWR1=system.file("extdata","SWR1",package="sojurner")
-HTZ1=system.file("extdata","HTZ1",package="sojurner")
+SWR1=system.file("extdata","SWR1",package="sojourner")
+HTZ1=system.file("extdata","HTZ1",package="sojourner")
 
 # local files
-SWR1="/Volumes/wulab/Users/ranjana/Data/2015-11-09/SWR1_Halo"
+SWR1_2="/Volumes/wulab/Users/ranjana/Data/2015-11-09/SWR1_Halo"
 
 # files on remoote dm11 server shared folder
-SWR1="/groups/wu/wulab/Users/ranjana/Data/2015-11-09/SWR1_Halo"
+SWR1_3="/groups/wu/wulab/Users/ranjana/Data/2015-11-09/SWR1_Halo"
 
 
 ## create master tracklist
-comp=compareFolder(SWR1,HTZ1)
+comp=compareFolder(c(SWR1,HTZ1))
 
 
-## compute MSD, Dinst, CDF, dwellTime
-msd(comp,dt=6,summarize=T,filter=T,plot=T,output=T)
+## compute MSD, CDF, dwellTime
+msd(comp,dt=6,summarize=TRUE, plot=TRUE,output=FALSE)
 
-Dinst(comp,dt=6,filter=T,plot=T,output=T)
+displacementCDF(comp,dt=6)
 
-CDF(comp,dt=6)
-
-dwellTime(comp,plot=T,output=T)
+dwellTime(comp,plot=TRUE,output=FALSE)
 
 
 ## use ?function for help

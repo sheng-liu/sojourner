@@ -18,9 +18,13 @@ A Shiny app implementation of many of the core features of sojourner. Namely, th
 
 ### Launching
 
-```{r, eval = FALSE}
-sojournerGUI()
+```{r, echo=FALSE, results='hide', warning=FALSE}
+library(sojourner)
 ```
+
+'''{r, eval=FALSE}
+sojournerGUI()
+'''
 
 ### Helpful Tips
 

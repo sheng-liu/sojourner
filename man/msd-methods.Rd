@@ -93,10 +93,10 @@ trackll=readDiatrack(folder)
 
 # filter track based length
 trackll.flt=filterTrack(trackll,filter=c(min=5,max=Inf))
-msd=msd(trackll.flt,dt=6,summarize=TRUE,plot=TRUE)
+msd=msd(trackll.flt,dt=6,summarize=TRUE,plot=FALSE)
 str(msd)
 
 # focus on a group of trajectory by setting filter greater than dt
 trackll.flt2=filterTrack(trackll,filter=c(min=7,max=Inf))
-msd2=msd(trackll.flt2,dt=6,summarize=TRUE,plot=TRUE)
+msd2=msd(trackll.flt2,dt=6,summarize=TRUE,plot=FALSE)
 }

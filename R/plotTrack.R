@@ -155,11 +155,11 @@
 ##' ## fit normal distribution to define component
 ##' ## set seed to reproduce results (see fitNormalDistr() for details on seed)
 ##' fit=fitNormDistr(
-##'     dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
+##' dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
 ##'
 ##' ## select component tracks based on fitting
 ##' trackll.sel=selComponentTracks(trackll,
-##'     fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
+##' fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 ##'
 ##' ## plot component tracks
 ##' plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)

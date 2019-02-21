@@ -3,13 +3,14 @@ Type: Package
 Title: Single Molecule Tracking
 Version: 0.5.2
 Date: 2015-10-15
-Author: Sheng Liu, Sun Jay Yoo, Xiaona Tang, Youngsoo Sun
+Author: Sheng Liu, Sun Jay Yoo, Xiaona Tang, Youngsoo Sung
 Maintainer: Sheng Liu <sliu@jhu.edu>
 Description: single molecule tracking analysis tool. It imports trajectory from trajectory generation programs such as Diatrack, computes biophysical paramters of the moleclues.
 License: Artistic-2.0
 LazyData: TRUE
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
+biocViews: Software, Technology
 Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,sp,truncnorm,utils,stats,pixmap,SDMTools,rlang,rowr,graphics,grDevices,grid,compiler,lattice
 NeedsCompilation: no
 Packaged: 2017-09-05; shengliu

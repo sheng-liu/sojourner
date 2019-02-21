@@ -46,7 +46,7 @@
 
 ##' @examples
 ##' # select track folder interactively and specify using 2 cores
-##' #trackll <- createTrackll(interact = TRUE, cores = 2)
+##' # trackll <- createTrackll(interact = TRUE, cores = 2)
 ##' 
 ##' # Specify trackll folder path programably, specify the file format to be "2"
 ##' #(i.e. Diatrack txt files ending with .txt), cores to be 2.

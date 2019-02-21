@@ -53,9 +53,9 @@
 ##' trackll=maskTracks(folder,trackll)
 ##' 
 ##' # Plot track overlays,
-##' plotTrackOverlay.Dcoef(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),
-##' resolution=0.107,rsquare=0.8,t.interval=0.01,Dcoef.range=c(-6,2),
-##' color=c("blue", "white", "red"),folder=NULL,file.No=0,line.width=0.1)
+##' #plotTrackOverlay.Dcoef(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),
+##' #resolution=0.107,rsquare=0.8,t.interval=0.01,Dcoef.range=c(-6,2),
+##' #color=c("blue", "white", "red"),folder=NULL,file.No=0,line.width=0.1)
 ##' plotTrackOverlay.Dcoef(trackll=trackll,color=c("red", "yellow"),folder=folder,file.No=0)
 ##' plotTrackOverlay.Dcoef(trackll=trackll,color=c("red", "yellow"),folder=folder,file.No=c(1,2))
 
