@@ -135,26 +135,42 @@
             Dcoef=sapply(trackl,function(x){x[[2]]})
             Dcoef[!is.finite(Dcoef)] <- NA
             trackl=trackl[!is.na(Dcoef)]
+        }
+        if (length(trackl)>0){
             Dcoef=sapply(trackl,function(x){x[[2]]})
             trackl=trackl[which(Dcoef>=(Dcoef.range[1]))]
+        }
+        if (length(trackl)>0){
             Dcoef=sapply(trackl,function(x){x[[2]]})
             trackl=trackl[which(Dcoef<=(Dcoef.range[2]))]
+        }    
+        if (length(trackl)>0){
             Rsquare=sapply(trackl,function(x){x[[3]]})
             trackl=trackl[which(sapply(Rsquare, function(x){x>=rsquare}))]
-            
+        }    
+        if (length(trackl)>0){
             Dcoef=sapply(trackl,function(x){x[[2]]})
-        }
-        
+        }    
+            
+            
         ## Plot trackoverlay for each file (trackl) in the un-merged trackll.
         plot.new()
         ## If image folder is provided, add nuclei background to the plot.
         if(!is.null(folder)){
             #library(EBImage)
             img=EBImage::readImage(nuclei.lst[[which(basename(gsub("_Nuclei.tif","",(nuclei.lst)))==gsub(".mat","",names(trackll[i])))]])
+            #d=img@.Data
+            #raster.img <- as.raster(t(d[,,1]))
+            #plot.window(xlim=c(0,scale),ylim=c(0,scale),xaxs = "i", yaxs = "i")
+            #plot(raster.img,add = TRUE)
             d=img@.Data
-            raster.img <- as.raster(t(d[,,1]))
-            plot.window(xlim=c(0,scale),ylim=c(0,scale),xaxs = "i", yaxs = "i")
-            plot(raster.img,add = TRUE)
+            m=as.matrix(d)
+            n=apply(m,2,rev)
+            o=apply(n,1,rev)
+            p=apply(o,1,rev)
+            
+            q=p[c(1:scale),c(1:scale)]
+            image(q, useRaster=TRUE, axes=FALSE,col = grey(seq(0, 1, length = 256)))
         }
         mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=1,col.main="white") 
         
