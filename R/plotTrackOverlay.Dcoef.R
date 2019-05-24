@@ -148,9 +148,9 @@
             Rsquare=sapply(trackl,function(x){x[[3]]})
             trackl=trackl[which(sapply(Rsquare, function(x){x>=rsquare}))]
         }    
-        if (length(trackl)>0){
+        
             Dcoef=sapply(trackl,function(x){x[[2]]})
-        }    
+            
             
             
         ## Plot trackoverlay for each file (trackl) in the un-merged trackll.
@@ -171,8 +171,12 @@
             
             q=p[c(1:scale),c(1:scale)]
             image(q, useRaster=TRUE, axes=FALSE,col = grey(seq(0, 1, length = 256)))
+            mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=1,col.main="white") 
+        }else{
+          plot.new()
+          mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=1,col.main="white") 
         }
-        mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=1,col.main="white") 
+        
         
         ## Rescale the plotting area with resolution, changing the units from pixel to um.
         plot.window(xlim=c(0,scale*resolution),ylim=c(0,scale*resolution),xaxs = "i", yaxs = "i")
