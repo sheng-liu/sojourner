@@ -135,13 +135,13 @@
             Dcoef=sapply(trackl,function(x){x[[2]]})
             Dcoef[!is.finite(Dcoef)] <- NA
             trackl=trackl[!is.na(Dcoef)]
+            Dcoef=sapply(trackl,function(x){x[[2]]})
         }
         if (length(trackl)>0){
-            Dcoef=sapply(trackl,function(x){x[[2]]})
             trackl=trackl[which(Dcoef>=(Dcoef.range[1]))]
+            Dcoef=sapply(trackl,function(x){x[[2]]})
         }
         if (length(trackl)>0){
-            Dcoef=sapply(trackl,function(x){x[[2]]})
             trackl=trackl[which(Dcoef<=(Dcoef.range[2]))]
         }    
         if (length(trackl)>0){
@@ -164,7 +164,7 @@
             #plot.window(xlim=c(0,scale),ylim=c(0,scale),xaxs = "i", yaxs = "i")
             #plot(raster.img,add = TRUE)
             d=img@.Data
-            m=as.matrix(d)
+            m=as.matrix(d[,,1])
             n=apply(m,2,rev)
             o=apply(n,1,rev)
             p=apply(o,1,rev)
