@@ -14,4 +14,4 @@ biocViews: Software, Technology
 Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,sp,truncnorm,utils,stats,pixmap,SDMTools,rlang,rowr,graphics,grDevices,grid,compiler,lattice
 NeedsCompilation: no
 Packaged: 2017-09-05; shengliu
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
