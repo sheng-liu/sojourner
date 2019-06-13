@@ -3,7 +3,7 @@ title: "sojourner Shiny Interface Guide"
 output: rmarkdown::html_vignette
 date: "September 7, 2017"
 vignette: >
-    %\VignetteIndexEntry{sojourner package}
+    %\VignetteIndexEntry{sojourner Shiny Interface Guide}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -12,21 +12,19 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Shiny Interface Guide
-
 ### Description
 
 A Shiny app implementation of many of the core features of sojourner. Namely, the basic abilities of reading trackll video files (of all supported types), processing tracks (linking, filtering, trimming, masking, merging), and analyzing tracks (MSD, Dcoef, CDF, and dwell time). The application interface provides a code-free GUI, suited with dynamic and interactive plots, that is relatively easy to use. The app is still in alpha development and only supports the base functions needed for educational capabilities and such. A command history log, named *command_history.R* in the working directory, will be continuously updated each time a command is called for diagnostic, replication, and tracking purposes.
 
 ### Launching
 
-```{r, echo=FALSE, results='hide', warning=FALSE}
+```{r, eval=FALSE, echo=FALSE, results='hide', warning=FALSE}
 library(sojourner)
 ```
 
-'''{r, eval=FALSE}
+```{{r, eval=FALSE}
 sojournerGUI()
-'''
+```
 
 ### Helpful Tips
 

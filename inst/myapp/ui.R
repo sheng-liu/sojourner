@@ -41,7 +41,7 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
                              
                              sliderInput(inputId = "cores", 
                                          label = h5("Cores for parallel computation:"),
-                                         min=1, max=parallel::detectCores(logical = F), 
+                                         min=1, max=parallel::detectCores(logical = FALSE), 
                                          value = 1, step = 1),
                              
                              textOutput("readNote"),
@@ -492,31 +492,31 @@ shinyUI(fluidPage(#theme = "bootstrap.css",
                                       selected = 2),
                          textOutput("noNucOverlay"),
                          
-                         plotOutput(outputId = "plotPoints", inline = T)
+                         plotOutput(outputId = "plotPoints", inline = TRUE)
                      )
     ),
     
     conditionalPanel(condition = "input.section == 'Mean Squared Displacement'", 
                      mainPanel(
-                         plotOutput(outputId = "plotMSD", inline = T)
+                         plotOutput(outputId = "plotMSD", inline = TRUE)
                      )
     ),
     
     conditionalPanel(condition = "input.section == 'Diffusion Coefficient'", 
                      mainPanel(
-                         plotOutput(outputId = "plotDcoef", inline = T)
+                         plotOutput(outputId = "plotDcoef", inline = TRUE)
                      )
     ),  
     
     conditionalPanel(condition = "input.section == 'Cummulative Distribution Function'", 
                      mainPanel(
-                         plotOutput(outputId = "plotDCDF", inline = T)
+                         plotOutput(outputId = "plotDCDF", inline = TRUE)
                      )
     ),  
     
     conditionalPanel(condition = "input.section == 'Dwell Time'", 
                      mainPanel(
-                         plotOutput(outputId = "plotDT", inline = T)
+                         plotOutput(outputId = "plotDT", inline = TRUE)
                      )
     )
 ))

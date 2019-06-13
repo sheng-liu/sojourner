@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, echo=FALSE, warning=FALSE}
+```{r, eval=FALSE, echo=FALSE, warning=FALSE}
 ## load the library
 library(sojourner)
 

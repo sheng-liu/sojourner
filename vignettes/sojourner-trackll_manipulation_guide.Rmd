@@ -3,7 +3,7 @@ title: "sojourner trackll Manipulation Guide"
 output: rmarkdown::html_vignette
 date: "July 18, 2017"
 vignette: >
-    %\VignetteIndexEntry{sojourner package}
+    %\VignetteIndexEntry{sojourner trackll Manipulation Guide}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -12,7 +12,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# sojourner trackll Manipulation Guide
 ![](sojourner_Pipeline.png)
 
 ## createTrackll()
@@ -58,7 +57,7 @@ trackll <- createTrackll(interact = TRUE, cores = 2)
 trackll <- createTrackll("/DIRECTORYPATH/", input = 2, cores = 2)
 ```
 
-```{r, echo=FALSE, results='hide', warning=FALSE}
+```{r, eval=FALSE, echo=FALSE, results='hide', warning=FALSE}
 #designate a folder and then create trackll
 folder=system.file("extdata","SWR1",package="sojourner")
 trackll = createTrackll(folder=folder, input=1)
@@ -138,7 +137,7 @@ Track: [Last five characters of the file name].[Start frame].[Length].[Track].[#
 
 ### Examples
 
-```{r, echo = FALSE, results='hide', warning=FALSE}
+```{r, eval=FALSE, echo = FALSE, results='hide', warning=FALSE}
 #Basic function call of linkSkippedFrames
 trackll.linked <- linkSkippedFrames(trackll, tolerance = 5, maxSkip = 10)
 ```

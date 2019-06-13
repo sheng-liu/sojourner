@@ -18,7 +18,7 @@ shinyServer(function(input, output, session){
         cat("# NEW SESSION CODE: ", Sys.time(), "\n",file="command_history.R", sep = "", append=TRUE);
         cat("folder <- dirname(file.choose());",file="command_history.R", sep = "\n", append=TRUE);
         cat("setwd(folder);",file="command_history.R", sep = "\n", append=TRUE);
-        nuclei.list$data = list.files(path=folder$data,pattern="_Nuclei.tif",full.names=T)
+        nuclei.list$data = list.files(path=folder$data,pattern="_Nuclei.tif",full.names = TRUE)
         output$folderConfirm <- renderText({
             paste("New working directory: ", folder$data, sep = "")
         })
@@ -27,13 +27,13 @@ shinyServer(function(input, output, session){
     #Read
     observeEvent(input$read, {
         withBusyIndicatorServer("read", {    
-            ab.track = F;
-            frameRecord = F;
+            ab.track = FALSE;
+            frameRecord = FALSE;
             for(i in 1:length(input$parameters)){
                 if (input$parameters[[i]] == 1){
-                    ab.track = T;
+                    ab.track = TRUE;
                 } else if (input$parameters[[i]] == 2) {
-                    frameRecord = T;
+                    frameRecord = TRUE;
                 }
             }
             trackll$data <- createTrackll(folder = folder$data,
