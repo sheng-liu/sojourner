@@ -11,7 +11,7 @@
 ##'
 ##' @usage
 ##' fitNormDistr(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,
-##' combine.plot=FALSE,output=FALSE, seed=NULL, proportion=NULL, means=NULL,
+##' combine.plot=FALSE,output=FALSE, proportion=NULL, means=NULL,
 ##' sd=NULL, constrain=FALSE)
 ##' @param dcoef diffusion coefficient calculated from Dcoef().
 ##' @param components parameter specifying the number of components to fit. If NULL (default), a components analysis is done to determine the most likely components and this number is then used for subsequent analysis.
@@ -19,15 +19,16 @@
 ##' @param binwidth binwidth for the combined plot. If NULL (default), will automatic assign binwidth.
 ##' @param combine.plot Logical indicate if all the plot should be combined into one, with same scale (/same axises breaks), same color theme, and same bin size for comparison.
 ##' @param output logical indicate if output file should be generated.
-##' @param seed Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=TRUE.
 ##' @param proportion numeric vector with estimates of each component's proportion of the whole data.
 ##' @param means numeric vector with estimates of mean(mu) values for each component.
 ##' @param sd numeric vector with estimates of standard deviation(sigma) values for each component.
 ##' @param constrain logical indicate if mean and std deviation are set to the given value. This will not work for the unimodal distribution.
 ##' @details
-##' components analysis uses the likelihood ratio test (LRT) to assess the number of mixture components.
-##' Bad Random seed generation may cause normalmixEM to crash. Running the function again would be the quickest solution to this issue.
-##'
+##' Components analysis uses the likelihood ratio test (LRT) to assess the number of mixture components.
+##' Bad Random seed generation may cause normalmixEM to crash. Using another seed will solve the issue.
+##' 
+##' Note: Ensure that a random number generator seed has been set! The seed is stored as an attribute of the returned object of fitNormDistr() and using the same seed makes results repeatable (see examples).
+##' 
 ##' @return
 ##' \describe{
 ##' \item{proportions}{The proportions of mixing components.}
@@ -35,7 +36,7 @@
 ##' \item{sd}{The Standard Deviations (SD) of components if not log transformed; if log transformed, it is then interpreted as Coefficient of Variation (CV).}
 ##' \item{loglik}{The log likelihood, useful for compare different fitting result, the bigger the better fit.}
 ##' }
-
+##' 
 ##' @examples
 ##' # compare folders
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
@@ -43,43 +44,50 @@
 ##' trackll=compareFolder(c(folder1,folder2))
 ##' MSD=msd(trackll=trackll)
 ##' dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
-##' # fit dcoef
+##' 
+##' # set seed (use any number)
+##' set.seed(123)
+##' 
+##' # save RNG state
+##' my_seed=.Random.seed 
+##' 
+##' # fit dcoef and assign seed attribute to a
 ##' a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,combine.plot=FALSE,output=FALSE)
-##' # to repeat a
+##' attr(a,"seed")=my_seed
+##' 
+##' # to repeat results of a, load seed attribute of a into RNG state
+##' .Random.seed=attr(a,"seed")
 ##' b=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,
-##' combine.plot=FALSE,output=FALSE,seed=attr(a,"seed"))
+##' combine.plot=FALSE,output=FALSE)
+##' 
 ##' # if a and b are the same
 ##' mapply(identical,a[[1]],b[[1]])
+##' 
 ##' #try with log transformation
+##' set.seed(234)
+##' my_seed=.Random.seed 
 ##' c=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
-##' #trying with some parameters provided(this will be applied to all dcoef results). 
-##' #with constrain = FALSE, this will be used as the starting values for the EM-algorithm
-##' #normally we should deal with only one dataset when working with constrains, 
-##' #since it will apply to all of them.
+##' attr(c,"seed")=my_seed
+##' 
+##' # trying with some parameters provided(this will be applied to all dcoef results). 
+##' # with constrain = FALSE, this will be used as the starting values for the EM-algorithm
+##' # normally we should deal with only one dataset when working with constrains, 
+##' # since it will apply to all of them.
 ##' folder3=system.file("extdata","HSF", package="sojourner")
 ##' trackll=compareFolder(c(folder3),input=2)
 ##' MSD=msd(trackll=trackll)
 ##' dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
-##' #try with constrain =TRUE, the values will be forced to eqaul the provided ones.
+##' 
+##' # try with constrain =TRUE, the values will be forced to eqaul the provided ones.
+##' set.seed(345)
+##' my_seed=.Random.seed 
 ##' e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=TRUE)
+##' attr(c,"seed")=my_seed
 
 
 ##' @export fitNormDistr
 ###############################################################################
 # fit normal distribution to diffusion coefficient
-
-#function for seed setting
-.setSeed=function(seed=NULL){
-    # set seed
-    if (is.null(seed)){
-        seed=sample(0:647,1)
-        set.seed(seed)
-    }else{set.seed(seed)}
-    
-    note=paste("\nRandom number generation seed",seed,"\n")
-    cat(note)
-    return(seed)
-}
 
 #function that deals with one-component normal distribution fitting
 .singlecompFit=function(data, mean=NULL, sd=NULL, constrain=FALSE){
@@ -128,9 +136,8 @@
     return(out)
 }
 
-.fitNormDistr=function(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,combine.plot=FALSE,output=FALSE,proportion=NULL,means=NULL,sd=NULL,seed=NULL,constrain=FALSE){
-    # scale=1e3
-    if(is.null(seed)){stop("NULL seed, cannot execute .fitNormDistr")}
+.fitNormDistr=function(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,combine.plot=FALSE,output=FALSE,proportion=NULL,means=NULL,sd=NULL,constrain=FALSE){
+    cat("\n Ensure a seed has been set! See help docs for more info.\n")
     name=names(dcoef)
     len=length(dcoef)
     
@@ -254,7 +261,7 @@
         logTrans=""
         if(log.transform){logTrans=".logtrans"}
         fileName=paste("FitNormDistr-",
-                    .timeStamp(name[1]),".seed",seed,logTrans,"....csv",sep="")
+                    .timeStamp(name[1]),logTrans,"....csv",sep="")
         cat("\nOutput FitNormDistr.\n")
         write.csv(file=fileName,result.df)
         
@@ -262,7 +269,7 @@
         if (combine.plot == TRUE){
 
             fileName=paste("FitNormDistr-combinePlot-",
-                            .timeStamp(name[1]),".seed",seed,logTrans,"....pdf",sep="")
+                            .timeStamp(name[1]),logTrans,"....pdf",sep="")
             cat("\nOutput FitNormDistr plot.\n")
 
             # gridExtra::marrangeGrob non-interactive use, multipage pdf
@@ -276,12 +283,10 @@
 }
 
 
-fitNormDistr=function(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,combine.plot=FALSE,output=FALSE,seed=NULL, proportion=NULL, means=NULL, sd=NULL, constrain=FALSE){
-    seed=.setSeed(seed=seed)
-
+fitNormDistr=function(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,combine.plot=FALSE,output=FALSE, proportion=NULL, means=NULL, sd=NULL, constrain=FALSE){
     # return
     structure(.fitNormDistr(dcoef=dcoef,components=components,log.transform=log.transform,binwidth=binwidth,combine.plot=combine.plot,output=output,
-                            proportion=proportion,means=means,sd=sd,constrain=constrain,seed=seed),seed=seed)
+                            proportion=proportion,means=means,sd=sd,constrain=constrain))
 }
 
 
