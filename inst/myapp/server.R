@@ -320,6 +320,7 @@ shinyServer(function(input, output, session){
     })
     
     #Fit CDF 
+    # TO DO: Add seed support
     observeEvent(input$calculateFCDF, {
         withBusyIndicatorServer("calculateFCDF",{ 
             if (isolate(input$componentsFCDF) == 1){
@@ -331,9 +332,8 @@ shinyServer(function(input, output, session){
                     t.interval=input$t.intervalFCDF,
                     maxiter.search=input$maxiter.searchFCDF,
                     maxiter.optim=input$maxiter.optimFCDF,
-                    output = input$outputFCDF,
-                    seed=NULL))
-                cat("fitdf <- fitCDF(cdf = cdf, components=\"one\", start=list(oneCompFit=list(D=c(",input$D_1,",",input$D_2,"))), t.interval=",input$t.intervalFCDF,", maxiter.search=",input$maxiter.searchFCDF,", maxiter.optim=",input$maxiter.optimFCDF,", output = ",input$outputFCDF,", seed=NULL) #fitCDF\n", file = "command_history.R", sep = "", append = TRUE);
+                    output = input$outputFCDF))
+                cat("fitdf <- fitCDF(cdf = cdf, components=\"one\", start=list(oneCompFit=list(D=c(",input$D_1,",",input$D_2,"))), t.interval=",input$t.intervalFCDF,", maxiter.search=",input$maxiter.searchFCDF,", maxiter.optim=",input$maxiter.optimFCDF,", output = ",input$outputFCDF,") #fitCDF\n", file = "command_history.R", sep = "", append = TRUE);
             } else if (isolate(input$componentsFCDF) == 2){
                 fitcdf$data <- isolate(fitCDF(cdf = cdf$data, 
                     components="two",
@@ -345,9 +345,8 @@ shinyServer(function(input, output, session){
                     t.interval=input$t.intervalFCDF,
                     maxiter.search=input$maxiter.searchFCDF,
                     maxiter.optim=input$maxiter.optimFCDF,
-                    output = input$outputFCDF,
-                    seed=NULL))
-                cat("fitdf <- fitCDF(cdf = cdf, components=\"two\", start=list(twoCompFit=list(D1=c(",input$D1_1,",",input$D1_2,"),D2=c(",input$D2_1,",",input$D2_2,"),alpha=c(",input$alpha_1,",",input$alpha_2,"))), t.interval=",input$t.intervalFCDF,", maxiter.search=",input$maxiter.searchFCDF,", maxiter.optim=",input$maxiter.optimFCDF,", output = ",input$outputFCDF,", seed=NULL) #fitCDF\n", file = "command_history.R", sep = "", append = TRUE);
+                    output = input$outputFCDF))
+                cat("fitdf <- fitCDF(cdf = cdf, components=\"two\", start=list(twoCompFit=list(D1=c(",input$D1_1,",",input$D1_2,"),D2=c(",input$D2_1,",",input$D2_2,"),alpha=c(",input$alpha_1,",",input$alpha_2,"))), t.interval=",input$t.intervalFCDF,", maxiter.search=",input$maxiter.searchFCDF,", maxiter.optim=",input$maxiter.optimFCDF,", output = ",input$outputFCDF,") #fitCDF\n", file = "command_history.R", sep = "", append = TRUE);
             } else if (isolate(input$componentsFCDF) == 3){
                 fitcdf$data <- isolate(fitCDF(cdf = cdf$data, 
                     components="three",
@@ -361,9 +360,8 @@ shinyServer(function(input, output, session){
                     t.interval=input$t.intervalFCDF,
                     maxiter.search=input$maxiter.searchFCDF,
                     maxiter.optim=input$maxiter.optimFCDF,
-                    output = input$outputFCDF,
-                    seed=NULL))
-                cat("fitdf <- fitCDF(cdf = cdf, components=\"three\", start=list(threeCompFit=list(D1=c(",input$D1_1,",",input$D1_2,"),D2=c(",input$D2_1,",",input$D2_2,"), D3=c(",input$D3_1,",",input$D3_2,"), alpha=c(",input$alpha_1,",",input$alpha_2,", beta=c(",input$beta_1,",",input$beta_2,"))))), t.interval=",input$t.intervalFCDF,", maxiter.search=",input$maxiter.searchFCDF,", maxiter.optim=",input$maxiter.optimFCDF,", output = ",input$outputFCDF,", seed=NULL) #fitCDF\n", file = "command_history.R", sep = "", append = TRUE);
+                    output = input$outputFCDF))
+                cat("fitdf <- fitCDF(cdf = cdf, components=\"three\", start=list(threeCompFit=list(D1=c(",input$D1_1,",",input$D1_2,"),D2=c(",input$D2_1,",",input$D2_2,"), D3=c(",input$D3_1,",",input$D3_2,"), alpha=c(",input$alpha_1,",",input$alpha_2,", beta=c(",input$beta_1,",",input$beta_2,"))))), t.interval=",input$t.intervalFCDF,", maxiter.search=",input$maxiter.searchFCDF,", maxiter.optim=",input$maxiter.optimFCDF,", output = ",input$outputFCDF,") #fitCDF\n", file = "command_history.R", sep = "", append = TRUE);
             }
             if (input$outputFCDF){
                 output$FCDFConfirm <- renderText({

@@ -21,8 +21,7 @@
 ##'         t.interval=0.01,
 ##'         maxiter.search=1000,
 ##'         maxiter.optim=1000,
-##'         output=FALSE,
-##'         seed=NULL)
+##'         output=FALSE)
 ##'
 ##' @param cdf cdf calculated from displacementCDF().
 ##' @param components parameter specifying the number of components to fit.Currently support one to three components fit.
@@ -31,15 +30,16 @@
 ##' @param maxiter.search maximum iteration in random search start value process. defual to 1000.
 ##' @param maxiter.optim maximum iteration in local optimization process. Default ot 1000.
 ##' @param output Logical indicaring if output file should be generated.
-##' @param seed Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=TRUE.
 ##' @return
 ##' \itemize{
 ##' \item{on screen output and file} Result and parameters of goodness of the fit.
 ##' \item{Plot,} fiting plot.
 ##' }
-##' @details calculating Dceof by fitting displacementCDF.
+##' @details Calculating Dcoef by fitting displacementCDF.
 ##'
 ##' Reducing the range can greatly increase the precision of the searching; alternatively, if the range are unavailable, increase the maxiter.search so more points will be searched through with the cost of computation time. maxiter.optim barely need to change, if it does not converge with default setting maxiter=1000, most likely the problem is in the initial values.
+##' 
+##' Note: Ensure that a random number generator seed has been manually set! The seed is stored as an attribute of the returned object of fitCDF() and using the same seed makes results repeatable (see examples).
 
 ##'
 ##' @examples
@@ -50,21 +50,31 @@
 ##' trackll=compareFolder(c(folder1,folder2))
 ##' cdf=displacementCDF(trackll,dt=1,plot=FALSE,output=FALSE)
 ##'
-##' # specify ranges of parameter value of interest
-##' fitCDF(cdf,components="two",
-##'     start=list(
-##'                 twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)))
-##'                 )
-##'
-##' # repeat a fit
+##' # set unique seed (use any number)
+##' set.seed(123)
+##' 
+##' # fit CDF (function automatically saves seed state as an attribute of the result)
 ##' a=fitCDF(cdf,components="two",output=FALSE)
-##' b=fitCDF(cdf,components="two",output=FALSE,seed=attr(a,"seed"))
+##' 
+##' # to repeat results of a, load seed attribute of 'a' into current RNG state
+##' .Random.seed=attr(a,"seed")
+##' # or, reset the seed with same unique number
+##' # set.seed(123)
+##' 
+##' b=fitCDF(cdf,components="two",output=FALSE)
 ##'
-##' # if result are identical
+##' # if 'a' and 'b' are the same
 ##' x=summary(a[[1]])
 ##' y=summary(b[[1]])
 ##' # formula records environment, exclude from the comparison
 ##' mapply(identical,x[names(x)!="formula"],y[names(y)!="formula"])
+##' 
+##' # To specify ranges of parameter value of interest
+##' set.seed(234)
+##' fit=fitCDF(cdf,components="two",
+##'     start=list(
+##'                 twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)))
+##'                 )
 
 
 # the only difference is the function environment, of course it is runned in two functions
@@ -266,7 +276,9 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
                 maxiter.search=1000,
                 maxiter.optim=1000,
                 output=FALSE){
-
+    
+    cat("\nIMPORTANT: Ensure a seed has been manually set! See help docs for more info.\n")
+    
     # use lapply to do it for all folders
     cdf.displacement=cdf$CDF.displacement
     name=names(cdf.displacement)
@@ -331,7 +343,6 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
         cat("\nOutput FitCDF.\n")
         write.csv(file=fileName,result.df)
     }
-
     return(invisible(fit))
 
 }
@@ -345,28 +356,20 @@ fitCDF=function(cdf, components=c("one","two","three"),
                 t.interval=0.01,
                 maxiter.search=1000,
                 maxiter.optim=1000,
-                output=FALSE,
-                seed=NULL){
+                output=FALSE){
+    
+    # collects current seed (recommended that a unique seed is set beforehand, e.g. set.seed(123))
+    my_seed=.Random.seed
 
-    # set seed
-    result=seedIt(expr=.fitCDF(cdf=cdf, components=components,
+    result=.fitCDF(cdf=cdf, components=components,
                                 start=start,
                                 t.interval=t.interval,
                                 maxiter.search=maxiter.search,
                                 maxiter.optim=maxiter.optim,
-                                output=output),seed=seed)
-
-    # output seed
-    if (output == TRUE){
-
-        name=names(result)
-        fileName=paste("FitCDF-",
-                        .timeStamp(name[1]),"-Seed....txt",sep="")
-
-        note<-paste("\nRandom number generation seed",attr(result,"seed"),"\n")
-        writeLines(text=note,con=fileName)
-    }
-
+                                output=output)
+    # saves seed as attribute of result
+    attr(result,"seed")=my_seed
+    
     return(result)
 }
 

@@ -1,0 +1,288 @@
+R CMD BiocCheck sojourner_0.5.2.tar.gz 
+This is BiocCheck version 1.21.0. BiocCheck is a work in progress.
+Output and severity of issues may change. Installing package...
+* Checking Package Dependencies...
+* Checking if other packages can import this one...
+* Checking to see if we understand object initialization...
+    * NOTE: Consider clarifying how 4 object(s) are initialized. Maybe
+      they are part of a data set loaded with data(), or perhaps part
+      of an object referenced in with() or within().
+    function (object)
+      displacementCDF (y)
+      displacementCDF (x)
+      displacementCDF (group)
+      gg.mixEM (mu)
+* Checking for deprecated package usage...
+* Checking for remote package usage...
+* Checking version number...
+* Checking for version number mismatch...
+* Checking version number validity...
+    Package version 0.5.2; pre-release
+* Checking R Version dependency...
+* Checking package size...
+* Checking individual file sizes...
+* Checking biocViews...
+* Checking that biocViews are present...
+* Checking package type based on biocViews...
+    Software
+* Checking for non-trivial biocViews...
+* Checking that biocViews come from the same category...
+* Checking biocViews validity...
+* Checking for recommended biocViews...
+* Checking build system compatibility...
+* Checking for blank lines in DESCRIPTION...
+* Checking if DESCRIPTION is well formatted...
+* Checking for whitespace in DESCRIPTION field names...
+* Checking that Package field matches directory/tarball name...
+* Checking for Version field...
+* Checking for valid maintainer...
+* Checking DESCRIPTION/NAMESPACE consistency...
+* Checking vignette directory...
+    This is a software package
+    * WARNING: Evaluate more vignette chunks.
+        # of code chunks: 11
+        # of eval=FALSE: 7
+        # of nonexecutable code chunks by syntax: 1
+        # total unevaluated 8 (72%)
+* Checking library calls...
+* Checking for library/require of sojourner...
+* Checking coding practice...
+    * NOTE: Avoid sapply(); use vapply()
+      Found in files:
+        compare.RT.CDF.R (line 139, column 17)
+        compareFolder.R (line 52, column 17)
+        compareFolder.R (line 54, column 24)
+        Dcoef.Helpers.R (line 45, column 12)
+        Dcoef.Helpers.R (line 332, column 12)
+        densityMaskTracks.R (line 195, column 15)
+        DisplacementCDF.R (line 162, column 15)
+        DisplacementCDF.R (line 198, column 37)
+        DisplacementCDF.R (line 212, column 45)
+        DisplacementCDF.R (line 215, column 36)
+        dwellTime.R (line 48, column 5)
+        dwellTime.R (line 55, column 16)
+        filterTrack.R (line 72, column 24)
+        filterTrack.R (line 124, column 18)
+        fitNormDistr.R (line 225, column 26)
+        fitResidenceTime.R (line 200, column 17)
+        hmmTrackll.R (line 110, column 13)
+        hmmTrackll.R (line 151, column 23)
+        hmmTrackll.R (line 156, column 22)
+        hmmTrackll.R (line 191, column 20)
+        maskTracks.R (line 286, column 18)
+        msd.R (line 171, column 15)
+        msd.R (line 205, column 29)
+        msd.R (line 526, column 16)
+        msd.R (line 599, column 16)
+        msd.R (line 605, column 7)
+        plotTrack.R (line 213, column 11)
+        plotTrackOverlay.Dcoef.R (line 129, column 11)
+        plotTrackOverlay.Dcoef.R (line 132, column 11)
+        plotTrackOverlay.Dcoef.R (line 134, column 11)
+        plotTrackOverlay.Dcoef.R (line 136, column 13)
+        plotTrackOverlay.Dcoef.R (line 137, column 25)
+        plotTrackOverlay.Dcoef.R (line 139, column 11)
+        readParticleTracker.R (line 95, column 14)
+        readParticleTracker.R (line 96, column 14)
+        readSlimFast.R (line 113, column 28)
+    * NOTE: Avoid 1:...; use seq_len() or seq_along()
+      Found in files:
+        bootstrap.R (line 99, column 15)
+        combineTrackll.R (line 66, column 19)
+        combineTrackll.R (line 73, column 19)
+        compare.RT.CDF.R (line 97, column 20)
+        compare.RT.CDF.R (line 134, column 16)
+        compare.RT.CDF.R (line 146, column 17)
+        compare.RT.CDF.R (line 149, column 49)
+        compareFolder.R (line 61, column 19)
+        compareFolder.R (line 72, column 19)
+        Dcoef.Helpers.R (line 88, column 12)
+        Dcoef.Helpers.R (line 93, column 15)
+        Dcoef.Helpers.R (line 123, column 15)
+        Dcoef.Helpers.R (line 124, column 19)
+        Dcoef.Helpers.R (line 269, column 19)
+        Dcoef.Helpers.R (line 294, column 15)
+        Dcoef.Helpers.R (line 296, column 19)
+        Dcoef.Helpers.R (line 305, column 19)
+        Dcoef.Helpers.R (line 442, column 15)
+        Dcoef.Helpers.R (line 443, column 18)
+        Dcoef.R (line 235, column 23)
+        Dcoef.R (line 243, column 23)
+        Dcoef.R (line 304, column 19)
+        densityMaskTracks.R (line 191, column 33)
+        densityMaskTracks.R (line 192, column 33)
+        densityMaskTracks.R (line 227, column 23)
+        densityMaskTracks.R (line 239, column 15)
+        densityMaskTracks.R (line 274, column 14)
+        densityMaskTracks.R (line 278, column 19)
+        densityMaskTracks.R (line 435, column 19)
+        densityMaskTracks.R (line 459, column 19)
+        densityMaskTracks.R (line 467, column 19)
+        densityMaskTracks.R (line 481, column 15)
+        densityMaskTracks.R (line 495, column 15)
+        DisplacementCDF.R (line 183, column 15)
+        DisplacementCDF.R (line 211, column 20)
+        DisplacementCDF.R (line 265, column 15)
+        DisplacementCDF.R (line 282, column 16)
+        DisplacementCDF.R (line 388, column 15)
+        DisplacementCDF.R (line 395, column 19)
+        DisplacementCDF.R (line 402, column 19)
+        dispVariance.R (line 136, column 19)
+        exportTrackll.R (line 71, column 32)
+        exportTrackll.R (line 81, column 19)
+        exportTrackll.R (line 84, column 106)
+        exportTrackll.R (line 111, column 15)
+        exportTrackll.R (line 117, column 33)
+        filterTrack.R (line 71, column 15)
+        filterTrack.R (line 105, column 15)
+        filterTrack.R (line 123, column 15)
+        fitCDF.R (line 292, column 15)
+        fitNormDistr.R (line 155, column 15)
+        fitNormDistr.R (line 211, column 19)
+        fitResidenceTime.R (line 206, column 16)
+        fitResidenceTime.R (line 222, column 19)
+        getCI.R (line 70, column 15)
+        getCI.R (line 80, column 19)
+        getCI.R (line 95, column 19)
+        getCI.R (line 123, column 19)
+        helperFunctions.R (line 89, column 15)
+        helperFunctions.R (line 156, column 15)
+        hmmTrackll.R (line 139, column 19)
+        linkSkippedFrames.R (line 162, column 79)
+        linkSkippedFrames.R (line 219, column 15)
+        linkSkippedFrames.R (line 220, column 19)
+        maskTracks.R (line 114, column 15)
+        maskTracks.R (line 160, column 15)
+        maskTracks.R (line 162, column 19)
+        maskTracks.R (line 184, column 15)
+        maskTracks.R (line 228, column 15)
+        maskTracks.R (line 230, column 19)
+        maskTracks.R (line 257, column 15)
+        maskTracks.R (line 266, column 19)
+        maskTracks.R (line 280, column 19)
+        maskTracks.R (line 294, column 20)
+        maskTracks.R (line 295, column 24)
+        maskTracks.R (line 303, column 22)
+        maskTracks.R (line 315, column 19)
+        maskTracks.R (line 338, column 15)
+        maskTracks.R (line 339, column 19)
+        maskTracks.R (line 352, column 14)
+        maskTracks.R (line 393, column 19)
+        mergeTracks.R (line 52, column 15)
+        mergeTracks.R (line 62, column 13)
+        mergeTracks.R (line 66, column 21)
+        msd.R (line 126, column 19)
+        msd.R (line 187, column 15)
+        msd.R (line 488, column 23)
+        msd.R (line 529, column 15)
+        msd.R (line 532, column 19)
+        msd.R (line 598, column 15)
+        msd.R (line 609, column 15)
+        msd.R (line 611, column 19)
+        plotIndividualTracks.R (line 66, column 12)
+        plotIndividualTracks.R (line 79, column 12)
+        plotIndividualTracks.R (line 87, column 12)
+        plotLocalizations.Density.R (line 86, column 17)
+        plotLocalizations.Density.R (line 99, column 17)
+        plotLocalizations.Density.R (line 106, column 17)
+        plotLocalizations.Density.R (line 122, column 16)
+        Plotting.Helpers.R (line 173, column 15)
+        Plotting.Helpers.R (line 301, column 19)
+        plotTrack.R (line 256, column 15)
+        plotTrack.R (line 342, column 15)
+        plotTrack.R (line 451, column 15)
+        plotTrack.R (line 625, column 15)
+        plotTrack.R (line 674, column 15)
+        plotTrack.R (line 688, column 15)
+        plotTrack.R (line 770, column 15)
+        plotTrack.R (line 771, column 19)
+        plotTrackOverlay.Dcoef.R (line 111, column 17)
+        plotTrackOverlay.Dcoef.R (line 117, column 17)
+        plotTrackOverlay.Dcoef.R (line 163, column 16)
+        plotTrackOverlay.Dcoef.R (line 208, column 14)
+        readDiaSessions.R (line 195, column 72)
+        readDiaSessions.R (line 235, column 19)
+        readDiaSessions.R (line 240, column 31)
+        readDiaSessions.R (line 271, column 29)
+        readDiatrack.R (line 91, column 15)
+        readDiatrack.R (line 186, column 19)
+        readDiatrack.R (line 193, column 29)
+        readDiatrack.R (line 226, column 29)
+        readParticleTracker.R (line 184, column 19)
+        readParticleTracker.R (line 190, column 29)
+        readParticleTracker.R (line 224, column 29)
+        readSlimFast.R (line 63, column 68)
+        readSlimFast.R (line 80, column 15)
+        readSlimFast.R (line 113, column 35)
+        readSlimFast.R (line 127, column 72)
+        readSlimFast.R (line 156, column 19)
+        readSlimFast.R (line 161, column 31)
+        readSlimFast.R (line 192, column 29)
+        readUtrack.R (line 76, column 15)
+        readUtrack.R (line 97, column 18)
+        readUtrack.R (line 124, column 72)
+        readUtrack.R (line 155, column 19)
+        readUtrack.R (line 160, column 31)
+        readUtrack.R (line 191, column 29)
+        selComponentTracks.R (line 125, column 15)
+        selComponentTracks.R (line 137, column 19)
+        selComponentTracks.R (line 149, column 15)
+        selComponentTracks.R (line 177, column 15)
+        selComponentTracks.R (line 183, column 19)
+        selComponentTracks.R (line 208, column 19)
+        selComponentTracks.R (line 209, column 23)
+        selComponentTracks.R (line 230, column 15)
+        selComponentTracks.R (line 239, column 15)
+        selComponentTracks.R (line 247, column 19)
+        squareDisp.R (line 64, column 15)
+* Checking parsed R code in R directory, examples, vignettes...
+* Checking function lengths.......................................................................
+    * NOTE: Recommended function length <= 50 lines.
+      There are 45 functions > 50 lines.
+      The longest 5 functions are:
+        hmmTrackll() (R/hmmTrackll.R, line 92): 211 lines
+        Dcoef() (R/Dcoef.R, line 103): 210 lines
+        readDiatrack() (R/readDiatrack.R, line 165): 179 lines
+        cmpOverlayData() (R/plotTrack.R, line 740): 168 lines
+        indexCell() (R/maskTracks.R, line 207): 165 lines
+* Checking man page documentation...
+    * NOTE: Consider adding runnable examples to the following man
+      pages which document exported objects:
+      readUtrack-methods.Rd, sojourner.Rd
+* Checking package NEWS...
+    * NOTE: Consider adding a NEWS file, so your package news will be
+      included in Bioconductor release announcements.
+* Checking unit tests...
+    * NOTE: Consider adding unit tests. We strongly encourage them. See
+      http://bioconductor.org/developers/how-to/unitTesting-guidelines/.
+* Checking skip_on_bioc() in tests...
+* Checking formatting of DESCRIPTION, NAMESPACE, man pages, R source,
+  and vignette source...
+    * NOTE: Consider shorter lines; 815 lines (7%) are > 80 characters
+      long.
+    First 6 lines:
+      R/compare.RT.CDF.R:83         Totaltracklls <- readline("Set the number...
+      R/compare.RT.CDF.R:98             trackll.label<-readline(cat("Enter th...
+      R/compare.RT.CDF.R:99             t.interval[i]<-as.numeric(readline(ca...
+      R/compare.RT.CDF.R:159         cat("    1-CDF of selected tracklls were...
+      R/createTrackll.R:11 ##' @description take in Diatrack (.txt or .mat), ...
+      R/createTrackll.R:17 ##' @param interact Open interactive menu to choos...
+    See http://bioconductor.org/developers/how-to/coding-style/
+    See FormatR package:
+      https://cran.r-project.org/web/packages/formatR/index.html
+* Checking if package already exists in CRAN...
+* Checking for bioc-devel mailing list subscription...
+    * NOTE: Cannot determine whether maintainer is subscribed to the
+      bioc-devel mailing list (requires admin credentials).  Subscribe
+      here: https://stat.ethz.ch/mailman/listinfo/bioc-devel
+* Checking for support site registration...
+    Maintainer is registered at support site.
+
+
+Summary:
+ERROR count: 0
+WARNING count: 1
+NOTE count: 9
+For detailed information about these checks, see the BiocCheck
+vignette, available at
+https://bioconductor.org/packages/3.10/bioc/vignettes/BiocCheck/inst/doc/BiocCheck.html#interpreting-bioccheck-output

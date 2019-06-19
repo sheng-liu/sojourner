@@ -15,8 +15,7 @@ fitCDF(cdf, components=c("one","two","three"),
         t.interval=0.01,
         maxiter.search=1000,
         maxiter.optim=1000,
-        output=FALSE,
-        seed=NULL)
+        output=FALSE)
 }
 \arguments{
 \item{start}{the start value for fitting.}
@@ -32,8 +31,6 @@ fitCDF(cdf, components=c("one","two","three"),
 \item{maxiter.search}{maximum iteration in random search start value process. defual to 1000.}
 
 \item{output}{Logical indicaring if output file should be generated.}
-
-\item{seed}{Seed for random number generator. This makes each run easily repeatable. Seed will be automatically assigned if no seed is specified (default). The seed information is stored as an attribute of the returned object. The seed can also be output to a txt file when output=TRUE.}
 }
 \value{
 \itemize{
@@ -46,9 +43,11 @@ Caclulate apparent diffusion coefficient (Dcoef) for
 trajecotries by fitting displacementCDF.
 }
 \details{
-calculating Dceof by fitting displacementCDF.
+Calculating Dcoef by fitting displacementCDF.
 
 Reducing the range can greatly increase the precision of the searching; alternatively, if the range are unavailable, increase the maxiter.search so more points will be searched through with the cost of computation time. maxiter.optim barely need to change, if it does not converge with default setting maxiter=1000, most likely the problem is in the initial values.
+
+Note: Ensure that a random number generator seed has been manually set! The seed is stored as an attribute of the returned object of fitCDF() and using the same seed makes results repeatable (see examples).
 }
 \examples{
 
@@ -58,19 +57,29 @@ folder2=system.file("extdata","HTZ1",package="sojourner")
 trackll=compareFolder(c(folder1,folder2))
 cdf=displacementCDF(trackll,dt=1,plot=FALSE,output=FALSE)
 
-# specify ranges of parameter value of interest
-fitCDF(cdf,components="two",
-    start=list(
-                twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)))
-                )
+# set unique seed (use any number)
+set.seed(123)
 
-# repeat a fit
+# fit CDF (function automatically saves seed state as an attribute of the result)
 a=fitCDF(cdf,components="two",output=FALSE)
-b=fitCDF(cdf,components="two",output=FALSE,seed=attr(a,"seed"))
 
-# if result are identical
+# to repeat results of a, load seed attribute of 'a' into current RNG state
+.Random.seed=attr(a,"seed")
+# or, reset the seed with same unique number
+# set.seed(123)
+
+b=fitCDF(cdf,components="two",output=FALSE)
+
+# if 'a' and 'b' are the same
 x=summary(a[[1]])
 y=summary(b[[1]])
 # formula records environment, exclude from the comparison
 mapply(identical,x[names(x)!="formula"],y[names(y)!="formula"])
+
+# To specify ranges of parameter value of interest
+set.seed(234)
+fit=fitCDF(cdf,components="two",
+    start=list(
+                twoCompFit=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)))
+                )
 }

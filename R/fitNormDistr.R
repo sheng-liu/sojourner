@@ -27,7 +27,7 @@
 ##' Components analysis uses the likelihood ratio test (LRT) to assess the number of mixture components.
 ##' Bad Random seed generation may cause normalmixEM to crash. Using another seed will solve the issue.
 ##' 
-##' Note: Ensure that a random number generator seed has been set! The seed is stored as an attribute of the returned object of fitNormDistr() and using the same seed makes results repeatable (see examples).
+##' Note: Ensure that a random number generator seed has been manually set! The seed is stored as an attribute of the returned object of fitNormDistr() and using the same seed makes results repeatable (see examples).
 ##' 
 ##' @return
 ##' \describe{
@@ -51,7 +51,7 @@
 ##' # fit dcoef (function automatically saves seed state as an attribute of the result)
 ##' a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,combine.plot=FALSE,output=FALSE)
 ##' 
-##' # to repeat results of a, load seed attribute of a into RNG state
+##' # to repeat results of 'a', load seed attribute of a into RNG state
 ##' .Random.seed=attr(a,"seed")
 ##' # or, reset the seed with same unique number
 ##' # set.seed(123)
@@ -59,7 +59,7 @@
 ##' b=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,
 ##' combine.plot=FALSE,output=FALSE)
 ##' 
-##' # if a and b are the same
+##' # if 'a' and 'b' are the same
 ##' mapply(identical,a[[1]],b[[1]])
 ##' 
 ##' #try with log transformation
@@ -131,7 +131,7 @@
 }
 
 .fitNormDistr=function(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,combine.plot=FALSE,output=FALSE,proportion=NULL,means=NULL,sd=NULL,constrain=FALSE){
-    cat("\n Ensure a seed has been set! See help docs for more info.\n")
+    cat("\nIMPORTANT: Ensure a seed has been manually set! See help docs for more info.\n")
     name=names(dcoef)
     len=length(dcoef)
     
@@ -282,9 +282,8 @@ fitNormDistr=function(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,co
     # collects current seed (recommended that a unique seed is set beforehand, e.g. set.seed(123))
     my_seed=.Random.seed
     
-    # return
-    result = structure(.fitNormDistr(dcoef=dcoef,components=components,log.transform=log.transform,binwidth=binwidth,combine.plot=combine.plot,output=output,
-                            proportion=proportion,means=means,sd=sd,constrain=constrain))
+    result = .fitNormDistr(dcoef=dcoef,components=components,log.transform=log.transform,binwidth=binwidth,combine.plot=combine.plot,output=output,
+                            proportion=proportion,means=means,sd=sd,constrain=constrain)
     
     # saves seed as attribute of result
     attr(result,"seed")=my_seed
