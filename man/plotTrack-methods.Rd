@@ -171,8 +171,9 @@ dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
 
 ## fit normal distribution to define component
 ## set seed to reproduce results (see fitNormalDistr() for details on seed)
+set.seed(123)
 fit=fitNormDistr(
-dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
+dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
 
 ## select component tracks based on fitting
 trackll.sel=selComponentTracks(trackll,

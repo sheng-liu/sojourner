@@ -39,7 +39,8 @@
 ##' dcoef=Dcoef(MSD,dt=6,plot=FALSE,output=FALSE)
 ##' # fit dcoef
 ##' # for replication purpose set seed to fix number
-##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=484)
+##' set.seed(484)
+##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
 ##'
 ##' # select component tracks from fitting
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,
@@ -86,7 +87,8 @@
 ##'
 ##' ## fit normal distribution to define component
 ##' ## set seed to reproduce results (see fitNormalDistr() for details on seed)
-##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE,seed=481)
+##' set.seed(484)
+##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
 ##'
 ##' ## select component tracks based on fitting
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,dcoef)

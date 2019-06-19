@@ -7,7 +7,7 @@
 ##' @title fitNormDistr
 ##' @rdname fitNormDistr-methods
 ##' @docType methods
-##' @description fit normal distributions to diffusion coefficient caclulated by Dcoef method.
+##' @description fit normal distributions to diffusion coefficient caclulated by Dcoef method and saves seed state as a attribute of the result
 ##'
 ##' @usage
 ##' fitNormDistr(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,
@@ -45,18 +45,17 @@
 ##' MSD=msd(trackll=trackll)
 ##' dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 ##' 
-##' # set seed (use any number)
+##' # set unique seed (use any number)
 ##' set.seed(123)
 ##' 
-##' # save RNG state
-##' my_seed=.Random.seed 
-##' 
-##' # fit dcoef and assign seed attribute to a
+##' # fit dcoef (function automatically saves seed state as an attribute of the result)
 ##' a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,combine.plot=FALSE,output=FALSE)
-##' attr(a,"seed")=my_seed
 ##' 
 ##' # to repeat results of a, load seed attribute of a into RNG state
 ##' .Random.seed=attr(a,"seed")
+##' # or, reset the seed with same unique number
+##' # set.seed(123)
+##' 
 ##' b=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,
 ##' combine.plot=FALSE,output=FALSE)
 ##' 
@@ -65,9 +64,7 @@
 ##' 
 ##' #try with log transformation
 ##' set.seed(234)
-##' my_seed=.Random.seed 
 ##' c=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
-##' attr(c,"seed")=my_seed
 ##' 
 ##' # trying with some parameters provided(this will be applied to all dcoef results). 
 ##' # with constrain = FALSE, this will be used as the starting values for the EM-algorithm
@@ -80,10 +77,7 @@
 ##' 
 ##' # try with constrain =TRUE, the values will be forced to eqaul the provided ones.
 ##' set.seed(345)
-##' my_seed=.Random.seed 
 ##' e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=TRUE)
-##' attr(c,"seed")=my_seed
-
 
 ##' @export fitNormDistr
 ###############################################################################
@@ -284,9 +278,18 @@
 
 
 fitNormDistr=function(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,combine.plot=FALSE,output=FALSE, proportion=NULL, means=NULL, sd=NULL, constrain=FALSE){
+    
+    # collects current seed (recommended that a unique seed is set beforehand, e.g. set.seed(123))
+    my_seed=.Random.seed
+    
     # return
-    structure(.fitNormDistr(dcoef=dcoef,components=components,log.transform=log.transform,binwidth=binwidth,combine.plot=combine.plot,output=output,
+    result = structure(.fitNormDistr(dcoef=dcoef,components=components,log.transform=log.transform,binwidth=binwidth,combine.plot=combine.plot,output=output,
                             proportion=proportion,means=means,sd=sd,constrain=constrain))
+    
+    # saves seed as attribute of result
+    attr(result,"seed")=my_seed
+    
+    return(result)
 }
 
 

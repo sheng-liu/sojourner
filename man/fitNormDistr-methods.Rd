@@ -40,7 +40,7 @@ sd=NULL, constrain=FALSE)
 }
 }
 \description{
-fit normal distributions to diffusion coefficient caclulated by Dcoef method.
+fit normal distributions to diffusion coefficient caclulated by Dcoef method and saves seed state as a attribute of the result
 }
 \details{
 Components analysis uses the likelihood ratio test (LRT) to assess the number of mixture components.
@@ -56,18 +56,17 @@ trackll=compareFolder(c(folder1,folder2))
 MSD=msd(trackll=trackll)
 dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 
-# set seed (use any number)
+# set unique seed (use any number)
 set.seed(123)
 
-# save RNG state
-my_seed=.Random.seed 
-
-# fit dcoef and assign seed attribute to a
+# fit dcoef (function automatically saves seed state as an attribute of the result)
 a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,combine.plot=FALSE,output=FALSE)
-attr(a,"seed")=my_seed
 
 # to repeat results of a, load seed attribute of a into RNG state
 .Random.seed=attr(a,"seed")
+# or, reset the seed with same unique number
+# set.seed(123)
+
 b=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,
 combine.plot=FALSE,output=FALSE)
 
@@ -76,9 +75,7 @@ mapply(identical,a[[1]],b[[1]])
 
 #try with log transformation
 set.seed(234)
-my_seed=.Random.seed 
 c=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
-attr(c,"seed")=my_seed
 
 # trying with some parameters provided(this will be applied to all dcoef results). 
 # with constrain = FALSE, this will be used as the starting values for the EM-algorithm
@@ -91,7 +88,5 @@ dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 
 # try with constrain =TRUE, the values will be forced to eqaul the provided ones.
 set.seed(345)
-my_seed=.Random.seed 
 e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=TRUE)
-attr(c,"seed")=my_seed
 }
