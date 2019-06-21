@@ -8,22 +8,22 @@
 ##' @rdname createTrackll-methods
 ##' @docType methods
 ##'
-##' @description take in Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or Utrack (.mat) input from a folder to output a list of track lists with the option to record frames and use multiple cores.
+##' @description take in Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or Utrack (.mat) input from a folder to output a list of track lists.
 
 ##' @usage 
 ##' createTrackll(folder, interact = FALSE, input = 1, ab.track = FALSE, 
 ##' cores = 1, frameRecord = TRUE)
 
 ##' @param interact Open interactive menu to choose the desired folder by selecting any file in it and select input type (script will process all files of that type in this folder).
-##' @param folder Full path output file folder (if they are .txt, ensure that they are either all Diatrack or all SlimFast).
-##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4; Utrack .mat file = 5).
+##' @param folder Full path output file folder (ensure each folder has files of only one input type).
+##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4; U-Track .mat file = 5).
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
+##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Each core will be assigned to read one file when in parallel.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.
 ##' @return trackll
 ##' @details
 ##' 
-##' (Note: When reading only Diatrack .mat sessipn files (input = 2), intensities will be saved after the frame column)
+##' (Note: When reading only Diatrack .mat session files (input = 2), intensities will be saved after the frame column)
 ##' 
 ##' It is highly advised that the frame record option be left on to preserve the most information, especially when linking frames and when using Utrack.
 ##' If the frame record option is turned on for reading Diatrack .txt files (input = 1), take note that the frame record is artificially created as consecutive frames after the given start frame.
@@ -45,16 +45,14 @@
 ##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 
 ##' @examples
-##' # select track folder interactively and specify using 2 cores
-##' # trackll <- createTrackll(interact = TRUE, cores = 2)
 ##' 
-##' # Specify trackll folder path programably, specify the file format to be "2"
-##' #(i.e. Diatrack txt files ending with .txt), cores to be 2.
+##' # Designate a folder and then create trackll from DiaTrack .txt data
 ##' folder=system.file("extdata","SWR1",package="sojourner")
-##' trackll <- createTrackll(folder=folder, input = 1, cores = 2)
-
+##' trackll = createTrackll(folder=folder, input=1)
+##' # Alternatively, use interact to open file browser and select input data type
+##' # trackll <- createTrackll(interact = TRUE)
+##' 
 ##' @export createTrackll
-
 ###############################################################################
 
 ### createTrackll ###

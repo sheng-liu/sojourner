@@ -52,11 +52,9 @@
 ##' plotMask(folder=folder)
 
 ##' @details
-##' IMPORTANT: It will take an extremely long time to mask unfiltered data. Filter first using filterTrack(trackll,filter=c(min=7,max=Inf)), then mask using maskTracks(folder, trackll)!
-
+##' IMPORTANT: It will take an extremely long time to mask large datasets. Filter/trim first using filterTrack() and trimTrack(), then mask using maskTracks(folder, trackll)! 
 ##' Note the mask file should have the same name as the output files with a "_MASK.tif" ending. 
-##' If there are more mask files than trackll, masking will fail. If there are less mask files, trackls without masks will be deleted.
-##' Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
+##' If there are more mask files than trackll, masking will fail. If there are less mask files, trackls without masks will be deleted. Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
 ##' 
 ##' indexCell() will mask a trackll, separate each cell into a trackl, display all cell areas and mean intensities, and then apply any area and intensity filters.
 ##' There is also the capability to export the final areas/intensities as "indexCell.csv" to the home directory and the pixel dimensions can be changed.

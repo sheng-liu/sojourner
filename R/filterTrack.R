@@ -15,9 +15,9 @@
 ##' trimTrack(trackll,trimmer=c(min=1,max=32))
 ##' trackLength(trackll)
 
-##' @param trackll Track list output from readDiatrack().
-##' @param filter length of track used for filtration. Only tracks pass through filter will be selected.
-##' @param trimmer length of track used for trimming. All tracks will be trimmed by the trimmer.
+##' @param trackll a list of track lists.
+##' @param filter range of possible track lengths to keep
+##' @param trimmer range of track lengths allowed in output, otherwise trimmed.
 
 
 ##' @return
@@ -26,9 +26,9 @@
 ##' \item{len} list of track lengths.
 ##' }
 
-##' @details filter is used to filter out tracks that has length within a
-##' specified range (default 5~Inf); On the other hand, despite the lengths of
-##' tracks, trimmer is used to trim /cutoff all tracks to a specified range
+##' @details filterTrack() is used to filter out tracks that has length within a
+##' specified range (default 7~Inf). On the other hand, despite the lengths of
+##' tracks, trimTrack() is used to trim /cutoff all tracks to a specified range
 ##' (default 1~32).
 ##'
 ##'

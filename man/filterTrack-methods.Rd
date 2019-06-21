@@ -12,11 +12,11 @@ trimTrack(trackll,trimmer=c(min=1,max=32))
 trackLength(trackll)
 }
 \arguments{
-\item{trackll}{Track list output from readDiatrack().}
+\item{trackll}{a list of track lists.}
 
-\item{filter}{length of track used for filtration. Only tracks pass through filter will be selected.}
+\item{filter}{range of possible track lengths to keep}
 
-\item{trimmer}{length of track used for trimming. All tracks will be trimmed by the trimmer.}
+\item{trimmer}{range of track lengths allowed in output, otherwise trimmed.}
 }
 \value{
 \itemize{
@@ -28,9 +28,9 @@ trackLength(trackll)
 methods for filter and trim tracks based on track length.
 }
 \details{
-filter is used to filter out tracks that has length within a
-specified range (default 5~Inf); On the other hand, despite the lengths of
-tracks, trimmer is used to trim /cutoff all tracks to a specified range
+filterTrack() is used to filter out tracks that has length within a
+specified range (default 7~Inf). On the other hand, despite the lengths of
+tracks, trimTrack() is used to trim /cutoff all tracks to a specified range
 (default 1~32).
 }
 \examples{
