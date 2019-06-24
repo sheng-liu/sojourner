@@ -31,7 +31,7 @@ squareDispCpp is the cpp version of squareDisp
 \examples{
 folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
-trackll=compareFolder(c(folder1,folder2))
+trackll=compareFolder(folders=c(folder1,folder2), input=3)
 #use default filter with min=7
 filtered.trackll=filterTrack(trackll)
 track.dt=squareDisp(filtered.trackll[[1]][[1]],dt=6)

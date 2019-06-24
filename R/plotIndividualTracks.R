@@ -36,10 +36,10 @@
 ##' # Generate trackll, and process, 
 ##' # e.g. mask region of interest, tracks from multiple files should not be merged.
 ##' folder=system.file("extdata","HSF",package="sojourner")
-##' trackll=createTrackll(interact=FALSE,folder,input=2, cores = 2)
+##' trackll=createTrackll(folder=folder, input=3)
+##' trackll=filterTrack(trackll,filter=c(7,Inf))
 ##' trackll=maskTracks(folder,trackll)
 ##' trackll=mergeTracks(folder, trackll)
-##' trackll=filterTrack(trackll,filter=c(7,Inf))
 ##' 
 ##' # Plot individual tracks,
 ##' plotIndividualTracks(trackll,grid.size=c(1000,1000),resolution=0.107,t.interval=0.5)

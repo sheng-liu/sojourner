@@ -24,9 +24,8 @@
 ##' @param interact Open menu to interactively choose file.
 ##' @return trackll 
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="sojourner")
-##' trackll=readDiatrack(folder)
-##' str(trackll,max.level=2)
+##' # trackll=readDiatrack(folder=folder)
+##' # str(trackll,max.level=2)
 
 
 

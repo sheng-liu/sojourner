@@ -40,8 +40,8 @@ The naming scheme for each track is as follows:
 }
 \examples{
 #Basic function call of .readDiaSessions
-hsf_folder=system.file("extdata", "HSF", package="sojourner")
-trackll <- readDiaSessions(folder=hsf_folder, cores = 2)
+hsf_folder=system.file("extdata", "HSF_2", package="sojourner")
+trackll <- readDiaSessions(folder=hsf_folder)
 
 #Basic function call of .readDiaSessions
 #trackl <- .readDiaSessions(interact = TRUE)

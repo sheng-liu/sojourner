@@ -100,7 +100,7 @@
 
 ##' @examples
 ##' folder=system.file("extdata","SWR1",package="sojourner")
-##' trackll.ab=readDiatrack(folder,ab.track=TRUE)
+##' trackll.ab=createTrackll(folder=folder, input=3, ab.track=TRUE)
 ##' plotTrack(trackll.ab)
 ##'
 ##' ## plot from index file
@@ -116,8 +116,8 @@
 ##'
 ##' ## masking with image mask
 ##' track.folder=system.file("extdata","SWR1_2",package="sojourner")
-##' trackll=readDiatrack(folder=track.folder)
-##' trackll.masked=readDiatrack(folder=track.folder)
+##' trackll=createTrackll(folder=track.folder, input=3)
+##' trackll.masked <- maskTracks(folder=track.folder, trackll=trackll)
 ##' str(trackll,1)
 ##' str(trackll.masked,1)
 ##'
@@ -137,12 +137,12 @@
 ##'
 ##' ## plotComponentTrackOverlay (see selComponentTracks() for more details)
 ##' folder2=system.file("extdata","SWR1_2",package="sojourner")
-##' trackll=readDiatrack(folder2)
+##' trackll=createTrackll(folder=folder2, input=3)
 ##'
-##' ## use merge=TRUE for per folder comparison, the analsyis result can't be plot
+##' ## use mergeTracks() for per folder comparison, the analsyis result can't be plot
 
 ##' ##back to original image. To see component tracks on original nuclei image,
-##' ##set merge=FALSE, for per movie analysis.
+##' ## do not use mergeTracks(), for per movie analysis.
 
 ##'
 ##' ## compute MSD

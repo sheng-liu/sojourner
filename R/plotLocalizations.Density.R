@@ -41,7 +41,7 @@
 ##' # Generate trackll, and process, 
 ##' # e.g. mask region of interest, tracks from multiple files should not be merged.
 ##' folder=system.file("extdata","HSF",package="sojourner")
-##' trackll=createTrackll(interact=FALSE,folder,input=2, cores = 2)
+##' trackll=createTrackll(folder=folder, input=3)
 ##' trackll=maskTracks(folder,trackll)
 ##' 
 ##' # Plot localization map,

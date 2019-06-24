@@ -68,7 +68,7 @@ library(sojourner)
 ```{r, eval=TRUE, warning=FALSE, echo=TRUE, results = 'hold'}
 # Designate a folder and then create trackll from DiaTrack .txt data
 folder=system.file("extdata","SWR1_2",package="sojourner")
-trackll = createTrackll(folder=folder, input=1)
+trackll = createTrackll(folder=folder, input=3)
 
 # Alternatively, use interact to open file browser and select input data type
 # trackll <- createTrackll(interact = TRUE)
@@ -221,7 +221,8 @@ IMPORTANT: It will take an extremely long time to mask large datasets. Filter/tr
 # Basic masking with folder path with image masks
 folder = system.file("extdata","ImageJ",package="sojourner")
 trackll = createTrackll(folder, input = 3)
-trackll.masked <- maskTracks(folder = folder, trackll = trackll)
+trackll.filter=filterTrack(trackll ,filter=c(7,Inf))
+trackll.masked <- maskTracks(folder = folder, trackll = trackll.filter)
 
 # Plot mask
 mask.list=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
@@ -260,7 +261,7 @@ If not merged, track lists takes the name of individual files in the folder. If 
 ```{r, eval=TRUE, warning=FALSE, echo=TRUE}
 # Read data
 folder=system.file("extdata","SWR1_2",package="sojourner")
-trackll = createTrackll(folder=folder, input=1)
+trackll = createTrackll(folder=folder, input=3)
 
 # Basic masking with folder path with image masks
 trackll.merged <- mergeTracks(folder = folder, trackll = trackll)

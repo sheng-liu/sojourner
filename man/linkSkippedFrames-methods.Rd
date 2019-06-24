@@ -46,10 +46,7 @@ Track: [Last five characters of the file name].[Start frame].[Length].[Track].[#
 }
 \examples{
 folder=system.file("extdata","SWR1",package="sojourner")
-trackll=readDiatrack(folder)
+trackll=createTrackll(folder=folder, input=3)
 #Basic function call of linkSkippedFrames
 trackll.linked <- linkSkippedFrames(trackll, tolerance = 5, maxSkip = 10)
-
-#Export linked trackll into .csv files
-exportTrackll(trackll.linked, cores = 2)
 }

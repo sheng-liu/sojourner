@@ -29,11 +29,10 @@
 ##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 
 ##' @examples
-##' #Basic function call of .readSlimFast
-##' txtfolder=system.file("extdata","HTZ1",package="sojourner")
-##' #trackll <- readSlimFast(folder = txtfolder, cores = 1)
+##' # Basic function call of .readSlimFast
+##' # trackll <- readSlimFast(folder = folder, cores = 1)
 ##'
-##' #Basic function call of .readSlimFast
+##' # Basic function call of .readSlimFast
 ##' # trackl <- .readSlimFast(interact = TRUE)
 ##' 
 

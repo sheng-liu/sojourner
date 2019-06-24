@@ -39,9 +39,9 @@ The naming scheme for each export is as follows:
 }
 \examples{
 folder=system.file("extdata","SWR1",package="sojourner")
-trackll=readDiatrack(folder)
+trackll=createTrackll(folder=folder, input=3)
 #Basic function call to exportTrackll with 2 cores into current directory
-exportTrackll(trackll, cores = 2)
+exportTrackll(trackll)
 
 #Export one track list
 .exportRowWise(trackll[[1]])
@@ -50,5 +50,5 @@ exportTrackll(trackll, cores = 2)
 getwd()
 
 #Import export save back into a trackll
-trackll.2 <- createTrackll(folder = getwd(), input = 3, cores = 2)
+trackll.2 <- createTrackll(folder = getwd(), input = 3)
 }

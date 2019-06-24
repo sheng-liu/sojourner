@@ -26,9 +26,8 @@
 ##' \item{Variances} calculated variacne for all trakcs in trackll}
 ##' 
 ##' @examples
-##' # read in using readDiatrack
 ##' folder=system.file("extdata","SWR1",package="sojourner")
-##' trackll=readDiatrack(folder)
+##' trackll=createTrackll(folder=folder, input=3)
 ##'
 ##' # run dispVariance with default minimum tracklength (min=7)
 ##' dispVars = dispVariance(trackll)

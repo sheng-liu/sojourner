@@ -50,9 +50,8 @@ or log. Although you may use both, using only one of the two would
 do the job.
 }
 \examples{
-# read in using readDiatrack
 folder=system.file("extdata","SWR1",package="sojourner")
-trackll=readDiatrack(folder)
+trackll=createTrackll(folder=folder, input=3)
 
 # run dispVariance with default minimum tracklength (min=7)
 dispVars = dispVariance(trackll)

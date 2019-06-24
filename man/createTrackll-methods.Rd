@@ -51,9 +51,9 @@ Track: [Last five characters of the file name].[Start frame].[Length].[Track].[I
 }
 \examples{
 
-# Designate a folder and then create trackll from DiaTrack .txt data
+# Designate a folder and then create trackll from .csv data
 folder=system.file("extdata","SWR1",package="sojourner")
-trackll = createTrackll(folder=folder, input=1)
+trackll = createTrackll(folder=folder, input=3)
 # Alternatively, use interact to open file browser and select input data type
 # trackll <- createTrackll(interact = TRUE)
 

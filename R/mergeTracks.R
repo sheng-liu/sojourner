@@ -19,7 +19,7 @@
 ##' @examples
 ##' #Basic masking with folder path with image masks
 ##' folder = system.file("extdata", "SWR1", package = "sojourner")
-##' trackll = readDiatrack(folder)
+##' trackll=createTrackll(folder=folder, input=3)
 ##' trackll.merged <- mergeTracks(folder = folder, trackll = trackll)
 
 

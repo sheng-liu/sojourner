@@ -31,7 +31,7 @@
 ##' @examples
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
-##' trackll=compareFolder(c(folder1,folder2))
+##' trackll=compareFolder(folders=c(folder1,folder2), input=3)
 ##' str(trackll,max.level=1)
 
 ##' @import reshape2

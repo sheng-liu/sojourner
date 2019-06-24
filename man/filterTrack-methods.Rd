@@ -35,7 +35,7 @@ tracks, trimTrack() is used to trim /cutoff all tracks to a specified range
 }
 \examples{
 folder=system.file("extdata","SWR1",package="sojourner")
-trackll=readDiatrack(folder)
+trackll=createTrackll(folder=folder, input=3)
 
 trackll.filter=filterTrack(trackll,filter=c(7,Inf))
 trackll.trim=trimTrack(trackll,trimmer=c(1,20))

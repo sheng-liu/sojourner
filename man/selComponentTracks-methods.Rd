@@ -38,7 +38,7 @@ coefficient.
 ## 1. select componentTracks per folder (cross movie) by using compareFolders
 folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
-trackll=createTrackll(folder=c(folder1,folder2),input=1)
+trackll=compareFolder(folders=c(folder1,folder2), input=3)
 MSD=msd(trackll=trackll)
 dcoef=Dcoef(MSD,dt=6,plot=FALSE,output=FALSE)
 # fit dcoef
@@ -74,7 +74,7 @@ plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder)
 ##component tracks back to initial Nuclei image.
 ## plotComponentTrackOverlay
 folder3=system.file("extdata","SWR1_2",package="sojourner")
-trackll=readDiatrack(folder3)
+trackll=createTrackll(folder=folder3, input=3)
 
 ## use merge=TRUE for per folder comparison, 
 ## the analsyis result can't be plot back to original image

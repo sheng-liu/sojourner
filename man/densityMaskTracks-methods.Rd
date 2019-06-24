@@ -94,7 +94,7 @@ during the program.
 
 # create trackll 
 track.folder=system.file("extdata","SWR1",package="sojourner")
-trackll <- createTrackll(folder=track.folder, input = 1, cores = 2)
+trackll <- createTrackll(folder=track.folder, input = 3)
 
 # mask trackll using using default model (may not fit all data)
 trackll.masked=densityMaskTracks(trackll)

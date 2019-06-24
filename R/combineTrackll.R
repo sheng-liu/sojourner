@@ -42,7 +42,7 @@
 ##' # Generate trackll, and process, 
 ##' # e.g. mask region of interest, merge tracks from multiple files.
 ##' folder1=system.file("extdata","HSF",package="sojourner")
-##' trackll1=createTrackll(folder1,input=2, cores = 2)
+##' trackll1=createTrackll(folder1,input=3, cores = 2)
 ##' trackll1=maskTracks(folder1,trackll1)
 ##' trackll1=mergeTracks(folder1,trackll1)
 ##' 

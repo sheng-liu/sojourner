@@ -33,7 +33,7 @@
 ##' @examples
 ##' #Basic masking with folder path with image masks
 ##' folder = system.file("extdata","ImageJ",package="sojourner")
-##' trackll = createTrackll(folder, input = 3)
+##' trackll = createTrackll(folder=folder, input=3)
 ##' trackll.masked <- maskTracks(folder = folder, trackll = trackll)
 ##'
 ##' #Compare the masking effect

@@ -40,7 +40,7 @@ confidence interval.
 \examples{
 # read in using readDiatrack
 folder=system.file("extdata","SWR1",package="sojourner")
-trackll=readDiatrack(folder)
+trackll=createTrackll(folder=folder, input = 1)
 
 # filter track based length
 trackll.flt=filterTrack(trackll,filter=c(min=5,max=Inf))

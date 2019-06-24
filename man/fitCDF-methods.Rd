@@ -54,7 +54,7 @@ Note: Ensure that a random number generator seed has been manually set! The seed
 # compare folders
 folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
-trackll=compareFolder(c(folder1,folder2))
+trackll=compareFolder(folders=c(folder1,folder2), input=3)
 cdf=displacementCDF(trackll,dt=1,plot=FALSE,output=FALSE)
 
 # set unique seed (use any number)

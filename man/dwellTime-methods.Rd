@@ -31,6 +31,6 @@ Caclulate dwell time (/residence time) for trajecotries.
 }
 \examples{
 folder=system.file("extdata","SWR1",package="sojourner")
-trackll=readDiatrack(folder)
+trackll=createTrackll(folder=folder, input=3)
 dwellTime(trackll,plot=TRUE)
 }
