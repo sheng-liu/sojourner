@@ -112,7 +112,7 @@
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' index.file2=system.file("extdata","INDEX","indexFile2.csv",package="sojourner")
-##' plotTrackFromIndex(index.file=index.file2,movie.folder = c(folder1,folder2))
+##' plotTrackFromIndex(index.file=index.file2,movie.folder = c(folder1,folder2), input = 3)
 ##'
 ##' ## masking with image mask
 ##' track.folder=system.file("extdata","SWR1_2",package="sojourner")

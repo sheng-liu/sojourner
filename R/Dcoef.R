@@ -82,14 +82,14 @@
 ##' @examples
 ##' # compare files
 ##' folder=system.file("extdata","SWR1",package="sojourner")
-##' trackll = createTrackll(folder=folder, input=1)
+##' trackll = createTrackll(folder=folder, input=3)
 ##' MSD=msd(trackll=trackll)
 ##' Dcoef(MSD=MSD,method="static",plot=TRUE)
 ##'
 ##' # compare folders
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
-##' trackll=compareFolder(folders=c(folder1,folder2), input=3)
+##' trackll2=compareFolder(folders=c(folder1,folder2), input=3)
 ##' Dcoef(trackll=trackll2,method="percentage",plot=TRUE)
 ##' Dcoef(trackll=trackll2,method="rolling.window",plot=TRUE)
 

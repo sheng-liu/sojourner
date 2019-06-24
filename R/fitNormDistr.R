@@ -71,7 +71,7 @@
 ##' # normally we should deal with only one dataset when working with constrains, 
 ##' # since it will apply to all of them.
 ##' folder3=system.file("extdata","HSF", package="sojourner")
-##' trackll=compareFolder(c(folder3),input=2)
+##' trackll=compareFolder(c(folder3),input=3)
 ##' MSD=msd(trackll=trackll)
 ##' dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 ##' 
