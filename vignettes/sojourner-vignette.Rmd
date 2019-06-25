@@ -41,7 +41,7 @@ trackll=list(FOLDER_1=trackl_1,
              FOLDER_n=trackl_n,) 
 ```
 
-## Reading in Diatrack Track Data with `createTrackll()`
+## Reading in Track Data with `createTrackll()`
 
 ```{r, eval=TRUE, messsage = FALSE, warning=FALSE, include=FALSE, echo=TRUE, results = 'hide'}
 library(sojourner)

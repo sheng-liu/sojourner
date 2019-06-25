@@ -46,7 +46,7 @@
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,
 ##' dcoef=dcoef,log.transformed=TRUE,output=FALSE)
 ##' # subset component tracks to further analyze msd, dcoef
-##' trackll.swr1=trackll.sel[["SWR1_WT_140mW_image6.txt"]]
+##' trackll.swr1=trackll.sel[["SWR1_WT_140mW_image6.csv"]]
 ##' msd(trackll.swr1,plot=FALSE)
 ##' msd(trackll.swr1,summarize=TRUE,plot=FALSE)
 ##' Dcoef(trackll=trackll.swr1,plot=FALSE)
@@ -62,8 +62,8 @@
 ##' index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",package="sojourner")
 ##' index.file2=system.file("extdata","INDEX","componentTrackID-SWR1.comp.2.csv",package="sojourner")
 ##' movie.folder=system.file("extdata","SWR1_2",package="sojourner")
-##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder)
-##' plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder)
+##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder, input = 3)
+##' plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder, input = 3)
 ##'
 ##'
 ##' ## 2. select componentTracks per movie base, use plotComponentTracks to plot 

@@ -106,7 +106,7 @@
 ##' ## plot from index file
 ##' index.file=system.file("extdata","INDEX","indexFile.csv",package="sojourner")
 ##' movie.folder=system.file("extdata","SWR1",package="sojourner")
-##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder)
+##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder, input = 3)
 ##'
 ##' ## index file contain trajectories from multiple movie folders
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
