@@ -1,11 +1,11 @@
 Package: sojourner
-Type: Package
-Title: Single Molecule Tracking
-Version: 0.5.2
+Type: Software
+Title: Single molecule tracking analysis tool. 
+Version: 0.99.0
 Date: 2015-10-15
-Author: Sheng Liu, Sun Jay Yoo, Xiaona Tang, Youngsoo Sung
-Maintainer: Sheng Liu <sliu@jhu.edu>
-Description: Single molecule tracking analysis tool. It imports trajectory from trajectory generation programs such as Diatrack, computes biophysical paramters of the moleclues.
+Author: Sheng Liu, Xiaona Tang, Sun Jay Yoo, Youngsoo Sun
+Maintainer: Sheng Liu <shengliumailbox@gmail.com>
+Description: A single molecule tracking analysis tool for computing biophysical properties of single moleclues.
 License: Artistic-2.0
 LazyData: TRUE
 Suggests: knitr, rmarkdown

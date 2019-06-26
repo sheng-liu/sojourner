@@ -9,7 +9,7 @@
 dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE)
 }
 \arguments{
-\item{trackll}{Track list output from readDiatrack().}
+\item{trackll}{a list of track lists.}
 
 \item{min}{minimum points on trajectory, should be at least 3 to work.}
 

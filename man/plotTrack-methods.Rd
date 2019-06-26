@@ -43,19 +43,18 @@ trackOverlayData(trackl)
 \item{frame.end}{last frame to plot. Default 500.}
 
 \item{ab.trackll}{absolute coordinates for plotting, generated from
-readDiatrack(folder,ab.track=TRUE).}
+createTrackll(folder, input, ab.track=TRUE).}
 
 \item{trackl}{Track list}
 
-\item{trackll}{Track list output from readDiatrack().}
+\item{trackll}{a list of track lists.}
 
 \item{folder}{folder containing desired input data.}
 
 \item{index.file}{a csv file that contains index of tracks in the first
 column. Leave a header line when preparing such a file.}
 
-\item{movie.folder}{the path to the folder which contains Diatrack output
-txt files (presumably it is the same folder with movie files).}
+\item{movie.folder}{the path to the folder which contains track files (presumably it is the same folder with movie files).}
 
 \item{max.pixel}{Number of pixels of imaging regime.}
 

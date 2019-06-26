@@ -8,7 +8,7 @@
 selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=FALSE,output=FALSE)
 }
 \arguments{
-\item{trackll}{Track list output from readDiatrack().}
+\item{trackll}{a list of track lists.}
 
 \item{fit}{Component fitting result form fitNormDistr() function.}
 
@@ -50,7 +50,7 @@ fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output
 trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,
 dcoef=dcoef,log.transformed=TRUE,output=FALSE)
 # subset component tracks to further analyze msd, dcoef
-trackll.swr1=trackll.sel[["SWR1_WT_140mW_image6.csv"]]
+trackll.swr1=trackll.sel[["SWR1"]]
 msd(trackll.swr1,plot=FALSE)
 msd(trackll.swr1,summarize=TRUE,plot=FALSE)
 Dcoef(trackll=trackll.swr1,plot=FALSE)

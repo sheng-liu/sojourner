@@ -19,7 +19,7 @@
 
 ##' @param dt Time intervals.
 ##' @param resolution ratio of pixel to uM.
-##' @param trackll Track list output from readDiatrack().
+##' @param trackll a list of track lists.
 ##' @param plot An logical indicate if plot should be generated. See Values for
 ##'   detail.
 ##' @param output An logical indicate if output should be generated. See Values
@@ -41,7 +41,7 @@
 ##' \itemize{
 ##' \item{ list of "stepwise.displacement" and "CDF.displacement",} {A list of
 ##' stepwise.displacement" and "CDF.displacement". the name of the list is the
-##' Diatrack folder name.}
+##' track folder name.}
 ##' 
 ##' \item{Output file,} {Displacement of individual trajectoreis at specified
 ##' dt. The output file is for user to plot in other applications. The column

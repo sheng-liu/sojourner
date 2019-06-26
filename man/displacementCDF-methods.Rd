@@ -18,7 +18,7 @@ displacement.trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
 \item{bivar}{bivar=FALSE, view displacement r as single variable; bivar=TRUE, view
 x,y as bivarate. Default value F.}
 
-\item{trackll}{Track list output from readDiatrack().}
+\item{trackll}{a list of track lists.}
 
 \item{plot}{An logical indicate if plot should be generated. See Values for
 detail.}
@@ -30,7 +30,7 @@ for detail.}
 \itemize{
 \item{ list of "stepwise.displacement" and "CDF.displacement",} {A list of
 stepwise.displacement" and "CDF.displacement". the name of the list is the
-Diatrack folder name.}
+track folder name.}
 
 \item{Output file,} {Displacement of individual trajectoreis at specified
 dt. The output file is for user to plot in other applications. The column

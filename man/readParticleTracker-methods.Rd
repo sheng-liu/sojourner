@@ -11,7 +11,7 @@ readParticleTracker(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 .readParticleTracker(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
-\item{file}{Full path to Diatrack .mat session file.}
+\item{file}{Full path to track file.}
 
 \item{interact}{Open menu to interactively choose file.}
 
@@ -30,13 +30,13 @@ trackll
 Read output file (tracks/trajectories in csv format) from ParticleTracker (a program of ImageJ plugin MosaicSuit).
 }
 \details{
-The usage of readParticleTracker() is equivalent to ReadDiatrack().
+The usage of readParticleTracker() is equivalent to readDiatrack().
 
 Note: the folder name should not contain ".", as it is a key character for subsequent indexing of file names.
 
 trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
 
-This "indexPerFile" is the index within a diatrackFile.
+This "indexPerFile" is the index within a track file.
 
 This "indexPerTrackll" is the index within a trackll, which is unique.
 

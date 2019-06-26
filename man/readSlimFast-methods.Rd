@@ -10,7 +10,7 @@ readSlimFast(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 .readSlimFast(file, interact = FALSE,  ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
-\item{file}{Full path to Diatrack .mat session file.}
+\item{file}{Full path to track file.}
 
 \item{interact}{Open menu to interactively choose file.}
 

@@ -38,7 +38,7 @@ distributions, a separate function was used to calculate the stderr and
 confidence interval.
 }
 \examples{
-# read in using readDiatrack
+# read in track files
 folder=system.file("extdata","SWR1",package="sojourner")
 trackll=createTrackll(folder=folder, input = 3)
 

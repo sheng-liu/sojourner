@@ -14,7 +14,7 @@
 ##' 
 ##' @usage
 ##' dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE)
-##' @param trackll Track list output from readDiatrack().
+##' @param trackll a list of track lists.
 ##' @param min minimum points on trajectory, should be at least 3 to work.
 ##' @param plot default: False, if true, show density plot for variances.
 ##' @param limits vector of size2, variance cut-off range that one wants to plot.

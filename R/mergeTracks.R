@@ -43,7 +43,7 @@ mergeTracks=function(folder, trackll){
     
     track.holder=c()
     
-    # getting a file list of Diatrack files in a directory
+    # getting a file list of track files in a directory
     file.list=list.files(path=folder,pattern=pattern,full.names=TRUE)
     folder.name=basename(folder)
     

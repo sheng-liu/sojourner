@@ -134,7 +134,7 @@ plotNucTrackOverlay(folder=folder,trackll=trackll.fi,cores=1, max.pixel=128,nrow
 plotNucTrackOverlay(folder=folder,trackll=trackll.fi.ma,cores=1, max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
 # Overlay tracks color coded for diffusion coefficient
-plotTrackOverlay.Dcoef(trackll=Track1.fi.ma, Dcoef.range=c(-2,1))
+plotTrackOverlay.Dcoef(trackll=trackll.fi.ma, Dcoef.range=c(-2,1))
 
 # Merge tracks from different image files in the folder
 trackll.fi.ma.me=c(mergeTracks(folder, trackll.fi.ma))

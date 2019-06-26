@@ -20,7 +20,7 @@
 ##'   
 ##' @param dt Time intervals. Default 6.
 ##' @param resolution ratio of pixel to uM.
-##' @param trackll Track list output from readDiatrack().
+##' @param trackll a list of track lists.
 ##' @param summarize An logical indicate if MSD should be calculated on
 ##'   individual trajectories (Default) or summarized on all trajectories.
 ##' @param filter a vector specifies the minimum and max length of trajecotries
@@ -58,7 +58,7 @@
 
 
 ##' @examples
-##' # read in using readDiatrack
+##' # read in using track files
 ##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=createTrackll(folder=folder, input=3)
 ##'

@@ -19,7 +19,7 @@ trimmer=c(min=1,max=31),resolution=0.107,output=FALSE)
 
 \item{resolution}{ratio of pixel to uM.}
 
-\item{trackll}{Track list output from readDiatrack().}
+\item{trackll}{a list of track lists.}
 
 \item{summarize}{An logical indicate if MSD should be calculated on
 individual trajectories (Default) or summarized on all trajectories.}
@@ -87,7 +87,7 @@ by assinging cores, computation is paralelled on each each list of trackll
 (corresponding to one movie file).
 }
 \examples{
-# read in using readDiatrack
+# read in using track files
 folder=system.file("extdata","SWR1",package="sojourner")
 trackll=createTrackll(folder=folder, input=3)
 

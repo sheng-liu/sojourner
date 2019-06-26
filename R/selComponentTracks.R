@@ -12,7 +12,7 @@
 ##' @description Select trajectory based on component fitting on diffusion 
 ##' coefficient.
 ##' @usage selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=FALSE,output=FALSE)
-##' @param trackll Track list output from readDiatrack().
+##' @param trackll a list of track lists.
 ##' @param fit Component fitting result form fitNormDistr() function.
 ##' @param likelihood The likelihood of a trajecotry to be in fitted group. This parameter specifies the strigency of selecting trajectories to be in the fitted group and therefore influence the number of trajectories been selected.
 ##' @param dcoef Diffusion coefficent calcualted by Dcoef, which provide the link between trajecotry index and diffusion coefficent.
@@ -46,7 +46,7 @@
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,
 ##' dcoef=dcoef,log.transformed=TRUE,output=FALSE)
 ##' # subset component tracks to further analyze msd, dcoef
-##' trackll.swr1=trackll.sel[["SWR1_WT_140mW_image6.csv"]]
+##' trackll.swr1=trackll.sel[["SWR1"]]
 ##' msd(trackll.swr1,plot=FALSE)
 ##' msd(trackll.swr1,summarize=TRUE,plot=FALSE)
 ##' Dcoef(trackll=trackll.swr1,plot=FALSE)

@@ -32,7 +32,7 @@
 ##' }
 
 ##' @examples
-##' # read in using readDiatrack
+##' # read in track files
 ##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=createTrackll(folder=folder, input = 3)
 ##'

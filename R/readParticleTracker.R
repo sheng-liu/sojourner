@@ -21,7 +21,7 @@
 ##' @param ab.track Use absolute coordinates for tracks.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
-##' @param file Full path to Diatrack .mat session file.
+##' @param file Full path to track file.
 ##' @param interact Open menu to interactively choose file.
 ##' @return trackll
 
@@ -32,13 +32,13 @@
 ##' str(trackll,max.level=2)
 
 ##' @details
-##' The usage of readParticleTracker() is equivalent to ReadDiatrack().
+##' The usage of readParticleTracker() is equivalent to readDiatrack().
 ##'
 ##' Note: the folder name should not contain ".", as it is a key character for subsequent indexing of file names.
 ##'
 ##' trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
 ##'
-##' This "indexPerFile" is the index within a diatrackFile.
+##' This "indexPerFile" is the index within a track file.
 ##'
 ##' This "indexPerTrackll" is the index within a trackll, which is unique.
 ##'

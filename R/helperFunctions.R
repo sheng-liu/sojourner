@@ -16,7 +16,7 @@
 }
 
 ##------------------------------------------------------------------------------
-## .readDiatrack
+## .valid
 
 # validity check for dt less than track length (-1)
 .valid=function(dt,track){

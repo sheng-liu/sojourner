@@ -34,9 +34,9 @@
 ##' trackOverlayData(trackl)
 ##'
 ##' @param ab.trackll absolute coordinates for plotting, generated from
-##'   readDiatrack(folder,ab.track=TRUE).
+##'   createTrackll(folder, input, ab.track=TRUE).
 ##' @param trackl Track list
-##' @param trackll Track list output from readDiatrack().
+##' @param trackll a list of track lists.
 ##' @param folder folder containing desired input data.
 ##' @param resolution ratio of pixel to uM.
 ##' @param frame.min minimum frame number for plotting.
@@ -45,8 +45,7 @@
 ##' @param frame.end last frame to plot. Default 500.
 ##' @param index.file a csv file that contains index of tracks in the first
 ##'   column. Leave a header line when preparing such a file.
-##' @param movie.folder the path to the folder which contains Diatrack output
-##'   txt files (presumably it is the same folder with movie files).
+##' @param movie.folder the path to the folder which contains track files (presumably it is the same folder with movie files).
 ##' @param max.pixel Number of pixels of imaging regime.
 ##' @param nrow Number of rows in the final plot.
 ##' @param ncol Number of colums in the final plot.
@@ -165,10 +164,10 @@
 ##' ## plot component tracks
 ##' plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
 
-
 ##' @export plotTrack
 ##' @export .plotTrack
 ##' @export plotTrackFromIndex
+##' @import reshape2
 ## @import animation
 ## FUTURE: maybe plot on dt
 
@@ -206,40 +205,41 @@
 
 ###############################################################################
 
-.plotTrack=function(ab.trackl,file.name="TrajectoryPlot",resolution=0.107,frame.min=8,frame.max=100,frame.start=1,frame.end=500){
-
+.plotTrack=function(ab.trackl,file.name="TrajectoryPlot",
+                    resolution=0.107,frame.min=8,frame.max=100,frame.start=1,frame.end=500){
+    
     # trackl is just a list of trajectories, with no upper level indicating folder
     ab.trackl.res=lapply(ab.trackl,function(x) x*resolution)
     m=max(sapply(ab.trackl.res,max))
-
-
+    
+    
     # add names to each plot
     name=names(ab.trackl)
-
-
+    
+    
     fileName=paste(.timeStamp(file.name),".pdf",sep="")
-
+    
     pdf(file=fileName)
-
+    
     par(mfrow=c(2,2))
     len=length(ab.trackl.res)
-
+    
     frame.end=ifelse(len<frame.end,len,frame.end)
-
-        for (i in frame.start:frame.end){
-
+    
+    for (i in frame.start:frame.end){
+        
         p=ab.trackl.res[[i]]
         frame.len=dim(p)[1]
         if (frame.len>frame.min & frame.len<frame.max)
-        plot(p$x,p$y,type="l",xlim=c(0,m),ylim=c(0,m),xlab="X (uM)",
-                ylab="Y (uM)",main=name[[i]])
-        }
-
+            plot(p$x,p$y,type="l",xlim=c(0,m),ylim=c(0,m),xlab="X (uM)",
+                 ylab="Y (uM)",main=name[[i]])
+    }
+    
     # sub = name[[i]]
     dev.off()
-
+    
     return(ab.trackl.res)
-
+    
 }
 
 ## TODO: this is good and simple, to be consistant with the plotting scheme, making it ggplot2 style if not require enormous amount of work.
@@ -248,7 +248,8 @@
 ##------------------------------------------------------------------------------
 ##
 
-plotTrack=function(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,frame.start=1,frame.end=500){
+plotTrack=function(ab.trackll,resolution=0.107,
+                    frame.min=8,frame.max=100,frame.start=1,frame.end=500){
 
     file.name=names(ab.trackll)
 
@@ -283,70 +284,74 @@ plotTrack=function(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,frame.s
 ## plot trajectory according to index
 ## user need to put the corresponding movie files into a folder
 
-plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,frame.min=1,frame.max=100,frame.start=1,frame.end=500,input=1){
-
+plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
+                            frame.min=1,frame.max=100,frame.start=1,
+                            frame.end=500,input=1){
+    
     ## read trajectory index from the index.file
     index.df=read.csv(file=index.file,header=TRUE)
     index=as.character(index.df[,1])
-
-
-#     # DONE: the number of folder to compare can be extended using ... statement
-
-#     folder.list=list()
-#     for (i in 1:length(movie.folder)){
-#         folder.list[[i]]=movie.folder[i]
-#     }
-#
-#
-#     # remove null folders by subsetting un-null folders
-#     null.folder=sapply(folder.list,is.null)
-#     folder.list=folder.list[!null.folder]
-#
-#     names(folder.list)=sapply(folder.list,basename)
-#
-#     ab.trackll=list()
-#
-#     for (i in 1:length(folder.list)) {
-#
-#         ## read in tracks in movie.folder with absolute coords,
-#         ## merge them as the input is merged csv files
-#         ab.trackll[i]=readDiatrack(folder=folder.list[[i]],merg=TRUE,ab.track=TRUE)
-#         cat("\n...\n") # seperator makes ouput clearer
-#         names(ab.trackll)[i]=names(folder.list)[i]
-#
-#
-#     }
-
+    
+    
+    #     # DONE: the number of folder to compare can be extended using ... statement
+    
+    #     folder.list=list()
+    #     for (i in 1:length(movie.folder)){
+    #         folder.list[[i]]=movie.folder[i]
+    #     }
+    #
+    #
+    #     # remove null folders by subsetting un-null folders
+    #     null.folder=sapply(folder.list,is.null)
+    #     folder.list=folder.list[!null.folder]
+    #
+    #     names(folder.list)=sapply(folder.list,basename)
+    #
+    #     ab.trackll=list()
+    #
+    #     for (i in 1:length(folder.list)) {
+    #
+    #         ## read in tracks in movie.folder with absolute coords,
+    #         ## merge them as the input is merged csv files
+    #         ab.trackll[i]=readDiatrack(folder=folder.list[[i]],merg=T,ab.track=T)
+    #         cat("\n...\n") # seperator makes ouput clearer
+    #         names(ab.trackll)[i]=names(folder.list)[i]
+    #
+    #
+    #     }
+    
     ab.trackll=compareFolder(folders=movie.folder,ab.track=TRUE,input=input)
-
+    
     # as it is only for one folder
     # trackl.plot=ab.trackll[[1]][index]
-
+    
     ## because it is a merged list, use .plotTrack
-    ## .plotTrack(trackl.plot,resolution=resolution,frame.min=frame.min,frame.max=frame.max,frame.start=frame.start,frame.end=frame.end)
-
-
+    ## .plotTrack(trackl.plot,resolution=resolution,frame.min=frame.min,
+    ## frame.max=frame.max,frame.start=frame.start,frame.end=frame.end)
+    
+    
     # or one can maintain the ab.trackl's structure, which has the folder name
     # because of list, this subsetting using index become amazingly simple
     # no further manipulation or matching needed. no assembly required.
     trackll.plot=lapply(ab.trackll,function(x){x[index]})
-
-
-
-
+    
+    
+    
+    
     ## remove NA (or combine it into one list)
     trackll.plot.narm=lapply(trackll.plot, function(x) x[!is.na(names(x))])
-
+    
     ## if the list is length 0, remove it
     ## remove zero length list
     for (i in 1:length(trackll.plot.narm)){
-
+        
         if (length(trackll.plot.narm[[i]]) == 0) trackll.plot.narm[[i]]=NULL
     }
-
-    plotTrack(trackll.plot.narm,resolution=resolution,frame.min=frame.min,frame.max=frame.max,frame.start=frame.start,frame.end=frame.end)
-
-
+    
+    plotTrack(trackll.plot.narm,resolution=resolution,frame.min=frame.min,
+              frame.max=frame.max,frame.start=frame.start,frame.end=frame.end)
+    
+    
 }
 
 # return(trackll.plot)
@@ -362,22 +367,22 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,frame.min=
 
 # collaps tracks of a single file (i.e. trackl)
 trackOverlayData=function(trackl){
-
-
+    
+    
     # plot.title=names(trackl)
-
+    
     cat("\nProcessing",names(trackl))
-
+    
     track.df=do.call(rbind.data.frame,trackl[[1]])
-
-            # must use [[1]]
-#     > str(trackll[[1]],0)
-#     List of 908
-#     [list output truncated]
-#     > str(trackll[1],0)
-#     List of 1
-
-
+    
+    # must use [[1]]
+    #     > str(trackll[[1]],0)
+    #     List of 908
+    #     [list output truncated]
+    #     > str(trackll[1],0)
+    #     List of 1
+    
+    
     # split rownames
     n=track.df
     if (length(grep("txt",rownames(n)[1])) == 0){
@@ -385,38 +390,53 @@ trackOverlayData=function(trackl){
     }else{
         Index=strsplit(rownames(n),".txt.")
     }
-
+    
     # trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
     Index.df=data.frame(do.call(rbind,Index))
     #do.call(rbind.data.frame,Index)
-
-    colnames(Index.df)=c("fileID","frameID","duration","indexPerFile","indexPerTrackll","SN")
-
+    
+    colnames(Index.df)=c(
+        "fileID","frameID","duration","indexPerFile","indexPerTrackll","SN")
+    
     track.plot.df=cbind(track.df,Index.df)
     return(track.plot.df)
-
+    
 }
 
 # for a single file (i.e. trackl)
 
 
 .plotTrackOverlay=function(trackl,max.pixel=128){
-
-
+    
+    
     # get names of the trackll (/video) to put it on each graph
     plot.title=names(trackl)
-
-
+    
+    
     track.overlay.data=trackOverlayData(trackl)
-
+    
     # note group needs to be on two /three variable (i.e. frameID and
     # indexPerFile) as indexPerFile sometimes repeat when multiple files are
     # merged. interaction() realize it
-
-    p=ggplot(track.overlay.data,aes_string(
-        x="x",y="y",group=interaction("frameID","duration","indexPerFile")))+
-            geom_path()+
-
+    
+    track.overlay.data$inter=interaction(
+        track.overlay.data$frameID,track.overlay.data$indexPerFile)
+    
+    p=ggplot(track.overlay.data,
+             aes_string(x="x",y="y",
+                        # group=interaction("frameID","duration","indexPerFile")))+
+                        group="inter"))+
+        geom_path()+
+        
+        #     > interaction("frameID","duration","indexPerFile")
+        # [1] frameID.duration.indexPerFile
+        # Levels: frameID.duration.indexPerFile
+        
+        # using interaction within aes_string (to pass RCMD check)
+        # what you want is a column of actual values, not the name
+        # the data has to be processed beforhand
+        # https://stackoverflow.com/questions/19410781/problems-when-using-ggplot-aes-string-group-and-linetype/19415464#19415464
+        
         scale_x_continuous(
             name="Pixel",
             breaks=seq(from=0, to=max.pixel,by=20),
@@ -425,18 +445,18 @@ trackOverlayData=function(trackl){
             name="Pixel",
             breaks=seq(from=0, to=max.pixel,by=20),
             limits=c(0,max.pixel))+
-
+        
         ggtitle(plot.title)+
-
+        
         # this makes integer breaks
-#        scale_x_continuous(breaks=scales::pretty_breaks(n=5))+
-#        scale_y_continuous(breaks=scales::pretty_breaks(n=5))+
+        #        scale_x_continuous(breaks=scales::pretty_breaks(n=5))+
+        #        scale_y_continuous(breaks=scales::pretty_breaks(n=5))+
         #labs(x="Pixel", y="Pixel")+
-
+        
         theme_bw()
-
-        return(p)
-
+    
+    return(p)
+    
 }
 
 
@@ -471,23 +491,35 @@ plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16
 
 # Plot mask
 .plotMask=function(mask.file,max.pixel=128){
-
+    
     title=basename(mask.file)
     # read in tiff mask
     # library(rtiff)
     cat("\nReading mask file",title)
     mask=rtiff::readTiff(fn=mask.file)
     # plot(mask)
-
+    
+    # TODO 
+    # EBImage::readImage(files)
+    
+    
+    # img=EBImage::readImage(image.file)
+    # d=img@.Data
+    
+    
+    
+    # 
     pospt=which(mask@red!=0,arr.ind=TRUE)
     pos.point=with(data.frame(pospt),data.frame(x=col,y=row))
-
+    
     # horizontal is the same vertical is fliped as the pixels is counted from
     # upper left in the image, but is counted from lower left in the plot.
-
-    # shape 22 is little square, when squeezed, they have misconsumption of smaller squres
+    
+    # shape 22 is little square, when squeezed, they have misconsumption of
+    # smaller squres
+    
     # shape 46 is the smallest dot, even when squeezed
-
+    
     pp=ggplot(pos.point,aes_string(x="x",y="y"))+geom_point(alpha=1,shape=22)+
         scale_x_continuous(
             name="Pixel",
@@ -499,15 +531,15 @@ plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16
             limits=c(0,max.pixel))+
         ggtitle(title)+
         theme_bw()
-
+    
     plot(pp)
-
-
-
+    
+    
+    
     # return plot for better manipulation downstream
     # return(invisible(pos.point))
     return(pp)
-
+    
 }
 
 
@@ -534,44 +566,81 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 # color="red"
 # color=track.overlay.data$component
 
-# process one movie at a time, trackl or component.lst (which corresponding to one movie with two components)
+# process one movie at a time, trackl or component.trackl (which corresponding to
+# one movie with two components)
 
-.plotNucTrackOverlay=function(trackl=NULL,component.lst=NULL,image.file,max.pixel=128,color="red"){
-
-    # double input, trackl or component.lst to allow more flexible
+.plotNucTrackOverlay=function(trackl=NULL,component.trackl=NULL,image.file,
+                              max.pixel=128,color="red"){
+    
+    # double input, trackl or component.trackl to allow more flexible
     # manipulation of data before pass in to plot. trackl can be null,
-    # component.lst must have value
-
-    if (!is.null(trackl)){
-        # get names of the trackll (/video) to put it on each graph
-        # the good about trackl over data.frame component.lst is it also passes in name
-        # change trackOverlayData() to take in trackl
-        plot.title=names(trackl)
-
-        track.overlay.data=trackOverlayData(trackl)
-    }else{
-        #plot.title=""
-        plot.title=names(component.lst)
-
-        if (is.null(component.lst)){stop(
-            "Please provide either trackl or component.lst")} else{
-            track.overlay.data=cmpOverlayData(component.lst)
-        }
-
-    }
-
-
-
+    # component.trackl must have value
+    
     img=EBImage::readImage(image.file)
     d=img@.Data
-    print(reshape2::melt(d))
+    
+    # 2018-09-29
+    # when trackl, color is charactor, aes_string(... shQuote(color))
+    # when component.trackl, color become "factors", aes_string(... color)
+    # when use aes, it reads both, when use aes_string, it read it as string.
     
     p=  ggplot()+
-        geom_raster(data=reshape2::melt(d), aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
-        scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+
-
-        geom_path(data=track.overlay.data, aes(x=track.overlay.data$x, y=track.overlay.data$y,group="indexPerFile", color = shQuote(color)))+
-        #geom_path(aes_string(x="x", y="y",group="indexPerFile", color = shQuote(color)))+
+        geom_raster(data=melt(d), 
+                    aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
+        scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)
+    
+    
+    if (
+        (is.null(component.trackl)&&is.null(trackl))||
+        (!is.null(component.trackl)&&(!is.null(trackl)))
+    ){stop(
+        "Please provide either trackl or component.trackl")} 
+    
+    
+    # if pass in trackl, i.e. color is character "red"
+    
+    # alternative check on the class of color
+    # if (!is.factor(color))
+    
+    if (!is.null(trackl)){
+        # get names of the trackll (/video) to put it on each graph the good
+        # about trackl over data.frame component.trackl is it also passes in name
+        # change trackOverlayData() to take in trackl
+        plot.title=names(trackl)
+        track.overlay.data=trackOverlayData(trackl)
+        
+        
+        # p=  ggplot()+
+        #     geom_raster(data=reshape2::melt(d), 
+        #                 aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
+        #     scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+
+        
+        # ggplot()+
+        
+        p=p+
+            geom_path(data=track.overlay.data,
+                      aes_string(x="x",y="y",group="indexPerFile",color=shQuote(color)))
+        ##aes_string(x="x",y="y",group="indexPerFile",color=color))+
+        
+        
+    }else{
+        
+        # if pass in component.trackl, i.e. color is factor
+        
+        #plot.title=""
+        plot.title=names(component.trackl)
+        track.overlay.data=cmpOverlayData(component.trackl)
+        
+        
+        p=p+
+            geom_path(data=track.overlay.data,
+                      # aes_string(x="x",y="y",group="indexPerFile",color=shQuote(color)))+
+                      aes_string(x="x",y="y",group="indexPerFile",color=color))
+        
+    }
+    
+    
+    p=p+
         scale_x_continuous(
             name="Pixel",
             breaks=seq(from=0, to=max.pixel,by=20),
@@ -585,22 +654,61 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
             # remove the blank between image and axies
             expand = c(0, 0))+
         ggtitle(plot.title)+
-
+        
         # this makes integer breaks
         #        scale_x_continuous(breaks=scales::pretty_breaks(n=5))+
         #        scale_y_continuous(breaks=scales::pretty_breaks(n=5))+
         #labs(x="Pixel", y="Pixel")
-
+        
         theme_bw()+
         theme(legend.title=element_blank())
-
+    
     # removes line and text of axis, only picture
-#     +theme(line=element_blank(),
-#            text=element_blank())
-
+    #     +theme(line=element_blank(),
+    #            text=element_blank())
+    
+    
+    
+    
+    #     p=  ggplot()+
+    #         geom_raster(data=reshape2::melt(d), 
+    #                     aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
+    #         scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+
+    # 
+    #         # ggplot()+
+    #         geom_path(data=track.overlay.data,
+    #                   # aes_string(x="x",y="y",group="indexPerFile",color=shQuote(color)))+
+    #                   aes_string(x="x",y="y",group="indexPerFile",color=color))+
+    #         
+    #         scale_x_continuous(
+    #             name="Pixel",
+    #             breaks=seq(from=0, to=max.pixel,by=20),
+    #             limits=c(0,max.pixel),
+    #             # remove the blank between image and axies
+    #             expand = c(0, 0))+
+    #         scale_y_continuous(
+    #             name="Pixel",
+    #             breaks=seq(from=0, to=max.pixel,by=20),
+    #             limits=c(0,max.pixel),
+    #             # remove the blank between image and axies
+    #             expand = c(0, 0))+
+    #         ggtitle(plot.title)+
+    # 
+    #         # this makes integer breaks
+    #         #        scale_x_continuous(breaks=scales::pretty_breaks(n=5))+
+    #         #        scale_y_continuous(breaks=scales::pretty_breaks(n=5))+
+    #         #labs(x="Pixel", y="Pixel")
+    # 
+    #         theme_bw()+
+    #         theme(legend.title=element_blank())
+    # 
+    #     # removes line and text of axis, only picture
+    # #     +theme(line=element_blank(),
+    # #            text=element_blank())
+    
     if (!is.factor(color)) {p=p+theme(legend.position="none")}
     plot(p)
-
+    
     return(p)
 }
 
@@ -610,38 +718,41 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 # plotNucTrackOverlay
 
 plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
-                                max.pixel=128,
-                                nrow=2,ncol=2,width=16,height=16){
-
+                             max.pixel=128,
+                             nrow=2,ncol=2,width=16,height=16){
+    
     nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
-
+    
     if (is.null(trackll)){
         cat("\ntrackll not specified, read in Diatrack file\n")
-        trackll=readDiatrack(folder=folder,cores=cores)
+        trackll=createTrackll(interact=TRUE, cores=cores)
     }
-
-
+    
+    
     plot.lst=list()
-    for (i in 1:length(trackll)) plot.lst[[i]]=.plotNucTrackOverlay(
-        trackl=trackll[i],component.lst=NULL,image.file=nuclei.lst[[i]],
+    for (i in 1:length(trackll)) plot.lst[[i]]=
+        
+        suppressWarnings(
+        .plotNucTrackOverlay(
+        trackl=trackll[i],component.trackl=NULL,image.file=nuclei.lst[[i]],
         max.pixel=max.pixel,color="red")
-
-
+        )
+    
     # output
     cat("\nOutput combined plot...")
     cmb.plot=gridExtra::marrangeGrob(plot.lst,nrow=nrow,ncol=ncol)
-
+    
     fileName=paste(.timeStamp("NucTrackOverlay"),".pdf",sep="")
     # TODO: add folder name in .timeStamp
     # fileName=paste("TrackOverlay-",.timeStamp("folder"),".pdf",sep="")
-
+    
     ggplot2::ggsave(filename=fileName,cmb.plot,width=width,height=height)
     # tip: save as png help keep the raster pixel better than pdf
-
+    
     cat("\nDone!")
-
+    
     return(invisible(trackll))
-
+    
 }
 
 ##------------------------------------------------------------------------------
@@ -650,62 +761,71 @@ plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
 # plotComponentTrackOverlay
 
 plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
-                                max.pixel=128,
-                                nrow=2,ncol=2,width=16,height=16){
-
+                                   max.pixel=128,
+                                   nrow=2,ncol=2,width=16,height=16){
+    
     nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
-
+    
     # no need to read them in, as only plot trackll.sel to the images
     # the folder is only to provide image location
-
+    
     # if (is.null(trackll)){
     #     cat("\ntrackll not specified, read in Diatrack file\n")
-    #     trackll=readDiatrack(folder=folder,merge=FALSE,mask=mask,cores=cores)
+    #     trackll=readDiatrack(folder=folder,merge=F,mask=mask,cores=cores)
     # }
-
+    
     plot.lst=list()
-
+    
     # track.overlay.data.lst=lapply(trackll.sel,function(x){cmpOverlayData(x)})
-
+    
     track.overlay.data.lst=list()
     length(track.overlay.data.lst)=length(trackll.sel)
     names(track.overlay.data.lst)=names(trackll.sel)
-
+    
     for (i in 1:length(trackll.sel)){
-
+        
         track.overlay.data.lst[[i]]=cmpOverlayData(trackll.sel[i])
     }
-
-
+    
+    
     color.lst=lapply(track.overlay.data.lst,function(x){x$component})
-
-    ###trackll or trackll.sel 
-    ###plotComponentTrackOverlay: no visible binding for global variable 'trackll'
-    #print(track.overlay.data.lst)
-    #print(color.lst)
-    #print(class(color.lst[[1]]))
+    
+    # trackll or trackll.sel 
+    # plotComponentTrackOverlay: no visible binding for global variable "trackll"
+    # print(track.overlay.data.lst)
+    # print(color.lst)
+    # print(class(color.lst[[1]]))
+    
     ### trackll -> trackll.sel
-    for (i in 1:length(trackll.sel)) plot.lst[[i]]=.plotNucTrackOverlay(
-        trackl=NULL,component.lst=trackll.sel[i],
-        image.file=nuclei.lst[[i]],
-        max.pixel=max.pixel,color=color.lst[[i]])
-
-
+    for (i in 1:length(trackll.sel)) plot.lst[[i]]=
+        
+        # Warning message:
+        # In readTIFF(x, all = all, ...) :
+        # TIFFReadDirectory: Unknown field with tag 65531 (0xfffb) encountered
+        # these are unnecesary private tags can be suppressed
+        # https://stackoverflow.com/questions/27608124/imagemagick-how-to-get-rid-of-tiffwarnings-768-message-about-unknown-field-wh
+        
+        suppressWarnings(.plotNucTrackOverlay(
+            trackl=NULL,component.trackl=trackll.sel[i],
+            image.file=nuclei.lst[[i]],
+            max.pixel=max.pixel,color=color.lst[[i]]))
+    
+    
     # output
     cat("\nOutput combined plot...")
     cmb.plot=gridExtra::marrangeGrob(plot.lst,nrow=nrow,ncol=ncol)
-
+    
     fileName=paste(.timeStamp("NucTrackOverlay"),".pdf",sep="")
     # TODO: add folder name in .timeStamp
     # fileName=paste("TrackOverlay-",.timeStamp("folder"),".pdf",sep="")
-
+    
     ggplot2::ggsave(filename=fileName,cmb.plot,width=width,height=height)
     # tip: save as png help keep the raster pixel better than pdf
-
+    
     cat("\nDone!")
-
+    
     return(invisible(trackll.sel))
-
+    
 }
 
 
@@ -714,7 +834,7 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
 
 # cmpOverlayData
 
-# pass in component.lst with name, rather than just comp1 comp2
+# pass in component.trackl with name, rather than just comp1 comp2
 # str(trackll.sel[1],2)
 # $ 120mW_10ms1.txt:List of 2
 # ..$ comp.1:List of 12
@@ -726,8 +846,8 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
 # $ comp.1:List of 12
 # $ comp.2:List of 26
 
-# component.lst=trackll.sel[1]
-# > str(component.lst,2)
+# component.trackl=trackll.sel[1]
+# > str(component.trackl,2)
 # List of 1
 # $ 120mW_10ms1.txt:List of 2
 # ..$ comp.1:List of 12
@@ -737,66 +857,67 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
 # now pass in one list of two component list
 # to have name of the movie included
 
-cmpOverlayData=function(component.lst){
-
+cmpOverlayData=function(component.trackl){
+    
     # keep this, although this is no need as when do.call(rbind, list) convert
     # names into the names
     # add one more column into data.frame as identifier
-    # column, then collaps tracks for (i in 1:length(component.lst)){
-    # component.lst[[i]]=lapply(component.lst[[i]],function(x,cmp.id){
+    # column, then collaps tracks for (i in 1:length(component.trackl)){
+    # component.trackl[[i]]=lapply(component.trackl[[i]],function(x,cmp.id){
     # component=rep(cmp.id,dim(x)[1]) cmp.id.x=cbind(x,component)
-    # return(cmp.id.x) },cmp.id=names(component.lst)[i]) }
-
-
-    plot.title=names(component.lst)
-
-    cat("\nProcessing",names(component.lst))
-    # cat("\nProcessing",names(component.lst[[1]]))
-
+    # return(cmp.id.x) },cmp.id=names(component.trackl)[i]) }
+    
+    
+    plot.title=names(component.trackl)
+    
+    cat("\nProcessing",names(component.trackl))
+    # cat("\nProcessing",names(component.trackl[[1]]))
+    
     # combine components into cmp.lst
     cmp.lst=list()
-    length(cmp.lst)=length(component.lst[[1]])
-    cmp.name=names(component.lst[[1]])
-
+    length(cmp.lst)=length(component.trackl[[1]])
+    cmp.name=names(component.trackl[[1]])
+    
     # replace file.name ".",with "_",
     # as it interference with Index indentifier "."
     cmp.name=gsub('\\.', '_', cmp.name)
     names(cmp.lst)=cmp.name
-
-    # for (i in 1:length(component.lst)){
-    #     cmp.lst[[i]]=do.call(rbind.data.frame,component.lst[[i]])
+    
+    # for (i in 1:length(component.trackl)){
+    #     cmp.lst[[i]]=do.call(rbind.data.frame,component.trackl[[i]])
     # }
-
-    for (i in 1:length(component.lst[[1]])){
-        for (j in 1:length(component.lst[[1]][i])){
-            cmp.lst[[i]]=do.call(rbind.data.frame,component.lst[[1]][[i]])
+    
+    for (i in 1:length(component.trackl[[1]])){
+        for (j in 1:length(component.trackl[[1]][i])){
+            cmp.lst[[i]]=do.call(rbind.data.frame,component.trackl[[1]][[i]])
         }
     }
-
+    
     cmp.df=do.call(rbind.data.frame,cmp.lst)
-
+    
     # TODO: these name manipulations is used so frequently should be put into a
     # function
-
+    
     # split rownames
     n=cmp.df
-
+    
     if (length(grep("txt",rownames(n)[1])) == 0){
         Index=strsplit(rownames(n),"\\.")
     }else{
         Index=strsplit(rownames(n),".txt.")
     }
-
+    
     # trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
     Index.df=data.frame(do.call(rbind,Index))
     # do.call(rbind.data.frame,Index)
-
-    colnames(Index.df)=c("component","fileID","frameID","duration","indexPerFile","indexPerTrackll","SN")
-
+    
+    colnames(Index.df)=c("component","fileID","frameID","duration",
+                         "indexPerFile","indexPerTrackll","SN")
+    
     track.plot.df=cbind(cmp.df,Index.df)
-
+    
     return(track.plot.df)
-
+    
 }
 
 ## TODO:
@@ -820,8 +941,8 @@ cmpOverlayData=function(component.lst){
 #     cat("\nReading nuclei file",title,"\n")
 #     nuclei=EBImage::readImage(nuclei.file)
 #     # display(nuclei)
-#     # interpolate =FALSE to make pixel clearer
-#     nucleiGrob= grid::rasterGrob(nuclei, interpolate=FALSE)
+#     # interpolate =F to make pixel clearer
+#     nucleiGrob= grid::rasterGrob(nuclei, interpolate=F)
 #
 #     #     ggplot(data=pos.point,aes(x=x,y=y),shape=22)+
 #     #         annotation_custom(grob=g,xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)+
@@ -868,18 +989,18 @@ cmpOverlayData=function(component.lst){
 #
 # }
 
-# plotPicTrackOverlay=function(folder,mask=FALSE,cores=1,
+# plotPicTrackOverlay=function(folder,mask=F,cores=1,
 #                              max.pixel=128,
 #                              nrow=2,ncol=2,width=16,height=16){
 #
-#     nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
+#     nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
 #
 #     nucleiGrob.lst=lapply(nuclei.lst,.nucleiGrob)
 #     names(nucleiGrob.lst)=sapply(nuclei.lst,basename,
-#                                  simplify = TRUE, USE.NAMES = FALSE)
+#                                  simplify = TRUE, USE.NAMES = F)
 #
 #
-#     trackll=readDiatrack(folder=folder,merge=FALSE,mask=mask,cores=cores)
+#     trackll=readDiatrack(folder=folder,merge=F,mask=mask,cores=cores)
 #
 #     plot.lst=list()
 # #     for (i in 1:length(trackll)){
