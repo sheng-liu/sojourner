@@ -12,6 +12,8 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 ---
 
+# Introduction
+
 A basic task in single molecule tracking is to determine diffusion coefficient from molecule trajectories identified after initial image data acquisition. The trajectory (term used interchangeably with "tracks") of a molecule is presented as a table of $x$,$y$ and $z$ coordinates in the unit of pixel, which then can be converted to other measurement, such as in $\mu$m, according to the resolution of the camera. The package *sojourner* provides methods to calculate diffusion coefficient by using mean square displacement (MSD) based, displacement cumulative distribution function (CDF)-based, as well as hidden Markov model (HMM) based methods from such input file. This vignette explains the usage of the package.
 
 # Input Data Preparation
@@ -142,13 +144,11 @@ trackll.fi.ma.me=c(mergeTracks(folder, trackll.fi.ma))
 # calculate MSD for all tracks longer than 3 frames
 msd(trackll.fi.ma.me,dt=20,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
 
-# Trim tracks to first ten frames and calculate diffusion coefficient
-trackll.combine.trim=trimTrack(trackll.fi.ma.me,trimmer=c(1,10))
+trackll.combine.trim=trimTrack(trackll.fi.ma.me,trimmer=c(1,11))
 
 Dcoef(trackll=trackll.combine.trim,dt=5, filter=c(min=6,max=Inf), method="static", plot=TRUE, output=TRUE)
 
-# calculate MSD for all tracks longer than 3 frames
-msd(trackll.combine.trim,dt=30,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
+msd(trackll.combine.trim,dt=10,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
 
 # Calculate all dislacement frequency and displacement CDF for all tracks longer than 3 frames
 displacementCDF(trackll.combine.trim, dt=1, plot=TRUE, output=TRUE)
