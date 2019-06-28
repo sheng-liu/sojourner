@@ -32,11 +32,7 @@
 ##' # Basic function call of readSlimFast
 ##' # trackll <- readSlimFast(folder = folder, cores = 1)
 ##'
-##' # Basic function call of .readSlimFast
-##' # trackl <- .readSlimFast(interact = TRUE)
 ##' 
-
-##' @export .readSlimFast
 ##' @export readSlimFast
 ###############################################################################
 

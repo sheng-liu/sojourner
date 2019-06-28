@@ -39,7 +39,5 @@ The naming scheme for each track is as follows:
 # Basic function call of readSlimFast
 # trackll <- readSlimFast(folder = folder, cores = 1)
 
-# Basic function call of .readSlimFast
-# trackl <- .readSlimFast(interact = TRUE)
 
 }
