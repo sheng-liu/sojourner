@@ -7,14 +7,8 @@
 \title{readDiaSessions}
 \usage{
 readDiaSessions(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
-
-.readDiaSessions(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
-\item{file}{Full path to Diatrack .mat session file.}
-
-\item{interact}{Open menu to interactively choose file.}
-
 \item{ab.track}{Use absolute coordinates for tracks.}
 
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).}
@@ -39,10 +33,7 @@ The naming scheme for each track is as follows:
 (Note: readDiaSessions supports reading in intensity values)
 }
 \examples{
-#Basic function call of .readDiaSessions
+#Basic function call of readDiaSessions
 hsf_folder=system.file("extdata", "HSF_2", package="sojourner")
 trackll <- readDiaSessions(folder=hsf_folder)
-
-#Basic function call of .readDiaSessions
-#trackl <- .readDiaSessions(interact = TRUE)
 }

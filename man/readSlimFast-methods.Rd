@@ -36,7 +36,7 @@ The naming scheme for each track is as follows:
 (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 }
 \examples{
-# Basic function call of .readSlimFast
+# Basic function call of readSlimFast
 # trackll <- readSlimFast(folder = folder, cores = 1)
 
 # Basic function call of .readSlimFast

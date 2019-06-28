@@ -78,7 +78,7 @@ Dcoef.static=function(MSD,lag.start=2,lag.end=5,t.interval=0.010){
 ##------------------------------------------------------------------------------
 ## .Dcoef.roll
 
-## cant use roll on MSD method = percentage, as its MSD is different length, MSD method = percentage is calculated differently, using msd.track.vecdt(), instead of msd().
+## cant use roll on MSD method = percentage, as its MSD is different length, MSD method = percentage is calculated differently, using msd_track_vecdt(), instead of msd().
 
 Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 
@@ -260,8 +260,8 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,filter=c(min=7,max=Inf),
                     trimmer=c(min=1,max=31),resolution=0.107,t.interval=0.010){
 
-    # calculate msd using msd.perc()
-    msd.lst=msd.perc(trackll,percentage=percentage,filter=filter,trimmer=trimmer,
+    # calculate msd using msd_perc()
+    msd.lst=msd_perc(trackll,percentage=percentage,filter=filter,trimmer=trimmer,
                     resolution=resolution,output=FALSE)
 
     # exclude the first time lag for fitting for all category

@@ -29,7 +29,7 @@
 ##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 
 ##' @examples
-##' # Basic function call of .readSlimFast
+##' # Basic function call of readSlimFast
 ##' # trackll <- readSlimFast(folder = folder, cores = 1)
 ##'
 ##' # Basic function call of .readSlimFast
@@ -130,14 +130,14 @@
     return (track.list);
 }
 
-#### readDiaSessions ####
+#### readSlimFast ####
 
 readSlimFast = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
     
     trackll = list()
     track.holder = c()
     
-    # getting a file list of Diatrack files in a directory
+    # getting a file list of SlimFast files in a directory
     file.list = list.files(path = folder, pattern = ".txt", full.names = TRUE)
     file.name = list.files(path = folder, pattern = ".txt", full.names = FALSE)
     folder.name=basename(folder)
@@ -167,7 +167,7 @@ readSlimFast = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
     } else {
         
         # parallel this block of code
-        # assign reading in using .readDiatrack to each CPUs
+        # assign reading in using .readSlimFast to each CPUs
         
         # detect number of cores
         # FUTURE: if more than one, automatic using multicore

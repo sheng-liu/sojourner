@@ -7,14 +7,8 @@
 \title{readUtrack}
 \usage{
 readUtrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
-
-.readUtrack(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
-\item{file}{Full path to Utrack file.}
-
-\item{interact}{Open menu to interactively choose file.}
-
 \item{ab.track}{Use absolute coordinates for tracks.}
 
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (almost mandatory for Utrack).}
@@ -37,9 +31,7 @@ The naming scheme for each track is as follows:
 (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 }
 \examples{
-#Basic function call of .readUtrack
+#Basic function call of readUtrack
 # trackll <- readUtrack(folder=folder)
 
-#Basic function call of .readUtrack
-#trackl <- .readUtrack(interact = TRUE)
 }

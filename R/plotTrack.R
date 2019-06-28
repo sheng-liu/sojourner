@@ -5,7 +5,7 @@
 ###############################################################################
 ##' @name plotTrack
 ##' @aliases plotTrack plotTrackFromIndex plotTrackOverlay plotNucTrackOverlay 
-##' plotComponentTrackOverlay plotMask trackOverlayData
+##' plotComponentTrackOverlay plotMask trackOverlayData plotNucTrackOverlayTrackl
 ##' @title plotTrack
 ##' @rdname plotTrack-methods
 ##' @docType methods
@@ -165,7 +165,6 @@
 ##' plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
 
 ##' @export plotTrack
-##' @export .plotTrack
 ##' @export plotTrackFromIndex
 ##' @import reshape2
 ## @import animation
@@ -180,7 +179,7 @@
 
 ## FOR SHINY USAGE:
 ##' @export trackOverlayData
-##' @export .plotNucTrackOverlay
+##' @export plotNucTrackOverlayTrackl
 
 
 
@@ -561,7 +560,7 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 ##------------------------------------------------------------------------------
 ##
 
-# .plotNucTrackOverlay
+# plotNucTrackOverlayTrackl
 
 # color="red"
 # color=track.overlay.data$component
@@ -569,7 +568,7 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 # process one movie at a time, trackl or component.trackl (which corresponding to
 # one movie with two components)
 
-.plotNucTrackOverlay=function(trackl=NULL,component.trackl=NULL,image.file,
+plotNucTrackOverlayTrackl=function(trackl=NULL,component.trackl=NULL,image.file,
                               max.pixel=128,color="red"){
     
     # double input, trackl or component.trackl to allow more flexible
@@ -733,7 +732,7 @@ plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
     for (i in 1:length(trackll)) plot.lst[[i]]=
         
         suppressWarnings(
-        .plotNucTrackOverlay(
+        plotNucTrackOverlayTrackl(
         trackl=trackll[i],component.trackl=NULL,image.file=nuclei.lst[[i]],
         max.pixel=max.pixel,color="red")
         )
@@ -805,7 +804,7 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
         # these are unnecesary private tags can be suppressed
         # https://stackoverflow.com/questions/27608124/imagemagick-how-to-get-rid-of-tiffwarnings-768-message-about-unknown-field-wh
         
-        suppressWarnings(.plotNucTrackOverlay(
+        suppressWarnings(plotNucTrackOverlayTrackl(
             trackl=NULL,component.trackl=trackll.sel[i],
             image.file=nuclei.lst[[i]],
             max.pixel=max.pixel,color=color.lst[[i]]))
@@ -1004,11 +1003,11 @@ cmpOverlayData=function(component.trackl){
 #
 #     plot.lst=list()
 # #     for (i in 1:length(trackll)){
-# #         .plotNucTrackOverlay(trackll,nrow=1,ncol=1,width=8,height=8)
+# #         plotNucTrackOverlayTrackl(trackll,nrow=1,ncol=1,width=8,height=8)
 # #
 # #     }
 #
-#     for (i in 1:length(trackll)) plot.lst[[i]]=.plotNucTrackOverlay(
+#     for (i in 1:length(trackll)) plot.lst[[i]]=plotNucTrackOverlayTrackl(
 #         trackl=trackll[i],nucleiGrob.lst[[i]],max.pixel=max.pixel)
 #
 #

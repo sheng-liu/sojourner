@@ -98,7 +98,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
     cat("calculating displacement...\n")
 
     # if (bivar == TRUE){
-        data=displacement.trackll(trackll,dt=1,bivar=TRUE)
+        data=displacement_trackll(trackll,dt=1,bivar=TRUE)
         
     # }else{
     #     dp=displacementCDF(trackll,dt=1,plot=FALSE,bivar=bivar)

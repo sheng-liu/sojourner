@@ -67,12 +67,12 @@
 ##########################################################################################
 
 ##----------------------------------------------------------------------------------------
-##dispVariance.track
+##dispVariance_track
 
 ##calculate variance for displacements single track
 
-##' @export dispVariance.track
-dispVariance.track=function(track) {
+##' @export dispVariance_track
+dispVariance_track=function(track) {
     withDisp = squareDisp(track) # get displacement
     sqDisp = withDisp[[1]]$square.disp #[[1]] is necessary b/c squaredisplacement give a list in result
     clean = sqrt(sqDisp[!is.na(sqDisp)]) #get rid of NA and do the sqrt since it is currently dx^2 + dy^2
@@ -85,7 +85,7 @@ dispVariance.track=function(track) {
 ##calculate variance for displacements single tracklist
 dispVariance.trackl=function(trackl) {
     
-    lapply(trackl, dispVariance.track)
+    lapply(trackl, dispVariance_track)
     #track.df = lapply(trackl, data.frame)
     #track.withdisp = sapply(track.df, squareDisp)
     #sqdisp = lapply(track.withdisp,function(x) {x[7]}) #column with square-disp

@@ -140,15 +140,15 @@ shinyServer(function(input, output, session){
     output$plotPoints <- renderPlot({
         if (!is.null(trackll$data)){
             if (input$plotType == 1){
-                .plotPoints(trackll$data[[input$tracklNum]])
+                plotPointsTrackl(trackll$data[[input$tracklNum]])
             } else {
                 if (length(nuclei.list$data) > 0){
-                    .plotNucTrackOverlay(trackl = trackll$data[input$tracklNum], image.file = nuclei.list$data[input$tracklNum])
+                    plotNucTrackOverlayTrackl(trackl = trackll$data[input$tracklNum], image.file = nuclei.list$data[input$tracklNum])
                 } else {
                     output$noNucOverlay <- renderText({
                         paste("(No nuclei images present for overlay.)")
                     })
-                    .plotLines(trackll$data[[input$tracklNum]])
+                    plotLinesTrackl(trackll$data[[input$tracklNum]])
                 }
             }
         }

@@ -7,14 +7,8 @@
 \title{readParticleTracker}
 \usage{
 readParticleTracker(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
-
-.readParticleTracker(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
-\item{file}{Full path to track file.}
-
-\item{interact}{Open menu to interactively choose file.}
-
 \item{ab.track}{Use absolute coordinates for tracks.}
 
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).}

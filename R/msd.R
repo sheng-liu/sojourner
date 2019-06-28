@@ -3,7 +3,7 @@
 ##
 ###############################################################################
 ##' @name msd
-##' @aliases msd msd.perc msd.track.vecdt
+##' @aliases msd msd_perc msd_track_vecdt
 ##' @title msd
 ##' @rdname msd-methods
 ##' @docType methods
@@ -14,8 +14,8 @@
 ##' @usage
 ##' msd(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,
 ##' plot=FALSE,output=FALSE,filter=c(min=7,max=Inf))
-##' msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=FALSE)
-##' msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
+##' msd_track_vecdt(trackll,vecdt=NULL,resolution=0.107,output=FALSE)
+##' msd_perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
 ##' trimmer=c(min=1,max=31),resolution=0.107,output=FALSE)
 ##'   
 ##' @param dt Time intervals. Default 6.
@@ -92,7 +92,7 @@
 
 
 ##------------------------------------------------------------------------------
-## msd.track
+## msd_track
 
 ## calculate msd for tracks (data.frame)
 ## track, data.frame, xyz
@@ -111,13 +111,13 @@
 
 # compile track wise computations to bytecode for performance
 # compiler::enableJIT(3)
-# msd.track=compiler::cmpfun(msd.track,options=list(optimize=3))
+# msd_track=compiler::cmpfun(msd_track,options=list(optimize=3))
 # compiler::enableJIT(0)
 
 # separate at.dt is to remove repeated calcualtion in msd.trackl
 
-##' @export msd.track
-msd.track=function(track,dt=6,resolution=0.107,at.dt=FALSE){
+##' @export msd_track
+msd_track=function(track,dt=6,resolution=0.107,at.dt=FALSE){
 
     if (at.dt == FALSE){
 
@@ -163,7 +163,7 @@ msd.track=function(track,dt=6,resolution=0.107,at.dt=FALSE){
 ##------------------------------------------------------------------------------
 ## msd.trackl
 
-## calculate msd.track for a list of tracks, trackl
+## calculate msd_track for a list of tracks, trackl
 
 msd.trackl=function(trackl,dt=6,resolution=0.107){
 
@@ -201,9 +201,9 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
             cat("\r",num.tracks.sel[i],"\ttracks length > & =\t",i)
             }
 
-        # calculate msd.track for dt=i
+        # calculate msd_track for dt=i
         msd.individual[[i]]=sapply(trackl.sel,function(x){
-            msd.track(track=x,dt=i,resolution=resolution,at.dt=TRUE)
+            msd_track(track=x,dt=i,resolution=resolution,at.dt=TRUE)
             },simplify=TRUE)
 
         # calculate summarized msd and se
@@ -327,7 +327,7 @@ msd.trackll=function(trackll,dt=6,resolution=0.107,cores=1){
 
 # when testing, need to pass all variables
 # parallel::clusterExport(cl,varlist=c(
-#     "squareDisp","msd.track","msd.trackl","dt","resolution"),
+#     "squareDisp","msd_track","msd.trackl","dt","resolution"),
 # envir=environment())
 
 
@@ -499,9 +499,9 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,ou
 }
 
 ##------------------------------------------------------------------------------
-## msd.track.vecdt
+## msd_track_vecdt
 
-## This function is a special case of msd.track(), where dt is of different
+## This function is a special case of msd_track(), where dt is of different
 ## values, corresponding to the first 25% of the total length, when calculate
 ## MSD for each track.
 
@@ -514,8 +514,8 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,ou
 ## trajectory, dt is a fixed number corresponding to 1/4 of its length.
 
 
-##' @export msd.track.vecdt
-msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
+##' @export msd_track_vecdt
+msd_track_vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
 
     # copy trackll's structure
     msd.lst=list()
@@ -536,7 +536,7 @@ msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
             # make system output in a new line.
             cat("\rcalculating MSD for individual tracks...","folder ",i,
                 " track ",j)
-            msd.lst[[i]][[j]]=as.matrix(msd.track(track=trackll[[i]][[j]],
+            msd.lst[[i]][[j]]=as.matrix(msd_track(track=trackll[[i]][[j]],
                                                     dt=vecdt[[i]][[j]],
                                                     resolution=resolution))
 
@@ -569,18 +569,18 @@ msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
 ## functions, works only for functions that require preferentially for one
 ## parameter. e.g. mapply(rep, 1:4, 4:1), repeat 1 4 times, 2, 3times, etc.
 
-# mapply(msd.track,trackll,n,MoreArgs=list(resolution=0.107))
-# mapply(msd.track,vectdt=n[[1]],trackll=trackll[[1]])
+# mapply(msd_track,trackll,n,MoreArgs=list(resolution=0.107))
+# mapply(msd_track,vectdt=n[[1]],trackll=trackll[[1]])
 
 ##------------------------------------------------------------------------------
-## msd.track.vecdt
+## msd_track_vecdt
 
 # compute msd based on (tierd) percentage of its total length, rather than
 # specified dt. This is specially designed for coefficient calculation using
 # percentage method.
 
-##' @export msd.perc
-msd.perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
+##' @export msd_perc
+msd_perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
                     trimmer=c(min=1,max=31),resolution=0.107,output=FALSE){
 
 
@@ -635,7 +635,7 @@ msd.perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
     # lapply(n,summary);lapply(N,summary)
 
     # calculate msd
-    msd.lst=msd.track.vecdt(trackll,vecdt=n,resolution=resolution,output=output)
+    msd.lst=msd_track_vecdt(trackll,vecdt=n,resolution=resolution,output=output)
 
     return(msd.lst)
 

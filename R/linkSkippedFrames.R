@@ -13,13 +13,10 @@
 ##' @usage 
 ##' linkSkippedFrames(trackll, tolerance, maxSkip, cores = 1)
 ##' 
-##' .linkSkippedFrames(track.list, tolerance, maxSkip)
-
 ##' @param trackll A list of track lists.
 ##' @param tolerance Distance tolerance level measured in pixels after the frame skip.
 ##' @param maxSkip Maximum number of frames a trajectory can skip.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
-##' @param track.list A track list (a list of trajectory data frames).
 ##' @return linked trackll
 ##' @details
 ##' Given user input for a tolerance level to limit how far the next point after the skip can deviate from the last point in pixel distance 
@@ -44,7 +41,6 @@
 ##' #Basic function call of linkSkippedFrames
 ##' trackll.linked <- linkSkippedFrames(trackll, tolerance = 5, maxSkip = 10)
 
-##' @export .linkSkippedFrames
 ##' @export linkSkippedFrames
 
 ###############################################################################

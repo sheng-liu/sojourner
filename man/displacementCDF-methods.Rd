@@ -4,11 +4,11 @@
 \name{displacementCDF}
 \alias{displacementCDF}
 \alias{displacement.track}
-\alias{displacement.trackll}
+\alias{displacement_trackll}
 \title{displacementCDF}
 \usage{
 displacementCDF(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,bivar=FALSE)
-displacement.trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
+displacement_trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
 }
 \arguments{
 \item{dt}{Time intervals.}

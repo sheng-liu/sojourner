@@ -10,6 +10,7 @@
 \alias{plotComponentTrackOverlay}
 \alias{plotMask}
 \alias{trackOverlayData}
+\alias{plotNucTrackOverlayTrackl}
 \title{plotTrack}
 \usage{
 plotTrack(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,

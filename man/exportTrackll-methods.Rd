@@ -7,12 +7,8 @@
 \title{exportTrackll}
 \usage{
 exportTrackll(trackll, cores = 1)
-
-.exportRowWise(track.list)
 }
 \arguments{
-\item{track.list}{A track list (a list of trajectory data frames).}
-
 \item{trackll}{A list of track lists.}
 
 \item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
@@ -42,9 +38,6 @@ folder=system.file("extdata","SWR1",package="sojourner")
 trackll=createTrackll(folder=folder, input=3)
 #Basic function call to exportTrackll with 2 cores into current directory
 exportTrackll(trackll)
-
-#Export one track list
-.exportRowWise(trackll[[1]])
 
 #Get current working directory
 getwd()

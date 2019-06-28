@@ -14,15 +14,12 @@
 ##' @usage
 ##' readParticleTracker(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 ##'
-##' .readParticleTracker(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 ##'
 ## @method # this roxygen directive does not working
 ##' @param folder Full path to ImageJ .csv files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
-##' @param file Full path to track file.
-##' @param interact Open menu to interactively choose file.
 ##' @return trackll
 
 ##' @examples
@@ -46,7 +43,6 @@
 ##'
 
 ##' @export readParticleTracker
-##' @export .readParticleTracker
 
 ###############################################################################
 
@@ -162,7 +158,7 @@ readParticleTracker=function(folder,ab.track=FALSE,cores=1, frameRecord=TRUE){
     trackll=list()
     track.holder=c()
 
-    # getting a file list of Diatrack files in a directory
+    # getting a file list of ParticleTracker files in a directory
     file.list=list.files(path=folder,pattern=".csv",full.names=TRUE)
     file.name=list.files(path=folder,pattern=".csv",full.names=FALSE)
     folder.name=basename(folder)

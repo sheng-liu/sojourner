@@ -7,12 +7,8 @@
 \title{linkSkippedFrames}
 \usage{
 linkSkippedFrames(trackll, tolerance, maxSkip, cores = 1)
-
-.linkSkippedFrames(track.list, tolerance, maxSkip)
 }
 \arguments{
-\item{track.list}{A track list (a list of trajectory data frames).}
-
 \item{tolerance}{Distance tolerance level measured in pixels after the frame skip.}
 
 \item{maxSkip}{Maximum number of frames a trajectory can skip.}

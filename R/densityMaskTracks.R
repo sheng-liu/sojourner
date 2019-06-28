@@ -3,7 +3,7 @@
 ##
 ###############################################################################
 ##' @name densityMaskTracks
-##' @aliases densityMaskTracks plotLines plotPoints
+##' @aliases densityMaskTracks plotLines plotLinesTrackl plotPoints plotPointsTrackl
 ##' @title densityMaskTracks
 ##' @rdname densityMaskTracks-methods
 ##' @docType methods
@@ -14,9 +14,12 @@
 ##' densityMaskTracks(trackll, scale = 128, removeEdge = FALSE, 
 ##' separate = FALSE, buildModel = FALSE)
 ##' plotLines(trackll, scale = 128)
+##' plotLinesTrackl(track.list, scale = 128)
 ##' plotPoints(trackll, scale = 128)
+##' plotPointsTrackl(track.list, scale = 128)
 ##' 
 ##' @param trackll An uncensored/unfiltered list of track lists
+##' @param track.list Track list
 ##' @param scale X and Y scale (in pixels) of track video window
 ##' @param removeEdge Remove edge clusters with incomplete contour lines/ploygons
 ##' @param separate Separate by cluster
@@ -51,8 +54,8 @@
 ##' that are on edges and/or have an incomplete contour line (discontinuous
 ##' polgon)
 ##' 
-##' Use plotTrackPoints and plotTrackLines to plot lists of track lists into
-##' separate scatter/line plots. Use .plotTrackPoints and .plotTrackLines for a
+##' Use plotPoints and plotLines to plot lists of track lists into
+##' separate scatter/line plots. Use plotPointsTrackl and plotLinesTrackl for a
 ##' single track list. These track lists can be plotted at any point in
 ##' analysis.
 ##' 
@@ -137,12 +140,11 @@
 ##' ###plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up) model
 ##' ###plotTrackOverlay(trackll.masked2) # masked using provided (lossen up) model without building it
 
-##' @export .densityMaskTracks
 ##' @export densityMaskTracks
 ##' @export plotPoints
 ##' @export plotLines
-##' @export .plotPoints
-##' @export .plotLines
+##' @export plotPointsTrackl
+##' @export plotLinesTrackl
 
 
 ###############################################################################
@@ -479,12 +481,12 @@ densityMaskTracks = function (trackll, scale = 128, removeEdge = FALSE, separate
 
 plotPoints = function(trackll, scale = 128){
     for (i in 1:length(trackll)){
-        .plotPoints(trackll[[i]], scale = scale)
+        plotPointsTrackl(trackll[[i]], scale = scale)
         title(sub= names(trackll)[[i]])
     }
 }
 
-.plotPoints = function(track.list, scale = 128){
+plotPointsTrackl = function(track.list, scale = 128){
     df <- mergeAllPoints(track.list)
     plot(df[[1]], df[[2]], xlim = c(0, scale), ylim = c(0, scale), xlab = "x (Pixels)", ylab = "y (Pixels)", main = paste("Tracks Plot for ", getTrackFileName(track.list), sep = ""), cex = .1);
 }
@@ -493,12 +495,12 @@ plotPoints = function(trackll, scale = 128){
 
 plotLines = function(trackll, scale = 128){
     for (i in 1:length(trackll)){
-        .plotLines(trackll[[i]], scale = scale)
+        plotLinesTrackl(trackll[[i]], scale = scale)
         title(sub= names(trackll)[[i]])
     }
 }
 
-.plotLines = function(track.list, scale = 128){
+plotLinesTrackl = function(track.list, scale = 128){
     plot(track.list[[1]][[1]], track.list[[1]][[2]], type = "l", xlim = c(0, scale), ylim = c(0, scale), xlab = "x (Pixels)", ylab = "y (Pixels)", main = paste("Tracks Plot for ", getTrackFileName(track.list), sep = ""));
     for(i in 2:length(track.list)){
         lines(track.list[[i]][[1]], track.list[[i]][[2]])

@@ -5,15 +5,21 @@
 \alias{densityMaskTracks}
 \alias{kernelDensity}
 \alias{plotLines}
+\alias{plotLinesTrackl}
 \alias{plotPoints}
+\alias{plotPointsTrackl}
 \title{densityMaskTracks}
 \usage{
 densityMaskTracks(trackll, scale = 128, removeEdge = FALSE, 
 separate = FALSE, buildModel = FALSE)
 plotLines(trackll, scale = 128)
+plotLinesTrackl(track.list, scale = 128)
 plotPoints(trackll, scale = 128)
+plotPointsTrackl(track.list, scale = 128)
 }
 \arguments{
+\item{track.list}{Track list}
+
 \item{scale}{X and Y scale (in pixels) of track video window}
 
 \item{trackll}{An uncensored/unfiltered list of track lists}
@@ -58,8 +64,8 @@ The removeEdge parameter allwos users to automatically remove any clusters
 that are on edges and/or have an incomplete contour line (discontinuous
 polgon)
 
-Use plotTrackPoints and plotTrackLines to plot lists of track lists into
-separate scatter/line plots. Use .plotTrackPoints and .plotTrackLines for a
+Use plotPoints and plotLines to plot lists of track lists into
+separate scatter/line plots. Use plotPointsTrackl and plotLinesTrackl for a
 single track list. These track lists can be plotted at any point in
 analysis.
 

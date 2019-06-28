@@ -14,11 +14,8 @@
 ##' @usage 
 ##' exportTrackll(trackll, cores = 1)
 ##' 
-##' .exportRowWise(track.list)
-
 ##' @param trackll A list of track lists.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
-##' @param track.list A track list (a list of trajectory data frames).
 ##' @return .csv file output
 ##' @details
 ##' The reason why ImageJ/MOSAIC style .csv export was chosen is because it fully preserves track frame data, while maintaining short computation time and easy readability in Excel/etc.
@@ -40,16 +37,12 @@
 ##' #Basic function call to exportTrackll with 2 cores into current directory
 ##' exportTrackll(trackll)
 ##' 
-##' #Export one track list
-##' .exportRowWise(trackll[[1]])
-##' 
 ##' #Get current working directory
 ##' getwd()
 ##' 
 ##' #Import export save back into a trackll
 ##' trackll.2 <- createTrackll(folder = getwd(), input = 3)
 ##' @importFrom rowr cbind.fill
-##' @export .exportRowWise
 ##' @export exportTrackll
 
 ###############################################################################

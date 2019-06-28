@@ -12,7 +12,6 @@
 ##' @usage
 ##' readDiatrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 ##'
-##' .readDiatrack(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 ##'
 ##'
 ## @method # this roxygen directive does not working
@@ -20,8 +19,6 @@
 ##' @param ab.track Use absolute coordinates for tracks.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
-##' @param file Full path to Diatrack .mat session file.
-##' @param interact Open menu to interactively choose file.
 ##' @return trackll 
 ##' @examples
 ##' # trackll=readDiatrack(folder=folder)
@@ -43,7 +40,6 @@
 ##'
 
 ##' @export readDiatrack
-##' @export .readDiatrack
 
 ###############################################################################
 

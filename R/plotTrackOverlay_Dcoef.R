@@ -1,21 +1,21 @@
-#### plotTrackOverlay.Dcoef.R
+#### plotTrackOverlay_Dcoef.R
 #### Wu Lab, Johns Hopkins University
 #### Author: Xiaona Tang
 #### Date: Dec 20, 2017
 
-## plotTrackOverlay.Dcoef-methods
+## plotTrackOverlay_Dcoef-methods
 ##
 ###############################################################################
-##' @name plotTrackOverlay.Dcoef
-##' @aliases plotTrackOverlay.Dcoef
-##' @title plotTrackOverlay.Dcoef
-##' @rdname plotTrackOverlay.Dcoef-methods
+##' @name plotTrackOverlay_Dcoef
+##' @aliases plotTrackOverlay_Dcoef
+##' @title plotTrackOverlay_Dcoef
+##' @rdname plotTrackOverlay_Dcoef-methods
 ##' @docType methods
 ##' @description Plot track/trajectory overlays from a list of files in a folder with color coded 
 ##' by the Diffusion Coefficient (Dcoef) of each track/trajectory. 
 ##'              
 ##' @usage
-##' plotTrackOverlay.Dcoef(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),
+##' plotTrackOverlay_Dcoef(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),
 ##' resolution=0.107,rsquare=0.8,t.interval=0.01,Dcoef.range=c(-6,2),
 ##' color=c("blue", "white", "red"),folder=NULL,file.No=0,line.width=0.1)
 ##'
@@ -53,13 +53,13 @@
 ##' trackll=maskTracks(folder,trackll)
 ##' 
 ##' # Plot track overlays,
-##' #plotTrackOverlay.Dcoef(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),
+##' #plotTrackOverlay_Dcoef(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),
 ##' #resolution=0.107,rsquare=0.8,t.interval=0.01,Dcoef.range=c(-6,2),
 ##' #color=c("blue", "white", "red"),folder=NULL,file.No=0,line.width=0.1)
-##' plotTrackOverlay.Dcoef(trackll=trackll,color=c("red", "yellow"),folder=folder,file.No=0)
-##' plotTrackOverlay.Dcoef(trackll=trackll,color=c("red", "yellow"),folder=folder,file.No=c(1,2))
+##' plotTrackOverlay_Dcoef(trackll=trackll,color=c("red", "yellow"),folder=folder,file.No=0)
+##' plotTrackOverlay_Dcoef(trackll=trackll,color=c("red", "yellow"),folder=folder,file.No=c(1,2))
 
-##' @export plotTrackOverlay.Dcoef
+##' @export plotTrackOverlay_Dcoef
 
 #####################################################################################
 #####################################################################################
@@ -97,7 +97,7 @@
     
     ## Read in nuclei background data if the image folder is provided.
     if(!is.null(folder)){
-        nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
+        nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
     }
     
     ## Generate color gradient/ramp for trajectory plotting.
@@ -116,7 +116,7 @@
         
         for (j in c(1:length(trackll[[i]]))){
             track=trackll[[i]][[j]]
-            msd.n=msd.track(track, dt=dt, at.dt=F)
+            msd.n=msd_track(track, dt=dt, at.dt=FALSE)
             
             fit=lm(msd.n[2:5]~x)
             MSDslope=coefficients(fit)[2]/(2*dimension)
@@ -227,7 +227,7 @@
 
 
 ## Function for outputting the plots into one multipage PDF file in the working directory.
-plotTrackOverlay.Dcoef<-function(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
+plotTrackOverlay_Dcoef<-function(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
                                  t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
                                  folder=NULL,file.No=0,line.width=0.1){
     ## Output the plots into one PDF file in the working directory.

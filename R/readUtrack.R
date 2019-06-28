@@ -13,14 +13,10 @@
 ##' @usage 
 ##' readUtrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 ##' 
-##' .readUtrack(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
-
 ##' @param folder Full path to Utrack files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (almost mandatory for Utrack).
-##' @param file Full path to Utrack file.
-##' @param interact Open menu to interactively choose file.
 ##' @return trackll
 ##' @details
 ##' The naming scheme for each track is as follows:
@@ -30,13 +26,9 @@
 ##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
 
 ##' @examples
-##' #Basic function call of .readUtrack
+##' #Basic function call of readUtrack
 ##' # trackll <- readUtrack(folder=folder)
 ##' 
-##' #Basic function call of .readUtrack
-##' #trackl <- .readUtrack(interact = TRUE)
-
-##' @export .readUtrack
 ##' @export readUtrack
 
 ##' @importFrom R.matlab readMat
@@ -137,7 +129,7 @@ readUtrack = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
     trackll = list()
     track.holder = c()
     
-    # getting a file list of Diatrack files in a directory
+    # getting a file list of Utrack files in a directory
     file.list = list.files(path = folder, pattern = ".mat", full.names = TRUE)
     file.name = list.files(path = folder, pattern = ".mat", full.names = FALSE)
     folder.name=basename(folder)
@@ -167,7 +159,7 @@ readUtrack = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
     } else {
         
         # parallel this block of code
-        # assign reading in using .readDiatrack to each CPUs
+        # assign reading in using .readUtrack to each CPUs
         
         # detect number of cores
         # FUTURE: if more than one, automatic using multicore

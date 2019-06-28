@@ -12,14 +12,10 @@
 ##' @usage
 ##' readDiaSessions(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 ##' 
-##' .readDiaSessions(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
-
 ##' @param folder Full path to Diatrack .mat session files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
 ##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
-##' @param file Full path to Diatrack .mat session file.
-##' @param interact Open menu to interactively choose file.
 ##' @return trackll
 ##' @details
 ##' The naming scheme for each track is as follows:
@@ -31,14 +27,10 @@
 ##' (Note: readDiaSessions supports reading in intensity values)
 
 ##' @examples
-##' #Basic function call of .readDiaSessions
+##' #Basic function call of readDiaSessions
 ##' hsf_folder=system.file("extdata", "HSF_2", package="sojourner")
 ##' trackll <- readDiaSessions(folder=hsf_folder)
-##' 
-##' #Basic function call of .readDiaSessions
-##' #trackl <- .readDiaSessions(interact = TRUE)
 
-##' @export .readDiaSessions
 ##' @export readDiaSessions
 
 ##' @importFrom R.matlab readMat
@@ -247,7 +239,7 @@ readDiaSessions = function(folder, ab.track = FALSE, cores = 1, frameRecord = TR
     } else {
         
         # parallel this block of code
-        # assign reading in using .readDiatrack to each CPUs
+        # assign reading in using .readDiaSessions to each CPUs
         
         # detect number of cores
         # FUTURE: if more than one, automatic using multicore

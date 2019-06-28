@@ -79,8 +79,8 @@ Visualization using `plotNucTrackOverlay()`:
 ```{r, eval=TRUE, warning=FALSE, echo=FALSE, results = 'hide'}
 # To visualize tracks over cell image
 image_list = list.files(path=folder,pattern="_Nuclei.tif",full.names = TRUE)
-.plotNucTrackOverlay(trackl = trackll[1], image.file = image_list[1])[[1]]
-.plotNucTrackOverlay(trackl = trackll[2], image.file = image_list[2])[[1]]
+plotNucTrackOverlayTrackl(trackl = trackll[1], image.file = image_list[1])[[1]]
+plotNucTrackOverlayTrackl(trackl = trackll[2], image.file = image_list[2])[[1]]
 ```
 
 # Processing Data
@@ -127,8 +127,8 @@ Visualization using `plotNucTrackOverlay()`:
 ```{r, eval=TRUE, warning=FALSE, echo=FALSE, results = 'hide'}
 # To visualize tracks over cell image
 image_list = list.files(path=folder,pattern="_Nuclei.tif",full.names = TRUE)
-.plotNucTrackOverlay(trackl = trackll.linked[1], image.file = image_list[1])[[1]]
-.plotNucTrackOverlay(trackl = trackll.linked[2], image.file = image_list[2])[[1]]
+plotNucTrackOverlayTrackl(trackl = trackll.linked[1], image.file = image_list[1])[[1]]
+plotNucTrackOverlayTrackl(trackl = trackll.linked[2], image.file = image_list[2])[[1]]
 ```
 
 ## `filterTrack()`
@@ -160,8 +160,8 @@ Visualization using `plotNucTrackOverlay()`:
 ```{r, eval=TRUE, warning=FALSE, echo=FALSE, results = 'hide'}
 # To visualize tracks over cell image
 image_list = list.files(path=folder,pattern="_Nuclei.tif",full.names = TRUE)
-.plotNucTrackOverlay(trackl = trackll.filter[1], image.file = image_list[1])[[1]]
-.plotNucTrackOverlay(trackl = trackll.filter[2], image.file = image_list[2])[[1]]
+plotNucTrackOverlayTrackl(trackl = trackll.filter[1], image.file = image_list[1])[[1]]
+plotNucTrackOverlayTrackl(trackl = trackll.filter[2], image.file = image_list[2])[[1]]
 ```
 
 
@@ -194,8 +194,8 @@ Visualization using `plotNucTrackOverlay()`:
 ```{r, eval=TRUE, warning=FALSE, echo=FALSE, results = 'hide'}
 # To visualize tracks over cell image
 image_list = list.files(path=folder,pattern="_Nuclei.tif",full.names = TRUE)
-.plotNucTrackOverlay(trackl = trackll.trim[1], image.file = image_list[1])[[1]]
-.plotNucTrackOverlay(trackl = trackll.trim[2], image.file = image_list[2])[[1]]
+plotNucTrackOverlayTrackl(trackl = trackll.trim[1], image.file = image_list[1])[[1]]
+plotNucTrackOverlayTrackl(trackl = trackll.trim[2], image.file = image_list[2])[[1]]
 ```
 
 
@@ -298,15 +298,12 @@ The naming scheme for each export is as follows:
 ### Examples
 
 ```{r, eval=FALSE}
-#Basic function call to exportTrackll with 2 cores into current directory
-exportTrackll(trackll, cores = 2)
-
-#Export one track list
-.exportRowWise(trackll[[1]])
+#Basic function call to exportTrackll into current directory
+exportTrackll(trackll)
 
 #Get current working directory
 getwd()
 
 #Import export save back into a trackll
-trackll.2 <- createTrackll(folder = getwd(), input = 3, cores = 2)
+trackll.2 <- createTrackll(folder = getwd(), input = 3)
 ```

@@ -7,14 +7,8 @@
 \title{readDiatrack}
 \usage{
 readDiatrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
-
-.readDiatrack(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE)
 }
 \arguments{
-\item{file}{Full path to Diatrack .mat session file.}
-
-\item{interact}{Open menu to interactively choose file.}
-
 \item{ab.track}{Use absolute coordinates for tracks.}
 
 \item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).}

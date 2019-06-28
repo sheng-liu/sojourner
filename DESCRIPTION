@@ -1,16 +1,15 @@
 Package: sojourner
-Type: Software
-Title: Single molecule tracking analysis tool. 
+Title: Single molecule tracking analysis tool
 Version: 0.99.0
 Date: 2015-10-15
-Author: Sheng Liu, Xiaona Tang, Sun Jay Yoo, Youngsoo Sun
+Author: Sheng Liu, Xiaona Tang, Sun Jay Yoo, Youngsoo Sung
 Maintainer: Sheng Liu <shengliumailbox@gmail.com>
 Description: A single molecule tracking analysis tool for computing biophysical properties of single moleclues.
 License: Artistic-2.0
 LazyData: FALSE
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
-biocViews: Software, Technology
+biocViews: Technology, WorkflowStep
 Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,sp,truncnorm,utils,stats,pixmap,SDMTools,rlang,rowr,graphics,grDevices,grid,compiler,lattice
 NeedsCompilation: no
 Packaged: 2017-09-05; shengliu

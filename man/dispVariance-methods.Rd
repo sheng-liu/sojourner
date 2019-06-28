@@ -3,7 +3,7 @@
 \docType{methods}
 \name{dispVariance}
 \alias{dispVariance}
-\alias{dispVariance.track}
+\alias{dispVariance_track}
 \title{dispVariance}
 \usage{
 dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE)

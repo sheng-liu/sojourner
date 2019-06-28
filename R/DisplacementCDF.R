@@ -4,7 +4,7 @@
 ##
 ###############################################################################
 ##' @name displacementCDF
-##' @aliases displacementCDF displacement.trackll
+##' @aliases displacementCDF displacement_trackll
 ##' @title displacementCDF
 ##' @rdname displacementCDF-methods
 ##' @docType methods
@@ -14,7 +14,7 @@
 
 ##' @usage 
 ##' displacementCDF(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,bivar=FALSE)
-##' displacement.trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
+##' displacement_trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
 
 
 ##' @param dt Time intervals.
@@ -232,9 +232,9 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
 }
 
 ##------------------------------------------------------------------------------
-## displacement.trackll
-##'@export displacement.trackll
-displacement.trackll=function(trackll,dt=1,resolution=0.107,bivar=FALSE){
+## displacement_trackll
+##'@export displacement_trackll
+displacement_trackll=function(trackll,dt=1,resolution=0.107,bivar=FALSE){
 
 
     displacement.trackll.lst=lapply(trackll,function(x){
@@ -252,11 +252,11 @@ displacement.trackll=function(trackll,dt=1,resolution=0.107,bivar=FALSE){
 ## plot CDF of individual displacement
 
 # the minimum tracks to include for the dt is recommended as 50. Users can see
-# the screen output, or NumTracksAtDt of displacement.trackll to decide the dt
+# the screen output, or NumTracksAtDt of displacement_trackll to decide the dt
 # that suits.
 
 displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,bivar=FALSE){
-    dp=displacement.trackll(trackll,dt=dt,resolution=resolution,bivar=bivar)
+    dp=displacement_trackll(trackll,dt=dt,resolution=resolution,bivar=bivar)
 
     # take "InidvidualDisplacement" out
     InidvidualDisplacement=list()
@@ -273,7 +273,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,b
     # now if it is bivar, it changes it (dx, dy) into single virate r
     # cause for CDF, we are only looking at single variable displacement
     # it is only for hmm, the model was build on bivariable x, y, rather than displacement alone
-    # use displacement.trackll for that purpose. 
+    # use displacement_trackll for that purpose. 
     
     # collapse all dp at dt
     dp.dt=list()
