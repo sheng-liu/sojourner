@@ -116,6 +116,9 @@ squareDisp=function(track,dt=1,resolution=0.107){
 # distribution of displacement, tells how centralized or spread the trajectory is, is a parameter to measure trajectory
 # calculate square displacement for all tracks
 
+# R requirements: Rcpp, RcppArmadillo
+
+
 
 
 ##------------------------------------------------------------------------------
