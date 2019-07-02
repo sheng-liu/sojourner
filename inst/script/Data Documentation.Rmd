@@ -1,0 +1,25 @@
+---
+title: "Data Documentation"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## HSF
+
+HSF, Single molecule tracking of Heat Shot Factor in Drosophila, HSF is labeled with Halo tag. Data is a courtesy of Xiaona Tang. 
+
+## HTZ1
+HTZ1, Single molecule tracking of histone variant HTZ1 in fission yeast, HTZ1 is labeled with Halo tag. Data is a courtesy of Anand Ranjan.
+
+## SWR1
+SWR1, Single molecule tracking of histone variant HTZ1 chromatin remodelers SWR1 in fission yeast, SWR1 is labeled with Halo tag. Data is a courtesy of Anand Ranjan.
+
+
+```{r}
+
+```
