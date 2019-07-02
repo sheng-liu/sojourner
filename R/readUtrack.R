@@ -8,22 +8,29 @@
 ##' @rdname readUtrack-methods
 ##' @docType methods
 
-##' @description take in a single channel Utrack file as input, along with several other user-configurable parameters and output options, to return a track list of all the trajectories found in the file
+##' @description take in a single channel Utrack file as input, along with 
+##' several other user-configurable parameters and output options, to return a 
+##' track list of all the trajectories found in the file
 
 ##' @usage 
 ##' readUtrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 ##' 
 ##' @param folder Full path to Utrack files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
-##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (almost mandatory for Utrack).
+##' @param cores Number of cores used for parallel computation. This can be the 
+##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
+##' read in a file when paralleled.
+##' @param frameRecord Add a fourth column to the track list after the 
+##' xyz-coordinates for the frame that coordinate point was found (almost 
+##' mandatory for Utrack).
 ##' @return trackll
 ##' @details
 ##' The naming scheme for each track is as follows:
 ##' 
 ##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
 ##' 
-##' (Note: The last five characters of the file name, excluding the extension, cannot contain ".")
+##' (Note: The last five characters of the file name, excluding the extension, 
+##' cannot contain ".")
 
 ##' @examples
 ##' #Basic function call of readUtrack
@@ -37,7 +44,8 @@
 
 #### readUtrack ####
 
-.readUtrack = function(file, interact = FALSE, ab.track = FALSE, frameRecord = FALSE){
+.readUtrack = function(file, interact = FALSE, ab.track = FALSE, 
+                       frameRecord = FALSE){
     
     #Interactively open window
     if (interact == TRUE) {
@@ -46,7 +54,8 @@
     
     #Collect file name information
     file.name = basename(file);
-    file.subname = substr(file.name, start=nchar(file.name)-8, stop=nchar(file.name)-4);
+    file.subname = substr(file.name, start=nchar(file.name)-8, 
+                          stop=nchar(file.name)-4);
     
     #Display starter text
     cat("\nReading Utrack file: ",file.name,"...\n");
@@ -74,7 +83,8 @@
         
         #Frame data has to be a 2x4 data frame (length = 8)
         #Second column has to be 1 (for start frame) and then 2 (for end frame)
-        if (length(frame.data) != 8 || frame.data[[3]] != 1 || frame.data[[4]] != 2){
+        if (length(frame.data) != 8 || frame.data[[3]] != 1 || 
+            frame.data[[4]] != 2){
             stop("Only 1 channel readings accepted.\n")
         }
         start.frame = frame.data[[1]]
@@ -96,9 +106,11 @@
             #Skip if NaN (denoting skipped frame track)
             if (!is.nan(x)){
                 if (frameRecord){
-                    track <- rbind(track, data.frame("x" = x, "y" = y, "z" = z, "Frame" = frame));
+                    track <- rbind(track, data.frame("x" = x, "y" = y, "z" = z, 
+                                                     "Frame" = frame));
                 } else {
-                    track <- rbind(track, data.frame("x" = x, "y" = y, "z" = z));
+                    track <- rbind(track, data.frame("x" = x, "y" = y, 
+                                                     "z" = z));
                 }
             }
             #Count frames
@@ -112,8 +124,10 @@
         }
     }
     #Name track list:
-    #[Last five characters of the file name without extension (cannot contain ".")].[Start frame #].[Length].[Track #]
-    names(track.list) = paste(file.subname, frame.list, length.list, c(1:length(track.list)), sep=".");
+    #[Last five characters of the file name without extension 
+    #(cannot contain ".")].[Start frame #].[Length].[Track #]
+    names(track.list) = paste(file.subname, frame.list, length.list, 
+                              c(1:length(track.list)), sep=".");
     
     #File read and processed confirmation text
     cat("\n", file.subname, "read and processed.\n")
@@ -146,11 +160,13 @@ readUtrack = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
         
         for (i in 1:length(file.list)){
             
-            track.list = .readUtrack(file = file.list[i], ab.track = ab.track, frameRecord = frameRecord)
+            track.list = .readUtrack(file = file.list[i], ab.track = ab.track, 
+                                     frameRecord = frameRecord)
             
             # add indexPerTrackll to track name
             indexPerTrackll = 1:length(track.list)
-            names(track.list) = mapply(paste, names(track.list), indexPerTrackll,sep = ".")
+            names(track.list) = mapply(paste, names(track.list), 
+                                       indexPerTrackll,sep = ".")
             
             trackll[[i]] = track.list
             names(trackll)[i] = file.name[i]
@@ -165,7 +181,8 @@ readUtrack = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
         # FUTURE: if more than one, automatic using multicore
         
         if (cores>max.cores)
-            stop("Number of cores specified is greater than recomended maximum: ", max.cores)
+            stop(paste("Number of cores specified is", 
+                       "greater than recomended maximum: "), max.cores)
         
         cat("Initiated parallel execution on", cores, "cores\n")
         # use outfile="" to display result on screen
@@ -174,11 +191,13 @@ readUtrack = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
         parallel::setDefaultCluster(cl)
         
         # pass environment variables to workers
-        parallel::clusterExport(cl,varlist=c(".readUtrack","ab.track", "frameRecord"),envir=environment())
+        parallel::clusterExport(cl,varlist=c(".readUtrack","ab.track", 
+                                             "frameRecord"),envir=environment())
         
         # trackll=parallel::parLapply(cl,file.list,function(fname){
         trackll=parallel::parLapply(cl,file.list,function(fname){
-            track=.readUtrack(file=fname,ab.track=ab.track, frameRecord = frameRecord)
+            track=.readUtrack(file=fname,ab.track=ab.track, frameRecord = 
+                                  frameRecord)
             # add indexPerTrackll to track name
             indexPerTrackll=1:length(track)
             names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")

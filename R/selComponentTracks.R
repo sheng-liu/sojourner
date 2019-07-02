@@ -11,18 +11,29 @@
 ##'
 ##' @description Select trajectory based on component fitting on diffusion 
 ##' coefficient.
-##' @usage selComponentTracks(trackll,fit,likelihood=0.9,dcoef,log.transformed=FALSE,output=FALSE)
+##' @usage selComponentTracks(trackll,fit,likelihood=0.9,dcoef,
+##' log.transformed=FALSE,output=FALSE)
 ##' @param trackll a list of track lists.
 ##' @param fit Component fitting result form fitNormDistr() function.
-##' @param likelihood The likelihood of a trajecotry to be in fitted group. This parameter specifies the strigency of selecting trajectories to be in the fitted group and therefore influence the number of trajectories been selected.
-##' @param dcoef Diffusion coefficent calcualted by Dcoef, which provide the link between trajecotry index and diffusion coefficent.
-##' @param log.transformed A flag indicating if the fitting is been log transformed, select TRUE if fitting was done in fitNormDistr(log.transform = TRUE,..). This parameter will be removed in later version by directly read the info from the output of fitNormalDistr() function.
-##' @param output A logical indicating if output of selected trajectory index, which can be used for plot individual trajectory using plotTrack.
+##' @param likelihood The likelihood of a trajecotry to be in fitted group. This
+##'  parameter specifies the strigency of selecting trajectories to be in the 
+##'  fitted group and therefore influence the number of trajectories been 
+##'  selected.
+##' @param dcoef Diffusion coefficent calcualted by Dcoef, which provide the 
+##' link between trajecotry index and diffusion coefficent.
+##' @param log.transformed A flag indicating if the fitting is been log 
+##' transformed, select TRUE if fitting was done in fitNormDistr
+##' (log.transform = TRUE,..). This parameter will be removed in later version 
+##' by directly read the info from the output of fitNormalDistr() function.
+##' @param output A logical indicating if output of selected trajectory index, 
+##' which can be used for plot individual trajectory using plotTrack.
 
 
 ##' @return
 ##' \itemize{
-##' \item{combined list of trackll} The result is a combined list of selected trajectories. The list is one level higher than trackll, use subsetting to output trackll.e.g. trackll[[1]], or trackll[["SWR1"]]. }
+##' \item{combined list of trackll} The result is a combined list of selected 
+##' trajectories. The list is one level higher than trackll, use subsetting to 
+##' output trackll.e.g. trackll[[1]], or trackll[["SWR1"]]. }
 
 ##' @examples
 ##'
@@ -31,7 +42,8 @@
 ##' # 2. select componentTracks per movie base, use plotComponentTracks to plot
 ##' # component tracks back to initial Nuclei image.
 ##'
-##' ## 1. select componentTracks per folder (cross movie) by using compareFolders
+##' ## 1. select componentTracks per folder (cross movie) by using 
+##' ## compareFolders
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' trackll=compareFolder(folders=c(folder1,folder2), input=3)
@@ -40,7 +52,8 @@
 ##' # fit dcoef
 ##' # for replication purpose set seed to fix number
 ##' set.seed(484)
-##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
+##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,
+##'                  output=FALSE)
 ##'
 ##' # select component tracks from fitting
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,
@@ -59,14 +72,19 @@
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
 ##' dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 ##' # specify index file path.
-##' index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",package="sojourner")
-##' index.file2=system.file("extdata","INDEX","componentTrackID-SWR1.comp.2.csv",package="sojourner")
+##' index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",
+##'                        package="sojourner")
+##' index.file2=system.file("extdata","INDEX",
+##'                         "componentTrackID-SWR1.comp.2.csv",
+##'                         package="sojourner")
 ##' movie.folder=system.file("extdata","SWR1_2",package="sojourner")
-##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder, input = 3)
-##' plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder, input = 3)
+##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder, 
+##'                    input = 3)
+##' plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder, 
+##'                    input = 3)
 ##'
 ##'
-##' ## 2. select componentTracks per movie base, use plotComponentTracks to plot 
+##' ## 2. select componentTracks per movie base, use plotComponentTracks to plot
 ##' ##component tracks back to initial Nuclei image.
 ##' ## plotComponentTrackOverlay
 ##' folder3=system.file("extdata","SWR1_2",package="sojourner")
@@ -74,7 +92,8 @@
 ##'
 ##' ## use merge=TRUE for per folder comparison, 
 ##' ## the analsyis result can't be plot back to original image
-##' ## To see component tracks on original nuclei image, set merge=FALSE (for per movie analysis)
+##' ## To see component tracks on original nuclei image, set merge=FALSE (for 
+##' ## per movie analysis)
 ##' ## may not make much sense to msd on individual movie, 
 ##' ##however for plot component track back to original nuclei image.
 ##'
@@ -88,10 +107,12 @@
 ##' ## fit normal distribution to define component
 ##' ## set seed to reproduce results (see fitNormalDistr() for details on seed)
 ##' set.seed(484)
-##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
+##' fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,
+##'                  output=FALSE)
 ##'
 ##' ## select component tracks based on fitting
-##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,dcoef)
+##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
+##'                                dcoef)
 ##' ## plot component tracks
 ##' plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
 
@@ -151,7 +172,8 @@ selComponentTracks=function(
     }
     l.print.result=do.call(rbind,l.print)
 
-    cat("\n","at likelihood of",likelihood,", the number of trajectories selected are:\n")
+    cat("\n","at likelihood of",likelihood,
+        ", the number of trajectories selected are:\n")
     print(l.print.result)
 
 
@@ -183,7 +205,8 @@ selComponentTracks=function(
         for (j in 1:length(comp.track.index.lst[[i]])){
 
             # subset the trackID using comp.track.index.lst[[i]][[j]]
-            comp.trackID.lst[[i]][[j]]= dcoef[[i]][comp.track.index.lst[[i]][[j]],]
+            comp.trackID.lst[[i]][[j]]= dcoef[[i]][
+                comp.track.index.lst[[i]][[j]],]
         }
     }
 

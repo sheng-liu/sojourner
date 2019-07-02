@@ -11,24 +11,31 @@ readDiaSessions(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 \arguments{
 \item{ab.track}{Use absolute coordinates for tracks.}
 
-\item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).}
+\item{frameRecord}{Add a fourth column to the track list after the 
+xyz-coordinates for the frame that coordinate point was found (especially 
+helpful when linking frames).}
 
 \item{folder}{Full path to Diatrack .mat session files output folder.}
 
-\item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
+\item{cores}{Number of cores used for parallel computation. This can be the 
+cores on a workstation, or on a cluster. Tip: each core will be assigned to 
+read in a file when paralleled.}
 }
 \value{
 trackll
 }
 \description{
-take in a Diatrack .mat session file as input, along with several other user-configurable parameters and output options, to return a track list of all the trajectories found in the session file
+take in a Diatrack .mat session file as input, along with 
+several other user-configurable parameters and output options, to return a 
+track list of all the trajectories found in the session file
 }
 \details{
 The naming scheme for each track is as follows:
 
 [Last five characters of the file name].[Start frame #].[Length].[Track #]
 
-(Note: The last five characters of the file name, excluding the extension, cannot contain ".")
+(Note: The last five characters of the file name, excluding the extension, 
+cannot contain ".")
 
 (Note: readDiaSessions supports reading in intensity values)
 }

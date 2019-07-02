@@ -24,7 +24,8 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
         if (is.null(binwidth)) binwidth=auto.binwidth(p$Log.D.coef)
 
         # overlay histogram and density plot without changing count as y axies
-        Dcoef.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
+        Dcoef.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",
+                                       col="file.name"))+
             geom_histogram(aes_string(y = "..count..",fill="file.name"),
                             binwidth=binwidth,position="dodge")+
 
@@ -53,7 +54,8 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
         # auto binwidth
         if (is.null(binwidth)) binwidth=auto.binwidth(p$Log.D.coef)
 
-        facet.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
+        facet.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",
+                                       col="file.name"))+
             geom_histogram(aes_string(y = "..count..",fill="file.name"),
                             binwidth=binwidth,position="dodge")+
 
@@ -64,10 +66,12 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
             theme(legend.title=element_blank())+
             facet_grid(window.name ~ .)
 
-        merged.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",col="file.name"))+
+        merged.plot=ggplot(p,aes_string(x="Log.D.coef",group="file.name",
+                                        col="file.name"))+
             geom_histogram(aes_string(y = "..count..",fill="file.name"),
                             binwidth=binwidth,position="dodge")+
-            geom_density(aes_string(y="0.5*..count..",fill="file.name"),alpha=0.2)+
+            geom_density(aes_string(y="0.5*..count..",fill="file.name"),
+                         alpha=0.2)+
             theme_bw()+
             theme(legend.title=element_blank())
 
@@ -101,7 +105,8 @@ plotDensity=function(Log.D.coef,binwidth=0.5,method){
                             colour="white",
                             binwidth=binwidth,
                             position="dodge")+
-            geom_density(aes_string(y = "..density..",col="file.name"),alpha = 0.2)+
+            geom_density(aes_string(y = "..density..",col="file.name"),
+                         alpha = 0.2)+
             theme_bw()+
             theme(legend.title=element_blank())
 
@@ -162,9 +167,11 @@ plotVariance=function(Log.D.coef,method){
         cat("Generating variance plot \n")
 
     ## plot data preparation
-    ## plot mean of Log.D.coef of each individual trajectory, against variance of each individual trajectory
+    ## plot mean of Log.D.coef of each individual trajectory, against variance 
+    ## of each individual trajectory
 
-    # when the list have same length, it maybe easier to work with when converted into data.frame
+    # when the list have same length, it maybe easier to work with when 
+    ## converted into data.frame
 
     Log.D.coef.df=do.call(rbind.data.frame,Log.D.coef)
     MEAN=data.frame(apply(Log.D.coef.df,1,mean,na.rm=TRUE))
@@ -232,7 +239,8 @@ plotVariance=function(Log.D.coef,method){
         )
 
 
-    gridExtra::grid.arrange(mean.density, empty, scatter, sd.density, ncol=2, nrow=2, widths=c(4, 1), heights=c(1, 4))
+    gridExtra::grid.arrange(mean.density, empty, scatter, sd.density, ncol=2, 
+                            nrow=2, widths=c(4, 1), heights=c(1, 4))
 
 
 
@@ -241,9 +249,11 @@ plotVariance=function(Log.D.coef,method){
 
 
     # or this one
-    # mapply(function(x){mean(x,na.rm=TRUE)},Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]])
+    # mapply(function(x){mean(x,na.rm=TRUE)},
+    #        Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]])
 
-    # this means mapply is not taking the elements of each list into one vector, but used them as seperate
+    # this means mapply is not taking the elements of each list into one vector,
+    # but used them as seperate
 
 
     # used alternative, concatanate, then apply
@@ -299,7 +309,8 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 
         # Make each plot, in the correct location
         for (i in 1:numPlots) {
-            # Get the i,j matrix positions of the regions that contain this subplot
+            # Get the i,j matrix positions of the regions that contain this 
+            # subplot
             matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
 
             print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
@@ -358,7 +369,8 @@ gg.mixEM <- function(EM,binwidth=NULL,reorder=TRUE) {
     # reconstruct x, may use sample
     x       <- with(EM,seq(min(x),max(x),len=1000))
     # parameters holder
-    pars    <- with(EM,data.frame(comp=colnames(EM$posterior), mu, sigma,lambda))
+    pars    <- with(EM,data.frame(comp=colnames(EM$posterior), mu, 
+                                  sigma,lambda))
 
     em.df   <- data.frame(x=rep(x,each=nrow(pars)),pars)
 
@@ -373,9 +385,10 @@ gg.mixEM <- function(EM,binwidth=NULL,reorder=TRUE) {
         geom_histogram(fill=NA,color="black",binwidth=binwidth)+
         # when distribution is truncated, it plots flippers
         # geom_polygon(data=em.df,aes(x,y,fill=comp),color="grey50", alpha=0.5)+
-        geom_area(data=em.df,aes_string(x="x",y="y",fill="comp"),color="grey50", alpha=0.5,position = "identity")+
-        scale_fill_discrete("Component\nMeans",labels=format(em.df$mu,digits=3))+
-        theme_bw()
+        geom_area(data=em.df,aes_string(x="x",y="y",fill="comp"),color="grey50",
+                  alpha=0.5,position = "identity")+
+        scale_fill_discrete("Component\nMeans",
+                            labels=format(em.df$mu,digits=3))+theme_bw()
 }
 
 # gg.mixEM(EM)

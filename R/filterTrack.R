@@ -70,7 +70,8 @@ filterTrack=function(trackll,filter=c(min=7,max=Inf)){
     track.len=list()
     for (i in 1:length(trackll)){
         track.len[[i]]=sapply(trackll[[i]],function(track){dim(track)[1]})
-        trackll[[i]]=trackll[[i]][ track.len[[i]]>=filter["min"] & track.len[[i]]<filter["max"]]
+        trackll[[i]]=trackll[[i]][ track.len[[i]]>=filter["min"] & 
+                                       track.len[[i]]<filter["max"]]
     }
 
     return(trackll)

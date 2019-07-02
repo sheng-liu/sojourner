@@ -11,23 +11,33 @@ exportTrackll(trackll, cores = 1)
 \arguments{
 \item{trackll}{A list of track lists.}
 
-\item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
+\item{cores}{Number of cores used for parallel computation. This can be the 
+cores on a workstation, or on a cluster. Tip: each core will be assigned to 
+read in a file when paralleled.}
 }
 \value{
 .csv file output
 }
 \description{
-take in a list of track lists (trackll) and export it into row-wise (ImageJ/MOSAIC) .csv files in the working directory
+take in a list of track lists (trackll) and export it into 
+row-wise (ImageJ/MOSAIC) .csv files in the working directory
 }
 \details{
-The reason why ImageJ/MOSAIC style .csv export was chosen is because it fully preserves track frame data, while maintaining short computation time and easy readability in Excel/etc.
+The reason why ImageJ/MOSAIC style .csv export was chosen is because it 
+fully preserves track frame data, while maintaining short computation time 
+and easy readability in Excel/etc.
 
-In order to import this .csv export back into a trackll at any point (while preserving all information), select input = 3 in createTrackll.
+In order to import this .csv export back into a trackll at any point (while 
+preserving all information), select input = 3 in createTrackll.
 
-If the track list does not have a fourth frame record column (not recommended), it will just output the start frame of each track instead and will take noticeably longer.
+If the track list does not have a fourth frame record column (not 
+recommended), it will just output the start frame of each track instead and 
+will take noticeably longer.
 
-It is not recommended that exportTrackll be run on merged list of track lists (trackll).
-Also, ensure that the input trackll is a list of track lists and not just a track list.
+It is not recommended that exportTrackll be run on merged list of track 
+lists (trackll).
+Also, ensure that the input trackll is a list of track lists and not just a 
+track list.
 
 The naming scheme for each export is as follows:
 

@@ -9,36 +9,49 @@
 linkSkippedFrames(trackll, tolerance, maxSkip, cores = 1)
 }
 \arguments{
-\item{tolerance}{Distance tolerance level measured in pixels after the frame skip.}
+\item{tolerance}{Distance tolerance level measured in pixels after the frame
+skip.}
 
 \item{maxSkip}{Maximum number of frames a trajectory can skip.}
 
 \item{trackll}{A list of track lists.}
 
-\item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
+\item{cores}{Number of cores used for parallel computation. This can be the 
+cores on a workstation, or on a cluster. Tip: each core will be assigned to 
+read in a file when paralleled.}
 }
 \value{
 linked trackll
 }
 \description{
-link trajectories skipped (or do not appear for) a number of frames
+link trajectories skipped (or do not appear for) a number of 
+frames
 }
 \details{
-Given user input for a tolerance level to limit how far the next point after the skip can deviate from the last point in pixel distance 
-and a maximum number of frame skips possible, all trajectories falling within these parameters are automatically linked, renamed, and ordered accordingly. 
-For a maxSkip example, if the maxSkip for a trajectory ending in frame 7 was 3, the next linked trajectory can start up to a maximum frame of 11.
+Given user input for a tolerance level to limit how far the next point after
+ the skip can deviate from the last point in pixel distance 
+and a maximum number of frame skips possible, all trajectories falling 
+within these parameters are automatically linked, renamed, and ordered 
+accordingly. 
+For a maxSkip example, if the maxSkip for a trajectory ending in frame 7 was
+ 3, the next linked trajectory can start up to a maximum frame of 11.
 
-Although not required, in order for the output to have a frame record column (recommended), the input must have one as well.
+Although not required, in order for the output to have a frame record column
+ (recommended), the input must have one as well.
 
 The naming scheme for each linked track is as follows:
 
-[Last five characters of the file name].[Start frame #].[Length].[Track #].[# of links]
+[Last five characters of the file name].[Start frame #].[Length].[Track #].
+[# of links]
 
 Track List: [full name of input file]
 
-Track: [Last five characters of the file name].[Start frame].[Length].[Track].[# of links].[Index in overall list (will differ from Track # when merging)]
+Track: [Last five characters of the file name].[Start frame].[Length].
+[Track].[# of links].
+[Index in overall list (will differ from Track # when merging)]
 
-(Note: The last five characters of the file name, excluding the extension, cannot contain ".")
+(Note: The last five characters of the file name, excluding the extension, 
+cannot contain ".")
 }
 \examples{
 folder=system.file("extdata","SWR1",package="sojourner")

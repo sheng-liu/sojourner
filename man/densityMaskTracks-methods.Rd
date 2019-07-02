@@ -24,27 +24,31 @@ plotPointsTrackl(track.list, scale = 128)
 
 \item{trackll}{An uncensored/unfiltered list of track lists}
 
-\item{removeEdge}{Remove edge clusters with incomplete contour lines/ploygons}
+\item{removeEdge}{Remove edge clusters with incomplete contour 
+lines/ploygons}
 
 \item{separate}{Separate by cluster}
 
-\item{buildModel}{Manually configure the kernel density probability (p), while continuously building a model. T to create a model or improve an existing model. F to load in a MODEL.csv for automatic masking.}
+\item{buildModel}{Manually configure the kernel density probability (p), 
+while continuously building a model. T to create a model or improve an 
+existing model. F to load in a MODEL.csv for automatic masking.}
 }
 \value{
 masked trackll
 }
 \description{
-mask track lists and lists of track lists using kernel density clusters
+mask track lists and lists of track lists using kernel density 
+clusters
 }
 \details{
 This algorithm relies on one parameter, the kernel density probability (p),
 to mask track lists. Following, describes a method to optimize a workflow to
 predict p actively.
 
-When densityMaskTracks() is called with buildModel = TRUE, it will repeatedly
-ask the user for the kernel density probability (p) and the number of
-smallest clusters to elimnate. The kernel density probability (p) is a
-factor that determines how dense the cluster contours are. Low p creates
+When densityMaskTracks() is called with buildModel = TRUE, it will 
+repeatedly ask the user for the kernel density probability (p) and the 
+number of smallest clusters to elimnate. The kernel density probability (p) 
+is a factor that determines the cluster contours density. Low p creates
 smaller and/or fewer clusters and vice versa. Adjust p accordingly, but if
 there are still small extra clusters made in undesired areas, raise the
 number of smallest clusters to eliminate accordingly (note: sometimes noise
@@ -122,14 +126,17 @@ plotTrackOverlay(trackll.masked)
 # Masking mage6 ...
 # No initial model read. If desired, ensure there is one file ending in
 # MODEL.csv in working directory.
-# 2 clusters. mage6 masked at kernel density probability = 0.5 , eliminate = 0 
+# 2 clusters. mage6 masked at kernel density probability = 0.5, 
+# eliminate = 0 
 
 # Done (1 = YES; 0 = NO)?: 0 # assume too strigent answer no. 
-# New kernel density probability (p): 0.6 # assume too strigent, losen it to 0.6 
-# Number of smallest clusters to elimnate (recommended 0, unless last resort): 0 
-# as recommended
+# New kernel density probability (p): 0.6 # assume too strigent, 
+# losen it to 0.6 
+# Number of smallest clusters to elimnate (recommended 0, 
+# unless last resort): 0 as recommended
 
-# 2 clusters. mage6 masked at kernel density probability = 0.6 , eliminate = 0 
+# 2 clusters. mage6 masked at kernel density probability = 0.6,
+# eliminate = 0 
 # Done (1 = YES; 0 = NO)?: 1 # yes. 
 
 # New MODEL.csv created.
@@ -139,12 +146,15 @@ plotTrackOverlay(trackll.masked)
 # compare results
 ###plotTrackOverlay(trackll) # original
 ###plotTrackOverlay(trackll.masked) # masked using default masking model
-###plotTrackOverlay(trackll.masked.md) # masked using losened up masking model 
+###plotTrackOverlay(trackll.masked.md) # masked using losened up masking 
+# model 
 
 # now one can used this modified Model.csv to process data that was not
 # masked well using default model by simply putting Model.csv in the working
 # directory and set buildModel=FALSE
 ###trackll.masked2 <- densityMaskTracks(trackll, buildModel = FALSE)
-###plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up) model
-###plotTrackOverlay(trackll.masked2) # masked using provided (lossen up) model without building it
+###plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up) 
+# model
+###plotTrackOverlay(trackll.masked2) # masked using provided (lossen up) 
+# model without building it
 }

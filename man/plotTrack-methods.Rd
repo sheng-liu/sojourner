@@ -55,7 +55,8 @@ createTrackll(folder, input, ab.track=TRUE).}
 \item{index.file}{a csv file that contains index of tracks in the first
 column. Leave a header line when preparing such a file.}
 
-\item{movie.folder}{the path to the folder which contains track files (presumably it is the same folder with movie files).}
+\item{movie.folder}{the path to the folder which contains track files 
+(presumably it is the same folder with movie files).}
 
 \item{max.pixel}{Number of pixels of imaging regime.}
 
@@ -123,15 +124,19 @@ trackll.ab=createTrackll(folder=folder, input=3, ab.track=TRUE)
 plotTrack(trackll.ab)
 
 ## plot from index file
-index.file=system.file("extdata","INDEX","indexFile.csv",package="sojourner")
+index.file=system.file("extdata","INDEX","indexFile.csv",
+package="sojourner")
 movie.folder=system.file("extdata","SWR1",package="sojourner")
-plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder, input = 3)
+plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder,
+input = 3)
 
 ## index file contain trajectories from multiple movie folders
 folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
-index.file2=system.file("extdata","INDEX","indexFile2.csv",package="sojourner")
-plotTrackFromIndex(index.file=index.file2,movie.folder = c(folder1,folder2), input = 3)
+index.file2=system.file("extdata","INDEX","indexFile2.csv",
+package="sojourner")
+plotTrackFromIndex(index.file=index.file2,movie.folder = c(folder1,folder2),
+ input = 3)
 
 ## masking with image mask
 track.folder=system.file("extdata","SWR1_2",package="sojourner")
@@ -158,7 +163,8 @@ plotMask(track.folder,nrow=1,ncol=1,width=8,height=8)
 folder2=system.file("extdata","SWR1_2",package="sojourner")
 trackll=createTrackll(folder=folder2, input=3)
 
-## use mergeTracks() for per folder comparison, the analsyis result can't be plot
+## use mergeTracks() for per folder comparison, the analsyis result 
+## can't be plot
 ##back to original image. To see component tracks on original nuclei image,
 ## do not use mergeTracks(), for per movie analysis.
 

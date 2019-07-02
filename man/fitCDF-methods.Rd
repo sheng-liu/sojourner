@@ -22,19 +22,23 @@ fitCDF(cdf, components=c("one","two","three"),
 
 \item{t.interval}{time interval for image aquisition. Default 0.01 sec.}
 
-\item{maxiter.optim}{maximum iteration in local optimization process. Default ot 1000.}
+\item{maxiter.optim}{maximum iteration in local optimization process. 
+Default ot 1000.}
 
 \item{cdf}{cdf calculated from displacementCDF().}
 
-\item{components}{parameter specifying the number of components to fit.Currently support one to three components fit.}
+\item{components}{parameter specifying the number of components to fit.
+Currently support one to three components fit.}
 
-\item{maxiter.search}{maximum iteration in random search start value process. defual to 1000.}
+\item{maxiter.search}{maximum iteration in random search start value 
+process. Default to 1000.}
 
 \item{output}{Logical indicaring if output file should be generated.}
 }
 \value{
 \itemize{
-\item{on screen output and file} Result and parameters of goodness of the fit.
+\item{on screen output and file} Result and parameters of goodness of the 
+fit.
 \item{Plot,} fiting plot.
 }
 }
@@ -45,9 +49,15 @@ trajecotries by fitting displacementCDF.
 \details{
 Calculating Dcoef by fitting displacementCDF.
 
-Reducing the range can greatly increase the precision of the searching; alternatively, if the range are unavailable, increase the maxiter.search so more points will be searched through with the cost of computation time. maxiter.optim barely need to change, if it does not converge with default setting maxiter=1000, most likely the problem is in the initial values.
+Reducing the range can greatly increase the precision of the searching; 
+alternatively, if the range are unavailable, increase the maxiter.search so 
+more points will be searched through with the cost of computation time. 
+maxiter.optim barely need to change, if it does not converge with default 
+setting maxiter=1000, most likely the problem is in the initial values.
 
-Note: Ensure that a random number generator seed has been manually set! The seed is stored as an attribute of the returned object of fitCDF() and using the same seed makes results repeatable (see examples).
+Note: Ensure that a random number generator seed has been manually set! The 
+seed is stored as an attribute of the returned object of fitCDF() and using 
+the same seed makes results repeatable (see examples).
 }
 \examples{
 
@@ -60,7 +70,8 @@ cdf=displacementCDF(trackll,dt=1,plot=FALSE,output=FALSE)
 # set unique seed (use any number)
 set.seed(123)
 
-# fit CDF (function automatically saves seed state as an attribute of the result)
+# fit CDF (function automatically saves seed state as an attribute of the 
+# result)
 a=fitCDF(cdf,components="two",output=FALSE)
 
 # to repeat results of a, load seed attribute of 'a' into current RNG state

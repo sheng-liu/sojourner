@@ -80,7 +80,9 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
                         t.interval=0.5,output=FALSE){
     ## Import trackll (merged) information
     if(is.null(trackll)){
-        Totaltracklls <- readline("Set the numbers of trackll to compare decay (survival curve) of residence time:")
+        Totaltracklls <- readline(
+            paste("Set the numbers of trackll",
+                  "to compare decay (survival curve) of residence time:"))
         Totaltracklls <- as.numeric (Totaltracklls)
     }
     else{
@@ -95,8 +97,10 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
     if(is.null(trackll)){
         trackll=c()
         for(i in c(1:Totaltracklls)){
-            trackll.label<-readline(cat("Enter the trackll you want to plot:    "))
-            t.interval[i]<-as.numeric(readline(cat("What's the t.interval for this trackll in sec:    ")))
+            trackll.label<-readline(
+                cat("Enter the trackll you want to plot:  "))
+            t.interval[i]<-as.numeric(readline(
+                cat("What's the t.interval for this trackll in sec:  ")))
             trackll[i]<-get(paste(trackll.label))
             names(trackll)[i]<-names(get(paste(trackll.label)))
         }
@@ -156,7 +160,7 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
                                             "%Y%m%d.%H%M%S"),".csv",sep="")
         write.table(ONE_CDF, filename  , append= FALSE, sep=',',
                     row.names = FALSE)
-        cat("    1-CDF of selected tracklls were output in the working directory. 
+        cat("  1-CDF of selected tracklls were output in the working directory. 
         If using the same filter range, the curve is exactly the same as the
         raw data curve in compare_RT_CDF(). Therefore, this output can be used 
         for plotting and fitting in other programs such as Prism")

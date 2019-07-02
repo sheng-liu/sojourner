@@ -5,7 +5,8 @@
 ###############################################################################
 ##' @name plotTrack
 ##' @aliases plotTrack plotTrackFromIndex plotTrackOverlay plotNucTrackOverlay 
-##' plotComponentTrackOverlay plotMask trackOverlayData plotNucTrackOverlayTrackl
+##' plotComponentTrackOverlay plotMask trackOverlayData 
+##' plotNucTrackOverlayTrackl
 ##' @title plotTrack
 ##' @rdname plotTrack-methods
 ##' @docType methods
@@ -45,7 +46,8 @@
 ##' @param frame.end last frame to plot. Default 500.
 ##' @param index.file a csv file that contains index of tracks in the first
 ##'   column. Leave a header line when preparing such a file.
-##' @param movie.folder the path to the folder which contains track files (presumably it is the same folder with movie files).
+##' @param movie.folder the path to the folder which contains track files 
+##' (presumably it is the same folder with movie files).
 ##' @param max.pixel Number of pixels of imaging regime.
 ##' @param nrow Number of rows in the final plot.
 ##' @param ncol Number of colums in the final plot.
@@ -103,15 +105,19 @@
 ##' plotTrack(trackll.ab)
 ##'
 ##' ## plot from index file
-##' index.file=system.file("extdata","INDEX","indexFile.csv",package="sojourner")
+##' index.file=system.file("extdata","INDEX","indexFile.csv",
+##' package="sojourner")
 ##' movie.folder=system.file("extdata","SWR1",package="sojourner")
-##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder, input = 3)
+##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder,
+##' input = 3)
 ##'
 ##' ## index file contain trajectories from multiple movie folders
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
-##' index.file2=system.file("extdata","INDEX","indexFile2.csv",package="sojourner")
-##' plotTrackFromIndex(index.file=index.file2,movie.folder = c(folder1,folder2), input = 3)
+##' index.file2=system.file("extdata","INDEX","indexFile2.csv",
+##' package="sojourner")
+##' plotTrackFromIndex(index.file=index.file2,movie.folder = c(folder1,folder2),
+##'  input = 3)
 ##'
 ##' ## masking with image mask
 ##' track.folder=system.file("extdata","SWR1_2",package="sojourner")
@@ -138,7 +144,8 @@
 ##' folder2=system.file("extdata","SWR1_2",package="sojourner")
 ##' trackll=createTrackll(folder=folder2, input=3)
 ##'
-##' ## use mergeTracks() for per folder comparison, the analsyis result can't be plot
+##' ## use mergeTracks() for per folder comparison, the analsyis result 
+##' ## can't be plot
 
 ##' ##back to original image. To see component tracks on original nuclei image,
 ##' ## do not use mergeTracks(), for per movie analysis.
@@ -188,11 +195,15 @@
 ## masking with image mask
 ## Not run:
 ## download Diatrack output txt file and mask
-## save file to a location on local computer corresponding to your operation system
+## save file to a location on local computer corresponding to your operation 
+## system
 
-# mask.url="https://www.dropbox.com/s/6472kweldoh96xd/SWR1_halo_140mW3_20151025_SWR1WT_Substack%20%28400-5800%29_MASK.tif?dl=0"
-# data.url="https://www.dropbox.com/s/lav6f0y4gd4j4lt/SWR1_halo_140mW3_20151025_SWR1WT_Substack%20%28400-5800%29.txt?dl=0"
-# nuclei.url="https://www.dropbox.com/s/t6erxm3wze9pz0r/Temp_Placeholder_Nuclei.tif?dl=0"
+# mask.url="https://www.dropbox.com/s/6472kweldoh96xd/SWR1_halo_140mW3_
+# 20151025_SWR1WT_Substack%20%28400-5800%29_MASK.tif?dl=0"
+# data.url="https://www.dropbox.com/s/lav6f0y4gd4j4lt/SWR1_halo_140mW3_
+# 20151025_SWR1WT_Substack%20%28400-5800%29.txt?dl=0"
+# nuclei.url="https://www.dropbox.com/s/t6erxm3wze9pz0r/
+# Temp_Placeholder_Nuclei.tif?dl=0"
 
 # dir.create("~/masking_test/")
 # download.file(mask.url, "~/masking_test/_MASK.tif")
@@ -205,9 +216,11 @@
 ###############################################################################
 
 .plotTrack=function(ab.trackl,file.name="TrajectoryPlot",
-                    resolution=0.107,frame.min=8,frame.max=100,frame.start=1,frame.end=500){
+                    resolution=0.107,frame.min=8,frame.max=100,frame.start=1,
+                    frame.end=500){
     
-    # trackl is just a list of trajectories, with no upper level indicating folder
+    # trackl is just a list of trajectories, with no upper level indicating 
+    # folder
     ab.trackl.res=lapply(ab.trackl,function(x) x*resolution)
     m=max(sapply(ab.trackl.res,max))
     
@@ -241,7 +254,8 @@
     
 }
 
-## TODO: this is good and simple, to be consistant with the plotting scheme, making it ggplot2 style if not require enormous amount of work.
+## TODO: this is good and simple, to be consistant with the plotting scheme, 
+## making it ggplot2 style if not require enormous amount of work.
 
 
 ##------------------------------------------------------------------------------
@@ -258,7 +272,10 @@ plotTrack=function(ab.trackll,resolution=0.107,
         # output plot
         cat("\nOutput track plot...\n")
 
-        plot.coords=.plotTrack(ab.trackll[[i]],file.name[i],resolution=resolution,frame.min=frame.min,frame.max=frame.max,frame.start=frame.start,frame.end=frame.end)
+        plot.coords=.plotTrack(ab.trackll[[i]],file.name[i],
+                               resolution=resolution,frame.min=frame.min,
+                               frame.max=frame.max,frame.start=frame.start,
+                               frame.end=frame.end)
 
         # output csv of the plot
         cat("\nOutput csv file for track plot...\n")
@@ -272,7 +289,9 @@ plotTrack=function(ab.trackll,resolution=0.107,
 
     }
 
-    # lapply(ab.trackll,function(ab.trackl,file.name){.plotTrack(ab.trackl,file.name,resolution=resolution,frame.min=frame.min,frame.max=frame.max,frame.start=frame.start,frame.end=frame.end)})
+    # lapply(ab.trackll,function(ab.trackl,file.name){.plotTrack(ab.trackl,
+    #        file.name,resolution=resolution,frame.min=frame.min,
+    #        frame.max=frame.max,frame.start=frame.start,frame.end=frame.end)})
     # lapply can only take one input
 
 }
@@ -292,7 +311,7 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
     index=as.character(index.df[,1])
     
     
-    #     # DONE: the number of folder to compare can be extended using ... statement
+# DONE: the number of folder to compare can be extended using ... statement
     
     #     folder.list=list()
     #     for (i in 1:length(movie.folder)){
@@ -312,7 +331,8 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
     #
     #         ## read in tracks in movie.folder with absolute coords,
     #         ## merge them as the input is merged csv files
-    #         ab.trackll[i]=readDiatrack(folder=folder.list[[i]],merg=T,ab.track=T)
+    #         ab.trackll[i]=readDiatrack(folder=folder.list[[i]],merg=T,
+    #                                    ab.track=T)
     #         cat("\n...\n") # seperator makes ouput clearer
     #         names(ab.trackll)[i]=names(folder.list)[i]
     #
@@ -423,7 +443,8 @@ trackOverlayData=function(trackl){
     
     p=ggplot(track.overlay.data,
              aes_string(x="x",y="y",
-                        # group=interaction("frameID","duration","indexPerFile")))+
+                        # group=interaction("frameID","duration",
+                        #                   "indexPerFile")))+
                         group="inter"))+
         geom_path()+
         
@@ -434,7 +455,9 @@ trackOverlayData=function(trackl){
         # using interaction within aes_string (to pass RCMD check)
         # what you want is a column of actual values, not the name
         # the data has to be processed beforhand
-        # https://stackoverflow.com/questions/19410781/problems-when-using-ggplot-aes-string-group-and-linetype/19415464#19415464
+
+# https://stackoverflow.com/questions/19410781/problems-when-
+#        using-ggplot-aes-string-group-and-linetype/19415464#19415464
         
         scale_x_continuous(
             name="Pixel",
@@ -459,10 +482,11 @@ trackOverlayData=function(trackl){
 }
 
 
-# mask and unmask needs to be done before plotting to save time on reading in data
-# plot multiple trackl (videos)
+# mask and unmask needs to be done before plotting to save time on reading in 
+# data plot multiple trackl (videos)
 
-plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
+plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,
+                          height=16){
 
     # get plot.lst
     plot.lst=list()
@@ -565,8 +589,8 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 # color="red"
 # color=track.overlay.data$component
 
-# process one movie at a time, trackl or component.trackl (which corresponding to
-# one movie with two components)
+# process one movie at a time, trackl or component.trackl (which corresponding 
+# to one movie with two components)
 
 plotNucTrackOverlayTrackl=function(trackl=NULL,component.trackl=NULL,image.file,
                               max.pixel=128,color="red"){
@@ -585,7 +609,8 @@ plotNucTrackOverlayTrackl=function(trackl=NULL,component.trackl=NULL,image.file,
     
     p=  ggplot()+
         geom_raster(data=melt(d), 
-                    aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
+                    aes_string(x="Var1",y="Var2",fill="value"),
+                    interpolate=FALSE)+
         scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)
     
     
@@ -603,22 +628,22 @@ plotNucTrackOverlayTrackl=function(trackl=NULL,component.trackl=NULL,image.file,
     
     if (!is.null(trackl)){
         # get names of the trackll (/video) to put it on each graph the good
-        # about trackl over data.frame component.trackl is it also passes in name
-        # change trackOverlayData() to take in trackl
+        # about trackl over data.frame component.trackl is it also passes in 
+        # name change trackOverlayData() to take in trackl
         plot.title=names(trackl)
         track.overlay.data=trackOverlayData(trackl)
         
         
-        # p=  ggplot()+
-        #     geom_raster(data=reshape2::melt(d), 
-        #                 aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
-        #     scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+
-        
-        # ggplot()+
+# p=  ggplot()+
+#     geom_raster(data=reshape2::melt(d), 
+#                 aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
+#     scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+
+# ggplot()+
         
         p=p+
             geom_path(data=track.overlay.data,
-                      aes_string(x="x",y="y",group="indexPerFile",color=shQuote(color)))
+                      aes_string(x="x",y="y",group="indexPerFile",
+                                 color=shQuote(color)))
         ##aes_string(x="x",y="y",group="indexPerFile",color=color))+
         
         
@@ -633,7 +658,8 @@ plotNucTrackOverlayTrackl=function(trackl=NULL,component.trackl=NULL,image.file,
         
         p=p+
             geom_path(data=track.overlay.data,
-                      # aes_string(x="x",y="y",group="indexPerFile",color=shQuote(color)))+
+                      # aes_string(x="x",y="y",group="indexPerFile",
+                      #            color=shQuote(color)))+
                       aes_string(x="x",y="y",group="indexPerFile",color=color))
         
     }
@@ -671,13 +697,17 @@ plotNucTrackOverlayTrackl=function(trackl=NULL,component.trackl=NULL,image.file,
     
     #     p=  ggplot()+
     #         geom_raster(data=reshape2::melt(d), 
-    #                     aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
-    #         scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)+
+    #                     aes_string(x="Var1",y="Var2",fill="value"),
+    #                     interpolate=FALSE)+
+    #         scale_fill_gradient(low = "black", high = "white")+ 
+    #                             guides(fill=FALSE)+
     # 
     #         # ggplot()+
     #         geom_path(data=track.overlay.data,
-    #                   # aes_string(x="x",y="y",group="indexPerFile",color=shQuote(color)))+
-    #                   aes_string(x="x",y="y",group="indexPerFile",color=color))+
+    #                   # aes_string(x="x",y="y",group="indexPerFile",
+    #                   #            color=shQuote(color)))+
+    #                   aes_string(x="x",y="y",group="indexPerFile",
+    #                              color=color))+
     #         
     #         scale_x_continuous(
     #             name="Pixel",
@@ -790,7 +820,8 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
     color.lst=lapply(track.overlay.data.lst,function(x){x$component})
     
     # trackll or trackll.sel 
-    # plotComponentTrackOverlay: no visible binding for global variable "trackll"
+    # plotComponentTrackOverlay: no visible binding for global 
+    # variable "trackll"
     # print(track.overlay.data.lst)
     # print(color.lst)
     # print(class(color.lst[[1]]))
@@ -802,7 +833,9 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
         # In readTIFF(x, all = all, ...) :
         # TIFFReadDirectory: Unknown field with tag 65531 (0xfffb) encountered
         # these are unnecesary private tags can be suppressed
-        # https://stackoverflow.com/questions/27608124/imagemagick-how-to-get-rid-of-tiffwarnings-768-message-about-unknown-field-wh
+        
+        # https://stackoverflow.com/questions/27608124/imagemagick-
+        # how-to-get-rid-of-tiffwarnings-768-message-about-unknown-field-wh
         
         suppressWarnings(plotNucTrackOverlayTrackl(
             trackl=NULL,component.trackl=trackll.sel[i],
@@ -944,11 +977,13 @@ cmpOverlayData=function(component.trackl){
 #     nucleiGrob= grid::rasterGrob(nuclei, interpolate=F)
 #
 #     #     ggplot(data=pos.point,aes(x=x,y=y),shape=22)+
-#     #         annotation_custom(grob=g,xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)+
+#     #         annotation_custom(grob=g,xmin=-Inf, xmax=Inf, ymin=-Inf, 
+#     #                           ymax=Inf)+
 #     #         geom_point(color="red")
 #
 #     #     ggplot(data.frame(x=1:10,y=1:10),aes(x=x,y=y))+
-#     #         annotation_custom(grob=g,xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)+
+#     #         annotation_custom(grob=g,xmin=-Inf, xmax=Inf, ymin=-Inf, 
+#     #                           ymax=Inf)+
 #     #         geom_point()
 #
 #     return(nucleiGrob)
@@ -963,7 +998,8 @@ cmpOverlayData=function(component.trackl){
 #     track.overlay.data=trackOverlayData(trackl)
 #
 #     p=ggplot(track.overlay.data,aes(x=x,y=y,group=indexPerFile))+
-#         annotation_custom(grob=nucleiGrob,xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)+
+#         annotation_custom(grob=nucleiGrob,xmin=-Inf, xmax=Inf, ymin=-Inf, 
+#                           ymax=Inf)+
 #
 #         geom_path(color="red")+
 #         scale_x_continuous(

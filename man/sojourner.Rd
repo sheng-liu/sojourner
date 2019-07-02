@@ -14,10 +14,13 @@ sojournerGUI()
 launch sojourner
 }
 \description{
-simple analysis on single molecule tracking data using parameters based on mean square displacement (MSD).
+simple analysis on single molecule tracking data using 
+parameters based on mean square displacement (MSD).
 }
 \details{
-sojourner provide a simple analysis on single molecule tracking data using parameters based on mean square displacement (MSD). Currently includes:
+sojourner provide a simple analysis on single molecule tracking 
+data using parameters based on mean square displacement (MSD). Currently 
+includes:
 - duration of the tracks (dwellTime),
 
 - square displacement (squareDisp),

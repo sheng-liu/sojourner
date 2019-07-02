@@ -34,7 +34,8 @@
 ##' @param output An logical indicate if output should be generated. See Values
 ##'   for detail.
 ##' @param vecdt A list containing varying dt values.
-##' @param percentage compute msd based on (tierd) percentage of its total length.
+##' @param percentage compute msd based on (tierd) percentage of its total 
+##' length.
 ##' @param trimmer vector used for trimming via trimTrack()
 ##' @return \itemize{ \item{SummarizedMSD} MSD summarized over all trajectories
 ##' as a function of dt.
@@ -52,8 +53,8 @@
 ##' \item{SampleSize} The sample size (number of tracks/trajectories) used for
 ##' calculating the msd and standard error.
 ##'
-##' \item{Trackll} The msd function also returns the processed trackll. If passed
-##' to a variable, one can then export the trackll with this variable.
+##' \item{Trackll} The msd function also returns the processed trackll. If 
+##' passed to a variable, one can then export the trackll with this variable.
 ##' }
 
 
@@ -220,10 +221,11 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
     # output
 
     # collapse /binding  msd.individual list into matrix cooresponding to their
-    # name for plotting. When reshape2::melt for plotting, reshape2::melt function
-    # generates an index when pass in as matrix but not data.frame. format
-    # msd.individual from vector to single row matrix. this is in line with tidy
-    # data format where variables are columns and observations are rows.
+    # name for plotting. When reshape2::melt for plotting, reshape2::melt 
+    # function generates an index when pass in as matrix but not data.frame. 
+    # format msd.individual from vector to single row matrix. this is in line 
+    # with tidy data format where variables are columns and observations are 
+    # rows.
 
     # format msd.individual from vector to single row matrix.
     msd.individual.mx=lapply(msd.individual,function(x){
@@ -342,8 +344,9 @@ msd.trackll=function(trackll,dt=6,resolution=0.107,cores=1){
 
 ##' @export msd
 ##'
-msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,output=FALSE,
-                filter=c(min=7,max=Inf)){
+msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,
+             output=FALSE,
+             filter=c(min=7,max=Inf)){
 
     ## keep this code here for backward compatability
     ## first remove documentation, code will be remove in next version
@@ -365,7 +368,8 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,ou
         # remove the IndividualMSD
         MSD.summarized=lapply(MSD,function(x){x$SummarizedMSD})
 
-        # if file.name has ".", replace it with "_", as it interference with Index
+        # if file.name has ".", replace it with "_", as it interference with 
+        # Index
         # indentifier "."
         names(MSD.summarized)=gsub('\\.', '_', names(MSD.summarized))
 
@@ -424,7 +428,8 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,ou
         msd.plot=ggplot(
 
             # p,aes(x=as.integer(as.character(dt)), not work
-            p,aes_string(x="dt",y="SummarizedMSD",group="file.name",col="file.name"))+
+            p,aes_string(x="dt",y="SummarizedMSD",group="file.name",
+                         col="file.name"))+
             geom_line()+geom_point()+
             geom_errorbar(aes_string(ymin="yMin",ymax="yMax"), width=.1)+
             # this makes integer breaks
@@ -553,7 +558,8 @@ msd_track_vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
     if(output == TRUE){
 
         p=reshape2::melt(msd.lst)
-        colnames(p)=c("frame.index","track.name","msd","track.number","file.name")
+        colnames(p)=c("frame.index","track.name","msd","track.number",
+                      "file.name")
 
         fileName=paste("MSD individual-",
                         .timeStamp("vecdt"),".csv",sep="")

@@ -9,7 +9,8 @@
 ##' @rdname readParticleTracker-methods
 ##' @docType methods
 ##'
-##' @description Read output file (tracks/trajectories in csv format) from ParticleTracker (a program of ImageJ plugin MosaicSuit).
+##' @description Read output file (tracks/trajectories in csv format) from 
+##' ParticleTracker (a program of ImageJ plugin MosaicSuit).
 
 ##' @usage
 ##' readParticleTracker(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
@@ -18,8 +19,12 @@
 ## @method # this roxygen directive does not working
 ##' @param folder Full path to ImageJ .csv files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
-##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
+##' @param cores Number of cores used for parallel computation. This can be the 
+##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
+##' read in a file when paralleled.
+##' @param frameRecord Add a fourth column to the track list after the 
+##' xyz-coordinates for the frame that coordinate point was found (especially 
+##' helpful when linking frames).
 ##' @return trackll
 
 ##' @examples
@@ -31,7 +36,8 @@
 ##' @details
 ##' The usage of readParticleTracker() is equivalent to readDiatrack().
 ##'
-##' Note: the folder name should not contain ".", as it is a key character for subsequent indexing of file names.
+##' Note: the folder name should not contain ".", as it is a key character for 
+##' subsequent indexing of file names.
 ##'
 ##' trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
 ##'
@@ -39,7 +45,8 @@
 ##'
 ##' This "indexPerTrackll" is the index within a trackll, which is unique.
 ##'
-##' The macro used for generating the csv file is also included in ImageJ folder of the package: folder=system.file("extdata","ImageJ",package="sojourner")
+##' The macro used for generating the csv file is also included in ImageJ folder
+##'  of the package: folder=system.file("extdata","ImageJ",package="sojourner")
 ##'
 
 ##' @export readParticleTracker
@@ -48,10 +55,12 @@
 
 ##------------------------------------------------------------------------------
 ## .readParticleTracker
-## a function to read ParticleTracker (a program of ImageJ plugin MosaicSuit) output .csv file and returns a list of tracks
+## a function to read ParticleTracker (a program of ImageJ plugin MosaicSuit) 
+## output .csv file and returns a list of tracks
 
 
-.readParticleTracker=function(file,interact=FALSE,ab.track=FALSE, frameRecord=FALSE){
+.readParticleTracker=function(file,interact=FALSE,ab.track=FALSE, 
+                              frameRecord=FALSE){
 
 
     # interactively open window
@@ -103,10 +112,13 @@
     # #                         stop=nchar(file.name)-4)
 
 
-    if (substr(file.name, start=nchar(file.name)-7,stop=nchar(file.name)-4) == ".tif"){
-        file.subname=substr(file.name, start=nchar(file.name)-12,stop=nchar(file.name)-8)
+    if (substr(file.name, start=nchar(file.name)-7,
+               stop=nchar(file.name)-4) == ".tif"){
+        file.subname=substr(file.name, start=nchar(file.name)-12,
+                            stop=nchar(file.name)-8)
     } else {
-        file.subname=substr(file.name, start=nchar(file.name)-8, stop=nchar(file.name)-4)
+        file.subname=substr(file.name, start=nchar(file.name)-8, 
+                            stop=nchar(file.name)-4)
     }
 
     # file.id
@@ -133,7 +145,8 @@
 
     # convert normal trackll to ab.trackll for plotting
     # can be paralleled
-    # this has to be a seperate function here, as reading in it is not going through loops.
+    # this has to be a seperate function here, as reading in it is not going 
+    # through loops.
 
     if (ab.track == TRUE) {
 
@@ -180,7 +193,8 @@ readParticleTracker=function(folder,ab.track=FALSE,cores=1, frameRecord=TRUE){
         for (i in 1:length(file.list)){
 
 
-            track=.readParticleTracker(file=file.list[i],ab.track=ab.track, frameRecord = frameRecord)
+            track=.readParticleTracker(file=file.list[i],ab.track=ab.track, 
+                                       frameRecord = frameRecord)
 
             # add indexPerTrackll to track name
             indexPerTrackll=1:length(track)
@@ -196,7 +210,8 @@ readParticleTracker=function(folder,ab.track=FALSE,cores=1, frameRecord=TRUE){
         # assign each file to a CPU for reading in using .readParticleTracker
 
         if (cores>max.cores)
-            stop("Number of cores specified is greater than recomended maxium: ",max.cores)
+            stop(paste("Number of cores specified is",
+            "greater than recomended maxium: "),max.cores)
 
         cat("Initiated parallel execution on", cores, "cores\n")
         # use outfile=" to display result on screen
@@ -206,15 +221,18 @@ readParticleTracker=function(folder,ab.track=FALSE,cores=1, frameRecord=TRUE){
 
         # pass environment variables to workers
 
-        # parallel::clusterExport(cl,varlist=c(".readParticleTracker","ab.track"),envir=environment())
+        # parallel::clusterExport(cl,varlist=c(".readParticleTracker",
+        #                                      "ab.track"),envir=environment())
         #
         # trackll=parallel::parLapply(cl,file.list,function(fname){
         #     track=.readParticleTracker(file=fname,ab.track=ab.track)
 
-        parallel::clusterExport(cl,varlist=c(".readParticleTracker","ab.track", "frameRecord"),envir=environment())
+        parallel::clusterExport(cl,varlist=c(".readParticleTracker","ab.track", 
+                                             "frameRecord"),envir=environment())
 
         trackll=parallel::parLapply(cl,file.list,function(fname){
-            track=.readParticleTracker(file=fname,ab.track=ab.track, frameRecord = frameRecord)
+            track=.readParticleTracker(file=fname,ab.track=ab.track, 
+                                       frameRecord = frameRecord)
 
             # add indexPerTrackll to track name
             indexPerTrackll=1:length(track)
@@ -237,8 +255,6 @@ readParticleTracker=function(folder,ab.track=FALSE,cores=1, frameRecord=TRUE){
     return(trackll)
 }
 
-# file="/Volumes/SDXC\ Disc/DoScience/Projects/SWR1/DotTracking/Result/2016-10-07/Traj_swc5AA_Swr1Halo_2hRAP_fr10ms_120mW_37-1.tif.csv"
-# folder="/Volumes/SDXC\ Disc/DoScience/Projects/SWR1/DotTracking/Data/2016-10-07"
 
 
 

@@ -48,7 +48,8 @@ dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 normalFit=fitNormDistr(dcoef)
 # perform bootstrapping for this dcoef result
 d.boot = bootstrap(normalFit, n.reps=100)
-# get confidence intervals for this dcoef result which contains data from two different folders
+# get confidence intervals for this dcoef result which contains data from 
+# two different folders
 a=getCI(d.boot)
 # to manually set confidence to 80\%
 b=getCI(d.boot, confidence=0.8, output=FALSE)

@@ -24,22 +24,32 @@
 ##'         output=FALSE)
 ##'
 ##' @param cdf cdf calculated from displacementCDF().
-##' @param components parameter specifying the number of components to fit.Currently support one to three components fit.
+##' @param components parameter specifying the number of components to fit.
+##' Currently support one to three components fit.
 ##' @param start the start value for fitting.
 ##' @param t.interval time interval for image aquisition. Default 0.01 sec.
-##' @param maxiter.search maximum iteration in random search start value process. defual to 1000.
-##' @param maxiter.optim maximum iteration in local optimization process. Default ot 1000.
+##' @param maxiter.search maximum iteration in random search start value 
+##' process. Default to 1000.
+##' @param maxiter.optim maximum iteration in local optimization process. 
+##' Default ot 1000.
 ##' @param output Logical indicaring if output file should be generated.
 ##' @return
 ##' \itemize{
-##' \item{on screen output and file} Result and parameters of goodness of the fit.
+##' \item{on screen output and file} Result and parameters of goodness of the 
+##' fit.
 ##' \item{Plot,} fiting plot.
 ##' }
 ##' @details Calculating Dcoef by fitting displacementCDF.
 ##'
-##' Reducing the range can greatly increase the precision of the searching; alternatively, if the range are unavailable, increase the maxiter.search so more points will be searched through with the cost of computation time. maxiter.optim barely need to change, if it does not converge with default setting maxiter=1000, most likely the problem is in the initial values.
+##' Reducing the range can greatly increase the precision of the searching; 
+##' alternatively, if the range are unavailable, increase the maxiter.search so 
+##' more points will be searched through with the cost of computation time. 
+##' maxiter.optim barely need to change, if it does not converge with default 
+##' setting maxiter=1000, most likely the problem is in the initial values.
 ##' 
-##' Note: Ensure that a random number generator seed has been manually set! The seed is stored as an attribute of the returned object of fitCDF() and using the same seed makes results repeatable (see examples).
+##' Note: Ensure that a random number generator seed has been manually set! The 
+##' seed is stored as an attribute of the returned object of fitCDF() and using 
+##' the same seed makes results repeatable (see examples).
 
 ##'
 ##' @examples
@@ -53,7 +63,8 @@
 ##' # set unique seed (use any number)
 ##' set.seed(123)
 ##' 
-##' # fit CDF (function automatically saves seed state as an attribute of the result)
+##' # fit CDF (function automatically saves seed state as an attribute of the 
+##' # result)
 ##' a=fitCDF(cdf,components="two",output=FALSE)
 ##' 
 ##' # to repeat results of a, load seed attribute of 'a' into current RNG state
@@ -77,7 +88,8 @@
 ##'                 )
 
 
-# the only difference is the function environment, of course it is runned in two functions
+# the only difference is the function environment, of course it is runned in two
+# functions
 # > mapply(identical,summary(a[[1]]),summary(b[[1]]))
 # formula    residuals        sigma           df cov.unscaled         call
 # FALSE         TRUE         TRUE         TRUE         TRUE         TRUE
@@ -93,13 +105,15 @@
 ##
 ###############################################################################
 
-## dt needs to be avariable in this equation so it is flexible and has a meaning to its unit um/s
+## dt needs to be avariable in this equation so it is flexible and has a meaning
+## to its unit um/s
 
 # ------------------------------------------------------------------------------
 # one component fit
 # library(truncnorm)
 
-one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,maxiter.optim=1000,name){
+one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,
+                      maxiter.optim=1000,name){
     # with one parameter, D
     p1 = function(r,D){1 - exp(-r^2/(4*D*t.interval))}
 
@@ -117,7 +131,8 @@ one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,maxiter.optim=100
     start=list(D=D)
 
     # fit equation 2 to data P
-    ocfit=nls(P ~ p1(r,D),start=start,control = nls.control(maxiter = maxiter.optim))
+    ocfit=nls(P ~ p1(r,D),
+              start=start,control = nls.control(maxiter = maxiter.optim))
 
     print(ocfit);cat("\n")
 
@@ -143,7 +158,8 @@ one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,maxiter.optim=100
 # two components fit
 
 two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
-                        t.interval=0.01,maxiter.search=1000,maxiter.optim=1000,name){
+                        t.interval=0.01,maxiter.search=1000,maxiter.optim=1000,
+                      name){
 
     ## equation
     p3 =function(r,D1,D2,alpha){
@@ -170,7 +186,8 @@ two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
                 lower=c(start$D1[[1]],start$D2[[1]],start$alpha[[1]]),
                 upper=c(start$D1[[2]],start$D2[[2]],start$alpha[[2]]),
                 
-                # barely need control of maxiter for minpack.lm::nlsLM, if it does not
+                # barely need control of maxiter for minpack.lm::nlsLM, 
+                # if it does not
                 # converge with default setting maxiter=1024, most likely the
                 # problem is in the initial values
                 control = nls.control(maxiter = maxiter.optim)
@@ -182,7 +199,8 @@ two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
     ## plotting
     p3.curve =function(x){
         1 - (coef(tcfit)["alpha"]*exp(-x^2/(4*coef(tcfit)["D1"]*t.interval)) + 
-                (1-coef(tcfit)["alpha"])*exp(-x^2/(4*coef(tcfit)["D2"]*t.interval)))}
+                (1-coef(tcfit)["alpha"])*exp(-x^2/(4*coef(tcfit)["D2"]*
+                                                       t.interval)))}
     plot(r,P,main=title,cex=0.3)
     curve(p3.curve,
         add=TRUE,col="red"
@@ -200,7 +218,8 @@ two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
 
 three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
                                         alpha=c(0,1),beta=c(0,1)),
-                        t.interval=0.01,maxiter.search=1000,maxiter.optim=1000,name){
+                        t.interval=0.01,maxiter.search=1000,maxiter.optim=1000,
+                        name){
 
 
     ## equation
@@ -234,10 +253,13 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
                 start=coef(r.search.thcfit),
                 # lower=c(0,0,0,0,0),
                 # upper=c(Inf,Inf,Inf,1,1),
-                lower=c(start$D1[[1]],start$D2[[1]],start$D3[[1]],start$alpha[1],start$beta[[1]]),
-                upper=c(start$D1[[2]],start$D2[[2]],start$D3[[2]],start$alpha[[2]],start$beta[[2]]),
+                lower=c(start$D1[[1]],start$D2[[1]],start$D3[[1]],
+                        start$alpha[1],start$beta[[1]]),
+                upper=c(start$D1[[2]],start$D2[[2]],start$D3[[2]],
+                        start$alpha[[2]],start$beta[[2]]),
 
-                # barely need control of maxiter for minpack.lm::nlsLM, if it does not
+                # barely need control of maxiter for minpack.lm::nlsLM, if it 
+                # does not
                 # converge with default setting maxiter=1024, most likely the
                 # problem is in the initial values
                 control = nls.control(maxiter = maxiter.optim)
@@ -249,7 +271,8 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     p5.curve=function(x){
         1 - (coef(thcfit)["alpha"]*exp(-x^2/(4*coef(thcfit)["D1"]*t.interval)) +
             coef(thcfit)["beta"]*exp(-x^2/(4*coef(thcfit)["D2"]*t.interval)) +
-            (1-coef(thcfit)["alpha"]-coef(thcfit)["beta"])*exp(-x^2/(4*coef(thcfit)["D3"]*t.interval))
+            (1-coef(thcfit)["alpha"]-coef(thcfit)["beta"])*
+                exp(-x^2/(4*coef(thcfit)["D3"]*t.interval))
         )
     }
     ## plot
@@ -277,7 +300,8 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
                 maxiter.optim=1000,
                 output=FALSE){
     
-    cat("\nIMPORTANT: Ensure a seed has been manually set! See help docs for more info.\n")
+    cat(paste("\nIMPORTANT: Ensure a seed has been manually set!",
+              "See help docs for more info.\n"))
     
     # use lapply to do it for all folders
     cdf.displacement=cdf$CDF.displacement
@@ -358,7 +382,8 @@ fitCDF=function(cdf, components=c("one","two","three"),
                 maxiter.optim=1000,
                 output=FALSE){
     
-    # collects current seed (recommended that a unique seed is set beforehand, e.g. set.seed(123))
+    # collects current seed (recommended that a unique seed is set beforehand,
+    # e.g. set.seed(123))
     my_seed=.Random.seed
 
     result=.fitCDF(cdf=cdf, components=components,
@@ -378,7 +403,8 @@ fitCDF=function(cdf, components=c("one","two","three"),
 # ------------------------------------------------------------------------------
 # DONE:
 
-# a better density plot than ggplot2 there, or adjust it to be better /professiona looking
+# a better density plot than ggplot2 there, or adjust it to be better 
+# professional looking
 #   plot(density(r),main="distribution of displacement r")
 
 ## output summary into csv files

@@ -17,8 +17,12 @@
 ## @method # this roxygen directive does not working
 ##' @param folder Full path to Diatrack .txt session files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
-##' @param frameRecord Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).
+##' @param cores Number of cores used for parallel computation. This can be the 
+##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
+##' read in a file when paralleled.
+##' @param frameRecord Add a fourth column to the track list after the 
+##' xyz-coordinates for the frame that coordinate point was found (especially 
+##' helpful when linking frames).
 ##' @return trackll 
 ##' @examples
 ##' # trackll=readDiatrack(folder=folder)
@@ -28,15 +32,18 @@
 
 ##' @details
 ##'
-##' Note: the folder name should not contain ".", as it is a key charactero for subsequent indexing of file names.
+##' Note: the folder name should not contain ".", as it is a key charactero for 
+##' subsequent indexing of file names.
 ##'
 ##' the absolute coordinates trajectory has moved
 ##'
 ##' trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
 ##'
-##' This "indexPerFile" is the index within a diatrackFile, which translate to "index per movie".
+##' This "indexPerFile" is the index within a diatrackFile, which translate to 
+##' "index per movie".
 ##'
-##' This "indexPerTrackll" is a unique index within a trackll, which can be translated to "index per folder".
+##' This "indexPerTrackll" is a unique index within a trackll, which can be 
+##' translated to "index per folder".
 ##'
 
 ##' @export readDiatrack
@@ -47,7 +54,8 @@
 ## .readDiatrack
 ## a function to read one diatrack txt file and returns a list of tracks
 
-.readDiatrack=function(file, interact=FALSE,ab.track=FALSE, frameRecord = FALSE){
+.readDiatrack=function(file, interact=FALSE,ab.track=FALSE, 
+                       frameRecord = FALSE){
 
     # interactively open window
     if (interact == TRUE) {
@@ -93,7 +101,9 @@
         track=dplyr::filter(track,track$x!=0,track$y!=0)
 
         if (frameRecord){
-            track <- cbind(track, "Frame" = c(frame.id[[i]]:(frame.id[[i]]+nrow(track)-1)))
+            track <- cbind(track, 
+                           "Frame" = c(frame.id[[i]]:(frame.id[[i]]+
+                                                          nrow(track)-1)))
         }
 
         # the [[]] is important, otherwise only x is included
@@ -181,7 +191,8 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
         for (i in 1:length(file.list)){
 
 
-            track=.readDiatrack(file=file.list[i],ab.track=ab.track, frameRecord = frameRecord)
+            track=.readDiatrack(file=file.list[i],ab.track=ab.track, 
+                                frameRecord = frameRecord)
 
 
             # add indexPerTrackll to track name
@@ -201,7 +212,8 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
         # FUTURE: if more than one, automatic using multicore
 
         if (cores>max.cores)
-            stop("Number of cores specified is greater than recomended maxium: ",max.cores)
+            stop(paste("Number of cores specified is",
+                       "greater than recomended maxium: "),max.cores)
 
         cat("Initiated parallel execution on", cores, "cores\n")
         # use outfile="" to display result on screen
@@ -211,11 +223,14 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
 
         # pass environment variables to workers
 
-        parallel::clusterExport(cl,varlist=c(".readDiatrack","ab.track", "frameRecord"),envir=environment())
+        parallel::clusterExport(cl,varlist=c(".readDiatrack",
+                                             "ab.track", "frameRecord"),
+                                envir=environment())
 
         # trackll=parallel::parLapply(cl,file.list,function(fname){
         trackll=parallel::parLapply(cl,file.list,function(fname){
-            track=.readDiatrack(file=fname,ab.track=ab.track, frameRecord = frameRecord)
+            track=.readDiatrack(file=fname,ab.track=ab.track, 
+                                frameRecord = frameRecord)
 
             # add indexPerTrackll to track name
             indexPerTrackll=1:length(track)
@@ -240,28 +255,30 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
     # merge masked tracks
     # merge has to be done after mask
 
-    #Merge start##########################################################################################
+    #Merge start################################################################
     # if (merge == TRUE){
     #     for (i in 1:length(file.list)){
     #         trackll[[i]]=track[[i]]
     #         names(trackll)[i]=file.name[i]
     #     }
     # }
-    #Merge end##########################################################################################
+    #Merge end##################################################################
 
     # trackll naming scheme
-    # if merge == FALSE, list takes the name of individual file name within folder
+    # if merge == FALSE, list takes the name of individual file name within 
+    # folder
     # file.name > data.frame.name
     # if merge == TRUE, list takes the folder name
     # folder.name > data.frame.name
     
     # merge masked tracks
     # merge has to be done after mask
-    #Mask start##########################################################################################
+    #Mask start#################################################################
     #if (merge == TRUE){
 
         # trackll naming scheme
-        # if merge == FALSE, list takes the name of individual file name within folder
+        # if merge == FALSE, list takes the name of individual file name within 
+        # folder
         # file.name > data.frame.name
         # if merge == TRUE, list takes the folder name
         # folder.name > data.frame.name
@@ -290,7 +307,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
         #trackll[[1]]=track.holder
         #names(trackll)[[1]]=folder.name
     #}
-        #Mask end ##########################################################################################
+        #Mask end ##############################################################
         # trackll=track.holder
 
     #     }else{

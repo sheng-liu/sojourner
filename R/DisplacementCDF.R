@@ -13,7 +13,8 @@
 ##' for individual trajectories.
 
 ##' @usage 
-##' displacementCDF(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,bivar=FALSE)
+##' displacementCDF(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
+##' bivar=FALSE)
 ##' displacement_trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
 
 
@@ -24,8 +25,8 @@
 ##'   detail.
 ##' @param output An logical indicate if output should be generated. See Values
 ##'   for detail.
-##' @param bivar bivar=FALSE, view displacement r as single variable; bivar=TRUE, view
-##'   x,y as bivarate. Default value F.
+##' @param bivar bivar=FALSE, view displacement r as single variable; 
+##' bivar=TRUE, view x,y as bivarate. Default value F.
 ##' @details The cumulative radial distribution function, P(r, i*dt), is the
 ##' probability of finding the diffusing particle within a radius r from the
 ##' origin at time lag i*dt:
@@ -121,7 +122,8 @@ displacement.track=function(track,dt=1,resolution=0.107,bivar=FALSE){
         if(bivar == TRUE){
 
             # get the displacement at that dt
-            # FIX: this appears no use in this calculation, as it is not returned in anyway
+            # FIX: this appears no use in this calculation, as it is not 
+            # returned in anyway
             displacement=track.disp[[dt]]["displacement"]
             displacement=displacement[!is.na(displacement)]
 
@@ -197,7 +199,8 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
 
             displacement.individual=sapply(trackl.dt,function(x){
                 displacement.track(
-                    track=x,dt=i,resolution=resolution,bivar=bivar)},simplify = FALSE)
+                    track=x,dt=i,resolution=resolution,bivar=bivar)},
+                simplify = FALSE)
         
 
         # as the result is of different length, the output is a list
@@ -213,7 +216,8 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
                 displacement.individual[[i]],mean,na.rm=TRUE,simplify=FALSE))
 
             std.summarized[i]=list(sapply(
-        #displacement.individual[[i]],function(x){sd(x)/N},na.rm=TRUE,simplify=FALSE))
+        #displacement.individual[[i]],function(x){sd(x)/N},na.rm=TRUE,
+        #        simplify=FALSE))
             displacement.individual[[i]],sd,na.rm=TRUE,simplify=FALSE))
         }
 
@@ -255,7 +259,8 @@ displacement_trackll=function(trackll,dt=1,resolution=0.107,bivar=FALSE){
 # the screen output, or NumTracksAtDt of displacement_trackll to decide the dt
 # that suits.
 
-displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,bivar=FALSE){
+displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
+                         bivar=FALSE){
     dp=displacement_trackll(trackll,dt=dt,resolution=resolution,bivar=bivar)
 
     # take "InidvidualDisplacement" out
@@ -269,10 +274,12 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,b
 
     # FIXed: this collaps does not work for bivariate, it only outputs dx
     # when collaps into one variable,dx dy shoudl be changed to displacement
-    # which was not output from displacment.trackll, however one can de novo calculate it here
+    # which was not output from displacment.trackll, however one can de novo 
+    # calculate it here
     # now if it is bivar, it changes it (dx, dy) into single virate r
     # cause for CDF, we are only looking at single variable displacement
-    # it is only for hmm, the model was build on bivariable x, y, rather than displacement alone
+    # it is only for hmm, the model was build on bivariable x, y, rather than 
+    # displacement alone
     # use displacement_trackll for that purpose. 
     
     # collapse all dp at dt
@@ -396,7 +403,8 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,b
             fileName=paste("stepwiseDisplacement-",
                             .timeStamp(file.name[i]),"....csv",sep="")
             cat("\nOutput stepwiseDisplacement for",file.name[i],"\n")
-            write.csv(file=fileName,stepwise.displacement[[i]],row.names = FALSE)
+            write.csv(file=fileName,stepwise.displacement[[i]],
+                      row.names = FALSE)
         }
 
         for (i in 1:length(CDF.displacement)){

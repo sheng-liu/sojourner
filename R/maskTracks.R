@@ -26,7 +26,8 @@
 ##' @param export Logical indicate if .csv output file should be generated
 ##' @param max.pixel Pixel dimension of image
 ##' @param areaFilter Range of cell areas (pixel sq) to keep in filtering
-##' @param intensityFilter Range of avg cell intensities (grayscale) to keep in filtering
+##' @param intensityFilter Range of avg cell intensities (grayscale) to keep in 
+##' filtering
 ##' @param numTracks Minimum number of required tracks in the trackll
 ##' @param num Number of tracks to randomly sample per trackl in trackll
 ##' @return masked tracks in trackll format
@@ -52,16 +53,28 @@
 ##' plotMask(folder=folder)
 
 ##' @details
-##' IMPORTANT: It will take an extremely long time to mask large datasets. Filter/trim first using filterTrack() and trimTrack(), then mask using maskTracks(folder, trackll)! 
-##' Note the mask file should have the same name as the output files with a "_MASK.tif" ending. 
-##' If there are more mask files than trackll, masking will fail. If there are less mask files, trackls without masks will be deleted. Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks.
+##' IMPORTANT: It will take an extremely long time to mask large datasets. 
+##' Filter/trim first using filterTrack() and trimTrack(), then mask using 
+##' maskTracks(folder, trackll)! 
+##' Note the mask file should have the same name as the output files with a 
+##' "_MASK.tif" ending. 
+##' If there are more mask files than trackll, masking will fail. If there are 
+##' less mask files, trackls without masks will be deleted. Users can use 
+##' plotMask() and plotTrackOverlay() to see the mask and its effect on 
+##' screening tracks.
 ##' 
-##' indexCell() will mask a trackll, separate each cell into a trackl, display all cell areas and mean intensities, and then apply any area and intensity filters.
-##' There is also the capability to export the final areas/intensities as "indexCell.csv" to the home directory and the pixel dimensions can be changed.
+##' indexCell() will mask a trackll, separate each cell into a trackl, display 
+##' all cell areas and mean intensities, and then apply any area and intensity 
+##' filters.
+##' There is also the capability to export the final areas/intensities as 
+##' "indexCell.csv" to the home directory and the pixel dimensions can be 
+##' changed.
 ##' 
-##' filterOnCell() eliminates all trackl in trackll that has less than numTracks tracks.
+##' filterOnCell() eliminates all trackl in trackll that has less than numTracks
+##'  tracks.
 ##' 
-##' sampleTracks() randomly samples num number of tracks for each trackl in trackll.
+##' sampleTracks() randomly samples num number of tracks for each trackl in 
+##' trackll.
 
 ##' @importFrom pixmap getChannels
 ##' @importFrom SDMTools ConnCompLabel
@@ -128,7 +141,8 @@ posTracks=function(track.center,pos.point){
     track.center.df=do.call(rbind.data.frame,track.center)
     names(track.center.df)=c("x","y","z", "Frame")
     
-    # change rownames to number to avoid PC mac difference in rowname when do.call rbind
+    # change rownames to number to avoid PC mac difference in rowname when 
+    # do.call rbind
     rownames(track.center.df)=seq(1,dim(track.center.df)[1])
     pos.tracks=plyr::match_df(track.center.df,pos.point,on=c("x","y"))
     return(pos.tracks)
@@ -165,7 +179,9 @@ maskTracks=function(folder, trackll){
             }
         }
         if (!found) {
-            cat(paste(names(trackll)[[i]], "mask not found. Trackl deleted from masked output.\n", sep = " "))
+            cat(paste(names(trackll)[[i]], 
+                      "mask not found. Trackl deleted from masked output.\n", 
+                      sep = " "))
             trackll[[i]] <- NULL
         }
     }
@@ -194,15 +210,19 @@ maskTracks=function(folder, trackll){
         index=rownames(mask.track.index[[i]])
         
         ## Filters only such indexes in the raw trackll[i]
-        masked.tracks[[i]]=lapply(trackll[i],function(x){x[as.numeric(index)]})[[1]]
+        masked.tracks[[i]]=lapply(trackll[i],
+                                  function(x){x[as.numeric(index)]})[[1]]
         
     }
     cat("\nAll files masked.\n")
     return(masked.tracks)
 }
 
-# Function masks, separates by cell, displays cell areas and mean intensities, and filters.
-indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(0, Inf), export = FALSE, max.pixel = 128){
+# Function masks, separates by cell, displays cell areas and mean intensities, 
+# and filters.
+indexCell=function(folder, trackll, areaFilter = c(0, Inf), 
+                   intensityFilter = c(0, Inf), export = FALSE, 
+                   max.pixel = 128){
     
     # Read in mask
     maskl=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
@@ -233,7 +253,9 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(
             }
         }
         if (!found) {
-            cat(paste(names(trackll)[[i]], "mask not found. Trackl deleted from masked output.\n", sep = " "))
+            cat(paste(names(trackll)[[i]], 
+                      "mask not found. Trackl deleted from masked output.\n", 
+                      sep = " "))
             trackll[[i]] <- NULL
         }
     }
@@ -269,30 +291,40 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(
         labeled.mat <- SDMTools::ConnCompLabel(binary.mat)
         
         # FOR VISUALIZING THE LABELED MASK
-        # image(t(labeled.mat[128:1,]),col=c('grey',rainbow(length(unique(labeled.mat))-1)))
+        # image(t(labeled.mat[128:1,]),col=c('grey',
+        #       rainbow(length(unique(labeled.mat))-1)))
         
         pos.points.indexed = list()
         length(pos.points.indexed) = max(labeled.mat)
 
         # Convert labeled.mat to lists of pos.points per cell
         for (j in 1:nrow(pos.point)) {
-            pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]] <- rbind( pos.points.indexed[[labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]], pos.point[j,])
+            pos.points.indexed[[
+                labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]] <- rbind(
+                    pos.points.indexed[[
+                        labeled.mat[pos.point[j,]$x, 
+                                    pos.point[j,]$y]]], pos.point[j,])
         }
 
         ## Display Area ##
-        cat(maskl.names[[i]], "\n", "Cell Areas (pixels squared): ", "\n", sep = "")
+        cat(maskl.names[[i]], "\n", "Cell Areas (pixels squared): ", "\n", 
+            sep = "")
         areal <- sapply(pos.points.indexed, nrow)
         cat(cat(areal, sep = "\n"))
         areas <- append(areas, areal) 
 
         
         ## Display Intensity ##
-        glow = t(matrix(pixmap::getChannels(rtiff::readTiff(glowl[[i]])), nrow = max.pixel, ncol = max.pixel))
+        glow = t(matrix(pixmap::getChannels(rtiff::readTiff(glowl[[i]])), 
+                        nrow = max.pixel, ncol = max.pixel))
         raw.intensities = rep(list(list()), max(labeled.mat))
         for(row in 1:nrow(labeled.mat)) {
             for(col in 1:ncol(labeled.mat)) {
                 if (labeled.mat[row, col] != 0){
-                    raw.intensities[[labeled.mat[row, col]]][[length(raw.intensities[[labeled.mat[row, col]]])+1]] = glow[row, col]
+                    raw.intensities[[
+                        labeled.mat[row, col]]][[
+                            length(raw.intensities[[
+                                labeled.mat[row, col]]])+1]] = glow[row, col]
                 }
             }
         }
@@ -317,13 +349,16 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(
             names(mask.track.index)=names(trackll)
             
             ## Filters all positive track centers
-            mask.track.index[[k]]=posTracks(track.center[[i]], pos.points.indexed[[k]])
+            mask.track.index[[k]]=posTracks(track.center[[i]], 
+                                            pos.points.indexed[[k]])
             
             ## Collects track indexes to keep 
             index=rownames(mask.track.index[[k]])
             
             ## Filters only such indexes in the raw trackll[i]
-            masked.trackll[[length(masked.trackll)+1]]=lapply(trackll[i],function(x){x[as.numeric(index)]})[[1]]
+            masked.trackll[[
+                length(masked.trackll)+1]]=lapply(
+                    trackll[i],function(x){x[as.numeric(index)]})[[1]]
         }
         
     }
@@ -335,7 +370,8 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(
     masked.names = list()
     for (c in 1:length(cell.count)){
         for (v in 1:cell.count[[c]]){
-            masked.names[[length(masked.names)+1]] <- paste(raw.names[c], toString(v), sep = "_")
+            masked.names[[length(masked.names)+1]] <- paste(
+                raw.names[c], toString(v), sep = "_")
         }
     }
     names(masked.trackll) <- masked.names
@@ -348,23 +384,29 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf), intensityFilter = c(
     # Filter
     j = 1
     for(i in 1:length(areas)){
-        if (areas[[i]] > areaFilter[[2]] || areas[[i]] < areaFilter[[1]] || intensities[[i]] > intensityFilter[[2]] || intensities[[i]] < intensityFilter[[1]]){
+        if (areas[[i]] > areaFilter[[2]] || areas[[i]] < areaFilter[[1]] || 
+            intensities[[i]] > intensityFilter[[2]] || intensities[[i]] < 
+            intensityFilter[[1]]){
             masked.trackll[[j]] <- NULL;
         } else {
             if (export){
-                df[nrow(df) + 1,] = list(names(masked.trackll)[[j]], areas[[i]], intensities[[i]])
+                df[nrow(df) + 1,] = list(names(masked.trackll)[[j]], areas[[i]],
+                                         intensities[[i]])
             }
             j = j + 1
         }
     }
-    cat("\nOnly cell with areas between ", areaFilter[[1]], " and ", areaFilter[[2]], " pixels sq kept.", sep = "")
-    cat("\nOnly cell with avg intensities between ", intensityFilter[[1]], " and ", intensityFilter[[2]], " grayscale kept.", sep = "")
+    cat("\nOnly cell with areas between ", areaFilter[[1]], " and ", 
+        areaFilter[[2]], " pixels sq kept.", sep = "")
+    cat("\nOnly cell with avg intensities between ", intensityFilter[[1]], 
+        " and ", intensityFilter[[2]], " grayscale kept.", sep = "")
     if (export){
         write.csv(df, file = "indexCell.csv")
         cat("\nindexCell.csv exported to working directory.")
     }
     
-    cat("\n\nAll files masked, separated by cell indexes, and filters applied.\n")
+    cat(paste("\n\nAll files masked,",
+              "separated by cell indexes, and filters applied.\n"))
     return(masked.trackll)
 }
 

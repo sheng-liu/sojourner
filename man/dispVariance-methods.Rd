@@ -6,7 +6,8 @@
 \alias{dispVariance_track}
 \title{dispVariance}
 \usage{
-dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE)
+dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, 
+output=FALSE)
 }
 \arguments{
 \item{trackll}{a list of track lists.}
@@ -15,21 +16,24 @@ dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE)
 
 \item{plot}{default: False, if true, show density plot for variances.}
 
-\item{limits}{vector of size2, variance cut-off range that one wants to plot.
+\item{limits}{vector of size2, variance cut-off range that one wants to 
+plot.
 This will not affect the returned result.}
 
-\item{log}{default: False, if true, apply log10 to variance value for new spread.
-like limits, this will only affect the plot, not the returned value.}
+\item{log}{default: False, if true, apply log10 to variance value for new 
+spread. like limits, this will only affect the plot, not the returned value.}
 
-\item{output}{if True, generate a csv output for each tracklist files that are in trackll.}
+\item{output}{if True, generate a csv output for each tracklist files that 
+are in trackll.}
 }
 \value{
 \itemize{
 \item{Variances} calculated variacne for all trakcs in trackll}
 }
 \description{
-calculate square displacements for all tracks in a trackll datatype,
-and return the variances for the dispacements of each trajectories.
+calculate square displacements for all tracks in a trackll 
+datatype, and return the variances for the dispacements of each 
+trajectories.
 }
 \details{
 dispVariance applies the squareDisp function to each dataframe

@@ -8,7 +8,8 @@
 ##' @rdname hmmTrackll-methods
 ##' @docType methods
 ##'
-##' @description Convert trackll to a (bivarte) displacement format for Hidden Markov Model fitting.
+##' @description Convert trackll to a (bivarte) displacement format for Hidden 
+##' Markov Model fitting.
 ##' @usage
 ##' hmmTrackll(trackll, t.interval=0.01)
 
@@ -92,7 +93,8 @@
 hmmTrackll=function(trackll,t.interval=0.01){
 
     # numericIndex=FALSE
-    # all the downstrain hmm analysis based on a bivariate model, so no need to have a bivar=TRUE paramter
+    # all the downstrain hmm analysis based on a bivariate model, so no need to 
+    # have a bivar=TRUE paramter
     
     
     cat("calculating displacement...\n")
@@ -141,12 +143,12 @@ hmmTrackll=function(trackll,t.interval=0.01){
             ## add time
             #  track.len=table(dat[[i]]["trackIndex"])
 
-            #             > head(track.len)
-            #
-            #             mage6.1.4.1.1 mage6.1003.11.108.108  mage6.1026.2.109.109
-            #                         3                    10                     1
-            #      mage6.1030.2.110.110  mage6.1042.2.111.111       mage6.11.12.5.5
-            #                         1                     1                    11
+        #             > head(track.len)
+        #
+        #             mage6.1.4.1.1 mage6.1003.11.108.108  mage6.1026.2.109.109
+        #                         3                    10                     1
+        #      mage6.1030.2.110.110  mage6.1042.2.111.111       mage6.11.12.5.5
+        #                         1                     1                    11
 
             track.len=sapply(dat[[i]],function(x){dim(x)[1]})
             
@@ -154,7 +156,8 @@ hmmTrackll=function(trackll,t.interval=0.01){
             
             # from tb.index generate time
             time.lst=sapply(names(track.len),function(x){
-                t=data.frame(seq(from=t.interval,to=track.len[x]*t.interval,by=t.interval))
+                t=data.frame(seq(from=t.interval,to=track.len[x]*t.interval,
+                                 by=t.interval))
                 names(t)="time"
                 return(t)
             },simplify = FALSE, USE.NAMES = TRUE)
@@ -162,14 +165,16 @@ hmmTrackll=function(trackll,t.interval=0.01){
             #         # lapply code is change from this for loop
             #         time=list()
             #         for (j in 1:length(names(track.len))){
-            #             time[[j]]=seq(from=t.interval,to=track.len[j]*t.interval,
+            #             time[[j]]=seq(
+            #                       from=t.interval,to=track.len[j]*t.interval,
             #                           by=t.interval)
             #         }
             #         names(time)=names(tb.index)
             #         identical(time,time.lst)
             #         [1] TRUE
 
-            # put time into the list, then use do.call(rbind) to make them a data.frame
+            # put time into the list, then use do.call(rbind) to make them 
+            # a data.frame
             # xx=as.data.frame(mapply(cbind.data.frame,time.lst,dat[[i]]))
             
             # mapply(cbind,time.lst,dat[[i]]) # returns a matrix
@@ -180,16 +185,18 @@ hmmTrackll=function(trackll,t.interval=0.01){
             # names(time.df)=c("time","index")
             # time.df=time.df[order(time.df$index),]
 
-            #             # notice the effect of subsetting using ["name"] vs $
-            #             > str(as.vector(dat[[i]]["trackIndex"]))
-            #            'data.frame':1249 obs. of  1 variable:
-            #                 $ trackIndex: chr  "mage6.1.4.1.1" "mage6.1.4.1.1" "mage6.1.4.1.1"
-            #             > str(as.vector(dat[[i]]$trackIndex))
-            #             chr [1:1249] "mage6.1.4.1.1" "mage6.1.4.1.1" "mage6.1.4.1.1" ...
+#             # notice the effect of subsetting using ["name"] vs $
+#             > str(as.vector(dat[[i]]["trackIndex"]))
+#            'data.frame':1249 obs. of  1 variable:
+#                 $ trackIndex: chr  "mage6.1.4.1.1" "mage6.1.4.1.1" 
+#                                                               "mage6.1.4.1.1"
+#             > str(as.vector(dat[[i]]$trackIndex))
+#             chr [1:1249] "mage6.1.4.1.1" "mage6.1.4.1.1" "mage6.1.4.1.1" ...
 
             # track unique id trackStepIndex
             id.lst=sapply(names(track.len),function(x,t.interval=1){
-                id=data.frame(seq(from=t.interval,to=track.len[x]*t.interval,by=t.interval))
+                id=data.frame(seq(from=t.interval,to=track.len[x]*t.interval,
+                                  by=t.interval))
                 names(id)="trackStepIndex"
                 return(id)
             },simplify = FALSE, USE.NAMES = TRUE)
@@ -261,7 +268,8 @@ hmmTrackll=function(trackll,t.interval=0.01){
     #         #         # lapply code is change from this for loop
     #         #         time=list()
     #         #         for (j in 1:length(names(track.len))){
-    #         #             time[[j]]=seq(from=t.interval,to=track.len[j]*t.interval,
+    #         #             time[[j]]=seq(from=t.interval,to=track.len[j]*
+    #         #                           t.interval,
     #         #                           by=t.interval)
     #         #         }
     #         #         names(time)=names(tb.index)

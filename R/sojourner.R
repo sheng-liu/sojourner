@@ -11,13 +11,16 @@
 ##' @title sojourner-simple parameters for single molecule tracking analysis
 ##' @rdname sojourner
 ##' @docType package
-##' @description simple analysis on single molecule tracking data using parameters based on mean square displacement (MSD).
+##' @description simple analysis on single molecule tracking data using 
+##' parameters based on mean square displacement (MSD).
 ##' @usage
 ##' sojourner()
 ##' sojournerGUI()
 
 
-##' @details sojourner provide a simple analysis on single molecule tracking data using parameters based on mean square displacement (MSD). Currently includes:
+##' @details sojourner provide a simple analysis on single molecule tracking 
+##' data using parameters based on mean square displacement (MSD). Currently 
+##' includes:
 ##' - duration of the tracks (dwellTime),
 ##'
 ##' - square displacement (squareDisp),

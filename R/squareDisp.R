@@ -42,13 +42,18 @@
 ## such a basic function that has been used in msd and cdf, need to export
 ## add help page later TODO
 
-## returns a list of length dt. i.e. when dt=2, it returns a list of 2 with two item, first corresponding to dt=1, second corresponding to dt=2. colnames are x,y, square.disp,dx,dy.
+## returns a list of length dt. i.e. when dt=2, it returns a list of 2 with two 
+## item, first corresponding to dt=1, second corresponding to dt=2. colnames are
+## x,y, square.disp,dx,dy.
 
 # it should be explicitly say that the dt is not at dt but from 1 to dt
-# use to.dt or dt=1:1 or simply only calculate at dt, then use lapply(1:7, squareDisp)
-# this way of confusing is because the intial msd caculation, that dt actually means 1:dt
+# use to.dt or dt=1:1 or simply only calculate at dt, then use 
+# lapply(1:7, squareDisp)
+# this way of confusing is because the intial msd caculation, that dt actually 
+# means 1:dt
 
-# add this TODO, change it to specific dt or change its nomenclature. this will affect msd and displacementCDF, change accordingly.
+# add this TODO, change it to specific dt or change its nomenclature. this will 
+# affect msd and displacementCDF, change accordingly.
 
 # it is actally at dt
 
@@ -107,13 +112,14 @@ squareDisp=function(track,dt=1,resolution=0.107){
 
 # no difference when enableJIT
 #
-# #------------------------------------------------------------------------------
+# #-----------------------------------------------------------------------------
 # # TODO: calculate displacement variance
 #
 # variance for each trajectory
 # move small steps, or varies hugely
 #
-# distribution of displacement, tells how centralized or spread the trajectory is, is a parameter to measure trajectory
+# distribution of displacement, tells how centralized or spread the trajectory 
+#is, is a parameter to measure trajectory
 # calculate square displacement for all tracks
 
 # R requirements: Rcpp, RcppArmadillo
@@ -124,8 +130,8 @@ squareDisp=function(track,dt=1,resolution=0.107){
 ##------------------------------------------------------------------------------
 ## squareDispCpp
 
-## calculate square displacement of a track/trajectory as a function of time/step
-## data.frame has two column, x and y
+## calculate square displacement of a track/trajectory as a function of 
+## time/step data.frame has two column, x and y
 ## also calculate dx, dy bivariate
 
 ##' @export squareDispCpp
@@ -146,5 +152,7 @@ squareDispCpp = function(track, dt = 1, resolution = 0.107){
     return (track.dt);
 }
 
-# TODO: Need to rewrite make 'file' an option rather than default calling in the function, this can leads to unexpected errors when the package change name or file changes location. 
+# TODO: Need to rewrite make 'file' an option rather than default calling in the
+# function, this can leads to unexpected errors when the package change name or 
+# file changes location. 
 

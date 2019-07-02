@@ -11,11 +11,15 @@ readDiatrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
 \arguments{
 \item{ab.track}{Use absolute coordinates for tracks.}
 
-\item{frameRecord}{Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames).}
+\item{frameRecord}{Add a fourth column to the track list after the 
+xyz-coordinates for the frame that coordinate point was found (especially 
+helpful when linking frames).}
 
 \item{folder}{Full path to Diatrack .txt session files output folder.}
 
-\item{cores}{Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.}
+\item{cores}{Number of cores used for parallel computation. This can be the 
+cores on a workstation, or on a cluster. Tip: each core will be assigned to 
+read in a file when paralleled.}
 }
 \value{
 trackll
@@ -24,15 +28,18 @@ trackll
 read output file (tracks/trajecotries) from Diatrack.
 }
 \details{
-Note: the folder name should not contain ".", as it is a key charactero for subsequent indexing of file names.
+Note: the folder name should not contain ".", as it is a key charactero for 
+subsequent indexing of file names.
 
 the absolute coordinates trajectory has moved
 
 trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
 
-This "indexPerFile" is the index within a diatrackFile, which translate to "index per movie".
+This "indexPerFile" is the index within a diatrackFile, which translate to 
+"index per movie".
 
-This "indexPerTrackll" is a unique index within a trackll, which can be translated to "index per folder".
+This "indexPerTrackll" is a unique index within a trackll, which can be 
+translated to "index per folder".
 }
 \examples{
 # trackll=readDiatrack(folder=folder)

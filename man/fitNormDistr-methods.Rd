@@ -11,42 +11,60 @@ combine.plot=FALSE,output=FALSE, proportion=NULL, means=NULL,
 sd=NULL, constrain=FALSE)
 }
 \arguments{
-\item{sd}{numeric vector with estimates of standard deviation(sigma) values for each component.}
+\item{sd}{numeric vector with estimates of standard deviation(sigma) values 
+for each component.}
 
-\item{constrain}{logical indicate if mean and std deviation are set to the given value. This will not work for the unimodal distribution.}
+\item{constrain}{logical indicate if mean and std deviation are set to the 
+given value. This will not work for the unimodal distribution.}
 
 \item{dcoef}{diffusion coefficient calculated from Dcoef().}
 
-\item{components}{parameter specifying the number of components to fit. If NULL (default), a components analysis is done to determine the most likely components and this number is then used for subsequent analysis.}
+\item{components}{parameter specifying the number of components to fit. If 
+NULL (default), a components analysis is done to determine the most likely 
+components and this number is then used for subsequent analysis.}
 
-\item{log.transform}{logical indicate if log10 transformation is needed, default F.}
+\item{log.transform}{logical indicate if log10 transformation is needed, 
+default F.}
 
-\item{binwidth}{binwidth for the combined plot. If NULL (default), will automatic assign binwidth.}
+\item{binwidth}{binwidth for the combined plot. If NULL (default), will 
+automatic assign binwidth.}
 
-\item{combine.plot}{Logical indicate if all the plot should be combined into one, with same scale (/same axises breaks), same color theme, and same bin size for comparison.}
+\item{combine.plot}{Logical indicate if all the plot should be combined into
+one, with same scale (/same axises breaks), same color theme, and same bin 
+size for comparison.}
 
 \item{output}{logical indicate if output file should be generated.}
 
-\item{proportion}{numeric vector with estimates of each component's proportion of the whole data.}
+\item{proportion}{numeric vector with estimates of each component's 
+proportion of the whole data.}
 
-\item{means}{numeric vector with estimates of mean(mu) values for each component.}
+\item{means}{numeric vector with estimates of mean(mu) values for each 
+component.}
 }
 \value{
 \describe{
 \item{proportions}{The proportions of mixing components.}
 \item{mean}{The Means of the components.}
-\item{sd}{The Standard Deviations (SD) of components if not log transformed; if log transformed, it is then interpreted as Coefficient of Variation (CV).}
-\item{loglik}{The log likelihood, useful for compare different fitting result, the bigger the better fit.}
+\item{sd}{The Standard Deviations (SD) of components if not log transformed;
+ if log transformed, it is then interpreted as Coefficient of Variation 
+ (CV).}
+\item{loglik}{The log likelihood, useful for compare different fitting 
+result, the bigger the better fit.}
 }
 }
 \description{
-fit normal distributions to diffusion coefficient caclulated by Dcoef method and saves seed state as a attribute of the result
+fit normal distributions to diffusion coefficient caclulated by
+ Dcoef method and saves seed state as a attribute of the result
 }
 \details{
-Components analysis uses the likelihood ratio test (LRT) to assess the number of mixture components.
-Bad Random seed generation may cause normalmixEM to crash. Using another seed will solve the issue.
+Components analysis uses the likelihood ratio test (LRT) to assess the 
+number of mixture components.
+Bad Random seed generation may cause normalmixEM to crash. Using another 
+seed will solve the issue.
 
-Note: Ensure that a random number generator seed has been manually set! The seed is stored as an attribute of the returned object of fitNormDistr() and using the same seed makes results repeatable (see examples).
+Note: Ensure that a random number generator seed has been manually set! The 
+seed is stored as an attribute of the returned object of fitNormDistr() and 
+using the same seed makes results repeatable (see examples).
 }
 \examples{
 # compare folders
@@ -59,8 +77,10 @@ dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 # set unique seed (use any number)
 set.seed(123)
 
-# fit dcoef (function automatically saves seed state as an attribute of the result)
-a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,combine.plot=FALSE,output=FALSE)
+# fit dcoef (function automatically saves seed state as an attribute of the 
+# result)
+a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,combine.plot=FALSE,
+               output=FALSE)
 
 # to repeat results of 'a', load seed attribute of a into RNG state
 .Random.seed=attr(a,"seed")
@@ -75,18 +95,22 @@ mapply(identical,a[[1]],b[[1]])
 
 #try with log transformation
 set.seed(234)
-c=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
+c=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,
+               output=FALSE)
 
-# trying with some parameters provided(this will be applied to all dcoef results). 
-# with constrain = FALSE, this will be used as the starting values for the EM-algorithm
-# normally we should deal with only one dataset when working with constrains, 
-# since it will apply to all of them.
+# trying with some parameters provided(this will be applied to all dcoef 
+# results). 
+# with constrain = FALSE, this will be used as the starting values for the 
+# EM-algorithm
+# normally we should deal with only one dataset when working with 
+# constrains, since it will apply to all of them.
 folder3=system.file("extdata","HSF", package="sojourner")
 trackll=compareFolder(c(folder3),input=3)
 MSD=msd(trackll=trackll)
 dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 
-# try with constrain =TRUE, the values will be forced to eqaul the provided ones.
+# try with constrain =TRUE, the values will be forced to eqaul the provided 
+# ones.
 set.seed(345)
 e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=TRUE)
 }

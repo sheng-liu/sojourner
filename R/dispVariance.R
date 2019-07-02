@@ -1,6 +1,6 @@
 ## dispVariance-methods
 ##
-#######################################################################################
+################################################################################
 ##
 ##
 ##' @name dispVariance
@@ -9,19 +9,23 @@
 ##' @rdname dispVariance-methods
 ##' @docType methods
 ##' 
-##' @description calculate square displacements for all tracks in a trackll datatype,
-##' and return the variances for the dispacements of each trajectories.
+##' @description calculate square displacements for all tracks in a trackll 
+##' datatype, and return the variances for the dispacements of each 
+##' trajectories.
 ##' 
 ##' @usage
-##' dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE)
+##' dispVariance(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, 
+##' output=FALSE)
 ##' @param trackll a list of track lists.
 ##' @param min minimum points on trajectory, should be at least 3 to work.
 ##' @param plot default: False, if true, show density plot for variances.
-##' @param limits vector of size2, variance cut-off range that one wants to plot.
+##' @param limits vector of size2, variance cut-off range that one wants to 
+##' plot.
 ##' This will not affect the returned result.
-##' @param log default: False, if true, apply log10 to variance value for new spread.
-##' like limits, this will only affect the plot, not the returned value.
-##' @param output if True, generate a csv output for each tracklist files that are in trackll.
+##' @param log default: False, if true, apply log10 to variance value for new 
+##' spread. like limits, this will only affect the plot, not the returned value.
+##' @param output if True, generate a csv output for each tracklist files that 
+##' are in trackll.
 ##' @return \itemize{
 ##' \item{Variances} calculated variacne for all trakcs in trackll}
 ##' 
@@ -64,9 +68,9 @@
 ##' 
 ##' @export dispVariance
 
-##########################################################################################
+################################################################################
 
-##----------------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
 ##dispVariance_track
 
 ##calculate variance for displacements single track
@@ -74,12 +78,14 @@
 ##' @export dispVariance_track
 dispVariance_track=function(track) {
     withDisp = squareDisp(track) # get displacement
-    sqDisp = withDisp[[1]]$square.disp #[[1]] is necessary b/c squaredisplacement give a list in result
-    clean = sqrt(sqDisp[!is.na(sqDisp)]) #get rid of NA and do the sqrt since it is currently dx^2 + dy^2
+    sqDisp = withDisp[[1]]$square.disp #[[1]] is necessary b/c 
+    # squaredisplacement give a list in result
+    clean = sqrt(sqDisp[!is.na(sqDisp)]) #get rid of NA and do the sqrt since 
+    # it is currently dx^2 + dy^2
     var(clean) # return variance value
 }
 
-##----------------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
 ##dispVariance.trackl
 
 ##calculate variance for displacements single tracklist
@@ -94,7 +100,7 @@ dispVariance.trackl=function(trackl) {
     #disp.var
 }
 
-##---------------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
 ##dispVariance
 
 ##calculate displacement variance for all tracks in given trackll
@@ -104,7 +110,8 @@ dispVariance.trackl=function(trackl) {
 ## of length 2.
 
 ##' @export dispVariance
-dispVariance=function(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=FALSE) {
+dispVariance=function(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, 
+                      output=FALSE) {
     if (min < 3) {
         stop("min value should be at least 3")
     }
@@ -120,9 +127,11 @@ dispVariance=function(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, output=
         if (log) {
             melted$variance=log10(melted$variance)
         }
-        #different tracklists will show up as different colors with some transparency
+        #different tracklists will show up as different colors with some 
+        # transparency
         plt=ggplot2::ggplot(melted, ggplot2::aes_string(x="variance", 
-        color="trackList")) + ggplot2::geom_line(alpha=0.5, position="identity", stat="density")
+        color="trackList")) + ggplot2::geom_line(alpha=0.5, position="identity",
+                                                 stat="density")
         if (length(limits) != 2) {
             plot(plt)
         }

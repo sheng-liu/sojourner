@@ -24,9 +24,12 @@
 
 
 ##' @details
-##' IMPORTANT: Once a trackll has been merged, it cannot be masked using maskTracks().
+##' IMPORTANT: Once a trackll has been merged, it cannot be masked using 
+##' maskTracks().
 ##' 
-##' Merging creates the following data structure: (1) first level is the folder name, (2) second level is a list of data.frames/tracks from all output files merged into one.
+##' Merging creates the following data structure: (1) first level is the folder 
+##' name, (2) second level is a list of data.frames/tracks from all output files
+##'  merged into one.
 ##' 
 ##' If not merged, track lists takes the name of individual files in the folder.
 ##' If merged, the single merged track list takes the folder name.

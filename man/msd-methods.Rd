@@ -40,7 +40,8 @@ for detail.}
 
 \item{vecdt}{A list containing varying dt values.}
 
-\item{percentage}{compute msd based on (tierd) percentage of its total length.}
+\item{percentage}{compute msd based on (tierd) percentage of its total 
+length.}
 
 \item{trimmer}{vector used for trimming via trimTrack()}
 }
@@ -61,8 +62,8 @@ SE=SD/sqrt(N).
 \item{SampleSize} The sample size (number of tracks/trajectories) used for
 calculating the msd and standard error.
 
-\item{Trackll} The msd function also returns the processed trackll. If passed
-to a variable, one can then export the trackll with this variable.
+\item{Trackll} The msd function also returns the processed trackll. If 
+passed to a variable, one can then export the trackll with this variable.
 }
 }
 \description{

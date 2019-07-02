@@ -78,7 +78,9 @@ Dcoef.static=function(MSD,lag.start=2,lag.end=5,t.interval=0.010){
 ##------------------------------------------------------------------------------
 ## .Dcoef.roll
 
-## cant use roll on MSD method = percentage, as its MSD is different length, MSD method = percentage is calculated differently, using msd_track_vecdt(), instead of msd().
+## cant use roll on MSD method = percentage, as its MSD is different length, MSD
+## method = percentage is calculated differently, using msd_track_vecdt(),
+## instead of msd().
 
 Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 
@@ -148,7 +150,8 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 #     D.coef=list()
 #     D.coef.vec=c()
 #     for (i in start){
-#         dd=Dcoef.static(MSD,lag.start=start[i],lag.end=end[i],t.interval=0.010)
+#         dd=Dcoef.static(MSD,lag.start=start[i],lag.end=end[i],
+#           t.interval=0.010)
 #         D.coef.vec=c(D.coef.vec,list(dd))
 #     }
 # 
@@ -242,10 +245,14 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 # convenient to plot the distribution of log D. (Saxton, 1997)
 
 # any track length >32, take 32
-# 22~32, percentage 1/4, use first 5~8 points, excluding initial point (ie.2~6-2~8);
-# 15~21, percentage 0.4, use first 5~8 points, excluding initial point (ie.2~6-2~8);
-# 10~14, percentage 0.6, use first 5~8 points, excluding initial point (i.e.2~6-2~8);(1)
-# 7~9, percentage 1, use all 5~9 frames, excluding initital point (i.e dt 2~6-2~8).(2)
+# 22~32, percentage 1/4, use first 5~8 points, excluding initial 
+# point (ie.2~6-2~8);
+# 15~21, percentage 0.4, use first 5~8 points, excluding initial 
+# point (ie.2~6-2~8);
+# 10~14, percentage 0.6, use first 5~8 points, excluding initial 
+# point (i.e.2~6-2~8);(1)
+# 7~9, percentage 1, use all 5~9 frames, excluding initital 
+# point (i.e dt 2~6-2~8).(2)
 # 5~6, percentage 1, use all points (i.e. dt 2~4-2~5)(3)
 
 # (1) 10*0.6 = 6 frames, 6 time lags, exclude 1st, 5 points for fitting
@@ -257,12 +264,13 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 
 
 
-Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,filter=c(min=7,max=Inf),
-                    trimmer=c(min=1,max=31),resolution=0.107,t.interval=0.010){
+Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,
+                    filter=c(min=7,max=Inf),trimmer=c(min=1,max=31),
+                    resolution=0.107,t.interval=0.010){
 
     # calculate msd using msd_perc()
-    msd.lst=msd_perc(trackll,percentage=percentage,filter=filter,trimmer=trimmer,
-                    resolution=resolution,output=FALSE)
+    msd.lst=msd_perc(trackll,percentage=percentage,filter=filter,
+                     trimmer=trimmer,resolution=resolution,output=FALSE)
 
     # exclude the first time lag for fitting for all category
     msd.remove1st=lapply(msd.lst,function(x){
@@ -344,8 +352,9 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,filter=c(min=7,max=In
 #
 #             # if 3=<frames<=6 are selected, all points needs to be used
 #
-#             if (length(x[[i]])<=3) {stop(
-#                 "tracks must at least have 3 time steps (i.e. 4 frames) for confident coefficient fitting, please filter track first.")
+#             if (length(x[[i]])<=3) {stop(paste("tracks must at least have",
+#                   "3 time steps (i.e. 4 frames) for confident coefficient",
+#                   "fitting, please filter track first."))
 #
 #             }else if (length(x[[i]])>=5 & length(x[[i]])<=6){
 #                 x[[i]]=x[[i]]
@@ -376,7 +385,10 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,filter=c(min=7,max=In
 # names(D.coef)=names(MSD)
 
 
-#     Weights are set to be the number of points (length of trajectory?) averaged to generate the mean square displacement value at the given delay (in this case, it is the 25%). Thus, we give more weight to MSD curves with greater certainty (larger number of elements averaged).
+#     Weights are set to be the number of points (length of trajectory?) 
+# averaged to generate the mean square displacement value at the given delay 
+# (in this case, it is the 25%). Thus, we give more weight to MSD curves with 
+# greater certainty (larger number of elements averaged).
 
 # weights are essentially the lenght of the msd list
 
@@ -387,18 +399,23 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,filter=c(min=7,max=In
 
 # plot those coef and get the mean of all
 
-# The only requirement for weights is that the vector supplied must be the same length as the data.
+# The only requirement for weights is that the vector supplied must be the same
+# length as the data.
 
-# simplest weights  index of the msd (as it shows how many points is used to generate the msd, steps)
+# simplest weights  index of the msd (as it shows how many points is used to
+# generate the msd, steps)
 
 # more sophistacted  1/theta^2 (variance)
 
 
 
-# would be nice to have a subsetting method for a sojourner class, there are so many levels of subsetting, each time it needs a lapply
+# would be nice to have a subsetting method for a sojourner class, there are so
+# many levels of subsetting, each time it needs a lapply
 
-## instead of trackll, it maybe better to store tracks in data.table, then folders
-## instead of (second) list of data.frame, it may worth the effort simply making it a data.frame (data.table) with fourth column as trajectory numbers.
+## instead of trackll, it maybe better to store tracks in data.table, then
+## folders
+## instead of (second) list of data.frame, it may worth the effort simply making
+## it a data.frame (data.table) with fourth column as trajectory numbers.
 
 ## it makes program (maybe) easier, computation faster
 
@@ -414,7 +431,8 @@ rsquare.filter=function(D.coef,rsquare=0.8){
     slope=lapply(D.coef,function(x){x[,"slope"]})   # x[colnames(x) == "slope"]
     corr=lapply(D.coef,function(x){x[,"corr"]})    # x[colnames(x) == "corr"]
 
-    # the "still" molecule wil generate a NA in correlation, thus is.na(x) == FALSE
+    # the "still" molecule wil generate a NA in correlation, 
+    # thus is.na(x) == FALSE
     corr.filter=lapply(corr,function(x){x>=rsquare & is.na(x) == FALSE})
 
     # add corr and slope in the output
@@ -424,7 +442,8 @@ rsquare.filter=function(D.coef,rsquare=0.8){
 
     D.coef.slope.subset=mapply("[",slope,corr.filter,SIMPLIFY=FALSE)
     D.coef.corr.subset=mapply("[",corr,corr.filter,SIMPLIFY=FALSE)
-    D.coef.subset=mapply(cbind,D.coef.slope.subset,D.coef.corr.subset,SIMPLIFY=FALSE)
+    D.coef.subset=mapply(cbind,D.coef.slope.subset,D.coef.corr.subset,
+                         SIMPLIFY=FALSE)
 
     # add colnames
     D.coef.subset=lapply(D.coef.subset,function(x){
@@ -513,7 +532,8 @@ rsquare.filter.roll=function(D.coef,rsquare=0.8){
 #     if (static){
 #
 #         #Log.D.coef=suppressWarnings(lapply(D.coef,log))
-#         # worth noting "log computes logarithms, by default natural logarithms"
+#         # worth noting "log computes logarithms, b
+#         # y default natural logarithms"
 #         Log.D.coef=lapply(D.coef.subset,log10)
 #
 #         # remove NaN if wanted

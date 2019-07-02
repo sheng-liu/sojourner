@@ -10,10 +10,13 @@
 ##' @description Caclulate diffusion coefficient (Dcoef) for trajecotries.
 ##'
 ##' @usage
-##' Dcoef( MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,resolution=0.107,
-##'     binwidth=NULL,method=c("static","percentage","rolling.window"),
-##'     plot=FALSE,output=FALSE,t.interval=0.01,profile=NULL)
-##' @param MSD Mean Square Displacement calculated using msd() function. Either MSD or trackll can be passed into Dcoef for calculation of diffusion coefficient.
+##' Dcoef( MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
+##' resolution=0.107, binwidth=NULL,
+##' method=c("static","percentage","rolling.window"),
+##' plot=FALSE,output=FALSE,t.interval=0.01,profile=NULL)
+##' @param MSD Mean Square Displacement calculated using msd() function. 
+##' Either MSD or trackll can be passed into Dcoef for calculation of diffusion 
+##' coefficient.
 ##' @param trackll Track list output from readDiatrack().
 ##' @param dt Time intervals. Default 6.
 ##' @param filter a vector specifies the minimum and max length of trajecotries
@@ -38,14 +41,15 @@
 ##'   for detail.
 ##' @param t.interval time interval between frames, default 0.010 s (10ms).
 ##' @param profile Location of preference file. By default (NULL), it is stored
-##'   at : system.file("extdata","PREF","profile.csv",package="sojourner"). User can
-##'   provide preference file by specifying the location of the file, e.g.
-##'   profile="/Users/shengliu/Desktop/profile.csv".
+##'   at : system.file("extdata","PREF","profile.csv",package="sojourner"). User
+##'    can provide preference file by specifying the location of the file, e.g. 
+##'    profile="/Users/shengliu/Desktop/profile.csv".
 ##'
 ##' @return
 ##' \itemize{
 ##' \item \emph{Dcoef} A list of Dcoef for each file in trackll.
-##' \item \emph{PDF} Log.Dcoef histogram fitted with density curve, when plot = TRUE.
+##' \item \emph{PDF} Log.Dcoef histogram fitted with density curve,
+##'  when plot = TRUE.
 ##' \item \emph{csv} Dcoef output in csv format, when output = TRUE.
 ##' }
 ##' @details Generic parameters (parameter applied to all methods, such as
@@ -53,8 +57,8 @@
 ##' as lag.start, lag.end for method = "static"), are stored in profile.csv in
 ##' PREF folder under extdata. To change preference parameter, can either
 ##' programably or manually go to folder
-##' system.file("extdata","PREF","profile.csv",package="sojourner"), and change the
-##' profile.csv.
+##' system.file("extdata","PREF","profile.csv",package="sojourner"), and c
+##' hange the profile.csv.
 ##' 
 ##' lag.start: time lag used as start of dt for compute Dcoef. Default 2.
 ##' lag.end: Time lag used as end of dt for compute Dcoef. Default 2.
@@ -74,7 +78,8 @@
 ##'     [,6] \tab 7~9 \tab 1 \tab 2~5-2~7
 ##' }
 ##'
-##'     \item \bold{rolling.window}  time lags uses for Dcoef follows a rolling window with specified window size (default 4).
+##'     \item \bold{rolling.window}  time lags uses for Dcoef follows a rolling 
+##'     window with specified window size (default 4).
 ##'}
 
 
@@ -124,7 +129,8 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
     ## set corresponding switches
 
     ## read in preference parameters
-    ## these are some method dependent parameters, the generic parameters (parameter applied to all methods) are set in the function
+    ## these are some method dependent parameters, the generic parameters
+    ## (parameter applied to all methods) are set in the function
 
     ## enable user provided preference file
     if (is.null(profile)){
@@ -175,7 +181,8 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
 
                 # calculate Dcoef using rolling window
-                D.coef=Dcoef.roll(MSD,window.size=window.size,t.interval=t.interval)
+                D.coef=Dcoef.roll(MSD,window.size=window.size,
+                                  t.interval=t.interval)
             },
             percentage={
                 static=TRUE
@@ -187,7 +194,8 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
 #     if (plot == "variance"){
 #         ## currently set rollingwindow only for variance plot
-#         cat("\nvariance = TRUE, applying rolling window, filter swtiched on\n")
+#         cat(
+#    "\nvariance = TRUE, applying rolling window, filter swtiched on\n")
 #         rolling.window=TRUE
 #         filter=TRUE
 #     }else{
@@ -249,7 +257,8 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
         # simpler than reverse setup
         #                 Log.D.coef=list()
         #                 for (i in 1:length(D.coef.subset.slope)){
-        #                     Log.D.coef[[i]]=lapply(D.coef.subset.slope[[i]],log10)
+        #                     Log.D.coef[[i]]=lapply(
+        #                           D.coef.subset.slope[[i]],log10)
         #                 }
         #                 names(Log.D.coef)=names(D.coef.subset.slope)
         #                 return(Log.D.coef)
@@ -276,9 +285,11 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 #            variance={
 #                if (method == "static"||method == "percentage"){
 #
-#                    cat("\n\nvariance plot for method static and percentage not available for sojourner v0.2 \n\n")
+#                    cat(paste("\n\nvariance plot for method static",
+#                       "and percentage not available for sojourner v0.2 \n\n"))
 #
-# #                    cat("variance plot for method static and percentage does not use rsquare filter. \n")
+# #                    cat(paste("variance plot for method static", 
+#                       "and percentage does not use rsquare filter. \n"))
 # #                    Log.D.coef.nofilter=Dcoef.log(D.coef,static=TRUE)
 # #                    plotVariance(Log.D.coef.nofilter,method=method)
 #
@@ -289,7 +300,8 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 #            ## needs more work to deal with a list
 #
 #            # see count inforamtion
-#            histogram=plotHistogram(Log.D.coef,binwidth=binwidth,method=method),
+#            histogram=plotHistogram(Log.D.coef,
+#                   binwidth=binwidth,method=method),
 #
 #            # plot frequency so it is easier to compare groups
 #            density=plotDensity(Log.D.coef,binwidth=binwidth,method=method)

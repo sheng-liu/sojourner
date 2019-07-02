@@ -7,7 +7,8 @@
 \alias{displacement_trackll}
 \title{displacementCDF}
 \usage{
-displacementCDF(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,bivar=FALSE)
+displacementCDF(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
+bivar=FALSE)
 displacement_trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
 }
 \arguments{
@@ -15,8 +16,8 @@ displacement_trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
 
 \item{resolution}{ratio of pixel to uM.}
 
-\item{bivar}{bivar=FALSE, view displacement r as single variable; bivar=TRUE, view
-x,y as bivarate. Default value F.}
+\item{bivar}{bivar=FALSE, view displacement r as single variable; 
+bivar=TRUE, view x,y as bivarate. Default value F.}
 
 \item{trackll}{a list of track lists.}
 

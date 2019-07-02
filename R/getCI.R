@@ -44,14 +44,16 @@
 ##' normalFit=fitNormDistr(dcoef)
 ##' # perform bootstrapping for this dcoef result
 ##' d.boot = bootstrap(normalFit, n.reps=100)
-##' # get confidence intervals for this dcoef result which contains data from two different folders
+##' # get confidence intervals for this dcoef result which contains data from 
+##' # two different folders
 ##' a=getCI(d.boot)
 ##' # to manually set confidence to 80%
 ##' b=getCI(d.boot, confidence=0.8, output=FALSE)
 ##' 
 ###TODO add plot with confidence interval
 
-##small helper function that calculates the CI in terms of stderr. This returns the critical t-values, given the confidence.
+##small helper function that calculates the CI in terms of stderr. This returns 
+##the critical t-values, given the confidence.
 .get.seRange=function(confidence, num.samples){
     diff=(1-confidence)/2
     range.vector=c(diff, 1-diff)
@@ -74,8 +76,8 @@ getCI=function(bootstrap.result, confidence=0.95, output=FALSE){
         out.df = data.frame()
         
         #Extract values form the fitting result and then apply the calculated
-        #critical-t values stored in SE.range generate the rownames in meannames
-        #and proportionnames each time we do this
+        #critical-t values stored in SE.range generate the rownames in 
+        #meannames and proportionnames each time we do this
         meannames = c()
         for (j in 1:length(fit.result[[i]]$mu)) {
             out.df = rbind(
@@ -122,7 +124,8 @@ getCI=function(bootstrap.result, confidence=0.95, output=FALSE){
                         .timeStamp(paste(names(ciList),sep = "")),".csv",sep="")
         for (i in 1:length(ciList)){
             single.df = data.frame(ciList[[i]])
-            rownames(single.df) = paste(inputNames[[i]],rownames(single.df), sep = ".")
+            rownames(single.df) = paste(inputNames[[i]],rownames(single.df), 
+                                        sep = ".")
             whole.df = rbind(whole.df, single.df)
         }
         write.csv(whole.df, file = fileName)
