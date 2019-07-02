@@ -2,8 +2,8 @@ Package: sojourner
 Title: Single molecule tracking analysis tool
 Version: 0.99.0
 Date: 2015-10-15
-Author: Sheng Liu, Xiaona Tang, Sun Jay Yoo, Youngsoo Sung
-Maintainer: Sheng Liu <shengliumailbox@gmail.com>
+Author: Sheng Liu, Sun Jay Yoo, Xiaona Tang, Youngsoo Sung
+Maintainer: Sheng Liu <sojourner.developer@outlook.com>
 Description: A single molecule tracking analysis tool for computing biophysical properties of single moleclues.
 License: Artistic-2.0
 LazyData: FALSE
