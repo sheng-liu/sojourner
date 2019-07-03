@@ -7,7 +7,7 @@ Maintainer: Sheng Liu <sojourner.developer@outlook.com>
 Description: A single molecule tracking analysis tool for computing biophysical properties of single moleclues.
 License: Artistic-2.0
 LazyData: FALSE
-Suggests: knitr, rmarkdown
+Suggests: BiocStyle, knitr, rmarkdown
 VignetteBuilder: knitr
 biocViews: Technology, WorkflowStep
 Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,sp,truncnorm,utils,stats,pixmap,SDMTools,rlang,rowr,graphics,grDevices,grid,compiler,lattice
