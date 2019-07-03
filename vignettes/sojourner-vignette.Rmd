@@ -6,7 +6,7 @@ author:
       - Department of Biology, Krieger School of Arts and Sciences, Johns Hopkins University
 - name: Sun Jay Yoo
   affiliation:
-      - Department of BioMedical Engineering, Johns Hopkins University
+      - Department of Biomedical Engineering, Johns Hopkins University
       - Department of Computer Science, Johns Hopkins University
 - name: Xiaona Tang
   affiliation:
