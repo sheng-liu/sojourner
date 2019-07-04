@@ -1,10 +1,9 @@
 Package: sojourner
-Title: Single molecule tracking analysis tool
+Title: sojourner: An R package for statistical analysis of single molecule trajectories
 Version: 0.99.0
 Date: 2015-10-15
-Author: Sheng Liu, Sun Jay Yoo, Xiaona Tang, Youngsoo Sung
 Maintainer: Sheng Liu <sojourner.developer@outlook.com>
-Description: A single molecule tracking analysis tool for computing biophysical properties of single moleclues.
+Description: Single molecule tracking has evolved as a novel new approach complementing genomic sequencing, it reports live biophysical properties of molecules being investigated besides properties relating their coding sequence; here we provided "sojourner" package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data.
 License: Artistic-2.0
 LazyData: FALSE
 Suggests: BiocStyle, knitr, rmarkdown
@@ -15,3 +14,12 @@ NeedsCompilation: no
 Packaged: 2017-09-05; shengliu
 RoxygenNote: 6.1.1
 Encoding: UTF-8
+URL: https://github.com/sheng-liu/sojourner
+BugReports: https://github.com/sheng-liu/sojourner/issues
+Authors@R: c(
+    person("Sheng", "Liu", email = "sheng.liu@live.ca", role = c("aut","cre")),
+    person("Sun Jay","Yoo", role = "aut"),
+    person("Xiao Na","Tang", role = "aut"),
+    person("Young Soo","Sung", role = "aut"),
+    person("Carl","Wu", email = "wuc@jhu.edu",role = "aut")
+    )

@@ -1,4 +1,6 @@
 
+# <img src="vignettes/sojourner_logo.png" align="right" alt="" width="180" />
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # Sojourner: Statistical Analysis of Single Molecule Trajectories
