@@ -40,7 +40,7 @@ vignette: >
   
 # Introduction
 
-A basic task in single molecule tracking is to determine diffusion coefficient from molecule trajectories identified after initial image data acquisition. The trajectory (term used interchangeably with "tracks") of a molecule is presented as a table of $x$,$y$ and $z$ coordinates in the unit of pixel, which then can be converted to other measurement, such as in $\mu$m, according to the resolution of the camera. The package *sojourner* provides methods to calculate diffusion coefficient by using mean square displacement (MSD) based, displacement cumulative distribution function (CDF)-based, as well as hidden Markov model (HMM) based methods from such input file. This vignette explains the usage of the package.
+A basic task in single molecule tracking is to determine diffusion coefficient from molecule trajectories identified after initial image data acquisition. The trajectory (term used interchangeably with "tracks") of a molecule is presented as a table of $x$,$y$ and $z$ coordinates in the unit of pixel, which then can be converted to other measurement, such as in $\mu$m, according to the resolution of the camera. The package *sojourner* provides methods to calculate diffusion coefficient by using mean square displacement (MSD) based, displacement cumulative distribution function (CDF)-based, as well as hidden Markov model (HMM) based methods (in next release) from such input file. This vignette explains some basic usage of the package.
 
 # Input Data Preparation
 
@@ -68,6 +68,8 @@ trackll=list(FOLDER_1=trackl_1,
              ... 
              FOLDER_n=trackl_n,) 
 ```
+
+![](sojourner_dataStructure.png){width=100%}
 
 ## Reading in Track Data with `createTrackll()`
 
@@ -496,6 +498,8 @@ A Shiny app implementation of many of the core features of sojourner. Namely, th
 library(sojourner)
 sojournerGUI()
 ```
+
+![](sojournerGUI.png){width=100%}
 
 ## Helpful Tips
 
