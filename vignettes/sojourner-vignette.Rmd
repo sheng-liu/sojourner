@@ -69,7 +69,6 @@ trackll=list(FOLDER_1=trackl_1,
              FOLDER_n=trackl_n,) 
 ```
 
-![](sojourner_dataStructure.png){width=100%}
 
 ## Reading in Track Data with `createTrackll()`
 
@@ -115,11 +114,7 @@ folder2=system.file("extdata","HTZ1",package="sojourner")
 plotTrackFromIndex(index.file=index.file2, movie.folder=c(folder1,folder2))
 ```
 
-Sample images of output plots:
-
-![](plotTrackFromIndex_example.png){width=95%}
-
-This plots the tracks based on its name, with the information contained in its name (i.e. start frame and length/duration), one can also pull out its movie. See `? plotTrack` for more plotting options. 
+The output plots the tracks based on its name, with the information contained in its name (i.e. start frame and length/duration), one can also pull out its movie. See `? plotTrack` for more plotting options. 
 
 ## Distribution of Trajectory Lengths with `dwellTime()`
 
@@ -141,7 +136,7 @@ trackll=filterTrack(trackll,filter=c(min=7,max=Inf))
 
 Below is a detailed description of functions of sojourner for importing, exporting and processing of single molecule trajectories.   
 
-![](sojourner_Pipeline.png){width=90%}
+
 
 ## Reading Data
 
@@ -499,7 +494,6 @@ library(sojourner)
 sojournerGUI()
 ```
 
-![](sojournerGUI.png){width=100%}
 
 ## Helpful Tips
 
