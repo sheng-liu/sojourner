@@ -1,8 +1,7 @@
 Package: sojourner
 Title: sojourner: An R package for statistical analysis of single molecule trajectories
-Version: 0.99.0
+Version: 0.99.1
 Date: 2015-10-15
-Maintainer: Sheng Liu <sojourner.developer@outlook.com>
 Description: Single molecule tracking has evolved as a novel new approach complementing genomic sequencing, it reports live biophysical properties of molecules being investigated besides properties relating their coding sequence; here we provided "sojourner" package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data.
 License: Artistic-2.0
 LazyData: FALSE
@@ -11,13 +10,14 @@ VignetteBuilder: knitr
 biocViews: Technology, WorkflowStep
 Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,sp,truncnorm,utils,stats,pixmap,SDMTools,rlang,rowr,graphics,grDevices,grid,compiler,lattice
 NeedsCompilation: no
-Packaged: 2017-09-05; shengliu
+Packaged: 
 RoxygenNote: 6.1.1
 Encoding: UTF-8
 URL: https://github.com/sheng-liu/sojourner
 BugReports: https://github.com/sheng-liu/sojourner/issues
 Authors@R: c(
-    person("Sheng", "Liu", email = "sheng.liu@live.ca", role = c("aut","cre")),
+    person("Sheng", "Liu", email = "sheng.liu@live.ca", role = "aut"),
+    person("Sojourner", "Developer", email = "sojourner.developer@outlook.com", role = c("cre")),
     person("Sun Jay","Yoo", role = "aut"),
     person("Xiao Na","Tang", role = "aut"),
     person("Young Soo","Sung", role = "aut"),
