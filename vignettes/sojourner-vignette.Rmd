@@ -195,14 +195,6 @@ trackll = createTrackll(folder=folder, input=3)
 # trackll <- createTrackll(interact = TRUE)
 ```
 
-Visualization using `plotNucTrackOverlay()`:
-
-```{r, eval=TRUE, warning=FALSE, echo=FALSE, results = 'hide'}
-# To visualize tracks over cell image
-image_list = list.files(path=folder,pattern="_Nuclei.tif",full.names = TRUE)
-plotNucTrackOverlayTrackl(trackl = trackll[1], image.file = image_list[1])[[1]]
-plotNucTrackOverlayTrackl(trackl = trackll[2], image.file = image_list[2])[[1]]
-```
 
 ## Processing Data
 
