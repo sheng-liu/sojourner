@@ -401,7 +401,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
     if (output == TRUE){
         for (i in 1:length(stepwise.displacement)){
             fileName=paste("stepwiseDisplacement-",
-                            .timeStamp(file.name[i]),"....csv",sep="")
+                            .timeStamp(file.name[i]),"___.csv",sep="")
             cat("\nOutput stepwiseDisplacement for",file.name[i],"\n")
             write.csv(file=fileName,stepwise.displacement[[i]],
                       row.names = FALSE)
@@ -409,7 +409,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
 
         for (i in 1:length(CDF.displacement)){
             fileName=paste("CDFDisplacement-",
-                            .timeStamp(file.name[i]),"....csv",sep="")
+                            .timeStamp(file.name[i]),"___.csv",sep="")
             cat("\nOutput CDFDisplacement for",file.name[i],"\n")
             write.csv(file=fileName,CDF.displacement[[i]],row.names = FALSE)
         }

@@ -107,7 +107,7 @@ dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=TRUE,
 #         }
 
         # output plot
-        tStamp.plotName=paste(.timeStamp(file.name[1]),"...",sep="")
+        tStamp.plotName=paste(.timeStamp(file.name[1]),"___",sep="")
         plotName=paste("Dwell Time Plot-",tStamp.plotName,".pdf",sep="")
         ggsave(filename=plotName,plot=histo.plot,width=8,height=4)
 

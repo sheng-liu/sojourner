@@ -171,7 +171,7 @@ plotLocalizations_Density<-function(trackll=trackll,scale=256, r=125, file.No=0,
                                     point.scale=0.15){
     ## Output the plots into one PDF file in the working directory.
     pdf(paste("plotLocalization.Density.Heatmap--",
-              format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),
+              format(Sys.time(),"%Y%m%d_%H%M%S"),".pdf",sep=""),
         width=11.7,height=11.7)
 
     .plotLocalizations.Density(trackll=trackll,scale=scale, r=r, 

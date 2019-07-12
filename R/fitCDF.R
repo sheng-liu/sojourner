@@ -137,7 +137,7 @@ one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,
     print(ocfit);cat("\n")
 
     # plot
-    pdf(paste(format(Sys.time(),"%Y%m%d.%H%M%S"), ".pdf", sep = ""))
+    pdf(paste(format(Sys.time(),"%Y%m%d_%H%M%S"), ".pdf", sep = ""))
     plot(r,P,main=title,cex=0.3)
     p1.curve = function(x){
         1 - exp(-x^2/(4*coef(ocfit)*t.interval)) 
@@ -195,7 +195,7 @@ two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
 
     print(tcfit);cat("\n")
     
-    pdf(paste(format(Sys.time(),"%Y%m%d.%H%M%S"), ".pdf", sep = ""))
+    pdf(paste(format(Sys.time(),"%Y%m%d_%H%M%S"), ".pdf", sep = ""))
     ## plotting
     p3.curve =function(x){
         1 - (coef(tcfit)["alpha"]*exp(-x^2/(4*coef(tcfit)["D1"]*t.interval)) + 
@@ -267,7 +267,7 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
 
     print(thcfit);cat("\n") # needed for print when compiled as pacakge
     
-    pdf(paste(format(Sys.time(),"%Y%m%d.%H%M%S"), ".pdf", sep = ""))
+    pdf(paste(format(Sys.time(),"%Y%m%d_%H%M%S"), ".pdf", sep = ""))
     p5.curve=function(x){
         1 - (coef(thcfit)["alpha"]*exp(-x^2/(4*coef(thcfit)["D1"]*t.interval)) +
             coef(thcfit)["beta"]*exp(-x^2/(4*coef(thcfit)["D2"]*t.interval)) +
@@ -363,7 +363,7 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
 
         result.df=do.call(rbind.data.frame,result.lst)
         fileName=paste("FitCDF-",
-                        .timeStamp(name[1]),"....csv",sep="")
+                        .timeStamp(name[1]),"___.csv",sep="")
         cat("\nOutput FitCDF.\n")
         write.csv(file=fileName,result.df)
     }

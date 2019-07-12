@@ -157,7 +157,7 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
     ## Output time intervals and corrsponding 1-CDF in .csv format.
     if (output){
         filename<-paste("1-CDF-DwellTime","--",format(Sys.time(),
-                                            "%Y%m%d.%H%M%S"),".csv",sep="")
+                                            "%Y%m%d_%H%M%S"),".csv",sep="")
         write.table(ONE_CDF, filename  , append= FALSE, sep=',',
                     row.names = FALSE)
         cat("  1-CDF of selected tracklls were output in the working directory. 

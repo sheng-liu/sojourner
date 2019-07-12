@@ -99,7 +99,7 @@ for(i in c(1:length(trackll[[1]]))){
 ############ Using the grid library to add text to each panel ##################
 
 pdf(paste("plotIndividualTraj-",
-          names(trackll),"-",format(Sys.time(),"%Y%m%d.%H%M%S"),
+          names(trackll),"-",format(Sys.time(),"%Y%m%d_%H%M%S"),
           ".pdf",sep=""),width=11.7,height=8.3)
 
 

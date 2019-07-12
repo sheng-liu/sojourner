@@ -297,7 +297,7 @@
         logTrans=""
         if(log.transform){logTrans=".logtrans"}
         fileName=paste("FitNormDistr-",
-                    .timeStamp(name[1]),logTrans,"....csv",sep="")
+                    .timeStamp(name[1]),logTrans,"___.csv",sep="")
         cat("\nOutput FitNormDistr.\n")
         write.csv(file=fileName,result.df)
         
@@ -305,7 +305,7 @@
         if (combine.plot == TRUE){
 
             fileName=paste("FitNormDistr-combinePlot-",
-                            .timeStamp(name[1]),logTrans,"....pdf",sep="")
+                            .timeStamp(name[1]),logTrans,"___.pdf",sep="")
             cat("\nOutput FitNormDistr plot.\n")
 
             # gridExtra::marrangeGrob non-interactive use, multipage pdf

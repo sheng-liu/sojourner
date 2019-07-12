@@ -442,7 +442,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,
 
         if (output == TRUE){
             fileName=paste("MSD Summarized-",
-                            .timeStamp(file.name[1]),"....csv",sep="")
+                            .timeStamp(file.name[1]),"___.csv",sep="")
             cat("\nOutput MSD for summarized trajectories.\n")
             write.csv(file=fileName,p)
         }
