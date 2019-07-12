@@ -64,7 +64,7 @@ row-wise (ImageJ/MOSAIC) .csv files in the working directory" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sojourner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
       </span>
     </div>
 
@@ -177,9 +177,9 @@ track list.</p>
 <span class='fu'>exportTrackll</span>(<span class='no'>trackll</span>)</div><div class='output co'>#&gt; 
 #&gt; Writing .csv row-wise output in current directory for mage6 ...
 #&gt; 
-#&gt; mage6_19-07-04_11-58-39.csv placed in current directory.</div><div class='input'>
+#&gt; mage6_19-07-12_13-24-41.csv placed in current directory.</div><div class='input'>
 <span class='co'>#Get current working directory</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>()</div><div class='output co'>#&gt; [1] "/Users/shengliu/OneDrive - Johns Hopkins University/OneDrive/DoScience/Projects/Rprojects/SingleMoleculeTracking/sojourner-master/sojourner/docs/reference"</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>()</div><div class='output co'>#&gt; [1] "/Users/sunjayyoo/Documents/Wu Lab/sojourner/docs/reference"</div><div class='input'>
 <span class='co'>#Import export save back into a trackll</span>
 <span class='no'>trackll.2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='createTrackll-methods.html'>createTrackll</a></span>(<span class='kw'>folder</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>(), <span class='kw'>input</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  mage6_19-07-04_10-58-22.csv ...
@@ -189,6 +189,10 @@ track list.</p>
 #&gt; Reading ParticleTracker file:  mage6_19-07-04_11-58-39.csv ...
 #&gt; 
 #&gt;  58-39 read and processed.
+#&gt; 
+#&gt; Reading ParticleTracker file:  mage6_19-07-12_13-24-41.csv ...
+#&gt; 
+#&gt;  24-41 read and processed.
 #&gt; 
 #&gt; Reading ParticleTracker file:  Track Coords-HTZ1-20190704.110014.csv ...</div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown columns: `Trajectory`, `Frame`, `z`</span></div><div class='output co'>#&gt; <span class='error'>Error in split.default(x = seq_len(nrow(x)), f = f, drop = drop, ...): group length is 0 but data length &gt; 0</span></div></pre>
   </div>
@@ -209,7 +213,7 @@ track list.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by .</p>
+  <p>Developed by Sheng Liu, Sojourner Developer, Sun Jay Yoo, Xiao Na Tang, Young Soo Sung, Carl Wu.</p>
 </div>
 
 <div class="pkgdown">

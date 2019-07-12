@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sojourner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
             <address class="author_afil">
       Department of Computer Science, Johns Hopkins University<br><h4 class="author">Carl Wu</h4>
             <address class="author_afil">
-      Department of Molecular Biology and Genetics, School of Medicine, Johns Hopkins University<br><h4 class="date">2019-07-04</h4>
+      Department of Molecular Biology and Genetics, School of Medicine, Johns Hopkins University<br><h4 class="date">2019-07-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sheng-liu/sojourner/blob/master/vignettes/sojourner-vignette.Rmd"><code>vignettes/sojourner-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>sojourner-vignette.Rmd</code></div>
@@ -128,27 +128,27 @@ document.addEventListener("DOMContentLoaded", function() {
 <h2 class="hasAnchor">
 <a href="#storing-track-information" class="anchor"></a>Storing Track Information</h2>
 <p>The input file for <em>sojourner</em> is the Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or Utrack (.mat) output file. Tracks are extracted from the output files and then stored in a two-level list: (1) the first level is a list of folder names; and (2) the second level is a list of tracks.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">trackll=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">FOLDER=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">track=</span>track)) </a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>trackll=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">FOLDER=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">track=</span>track)) </span></code></pre></div>
 <p>A naming scheme is used in the source code of the <em>sojourner</em> package as follow: <code>trackl</code> denotes a list of tracks; and <code>trackll</code>, denotes a list of folders, each containing the tracks. The coordinates of tracksare stored in a table-like data structure <code>data.frame</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># construct trackll from data.frame </span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">trackl=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">track_1=</span>dataframe_<span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">            <span class="dt">track_2=</span>dataframe_<span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">            <span class="dt">track_3=</span>dataframe_<span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">            ... </a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">            <span class="dt">track_n=</span>dataframe_n) </a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"> </a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">trackll=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">FOLDER_1=</span>trackl_<span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">             <span class="dt">FOLDER_2=</span>trackl_<span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">             <span class="dt">FOLDER_3=</span>trackl_<span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">             ... </a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">             <span class="dt">FOLDER_n=</span>trackl_n,) </a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># construct trackll from data.frame </span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>trackl=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">track_1=</span>dataframe_<span class="dv">1</span>, </span>
+<span id="cb2-3"><a href="#cb2-3"></a>            <span class="dt">track_2=</span>dataframe_<span class="dv">2</span>, </span>
+<span id="cb2-4"><a href="#cb2-4"></a>            <span class="dt">track_3=</span>dataframe_<span class="dv">3</span>, </span>
+<span id="cb2-5"><a href="#cb2-5"></a>            ... </span>
+<span id="cb2-6"><a href="#cb2-6"></a>            <span class="dt">track_n=</span>dataframe_n) </span>
+<span id="cb2-7"><a href="#cb2-7"></a> </span>
+<span id="cb2-8"><a href="#cb2-8"></a>trackll=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">FOLDER_1=</span>trackl_<span class="dv">1</span>, </span>
+<span id="cb2-9"><a href="#cb2-9"></a>             <span class="dt">FOLDER_2=</span>trackl_<span class="dv">2</span>, </span>
+<span id="cb2-10"><a href="#cb2-10"></a>             <span class="dt">FOLDER_3=</span>trackl_<span class="dv">3</span>, </span>
+<span id="cb2-11"><a href="#cb2-11"></a>             ... </span>
+<span id="cb2-12"><a href="#cb2-12"></a>             <span class="dt">FOLDER_n=</span>trackl_n,) </span></code></pre></div>
 </div>
 <div id="reading-in-track-data-with-createtrackll" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reading-in-track-data-with-createtrackll" class="anchor"></a>Reading in Track Data with <code><a href="../reference/createTrackll-methods.html">createTrackll()</a></code>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">folder=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"SWR1_2"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">trackll =<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder=</span>folder, <span class="dt">input=</span><span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>folder=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"SWR1_2"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>trackll =<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder=</span>folder, <span class="dt">input=</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## 
 ## Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 ## 
@@ -159,10 +159,10 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  mage7 read and processed.
 ## 
 ## Process complete.</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">trackll &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeTracks-methods.html">mergeTracks</a></span>(<span class="dt">folder=</span>folder, <span class="dt">trackll=</span>trackll)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>trackll &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeTracks-methods.html">mergeTracks</a></span>(<span class="dt">folder=</span>folder, <span class="dt">trackll=</span>trackll)</span></code></pre></div>
 <pre><code>## 
 ## Merging of folder SWR1_2 complete.</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(trackll,<span class="dt">max.level=</span><span class="dv">2</span>, <span class="dt">list.len=</span><span class="dv">5</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(trackll,<span class="dt">max.level=</span><span class="dv">2</span>, <span class="dt">list.len=</span><span class="dv">5</span>) </span></code></pre></div>
 <pre><code>## List of 1
 ##  $ SWR1_2:List of 346
 ##   ..$ mage6.1.4.1.1        :'data.frame':    4 obs. of  4 variables:
@@ -172,10 +172,10 @@ document.addEventListener("DOMContentLoaded", function() {
 ##   ..$ mage6.11.12.5.5      :'data.frame':    12 obs. of  4 variables:
 ##   .. [list output truncated]</code></pre>
 <p>This folder named “SWR1” has in total 346 tracks. Folder name is after the first-level “$” sign, track name is after the second-level “$” sign. To see coordinates of an individual track, you can specify the folder name and the track name.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># specify the folder name and the track name</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">trackll[[<span class="st">"SWR1_2"</span>]][<span class="st">"mage6.1.4.1.1"</span>]</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co"># alternatively, specify the index of the folder and the track</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># trackll[[1]][1]</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># specify the folder name and the track name</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>trackll[[<span class="st">"SWR1_2"</span>]][<span class="st">"mage6.1.4.1.1"</span>]</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># alternatively, specify the index of the folder and the track</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># trackll[[1]][1]</span></span></code></pre></div>
 <pre><code>## $mage6.1.4.1.1
 ##       x     y z Frame
 ## 1 40.32 49.36 1     1
@@ -191,13 +191,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="#plotting-tracks" class="anchor"></a>Plotting Tracks</h2>
 <p>The first thing one may want to do is to see how the tracks look like in 2-D space. The track name is useful in this case if one wants to see specific trajectories and its associated movies.</p>
 <p>All one needs to do is to create a .csv file contains trajectory names in its first column. <em>sojourner</em> package contains such an example .csv file.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># specify the path of the file containing trajectory index names, index file</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">index.file2=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"INDEX"</span>,<span class="st">"indexFile2.csv"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co"># specify the folders containing the output files</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">folder1=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"SWR1_2"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">folder2=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"HTZ1"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co"># plot trajectories specified in the trajectory index file</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="kw"><a href="../reference/plotTrack-methods.html">plotTrackFromIndex</a></span>(<span class="dt">index.file=</span>index.file2, <span class="dt">movie.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(folder1,folder2))</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># specify the path of the file containing trajectory index names, index file</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>index.file2=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"INDEX"</span>,<span class="st">"indexFile2.csv"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># specify the folders containing the output files</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>folder1=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"SWR1_2"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>folder2=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"HTZ1"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co"># plot trajectories specified in the trajectory index file</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="kw"><a href="../reference/plotTrack-methods.html">plotTrackFromIndex</a></span>(<span class="dt">index.file=</span>index.file2, <span class="dt">movie.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(folder1,folder2))</span></code></pre></div>
 <p>The output plots the tracks based on its name, with the information contained in its name (i.e. start frame and length/duration), one can also pull out its movie. See <code><a href="../reference/plotTrack-methods.html">? plotTrack</a></code> for more plotting options.</p>
 </div>
 <div id="distribution-of-trajectory-lengths-with-dwelltime" class="section level2">
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="#distribution-of-trajectory-lengths-with-dwelltime" class="anchor"></a>Distribution of Trajectory Lengths with <code><a href="../reference/dwellTime-methods.html">dwellTime()</a></code>
 </h2>
 <p>One maybe interested to see the distribution of the (time) length of the tracks. This can be done by:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/dwellTime-methods.html">dwellTime</a></span>(trackll,<span class="dt">plot=</span><span class="ot">TRUE</span>) <span class="co"># default t.interval=10, x.scale=c(0,250)</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="../reference/dwellTime-methods.html">dwellTime</a></span>(trackll,<span class="dt">plot=</span><span class="ot">TRUE</span>) <span class="co"># default t.interval=10, x.scale=c(0,250)</span></span></code></pre></div>
 <p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-7-1.png" width="60%"></p>
 </div>
 <div id="filter-tracks-on-length-with-filtertrack" class="section level2">
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="#filter-tracks-on-length-with-filtertrack" class="anchor"></a>Filter Tracks on Length with <code><a href="../reference/filterTrack-methods.html">filterTrack()</a></code>
 </h2>
 <p>In the previous section, we can see majority of the track lengths centered at 20 ms which is 2 frames. If we intend to only analyze frames length at specific range, one can use the <code><a href="../reference/filterTrack-methods.html">filterTrack()</a></code> function.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">trackll=<span class="kw"><a href="../reference/filterTrack-methods.html">filterTrack</a></span>(trackll,<span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">min=</span><span class="dv">7</span>,<span class="dt">max=</span><span class="ot">Inf</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>trackll=<span class="kw"><a href="../reference/filterTrack-methods.html">filterTrack</a></span>(trackll,<span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">min=</span><span class="dv">7</span>,<span class="dt">max=</span><span class="ot">Inf</span>))</span></code></pre></div>
 <pre><code>## applying filter, min 7   max Inf</code></pre>
 </div>
 </div>
@@ -302,12 +302,12 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="examples" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h4>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># Designate a folder and then create trackll from DiaTrack .txt data</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">folder=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"SWR1_2"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">trackll =<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder=</span>folder, <span class="dt">input=</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co"># Alternatively, use interact to open file browser and select input data type</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co"># trackll &lt;- createTrackll(interact = TRUE)</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Designate a folder and then create trackll from DiaTrack .txt data</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>folder=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"SWR1_2"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3"></a>trackll =<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder=</span>folder, <span class="dt">input=</span><span class="dv">3</span>)</span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co"># Alternatively, use interact to open file browser and select input data type</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="co"># trackll &lt;- createTrackll(interact = TRUE)</span></span></code></pre></div>
 <pre><code>## 
 ## Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 ## 
@@ -318,8 +318,6 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  mage7 read and processed.
 ## 
 ## Process complete.</code></pre>
-<p>Visualization using <code><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay()</a></code>:</p>
-<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-11-1.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-11-2.png" width="700"></p>
 </div>
 </div>
 </div>
@@ -385,8 +383,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="examples-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-1" class="anchor"></a>Examples</h4>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># Basic function call of linkSkippedFrames</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">trackll.linked &lt;-<span class="st"> </span><span class="kw"><a href="../reference/linkSkippedFrames-methods.html">linkSkippedFrames</a></span>(trackll, <span class="dt">tolerance =</span> <span class="dv">5</span>, <span class="dt">maxSkip =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Basic function call of linkSkippedFrames</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>trackll.linked &lt;-<span class="st"> </span><span class="kw"><a href="../reference/linkSkippedFrames-methods.html">linkSkippedFrames</a></span>(trackll, <span class="dt">tolerance =</span> <span class="dv">5</span>, <span class="dt">maxSkip =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## 
 ## Linking mage6 ...
 ## 
@@ -398,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## 
 ## Process complete.</code></pre>
 <p>Visualization using <code><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay()</a></code>:</p>
-<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-13-1.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-13-2.png" width="700"></p>
+<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-12-1.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-12-2.png" width="700"></p>
 </div>
 </div>
 <div id="filtertrack" class="section level3">
@@ -439,24 +437,24 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="examples-2" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-2" class="anchor"></a>Examples</h4>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">trackll.filter=<span class="kw"><a href="../reference/filterTrack-methods.html">filterTrack</a></span>(trackll ,<span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">7</span>,<span class="ot">Inf</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>trackll.filter=<span class="kw"><a href="../reference/filterTrack-methods.html">filterTrack</a></span>(trackll ,<span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">7</span>,<span class="ot">Inf</span>))</span></code></pre></div>
 <pre><code>## applying filter, min 7   max Inf</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># See the min and max length of the trackll</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co"># trackLength() is a helper function output track length of trackll</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="../reference/filterTrack-methods.html">trackLength</a></span>(trackll),min)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># See the min and max length of the trackll</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co"># trackLength() is a helper function output track length of trackll</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="../reference/filterTrack-methods.html">trackLength</a></span>(trackll),min)</span></code></pre></div>
 <pre><code>## $SWR1_WT_140mW_image6.csv
 ## [1] 2
 ## 
 ## $SWR1_WT_140mW_image7.csv
 ## [1] 2</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="../reference/filterTrack-methods.html">trackLength</a></span>(trackll.filter),min)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="../reference/filterTrack-methods.html">trackLength</a></span>(trackll.filter),min)</span></code></pre></div>
 <pre><code>## $SWR1_WT_140mW_image6.csv
 ## [1] 7
 ## 
 ## $SWR1_WT_140mW_image7.csv
 ## [1] 7</code></pre>
 <p>Visualization using <code><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay()</a></code>:</p>
-<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-15-1.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-15-2.png" width="700"></p>
+<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-14-1.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-14-2.png" width="700"></p>
 </div>
 </div>
 <div id="trimtrack" class="section level3">
@@ -497,24 +495,24 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="examples-3" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-3" class="anchor"></a>Examples</h4>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">trackll.trim=<span class="kw"><a href="../reference/filterTrack-methods.html">trimTrack</a></span>(trackll,<span class="dt">trimmer=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">20</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>trackll.trim=<span class="kw"><a href="../reference/filterTrack-methods.html">trimTrack</a></span>(trackll,<span class="dt">trimmer=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">20</span>))</span></code></pre></div>
 <pre><code>## applying trimmer, min 1   max 20</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># See the min and max length of the trackll</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co"># trackLength() is a helper function output track length of trackll</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="../reference/filterTrack-methods.html">trackLength</a></span>(trackll),max)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># See the min and max length of the trackll</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="co"># trackLength() is a helper function output track length of trackll</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="../reference/filterTrack-methods.html">trackLength</a></span>(trackll),max)</span></code></pre></div>
 <pre><code>## $SWR1_WT_140mW_image6.csv
 ## [1] 30
 ## 
 ## $SWR1_WT_140mW_image7.csv
 ## [1] 15</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="../reference/filterTrack-methods.html">trackLength</a></span>(trackll.trim),max)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="kw"><a href="../reference/filterTrack-methods.html">trackLength</a></span>(trackll.trim),max)</span></code></pre></div>
 <pre><code>## $SWR1_WT_140mW_image6.csv
 ## [1] 20
 ## 
 ## $SWR1_WT_140mW_image7.csv
 ## [1] 15</code></pre>
 <p>Visualization using <code><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay()</a></code>:</p>
-<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-17-1.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-17-2.png" width="700"></p>
+<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-16-1.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-16-2.png" width="700"></p>
 </div>
 </div>
 <div id="masktracks" class="section level3">
@@ -556,9 +554,9 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="examples-4" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-4" class="anchor"></a>Examples</h4>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co"># Basic masking with folder path with image masks</span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2">folder =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"ImageJ"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</a>
-<a class="sourceLine" id="cb31-3" data-line-number="3">trackll =<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(folder, <span class="dt">input =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Basic masking with folder path with image masks</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>folder =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"ImageJ"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3"></a>trackll =<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(folder, <span class="dt">input =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## 
 ## Reading ParticleTracker file:  epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv ...
 ## 
@@ -569,29 +567,29 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  0mW_2 read and processed.
 ## 
 ## Process complete.</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">trackll.filter=<span class="kw"><a href="../reference/filterTrack-methods.html">filterTrack</a></span>(trackll ,<span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">7</span>,<span class="ot">Inf</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>trackll.filter=<span class="kw"><a href="../reference/filterTrack-methods.html">filterTrack</a></span>(trackll ,<span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">7</span>,<span class="ot">Inf</span>))</span></code></pre></div>
 <pre><code>## applying filter, min 7   max Inf</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">trackll.masked &lt;-<span class="st"> </span><span class="kw"><a href="../reference/maskTracks-methods.html">maskTracks</a></span>(<span class="dt">folder =</span> folder, <span class="dt">trackll =</span> trackll.filter)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>trackll.masked &lt;-<span class="st"> </span><span class="kw"><a href="../reference/maskTracks-methods.html">maskTracks</a></span>(<span class="dt">folder =</span> folder, <span class="dt">trackll =</span> trackll.filter)</span></code></pre></div>
 <pre><code>## Reading mask file     epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1_MASK.tif 
 ## Reading mask file     epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2_MASK.tif 
 ## 
 ## All files masked.</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># Plot mask</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2">mask.list=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">list.files</a></span>(<span class="dt">path=</span>folder,<span class="dt">pattern=</span><span class="st">"_MASK.tif"</span>,<span class="dt">full.names=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="kw"><a href="../reference/plotTrack-methods.html">plotMask</a></span>(folder)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># Plot mask</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>mask.list=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">list.files</a></span>(<span class="dt">path=</span>folder,<span class="dt">pattern=</span><span class="st">"_MASK.tif"</span>,<span class="dt">full.names=</span><span class="ot">TRUE</span>)</span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="kw"><a href="../reference/plotTrack-methods.html">plotMask</a></span>(folder)</span></code></pre></div>
 <pre><code>## 
 ## Reading mask file epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1_MASK.tif</code></pre>
-<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <pre><code>## 
 ## Reading mask file epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2_MASK.tif</code></pre>
-<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-18-2.png" width="700"></p>
+<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-17-2.png" width="700"></p>
 <pre><code>## 
 ## Done!</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co"># If nuclear image is available</span></a>
-<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="kw"><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay</a></span>(<span class="dt">folder=</span>folder,<span class="dt">trackll=</span>trackll)</a></code></pre></div>
-<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-19-1.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-19-2.png" width="700"></p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw"><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay</a></span>(<span class="dt">folder=</span>folder,<span class="dt">trackll=</span>trackll.masked)</a></code></pre></div>
-<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-19-3.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-19-4.png" width="700"></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># If nuclear image is available</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="kw"><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay</a></span>(<span class="dt">folder=</span>folder,<span class="dt">trackll=</span>trackll)</span></code></pre></div>
+<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-18-1.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-18-2.png" width="700"></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="kw"><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay</a></span>(<span class="dt">folder=</span>folder,<span class="dt">trackll=</span>trackll.masked)</span></code></pre></div>
+<p><img src="sojourner-vignette_files/figure-html/unnamed-chunk-18-3.png" width="700"><img src="sojourner-vignette_files/figure-html/unnamed-chunk-18-4.png" width="700"></p>
 </div>
 </div>
 <div id="mergetracks" class="section level3">
@@ -635,9 +633,9 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="examples-5" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-5" class="anchor"></a>Examples</h4>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># Read data</span></a>
-<a class="sourceLine" id="cb43-2" data-line-number="2">folder=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"SWR1_2"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</a>
-<a class="sourceLine" id="cb43-3" data-line-number="3">trackll =<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder=</span>folder, <span class="dt">input=</span><span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># Read data</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>folder=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"SWR1_2"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3"></a>trackll =<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder=</span>folder, <span class="dt">input=</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## 
 ## Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 ## 
@@ -648,8 +646,8 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  mage7 read and processed.
 ## 
 ## Process complete.</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="co"># Basic masking with folder path with image masks</span></a>
-<a class="sourceLine" id="cb45-2" data-line-number="2">trackll.merged &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeTracks-methods.html">mergeTracks</a></span>(<span class="dt">folder =</span> folder, <span class="dt">trackll =</span> trackll)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Basic masking with folder path with image masks</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>trackll.merged &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeTracks-methods.html">mergeTracks</a></span>(<span class="dt">folder =</span> folder, <span class="dt">trackll =</span> trackll)</span></code></pre></div>
 <pre><code>## 
 ## Merging of folder SWR1_2 complete.</code></pre>
 </div>
@@ -705,14 +703,14 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="examples-6" class="section level4">
 <h4 class="hasAnchor">
 <a href="#examples-6" class="anchor"></a>Examples</h4>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="co">#Basic function call to exportTrackll into current directory</span></a>
-<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="kw"><a href="../reference/exportTrackll-methods.html">exportTrackll</a></span>(trackll)</a>
-<a class="sourceLine" id="cb47-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb47-4" data-line-number="4"><span class="co">#Get current working directory</span></a>
-<a class="sourceLine" id="cb47-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>()</a>
-<a class="sourceLine" id="cb47-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb47-7" data-line-number="7"><span class="co">#Import export save back into a trackll</span></a>
-<a class="sourceLine" id="cb47-8" data-line-number="8">trackll<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">input =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co">#Basic function call to exportTrackll into current directory</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="kw"><a href="../reference/exportTrackll-methods.html">exportTrackll</a></span>(trackll)</span>
+<span id="cb47-3"><a href="#cb47-3"></a></span>
+<span id="cb47-4"><a href="#cb47-4"></a><span class="co">#Get current working directory</span></span>
+<span id="cb47-5"><a href="#cb47-5"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>()</span>
+<span id="cb47-6"><a href="#cb47-6"></a></span>
+<span id="cb47-7"><a href="#cb47-7"></a><span class="co">#Import export save back into a trackll</span></span>
+<span id="cb47-8"><a href="#cb47-8"></a>trackll<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">input =</span> <span class="dv">3</span>)</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -720,46 +718,46 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="calculating-diffusion-coefficient-using-msd-based-method" class="section level1">
 <h1 class="hasAnchor">
 <a href="#calculating-diffusion-coefficient-using-msd-based-method" class="anchor"></a>Calculating Diffusion Coefficient Using MSD-Based Method</h1>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co"># Specify folder with data</span></a>
-<a class="sourceLine" id="cb48-2" data-line-number="2">folder=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"HSF"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</a>
-<a class="sourceLine" id="cb48-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb48-4" data-line-number="4"><span class="co"># Create track list</span></a>
-<a class="sourceLine" id="cb48-5" data-line-number="5">trackll&lt;-<span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder=</span>folder, <span class="dt">interact=</span><span class="ot">FALSE</span>, <span class="dt">input=</span><span class="dv">3</span>, <span class="dt">ab.track=</span><span class="ot">FALSE</span>, <span class="dt">cores=</span><span class="dv">1</span>, <span class="dt">frameRecord=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb48-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb48-7" data-line-number="7"><span class="co"># Filter/choose tracks 3 frames or longer for all analysis </span></a>
-<a class="sourceLine" id="cb48-8" data-line-number="8">trackll.fi&lt;-<span class="kw"><a href="../reference/filterTrack-methods.html">filterTrack</a></span>(<span class="dt">trackll=</span>trackll, <span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">min=</span><span class="dv">3</span>,<span class="dt">max=</span><span class="ot">Inf</span>))</a>
-<a class="sourceLine" id="cb48-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb48-10" data-line-number="10"><span class="co"># Apply mask and remove tracks outside nuclei </span></a>
-<a class="sourceLine" id="cb48-11" data-line-number="11">trackll.fi.ma&lt;-<span class="kw"><a href="../reference/maskTracks-methods.html">maskTracks</a></span>(folder,trackll.fi)</a>
-<a class="sourceLine" id="cb48-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb48-13" data-line-number="13"><span class="co"># Overlay all tracks on nuclei</span></a>
-<a class="sourceLine" id="cb48-14" data-line-number="14"><span class="kw"><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay</a></span>(<span class="dt">folder=</span>folder,<span class="dt">trackll=</span>trackll.fi,<span class="dt">cores=</span><span class="dv">1</span>, <span class="dt">max.pixel=</span><span class="dv">128</span>,<span class="dt">nrow=</span><span class="dv">2</span>,<span class="dt">ncol=</span><span class="dv">2</span>,<span class="dt">width=</span><span class="dv">16</span>,<span class="dt">height=</span><span class="dv">16</span>)</a>
-<a class="sourceLine" id="cb48-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb48-16" data-line-number="16"><span class="co"># Overlay tracks after nuclear mask</span></a>
-<a class="sourceLine" id="cb48-17" data-line-number="17"><span class="kw"><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay</a></span>(<span class="dt">folder=</span>folder,<span class="dt">trackll=</span>trackll.fi.ma,<span class="dt">cores=</span><span class="dv">1</span>, <span class="dt">max.pixel=</span><span class="dv">128</span>,<span class="dt">nrow=</span><span class="dv">2</span>,<span class="dt">ncol=</span><span class="dv">2</span>,<span class="dt">width=</span><span class="dv">16</span>,<span class="dt">height=</span><span class="dv">16</span>)</a>
-<a class="sourceLine" id="cb48-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb48-19" data-line-number="19"><span class="co"># Overlay tracks color coded for diffusion coefficient</span></a>
-<a class="sourceLine" id="cb48-20" data-line-number="20"><span class="kw"><a href="../reference/plotTrackOverlay_Dcoef-methods.html">plotTrackOverlay_Dcoef</a></span>(<span class="dt">trackll=</span>trackll.fi.ma, <span class="dt">Dcoef.range=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb48-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb48-22" data-line-number="22"><span class="co"># Merge tracks from different image files in the folder</span></a>
-<a class="sourceLine" id="cb48-23" data-line-number="23">trackll.fi.ma.me=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="../reference/mergeTracks-methods.html">mergeTracks</a></span>(folder, trackll.fi.ma))</a>
-<a class="sourceLine" id="cb48-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb48-25" data-line-number="25"><span class="co"># calculate MSD for all tracks longer than 3 frames</span></a>
-<a class="sourceLine" id="cb48-26" data-line-number="26"><span class="kw"><a href="../reference/msd-methods.html">msd</a></span>(trackll.fi.ma.me,<span class="dt">dt=</span><span class="dv">20</span>,<span class="dt">resolution=</span><span class="fl">0.107</span>,<span class="dt">summarize=</span><span class="ot">TRUE</span>,<span class="dt">cores=</span><span class="dv">1</span>,<span class="dt">plot=</span><span class="ot">TRUE</span>,<span class="dt">output=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb48-27" data-line-number="27"></a>
-<a class="sourceLine" id="cb48-28" data-line-number="28">trackll.combine.trim=<span class="kw"><a href="../reference/filterTrack-methods.html">trimTrack</a></span>(trackll.fi.ma.me,<span class="dt">trimmer=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">11</span>))</a>
-<a class="sourceLine" id="cb48-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb48-30" data-line-number="30"><span class="kw"><a href="../reference/Dcoef-methods.html">Dcoef</a></span>(<span class="dt">trackll=</span>trackll.combine.trim,<span class="dt">dt=</span><span class="dv">5</span>, <span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">min=</span><span class="dv">6</span>,<span class="dt">max=</span><span class="ot">Inf</span>), <span class="dt">method=</span><span class="st">"static"</span>, <span class="dt">plot=</span><span class="ot">TRUE</span>, <span class="dt">output=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb48-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb48-32" data-line-number="32"><span class="kw"><a href="../reference/msd-methods.html">msd</a></span>(trackll.combine.trim,<span class="dt">dt=</span><span class="dv">10</span>,<span class="dt">resolution=</span><span class="fl">0.107</span>,<span class="dt">summarize=</span><span class="ot">TRUE</span>,<span class="dt">cores=</span><span class="dv">1</span>,<span class="dt">plot=</span><span class="ot">TRUE</span>,<span class="dt">output=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb48-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb48-34" data-line-number="34"><span class="co"># Calculate all dislacement frequency and displacement CDF for all tracks longer than 3 frames</span></a>
-<a class="sourceLine" id="cb48-35" data-line-number="35"><span class="kw"><a href="../reference/displacementCDF-methods.html">displacementCDF</a></span>(trackll.combine.trim, <span class="dt">dt=</span><span class="dv">1</span>, <span class="dt">plot=</span><span class="ot">TRUE</span>, <span class="dt">output=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb48-36" data-line-number="36"></a>
-<a class="sourceLine" id="cb48-37" data-line-number="37"><span class="co"># Calculate all dislacement frequency and displacement CDF for all tracks longer than 3 frames</span></a>
-<a class="sourceLine" id="cb48-38" data-line-number="38"><span class="kw"><a href="../reference/displacementCDF-methods.html">displacementCDF</a></span>(trackll.combine.trim, <span class="dt">dt=</span><span class="dv">2</span>, <span class="dt">plot=</span><span class="ot">TRUE</span>, <span class="dt">output=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb48-39" data-line-number="39"></a>
-<a class="sourceLine" id="cb48-40" data-line-number="40"><span class="co"># End</span></a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co"># Specify folder with data</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>folder=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>,<span class="st">"HSF"</span>,<span class="dt">package=</span><span class="st">"sojourner"</span>)</span>
+<span id="cb48-3"><a href="#cb48-3"></a></span>
+<span id="cb48-4"><a href="#cb48-4"></a><span class="co"># Create track list</span></span>
+<span id="cb48-5"><a href="#cb48-5"></a>trackll&lt;-<span class="kw"><a href="../reference/createTrackll-methods.html">createTrackll</a></span>(<span class="dt">folder=</span>folder, <span class="dt">interact=</span><span class="ot">FALSE</span>, <span class="dt">input=</span><span class="dv">3</span>, <span class="dt">ab.track=</span><span class="ot">FALSE</span>, <span class="dt">cores=</span><span class="dv">1</span>, <span class="dt">frameRecord=</span><span class="ot">TRUE</span>)</span>
+<span id="cb48-6"><a href="#cb48-6"></a></span>
+<span id="cb48-7"><a href="#cb48-7"></a><span class="co"># Filter/choose tracks 3 frames or longer for all analysis </span></span>
+<span id="cb48-8"><a href="#cb48-8"></a>trackll.fi&lt;-<span class="kw"><a href="../reference/filterTrack-methods.html">filterTrack</a></span>(<span class="dt">trackll=</span>trackll, <span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">min=</span><span class="dv">3</span>,<span class="dt">max=</span><span class="ot">Inf</span>))</span>
+<span id="cb48-9"><a href="#cb48-9"></a></span>
+<span id="cb48-10"><a href="#cb48-10"></a><span class="co"># Apply mask and remove tracks outside nuclei </span></span>
+<span id="cb48-11"><a href="#cb48-11"></a>trackll.fi.ma&lt;-<span class="kw"><a href="../reference/maskTracks-methods.html">maskTracks</a></span>(folder,trackll.fi)</span>
+<span id="cb48-12"><a href="#cb48-12"></a></span>
+<span id="cb48-13"><a href="#cb48-13"></a><span class="co"># Overlay all tracks on nuclei</span></span>
+<span id="cb48-14"><a href="#cb48-14"></a><span class="kw"><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay</a></span>(<span class="dt">folder=</span>folder,<span class="dt">trackll=</span>trackll.fi,<span class="dt">cores=</span><span class="dv">1</span>, <span class="dt">max.pixel=</span><span class="dv">128</span>,<span class="dt">nrow=</span><span class="dv">2</span>,<span class="dt">ncol=</span><span class="dv">2</span>,<span class="dt">width=</span><span class="dv">16</span>,<span class="dt">height=</span><span class="dv">16</span>)</span>
+<span id="cb48-15"><a href="#cb48-15"></a></span>
+<span id="cb48-16"><a href="#cb48-16"></a><span class="co"># Overlay tracks after nuclear mask</span></span>
+<span id="cb48-17"><a href="#cb48-17"></a><span class="kw"><a href="../reference/plotTrack-methods.html">plotNucTrackOverlay</a></span>(<span class="dt">folder=</span>folder,<span class="dt">trackll=</span>trackll.fi.ma,<span class="dt">cores=</span><span class="dv">1</span>, <span class="dt">max.pixel=</span><span class="dv">128</span>,<span class="dt">nrow=</span><span class="dv">2</span>,<span class="dt">ncol=</span><span class="dv">2</span>,<span class="dt">width=</span><span class="dv">16</span>,<span class="dt">height=</span><span class="dv">16</span>)</span>
+<span id="cb48-18"><a href="#cb48-18"></a></span>
+<span id="cb48-19"><a href="#cb48-19"></a><span class="co"># Overlay tracks color coded for diffusion coefficient</span></span>
+<span id="cb48-20"><a href="#cb48-20"></a><span class="kw"><a href="../reference/plotTrackOverlay_Dcoef-methods.html">plotTrackOverlay_Dcoef</a></span>(<span class="dt">trackll=</span>trackll.fi.ma, <span class="dt">Dcoef.range=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb48-21"><a href="#cb48-21"></a></span>
+<span id="cb48-22"><a href="#cb48-22"></a><span class="co"># Merge tracks from different image files in the folder</span></span>
+<span id="cb48-23"><a href="#cb48-23"></a>trackll.fi.ma.me=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="../reference/mergeTracks-methods.html">mergeTracks</a></span>(folder, trackll.fi.ma))</span>
+<span id="cb48-24"><a href="#cb48-24"></a></span>
+<span id="cb48-25"><a href="#cb48-25"></a><span class="co"># calculate MSD for all tracks longer than 3 frames</span></span>
+<span id="cb48-26"><a href="#cb48-26"></a><span class="kw"><a href="../reference/msd-methods.html">msd</a></span>(trackll.fi.ma.me,<span class="dt">dt=</span><span class="dv">20</span>,<span class="dt">resolution=</span><span class="fl">0.107</span>,<span class="dt">summarize=</span><span class="ot">TRUE</span>,<span class="dt">cores=</span><span class="dv">1</span>,<span class="dt">plot=</span><span class="ot">TRUE</span>,<span class="dt">output=</span><span class="ot">TRUE</span>)</span>
+<span id="cb48-27"><a href="#cb48-27"></a></span>
+<span id="cb48-28"><a href="#cb48-28"></a>trackll.combine.trim=<span class="kw"><a href="../reference/filterTrack-methods.html">trimTrack</a></span>(trackll.fi.ma.me,<span class="dt">trimmer=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">11</span>))</span>
+<span id="cb48-29"><a href="#cb48-29"></a></span>
+<span id="cb48-30"><a href="#cb48-30"></a><span class="kw"><a href="../reference/Dcoef-methods.html">Dcoef</a></span>(<span class="dt">trackll=</span>trackll.combine.trim,<span class="dt">dt=</span><span class="dv">5</span>, <span class="dt">filter=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">min=</span><span class="dv">6</span>,<span class="dt">max=</span><span class="ot">Inf</span>), <span class="dt">method=</span><span class="st">"static"</span>, <span class="dt">plot=</span><span class="ot">TRUE</span>, <span class="dt">output=</span><span class="ot">TRUE</span>)</span>
+<span id="cb48-31"><a href="#cb48-31"></a></span>
+<span id="cb48-32"><a href="#cb48-32"></a><span class="kw"><a href="../reference/msd-methods.html">msd</a></span>(trackll.combine.trim,<span class="dt">dt=</span><span class="dv">10</span>,<span class="dt">resolution=</span><span class="fl">0.107</span>,<span class="dt">summarize=</span><span class="ot">TRUE</span>,<span class="dt">cores=</span><span class="dv">1</span>,<span class="dt">plot=</span><span class="ot">TRUE</span>,<span class="dt">output=</span><span class="ot">TRUE</span>)</span>
+<span id="cb48-33"><a href="#cb48-33"></a></span>
+<span id="cb48-34"><a href="#cb48-34"></a><span class="co"># Calculate all dislacement frequency and displacement CDF for all tracks longer than 3 frames</span></span>
+<span id="cb48-35"><a href="#cb48-35"></a><span class="kw"><a href="../reference/displacementCDF-methods.html">displacementCDF</a></span>(trackll.combine.trim, <span class="dt">dt=</span><span class="dv">1</span>, <span class="dt">plot=</span><span class="ot">TRUE</span>, <span class="dt">output=</span><span class="ot">TRUE</span>)</span>
+<span id="cb48-36"><a href="#cb48-36"></a></span>
+<span id="cb48-37"><a href="#cb48-37"></a><span class="co"># Calculate all dislacement frequency and displacement CDF for all tracks longer than 3 frames</span></span>
+<span id="cb48-38"><a href="#cb48-38"></a><span class="kw"><a href="../reference/displacementCDF-methods.html">displacementCDF</a></span>(trackll.combine.trim, <span class="dt">dt=</span><span class="dv">2</span>, <span class="dt">plot=</span><span class="ot">TRUE</span>, <span class="dt">output=</span><span class="ot">TRUE</span>)</span>
+<span id="cb48-39"><a href="#cb48-39"></a></span>
+<span id="cb48-40"><a href="#cb48-40"></a><span class="co"># End</span></span></code></pre></div>
 </div>
 <div id="sojournergui-a-shiny-interface" class="section level1">
 <h1 class="hasAnchor">
@@ -768,8 +766,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="launching" class="section level2">
 <h2 class="hasAnchor">
 <a href="#launching" class="anchor"></a>Launching</h2>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sojourner)</a>
-<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="kw"><a href="../reference/sojourner.html">sojournerGUI</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sojourner)</span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="kw"><a href="../reference/sojourner.html">sojournerGUI</a></span>()</span></code></pre></div>
 </div>
 <div id="helpful-tips" class="section level2">
 <h2 class="hasAnchor">
@@ -820,7 +818,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
       <footer><div class="copyright">
-  <p>Developed by .</p>
+  <p>Developed by Sheng Liu, Sojourner Developer, Sun Jay Yoo, Xiao Na Tang, Young Soo Sung, Carl Wu.</p>
 </div>
 
 <div class="pkgdown">

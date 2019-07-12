@@ -65,7 +65,7 @@ track list of all the trajectories found in the session file" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sojourner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
       </span>
     </div>
 
@@ -170,14 +170,10 @@ cannot contain ".")</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#Basic function call of readDiaSessions</span>
-<span class='no'>hsf_folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"HSF_2"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
-<span class='no'>trackll</span> <span class='kw'>&lt;-</span> <span class='fu'>readDiaSessions</span>(<span class='kw'>folder</span><span class='kw'>=</span><span class='no'>hsf_folder</span>)</div><div class='output co'>#&gt; 
-#&gt; Reading Diatrack session file:  HSF-Halo_3.mat ...
-#&gt; 
-#&gt;  alo_3 read and processed.
-#&gt; 
-#&gt; Process complete.</div></pre>
+    <pre class="examples"><div class='input'>#Basic function call of readDiaSessions
+# hsf_folder=system.file("extdata", "HSF_2", package="sojourner")
+# trackll <- readDiaSessions(folder=hsf_folder)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -196,7 +192,7 @@ cannot contain ".")</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by .</p>
+  <p>Developed by Sheng Liu, Sojourner Developer, Sun Jay Yoo, Xiao Na Tang, Young Soo Sung, Carl Wu.</p>
 </div>
 
 <div class="pkgdown">
