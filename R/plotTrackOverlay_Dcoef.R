@@ -272,7 +272,7 @@ plotTrackOverlay_Dcoef<-function(trackll=trackll,scale=128,dt=6,
                                  color=c("blue", "white", "red"),
                                  folder=NULL,file.No=0,line.width=0.1){
     ## Output the plots into one PDF file in the working directory.
-    pdf(paste("plotTrackOverlay.Dcoef.Heatmap--",
+    pdf(paste("plotTrackOverlay_Dcoef_Heatmap--",
               format(Sys.time(),"%Y%m%d_%H%M%S"),".pdf",sep=""),
         width=11.7,height=11.7)
     
