@@ -1,3 +1,7 @@
+# sojourner 0.99.4
+
+* fixed Linux build error and removed extraneous .pdf files
+
 # sojourner 0.99.3
 
 * fixed git clone issues for Windows
