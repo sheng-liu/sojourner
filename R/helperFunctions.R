@@ -10,7 +10,7 @@
 
     basename=basename(filename)
     name=unlist(strsplit(basename,split="[.]"))
-    fileName=paste(name[1],"-",format(Sys.time(),"%Y%m%_%H%M%S"),sep="")
+    fileName=paste(name[1],"-",format(Sys.time(),"%Y%m%d_%H%M%S"),sep="")
     return(fileName)
 
 }
