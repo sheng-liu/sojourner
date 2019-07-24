@@ -1,6 +1,6 @@
 ---
 title: "Sojourner: an R package for statistical analysis of single molecule trajectories"
-author: 
+author:
 - name: Sheng Liu
   affiliation:
       - Department of Biology, Krieger School of Arts and Sciences, Johns Hopkins University
@@ -21,7 +21,7 @@ author:
 
 package: sojourner
 date: "`r Sys.Date()`"
-output: 
+output:
     # rmarkdown::html_vignette:
         BiocStyle::html_document:
           toc: true
@@ -37,42 +37,57 @@ vignette: >
 ```{r style, echo = FALSE, results = 'asis'}
   BiocStyle::markdown()
 ```
-  
+
 # Introduction
 
-A basic task in single molecule tracking is to determine diffusion coefficient from molecule trajectories identified after initial image data acquisition. The trajectory (term used interchangeably with "tracks") of a molecule is presented as a table of $x$,$y$ and $z$ coordinates in the unit of pixel, which then can be converted to other measurement, such as in $\mu$m, according to the resolution of the camera. The package *sojourner* provides methods to calculate diffusion coefficient by using mean square displacement (MSD) based, displacement cumulative distribution function (CDF)-based, as well as hidden Markov model (HMM) based methods (in next release) from such input file. This vignette explains some basic usage of the package.
+A basic task in single molecule tracking is to determine diffusion coefficient
+from molecule trajectories identified after initial image data acquisition. The
+trajectory (term used interchangeably with "tracks") of a molecule is presented
+as a table of $x$,$y$ and $z$ coordinates in the unit of pixel, which then can
+be converted to other measurement, such as in $\mu$m, according to the
+resolution of the camera. The package *sojourner* provides methods to calculate
+diffusion coefficient by using mean square displacement (MSD) based,
+displacement cumulative distribution function (CDF)-based, as well as hidden
+Markov model (HMM) based methods (in next release) from such input file. This
+vignette explains some basic usage of the package.
 
 # Input Data Preparation
 
 ## Storing Track Information
 
-The input file for *sojourner* is the Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or Utrack (.mat) output file. Tracks are extracted from the output files and then stored in a two-level list: (1) the first level is a list of folder names; and (2) the second level is a list of tracks.
+The input file for *sojourner* is the Diatrack (.txt or .mat), ImageJ (.csv),
+SlimFast (.txt), or Utrack (.mat) output file. Tracks are extracted from the
+output files and then stored in a two-level list: (1) the first level is a list
+of folder names; and (2) the second level is a list of tracks.
 
 ```{r, eval = FALSE}
-trackll=list(FOLDER=list(track=track)) 
+trackll=list(FOLDER=list(track=track))
 ```
 
-A naming scheme is used in the source code of the *sojourner* package as follow: `trackl` denotes a list of tracks; and `trackll`, denotes a list of folders, each containing the tracks. The coordinates of tracksare  stored in a table-like data structure `data.frame`.
+A naming scheme is used in the source code of the *sojourner* package as
+follow: `trackl` denotes a list of tracks; and `trackll`, denotes a list of
+folders, each containing the tracks. The coordinates of tracks are stored in a
+table-like data structure `data.frame`.
 
 ```{r, eval = FALSE}
-# construct trackll from data.frame 
-trackl=list(track_1=dataframe_1, 
-            track_2=dataframe_2, 
-            track_3=dataframe_3, 
-            ... 
-            track_n=dataframe_n) 
- 
-trackll=list(FOLDER_1=trackl_1, 
-             FOLDER_2=trackl_2, 
-             FOLDER_3=trackl_3, 
-             ... 
-             FOLDER_n=trackl_n,) 
+# construct trackll from data.frame
+trackl=list(track_1=dataframe_1,
+            track_2=dataframe_2,
+            track_3=dataframe_3,
+            ...
+            track_n=dataframe_n)
+
+trackll=list(FOLDER_1=trackl_1,
+             FOLDER_2=trackl_2,
+             FOLDER_3=trackl_3,
+             ...
+             FOLDER_n=trackl_n,)
 ```
 
 
 ## Reading in Track Data with `createTrackll()`
 
-```{r, eval=TRUE, messsage = FALSE, warning=FALSE, include=FALSE, echo=TRUE, results = 'hide'}
+```{r, eval=TRUE, messsage = FALSE, warning=FALSE, include=TRUE, echo=TRUE, results = 'hide'}
 library(sojourner)
 ```
 
@@ -80,10 +95,13 @@ library(sojourner)
 folder=system.file("extdata","SWR1_2",package="sojourner")
 trackll = createTrackll(folder=folder, input=3)
 trackll <- mergeTracks(folder=folder, trackll=trackll)
-str(trackll,max.level=2, list.len=5) 
+str(trackll,max.level=2, list.len=5)
 ```
 
-This folder named "SWR1" has in total 346 tracks. Folder name is after the first-level "\$" sign, track name is after the second-level "\$" sign. To see coordinates of an individual track, you can specify the folder name and the track name.
+This folder named "SWR1_2" has in total 346 tracks. Folder name is after the
+first-level "\$" sign, track name is after the second-level "\$" sign. To see
+coordinates of an individual track, you can specify the folder name and the
+track name.
 
 ```{r, eval = TRUE, warning=FALSE, echo = TRUE, results = 'hold'}
 # specify the folder name and the track name
@@ -96,13 +114,18 @@ The naming scheme for the list of track list is as follows:
 
 Track List: [full name of input file]
 
-Track: [Last five characters of the file name].[Start frame].[Length].[Track].[Index in overall list (will differ from Track # when merging)]
+Track: [Last five characters of the file name].[Start
+frame].[Length].[Track].[Index in overall list (will differ from Track # when
+merging)]
 
 ## Plotting Tracks
 
-The first thing one may want to do is to see how the tracks look like in 2-D space.  The track name is useful in this case if one wants to see specific trajectories and its associated movies. 
+The first thing one may want to do is to see how the tracks look like in 2-D
+space.  The track name is useful in this case if one wants to see specific
+trajectories and its associated movies.
 
-All one needs to do is to create a .csv file contains trajectory names in its first column. *sojourner* package contains such an example .csv file.
+All one needs to do is to create a .csv file contains trajectory names in its
+first column. *sojourner* package contains such an example .csv file.
 
 ```{r, eval = FALSE}
 # specify the path of the file containing trajectory index names, index file
@@ -111,22 +134,27 @@ index.file2=system.file("extdata","INDEX","indexFile2.csv",package="sojourner")
 folder1=system.file("extdata","SWR1_2",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
 # plot trajectories specified in the trajectory index file
-plotTrackFromIndex(index.file=index.file2, movie.folder=c(folder1,folder2))
+plotTrackFromIndex(index.file=index.file2, movie.folder=c(folder1,folder2),input=3)
 ```
 
-The output plots the tracks based on its name, with the information contained in its name (i.e. start frame and length/duration), one can also pull out its movie. See `? plotTrack` for more plotting options. 
+The output plots the tracks based on its name, with the information contained
+in its name (i.e. start frame and length/duration), one can also pull out its
+movie. See `? plotTrack` for more plotting options.
 
 ## Distribution of Trajectory Lengths with `dwellTime()`
 
-One maybe interested to see the distribution of the (time) length of the tracks. This can be done by:
+One maybe interested to see the distribution of the (time) length of the
+tracks. This can be done by:
 
-```{r, eval = TRUE, warning=FALSE, out.width='60%', dpi=300}
+```{r, eval = TRUE, warning=FALSE, out.width='90%', dpi=300}
 dwellTime(trackll,plot=TRUE) # default t.interval=10, x.scale=c(0,250)
 ```
 
 ## Filter Tracks on Length with `filterTrack()`
 
-In the previous section, we can see majority of the track lengths centered at 20 ms which is 2 frames. If we intend to only analyze frames length at specific range, one can use the `filterTrack()` function. 
+In the previous section, we can see majority of the track lengths centered at
+20 ms which is 2 frames. If we intend to only analyze frames length at specific
+range, one can use the `filterTrack()` function.
 
 ```{r, eval = TRUE}
 trackll=filterTrack(trackll,filter=c(min=7,max=Inf))
@@ -134,7 +162,8 @@ trackll=filterTrack(trackll,filter=c(min=7,max=Inf))
 
 # Data Manipulation
 
-Below is a detailed description of functions of sojourner for importing, exporting and processing of single molecule trajectories.   
+Below is a detailed description of functions of sojourner for importing,
+exporting and processing of single molecule trajectories.
 
 
 
@@ -143,36 +172,60 @@ Below is a detailed description of functions of sojourner for importing, exporti
 ### `createTrackll()`
 
 #### Description
-Take in Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or U-Track (.mat) input from a folder to output a list of track lists (`trackll`).
+Take in Diatrack (.txt or .mat), ImageJ (.csv), SlimFast (.txt), or U-Track
+(.mat) input from a folder to output a list of track lists (`trackll`).
 
 #### Parameters
 
-Parameter                            | Description
--------------------------------------|--------------------------------------------------------------------------------------------
-`interact` (default `FALSE`)                 | Open interactive menu to choose the desired folder by selecting any file in it and select input type (script will process all files of that type in this folder).
-`folder` (specify, unless interact = `TRUE`)| Full path output file folder (ensure each folder has files of only one input type).
-`input` (specify, unless `interact = TRUE`) | Input file type (Diatrack .txt file = `1`; Diatrack .mat session file = `2`; ImageJ .csv file = `3`; SlimFast .txt file = `4`; Utrack .mat file = `5`).
-`ab.track` (default `FALSE`)                 | Use absolute coordinates for tracks.
-`cores` (default `1`)                    | Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Each core will be assigned to read one file when in parallel.
-`frameRecord` (default `TRUE`)              | Add a fourth column to the track list after the $x$,$y$,$z$-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.
+Parameter | Description
+-------------------------------------|------------------------------------------
+`interact` (default `FALSE`) | Open interactive menu to choose the desired
+folder by selecting any file in it and select input type (script will process
+all files of that type in this folder). `folder` (specify, unless interact =
+`TRUE`)| Full path output file folder (ensure each folder has files of only one
+input type). `input` (specify, unless `interact = TRUE`) | Input file type
+(Diatrack .txt file = `1`; Diatrack .mat session file = `2`; ImageJ .csv file =
+`3`; SlimFast .txt file = `4`; Utrack .mat file = `5`). `ab.track` (default
+`FALSE`) | Use absolute coordinates for tracks. `cores` (default `1`) | Number
+of cores used for parallel computation. This can be the cores on a workstation,
+or on a cluster. Each core will be assigned to read one file when in parallel.
+`frameRecord` (default `TRUE`) | Add a fourth column to the track list after
+the $x$,$y$,$z$-coordinates for the frame that coordinate point was found
+(especially helpful when linking frames). Highly recommended to leave on.
 
 #### Notes
 
-(When reading only Diatrack .mat session files (input = `2`), intensities will also be saved after the frame column)
+(When reading only Diatrack .mat session files (input = `2`), intensities will
+also be saved after the frame column)
 
-It is highly advised that the frame record option be left on to preserve the most information, especially when linking frames. If the frame record option is turned on for reading Diatrack .txt files (`input = 1`), take note that the frame record is artificially created as consecutive frames after the given start frame. Otherwise, all other data types naturally encode the frames of every coordinate point.
+It is highly advised that the frame record option be left on to preserve the
+most information, especially when linking frames. If the frame record option is
+turned on for reading Diatrack .txt files (`input = 1`), take note that the
+frame record is artificially created as consecutive frames after the given
+start frame. Otherwise, all other data types naturally encode the frames of
+every coordinate point.
 
-The pre-censoring of single-frame tracks is dependent on the tracking software. **For highest fidelity track data, use Diatrack (.mat) session files.** If the initial creation of the trackll does not have a frame record, future exports and imports of the trackll will only preserve the start frames.
+The pre-censoring of single-frame tracks is dependent on the tracking software.
+**For highest fidelity track data, use Diatrack (.mat) session files.** If the
+initial creation of the trackll does not have a frame record, future exports
+and imports of the trackll will only preserve the start frames.
 
-If the cores are set to the maximum number of cores available on the system, the script may return a error after processing all the files. This error is due to the requirement of some systems to have one core open for system functions. This error will not affect the trackll output, but to avoid it, one can input one less than the maximum number of cores available.
+If the cores are set to the maximum number of cores available on the system,
+the script may return a error after processing all the files. This error is due
+to the requirement of some systems to have one core open for system functions.
+This error will not affect the trackll output, but to avoid it, one can input
+one less than the maximum number of cores available.
 
 The naming scheme for the list of track list is as follows:
 
 Track List: [full name of input file]
 
-Track: [Last five characters of the file name].[Start frame].[Length].[Track].[Index in overall list (will differ from Track # when merging)]
+Track: [Last five characters of the file name].[Start
+frame].[Length].[Track].[Index in overall list (will differ from Track # when
+merging)]
 
-(The last five characters of the file name, excluding the extension, cannot contain “.”)
+(The last five characters of the file name, excluding the extension, cannot
+contain “.”)
 
 #### Aditional Information
 
@@ -205,28 +258,40 @@ Link trajectories that skip (or do not appear for) a number of frames.
 
 #### Parameters
 
-Parameter         | Description
-------------------|--------------------------------------------------------------------------------------------
-`trackll` (specify)   | A list of track lists.
-`tolerance` (specify) | Distance tolerance level measured in pixels after the frame skip.
-`maxSkip` (specify)   | Maximum number of frames a trajectory can skip.
-`cores` (default `1`) | Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
+Parameter | Description
+------------------|-------------------------------------------------------------
+`trackll` (specify) | A list of track lists. `tolerance` (specify) | Distance
+tolerance level measured in pixels after the frame skip. `maxSkip` (specify) |
+Maximum number of frames a trajectory can skip. `cores` (default `1`) | Number
+of cores used for parallel computation. This can be the cores on a workstation,
+or on a cluster. Tip: each core will be assigned to read in a file when
+paralleled.
 
 
 #### Notes
-Given user input for a tolerance level to limit how far the next point after the skip can deviate from the last point in pixel distance and a maximum number of frame skips possible, all trajectories falling within these parameters are automatically linked, renamed, and ordered accordingly. For a `maxSkip` example, if the `maxSkip` for a trajectory ending in frame 7 was 3, the next linked trajectory can start up to a maximum frame of 11.
+Given user input for a tolerance level to limit how far the next point after
+the skip can deviate from the last point in pixel distance and a maximum number
+of frame skips possible, all trajectories falling within these parameters are
+automatically linked, renamed, and ordered accordingly. For a `maxSkip`
+example, if the `maxSkip` for a trajectory ending in frame 7 was 3, the next
+linked trajectory can start up to a maximum frame of 11.
 
-Although not required, in order for the output to have a frame record column (recommended), the input must have one as well.
+Although not required, in order for the output to have a frame record column
+(recommended), the input must have one as well.
 
 The naming scheme for each linked track is as follows:
 
-[Last five characters of the file name].[Start frame #].[Length].[Track #].[# of links]
+[Last five characters of the file name].[Start frame #].[Length].[Track #].[#
+of links]
 
 Track List: [full name of input file]
 
-Track: [Last five characters of the file name].[Start frame].[Length].[Track].[# of links].[Index in overall list (will differ from Track # when merging)]
+Track: [Last five characters of the file name].[Start
+frame].[Length].[Track].[# of links].[Index in overall list (will differ from
+Track # when merging)]
 
-(Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+(Note: The last five characters of the file name, excluding the extension,
+cannot contain “.”)
 
 #### Examples
 
@@ -252,10 +317,10 @@ Filter out tracks that have lengths within a specified range.
 
 #### Parameters
 
-Parameter         | Description
-------------------|--------------------------------------------------------------------------------------------
-`trackll` (specify)   | A list of track lists.
-`filter` (default `c(min=7,max=Inf)`) | Range of possible track lengths to keep.
+Parameter | Description
+------------------|-------------------------------------------------------------
+`trackll` (specify) | A list of track lists. `filter` (default
+`c(min=7,max=Inf)`) | Range of possible track lengths to keep.
 
 #### Examples
 
@@ -286,10 +351,11 @@ Trim tracks to a certain specified range of lengths.
 
 #### Parameters
 
-Parameter         | Description
-------------------|--------------------------------------------------------------------------------------------
-`trackll` (specify)   | A list of track lists.
-`trimmer` (default `c(min=1,max=32)`) | Range of track lengths allowed in output, otherwise trimmed.
+Parameter | Description
+------------------|-------------------------------------------------------------
+`trackll` (specify) | A list of track lists. `trimmer` (default
+`c(min=1,max=32)`) | Range of track lengths allowed in output, otherwise
+trimmed.
 
 #### Examples
 
@@ -319,14 +385,20 @@ Apply binary image masks.
 
 #### Parameters
 
-Parameter         | Description
-------------------|--------------------------------------------------------------------------------------------
-`folder` (specify) | Full path to the output files.
-`trackll` (specify)   | A list of track lists.
+Parameter | Description
+------------------|-------------------------------------------------------------
+`folder` (specify) | Full path to the output files. `trackll` (specify) | A
+list of track lists.
 
 #### Notes
 
-IMPORTANT: It will take an extremely long time to mask large datasets. Filter/trim first using `filterTrack()` and `trimTrack()`, then mask using `maskTracks()`! Note the mask file should have the same name as the output files with a "_MASK.tif" ending. If there are more mask files than `trackll`, masking will fail. If there are less mask files, `trackl`s without masks will be deleted. Users can use `plotMask()` and `plotTrackOverlay()` to see the mask and its effect on screening tracks.
+IMPORTANT: It will take an extremely long time to mask large datasets.
+Filter/trim first using `filterTrack()` and `trimTrack()`, then mask using
+`maskTracks()`! Note the mask file should have the same name as the output
+files with a "\_MASK.tif" ending. If there are more mask files than `trackll`,
+masking will fail. If there are less mask files, `trackl`s without masks will
+be deleted. Users can use `plotMask()` and `plotTrackOverlay()` to see the mask
+and its effect on screening tracks.
 
 #### Examples
 
@@ -355,18 +427,22 @@ Merge a list of track lists into one.
 
 #### Parameters
 
-Parameter         | Description
-------------------|--------------------------------------------------------------------------------------------
-`folder` (specify) | Full path to the output files.
-`trackll` (specify)   | A list of track lists.
+Parameter | Description
+------------------|-------------------------------------------------------------
+`folder` (specify) | Full path to the output files. `trackll` (specify) | A
+list of track lists.
 
 #### Notes
 
-IMPORTANT: Once a `trackll` has been merged, it cannot be masked using `maskTracks()`.
+IMPORTANT: Once a `trackll` has been merged, it cannot be masked using
+`maskTracks()`.
 
-Merging creates the following data structure: (1) first level is the folder name, (2) second level is a list of `data.frames`/tracks from all output files merged into one.
+Merging creates the following data structure: (1) first level is the folder
+name, (2) second level is a list of `data.frames`/tracks from all output files
+merged into one.
 
-If not merged, track lists takes the name of individual files in the folder. If merged, the single merged track list takes the folder name.
+If not merged, track lists takes the name of individual files in the folder. If
+merged, the single merged track list takes the folder name.
 
 
 #### Examples
@@ -385,24 +461,33 @@ trackll.merged <- mergeTracks(folder = folder, trackll = trackll)
 ### `exportTrackll()`
 
 #### Description
-Take in a list of track lists (`trackll`) and export it into row-wise (ImageJ/MOSAIC) .csv files in the working directory.
+Take in a list of track lists (`trackll`) and export it into row-wise
+(ImageJ/MOSAIC) .csv files in the working directory.
 
 #### Parameters
 
-Parameter         | Description
-------------------|--------------------------------------------------------------------------------------------
-`trackll`          | A list of track lists.
-`cores` (default 1) | Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
+Parameter | Description
+------------------|-------------------------------------------------------------
+`trackll` | A list of track lists. `cores` (default 1) | Number of cores used
+for parallel computation. This can be the cores on a workstation, or on a
+cluster. Tip: each core will be assigned to read in a file when paralleled.
 
 
 #### Notes
-The reason why ImageJ/MOSAIC style .csv export was chosen is because it fully preserves track frame data, while maintaining short computation time and easy readability in Excel/etc.
+The reason why ImageJ/MOSAIC style .csv export was chosen is because it fully
+preserves track frame data, while maintaining short computation time and easy
+readability in Excel/etc.
 
-In order to import this .csv export back into a trackll at any point (while preserving all information), select `input = 3` in `createTrackll()`.
+In order to import this .csv export back into a trackll at any point (while
+preserving all information), select `input = 3` in `createTrackll()`.
 
-If the track list does not have a fourth frame record column (not recommended), it will just output the start frame of each track instead and will take noticeably longer.
+If the track list does not have a fourth frame record column (not recommended),
+it will just output the start frame of each track instead and will take
+noticeably longer.
 
-It is not recommended that exportTrackll be run on merged list of track lists (`trackll`). Also, ensure that the input trackll is a list of track lists and not just a track list.
+It is not recommended that exportTrackll be run on merged list of track lists
+(`trackll`). Also, ensure that the input trackll is a list of track lists and
+not just a track list.
 
 The naming scheme for each export is as follows:
 
@@ -437,10 +522,10 @@ folder=system.file("extdata","HSF",package="sojourner")
 # Create track list
 trackll<-createTrackll(folder=folder, interact=FALSE, input=3, ab.track=FALSE, cores=1, frameRecord=TRUE)
 
-# Filter/choose tracks 3 frames or longer for all analysis 
+# Filter/choose tracks 3 frames or longer for all analysis
 trackll.fi<-filterTrack(trackll=trackll, filter=c(min=3,max=Inf))
 
-# Apply mask and remove tracks outside nuclei 
+# Apply mask and remove tracks outside nuclei
 trackll.fi.ma<-maskTracks(folder,trackll.fi)
 
 # Overlay all tracks on nuclei
@@ -477,7 +562,16 @@ displacementCDF(trackll.combine.trim, dt=2, plot=TRUE, output=TRUE)
 
 # sojournerGUI: A Shiny Interface
 
-A Shiny app implementation of many of the core features of sojourner. Namely, the basic abilities of reading trackll video files (of all supported types), processing tracks (linking, filtering, trimming, masking, merging), and analyzing tracks (MSD, Dcoef, CDF, and dwell time). The application interface provides a code-free GUI, suited with dynamic and interactive plots, that is relatively easy to use. The app is still in alpha development and only supports the base functions needed for educational capabilities and such. A command history log, named *command_history.R* in the working directory, will be continuously updated each time a command is called for diagnostic, replication, and tracking purposes.
+A Shiny app implementation of many of the core features of sojourner. Namely,
+the basic abilities of reading trackll video files (of all supported types),
+processing tracks (linking, filtering, trimming, masking, merging), and
+analyzing tracks (MSD, Dcoef, CDF, and dwell time). The application interface
+provides a code-free GUI, suited with dynamic and interactive plots, that is
+relatively easy to use. The app is still in alpha development and only supports
+the base functions needed for educational capabilities and such. A command
+history log, named *command_history.R* in the working directory, will be
+continuously updated each time a command is called for diagnostic, replication,
+and tracking purposes.
 
 ## Launching
 
@@ -489,11 +583,11 @@ sojournerGUI()
 
 ## Helpful Tips
 
-* If in doubt, check the console output of each command inputted through the GUI. These will show error and warning messages as needed.
+* If in doubt, check the console output of each command inputted through the GUI. 
+These will show error and warning messages as needed.
 
-* Normal distribution, compare folder, and kernel density masking features are currently not supported.
+* Normal distribution, compare folder, and kernel density masking features are 
+currently not supported.
 
-* Reading tracks depends on a **running session of R**, as it uses its native `file.choose()` function.
-
-
-
+* Reading tracks depends on a **running session of R**, as it uses its 
+native `file.choose()` function.

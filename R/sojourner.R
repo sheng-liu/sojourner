@@ -80,6 +80,7 @@
 ##' @importFrom sp point.in.polygon
 
 ##' @import shiny
+##' @import shinyjs
 ##' @export sojournerGUI
 ##' @return launch sojourner
 sojourner=function(){}
