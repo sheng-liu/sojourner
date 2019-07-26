@@ -240,7 +240,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
         # subset
         D.coef.subset=rsquare.filter.roll(D.coef,rsquare=rsquare)
         D.coef.subset.slope=lapply(D.coef.subset,function(x){
-            for (i in 1:length(x)){
+            for (i in seq_along(x)){
                 x[[i]]=x[[i]][,"slope"]
             }
             return(x)
@@ -248,7 +248,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
         ## logorithm
         Log.D.coef=lapply(D.coef.subset.slope,function(x){
-            for (i in 1:length(x)){
+            for (i in seq_along(x)){
                 x[[i]]=log10(x[[i]])
             }
             return(x)
@@ -256,7 +256,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
         # simpler than reverse setup
         #                 Log.D.coef=list()
-        #                 for (i in 1:length(D.coef.subset.slope)){
+        #                 for (i in seq_along(D.coef.subset.slope)){
         #                     Log.D.coef[[i]]=lapply(
         #                           D.coef.subset.slope[[i]],log10)
         #                 }
@@ -313,7 +313,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
     if (output == TRUE){
         # output csv
-        for (i in 1:length(trackll)){
+        for (i in seq_along(trackll)){
             fileName=paste("Dcoef-",.timeStamp(names(trackll)[i]),".csv",sep="")
             write.csv(file=fileName,D.coef.subset[[i]])
         }

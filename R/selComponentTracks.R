@@ -143,7 +143,7 @@ selComponentTracks=function(
 
     #---------------------------------------------------------------------------
     # select tracks from fitNormDistr() outputs
-    for (i in 1:length(fit)){
+    for (i in seq_along(fit)){
 
         comp[[i]]=data.frame(fit[[i]]$posterior)
 
@@ -155,7 +155,7 @@ selComponentTracks=function(
         length(comp.track.index.lst[[i]])=dim(comp[[i]])[2]
         names(comp.track.index.lst[[i]])=colnames(comp[[i]])
 
-        for (j in 1:dim(comp[[i]])[2]){
+        for (j in seq_len(dim(comp[[i]])[2])){
 
             # select likelihood > 0.9
             comp.track.index.lst[[i]][[j]]=which(comp[[i]][,j]>=likelihood)
@@ -167,7 +167,7 @@ selComponentTracks=function(
     l.print=list()
     length(l.print)=length(comp.track.index.lst)
     names(l.print)=names(comp.track.index.lst)
-    for (i in 1:length(comp.track.index.lst)){
+    for (i in seq_along(comp.track.index.lst)){
         l.print[[i]]=lapply(comp.track.index.lst[[i]],length)
     }
     l.print.result=do.call(rbind,l.print)
@@ -196,13 +196,13 @@ selComponentTracks=function(
     # dcoef is supposed to have the same structure as comp.track.index.list
     # need a sanity check here TODO
 
-    for (i in 1:length(dcoef)){
+    for (i in seq_along(dcoef)){
 
         comp.trackID.lst[[i]]=list()
         length(comp.trackID.lst[[i]])=length(comp.track.index.lst[[i]])
         names(comp.trackID.lst[[i]])=names(comp.track.index.lst[[i]])
 
-        for (j in 1:length(comp.track.index.lst[[i]])){
+        for (j in seq_along(comp.track.index.lst[[i]])){
 
             # subset the trackID using comp.track.index.lst[[i]][[j]]
             comp.trackID.lst[[i]][[j]]= dcoef[[i]][
@@ -228,8 +228,8 @@ selComponentTracks=function(
     # export as index file to plot individually
 
     if (output == TRUE){
-        for (i in 1:length(comp.trackID.lst)){
-            for (j in 1:length(comp.trackID.lst[[i]])){
+        for (i in seq_along(comp.trackID.lst)){
+            for (j in seq_along(comp.trackID.lst[[i]])){
                 fileName=paste("componentTrackID-",
                                 paste(names(comp.trackID.lst)[[i]],".",
                                         names(comp.trackID.lst[[i]][j]),sep=""),
@@ -250,7 +250,7 @@ selComponentTracks=function(
     length(trackID)=length(comp.trackID.lst)
     names(trackID)=names(comp.trackID.lst)
 
-    for (i in 1:length(comp.trackID.lst)){
+    for (i in seq_along(comp.trackID.lst)){
         trackID[[i]]=lapply(comp.trackID.lst[[i]],function(x){rownames(x)})
     }
 
@@ -259,7 +259,7 @@ selComponentTracks=function(
     names(componentTracks)=names(trackID)
 
 
-    for (i in 1:length(trackID)){
+    for (i in seq_along(trackID)){
 
         ## creates internal list structure of componentTracks
         componentTracks[[i]]=list()
@@ -267,7 +267,7 @@ selComponentTracks=function(
         names(componentTracks[[i]])=names(trackID[[i]])
 
 
-        for (j in 1:length(trackID[[i]])){
+        for (j in seq_along(trackID[[i]])){
             componentTracks[[i]][j]=lapply(trackll[i],function(x){
                 x[trackID[[i]][[j]]]})
         }

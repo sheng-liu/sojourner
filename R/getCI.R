@@ -69,7 +69,7 @@ getCI=function(bootstrap.result, confidence=0.95, output=FALSE){
     fit.result=bootstrap.result$Fit
     #get std.err component
     fit.se=bootstrap.result$Bootstraps
-    for (i in 1:length(fit.result)){
+    for (i in seq_along(fit.result)){
         #from the desired confidecne lvl, calculate the crtitcal-t value
         n.reps=fit.se[[i]]$n.reps
         SE.range=.get.seRange(confidence, n.reps)
@@ -79,7 +79,7 @@ getCI=function(bootstrap.result, confidence=0.95, output=FALSE){
         #critical-t values stored in SE.range generate the rownames in 
         #meannames and proportionnames each time we do this
         meannames = c()
-        for (j in 1:length(fit.result[[i]]$mu)) {
+        for (j in seq_along(fit.result[[i]]$mu)) {
             out.df = rbind(
                 out.df,
                 c(
@@ -94,7 +94,7 @@ getCI=function(bootstrap.result, confidence=0.95, output=FALSE){
             meannames = c(meannames, paste(j, "-compCI", sep = ""))
         }
         proportionnames = c()
-        for (j in 1:length(fit.result[[i]]$lambda)) {
+        for (j in seq_along(fit.result[[i]]$lambda)) {
             out.df = rbind(
                 out.df,
                 c(
@@ -122,7 +122,7 @@ getCI=function(bootstrap.result, confidence=0.95, output=FALSE){
         whole.df = data.frame()
         fileName=paste("ConfidenceInterval-",
                         .timeStamp(paste(names(ciList),sep = "")),".csv",sep="")
-        for (i in 1:length(ciList)){
+        for (i in seq_along(ciList)){
             single.df = data.frame(ciList[[i]])
             rownames(single.df) = paste(inputNames[[i]],rownames(single.df), 
                                         sep = ".")

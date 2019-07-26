@@ -267,7 +267,7 @@ plotTrack=function(ab.trackll,resolution=0.107,
     file.name=names(ab.trackll)
 
 
-    for (i in 1:length(file.name)){
+    for (i in seq_along(file.name)){
 
         # output plot
         cat("\nOutput track plot...\n")
@@ -314,7 +314,7 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
 # DONE: the number of folder to compare can be extended using ... statement
     
     #     folder.list=list()
-    #     for (i in 1:length(movie.folder)){
+    #     for (i in seq_along(movie.folder)){
     #         folder.list[[i]]=movie.folder[i]
     #     }
     #
@@ -327,7 +327,7 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
     #
     #     ab.trackll=list()
     #
-    #     for (i in 1:length(folder.list)) {
+    #     for (i in seq_along(folder.list)) {
     #
     #         ## read in tracks in movie.folder with absolute coords,
     #         ## merge them as the input is merged csv files
@@ -362,7 +362,7 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
     
     ## if the list is length 0, remove it
     ## remove zero length list
-    for (i in 1:length(trackll.plot.narm)){
+    for (i in seq_along(trackll.plot.narm)){
         
         if (length(trackll.plot.narm[[i]]) == 0) trackll.plot.narm[[i]]=NULL
     }
@@ -491,7 +491,7 @@ plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,
     # get plot.lst
     plot.lst=list()
 
-    for (i in 1:length(trackll)) plot.lst[[i]]=.plotTrackOverlay(
+    for (i in seq_along(trackll)) plot.lst[[i]]=.plotTrackOverlay(
         trackl=trackll[i],max.pixel=max.pixel)
 
     # output
@@ -759,7 +759,7 @@ plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
     
     
     plot.lst=list()
-    for (i in 1:length(trackll)) plot.lst[[i]]=
+    for (i in seq_along(trackll)) plot.lst[[i]]=
         
         suppressWarnings(
         plotNucTrackOverlayTrackl(
@@ -811,7 +811,7 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
     length(track.overlay.data.lst)=length(trackll.sel)
     names(track.overlay.data.lst)=names(trackll.sel)
     
-    for (i in 1:length(trackll.sel)){
+    for (i in seq_along(trackll.sel)){
         
         track.overlay.data.lst[[i]]=cmpOverlayData(trackll.sel[i])
     }
@@ -827,7 +827,7 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
     # print(class(color.lst[[1]]))
     
     ### trackll -> trackll.sel
-    for (i in 1:length(trackll.sel)) plot.lst[[i]]=
+    for (i in seq_along(trackll.sel)) plot.lst[[i]]=
         
         # Warning message:
         # In readTIFF(x, all = all, ...) :
@@ -894,7 +894,7 @@ cmpOverlayData=function(component.trackl){
     # keep this, although this is no need as when do.call(rbind, list) convert
     # names into the names
     # add one more column into data.frame as identifier
-    # column, then collaps tracks for (i in 1:length(component.trackl)){
+    # column, then collaps tracks for (i in seq_along(component.trackl)){
     # component.trackl[[i]]=lapply(component.trackl[[i]],function(x,cmp.id){
     # component=rep(cmp.id,dim(x)[1]) cmp.id.x=cbind(x,component)
     # return(cmp.id.x) },cmp.id=names(component.trackl)[i]) }
@@ -915,12 +915,12 @@ cmpOverlayData=function(component.trackl){
     cmp.name=gsub('\\.', '_', cmp.name)
     names(cmp.lst)=cmp.name
     
-    # for (i in 1:length(component.trackl)){
+    # for (i in seq_along(component.trackl)){
     #     cmp.lst[[i]]=do.call(rbind.data.frame,component.trackl[[i]])
     # }
     
-    for (i in 1:length(component.trackl[[1]])){
-        for (j in 1:length(component.trackl[[1]][i])){
+    for (i in seq_along(component.trackl[[1]])){
+        for (j in seq_along(component.trackl[[1]][i])){
             cmp.lst[[i]]=do.call(rbind.data.frame,component.trackl[[1]][[i]])
         }
     }
@@ -1038,12 +1038,12 @@ cmpOverlayData=function(component.trackl){
 #     trackll=readDiatrack(folder=folder,merge=F,mask=mask,cores=cores)
 #
 #     plot.lst=list()
-# #     for (i in 1:length(trackll)){
+# #     for (i in seq_along(trackll)){
 # #         plotNucTrackOverlayTrackl(trackll,nrow=1,ncol=1,width=8,height=8)
 # #
 # #     }
 #
-#     for (i in 1:length(trackll)) plot.lst[[i]]=plotNucTrackOverlayTrackl(
+#     for (i in seq_along(trackll)) plot.lst[[i]]=plotNucTrackOverlayTrackl(
 #         trackl=trackll[i],nucleiGrob.lst[[i]],max.pixel=max.pixel)
 #
 #

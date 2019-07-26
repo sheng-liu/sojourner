@@ -91,7 +91,7 @@
     # can use frame number to do this, but this way makes the program more
     # robust with little to non decrease in efficiency
 
-    for (i in 1:(dim(data)[2]/3)) {
+    for (i in seq_len(dim(data)[2]/3)) {
 
         #i=2
 
@@ -188,7 +188,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
 
     if (cores == 1){
 
-        for (i in 1:length(file.list)){
+        for (i in seq_along(file.list)){
 
 
             track=.readDiatrack(file=file.list[i],ab.track=ab.track, 
@@ -196,7 +196,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
 
 
             # add indexPerTrackll to track name
-            indexPerTrackll=1:length(track)
+            indexPerTrackll=seq_along(track)
             names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")
 
             trackll[[i]]=track
@@ -233,7 +233,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
                                 frameRecord = frameRecord)
 
             # add indexPerTrackll to track name
-            indexPerTrackll=1:length(track)
+            indexPerTrackll=seq_along(track)
             names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")
             return(track)
         })
@@ -257,7 +257,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
 
     #Merge start################################################################
     # if (merge == TRUE){
-    #     for (i in 1:length(file.list)){
+    #     for (i in seq_along(file.list)){
     #         trackll[[i]]=track[[i]]
     #         names(trackll)[i]=file.name[i]
     #     }
@@ -284,7 +284,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
         # folder.name > data.frame.name
 
         # concatenate track list into one list of data.frames
-        #for (i in 1:length(file.list)){
+        #for (i in seq_along(file.list)){
         #    track.holder=c(track.holder,trackll[[i]])
         #}
 
@@ -298,7 +298,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
             #x=paste(x,collapse=".")})
 
         # add indexPerTrackll to track name
-        #indexPerTrackll=1:length(track.holder)
+        #indexPerTrackll=seq_along(track.holder)
         #names(track.holder)=mapply(paste,Index,
                                     #indexPerTrackll,sep=".")
 
@@ -316,7 +316,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
     #         # first level list of folder names and
     #         # second level list of data.frames
     #
-    #         for (i in 1:length(file.list)){
+    #         for (i in seq_along(file.list)){
     #
     #             track=.readDiatrack(file=file.list[i],ab.track=ab.track)
     #             # concatenate tracks into one list of data.frames
@@ -325,7 +325,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
     #         }
     #
     #         # add indexPerTrackll to track name
-    #         indexPerTrackll=1:length(track.holder)
+    #         indexPerTrackll=seq_along(track.holder)
     #
     #         names(track.holder)=mapply(paste,names(track.holder),
     #                                    indexPerTrackll,sep=".")

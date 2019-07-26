@@ -74,7 +74,7 @@
     length.list = list();
     
     #Loop through each track
-    for (i in 1:num.tracks){
+    for (i in seq_len(num.tracks)){
         #Track data exists every 3 lists, starting from list 2
         counter = i*3 - 1;
         
@@ -96,7 +96,7 @@
         frame = start.frame
 
         track.length = length(data[[counter]])/8
-        for(j in 1:track.length){
+        for(j in seq_len(track.length)){
             #xyz coordinates start every 8 frames
             point = 8*j-7
             x = data[[counter]][[point]]
@@ -127,7 +127,7 @@
     #[Last five characters of the file name without extension 
     #(cannot contain ".")].[Start frame #].[Length].[Track #]
     names(track.list) = paste(file.subname, frame.list, length.list, 
-                              c(1:length(track.list)), sep=".");
+                              c(seq_along(track.list)), sep=".");
     
     #File read and processed confirmation text
     cat("\n", file.subname, "read and processed.\n")
@@ -158,13 +158,13 @@ readUtrack = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
     
     if (cores == 1){
         
-        for (i in 1:length(file.list)){
+        for (i in seq_along(file.list)){
             
             track.list = .readUtrack(file = file.list[i], ab.track = ab.track, 
                                      frameRecord = frameRecord)
             
             # add indexPerTrackll to track name
-            indexPerTrackll = 1:length(track.list)
+            indexPerTrackll = seq_along(track.list)
             names(track.list) = mapply(paste, names(track.list), 
                                        indexPerTrackll,sep = ".")
             
@@ -199,7 +199,7 @@ readUtrack = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
             track=.readUtrack(file=fname,ab.track=ab.track, frameRecord = 
                                   frameRecord)
             # add indexPerTrackll to track name
-            indexPerTrackll=1:length(track)
+            indexPerTrackll=seq_along(track)
             names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")
             return(track)
         })

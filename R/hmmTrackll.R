@@ -115,7 +115,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
         # 
         # lapply(dat,function(x){
         #     
-        #     for (i in 1:length(x)){
+        #     for (i in seq_along(x)){
         #         y=rownames(x[[i]])
         #     }
         #     y
@@ -138,7 +138,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
         # [1] "mage6.1.4.1.1"
         
         
-        for (i in 1:length(dat)){
+        for (i in seq_along(dat)){
 
             ## add time
             #  track.len=table(dat[[i]]["trackIndex"])
@@ -164,7 +164,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
 
             #         # lapply code is change from this for loop
             #         time=list()
-            #         for (j in 1:length(names(track.len))){
+            #         for (j in seq_along(names(track.len))){
             #             time[[j]]=seq(
             #                       from=t.interval,to=track.len[j]*t.interval,
             #                           by=t.interval)
@@ -242,7 +242,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
     #     length(dat)=length(data)
     #     names(dat)=names(data)
     # 
-    #     for (i in 1:length(data)){
+    #     for (i in seq_along(data)){
     #         ## subtract track index
     #         index.lst=strsplit(data[[i]]$trackIndex,split="[.]")
     #         index=sapply(index.lst,function(x){x[length(x)]})
@@ -267,7 +267,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
     # 
     #         #         # lapply code is change from this for loop
     #         #         time=list()
-    #         #         for (j in 1:length(names(track.len))){
+    #         #         for (j in seq_along(names(track.len))){
     #         #             time[[j]]=seq(from=t.interval,to=track.len[j]*
     #         #                           t.interval,
     #         #                           by=t.interval)

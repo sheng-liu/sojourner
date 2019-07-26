@@ -177,7 +177,7 @@ plotVariance=function(Log.D.coef,method){
     MEAN=data.frame(apply(Log.D.coef.df,1,mean,na.rm=TRUE))
 
     folder=c()
-    for (i in 1:dim(MEAN)[1])
+    for (i in seq_len(dim(MEAN)[1]))
         folder[i]=unlist(strsplit(rownames(MEAN)[i],split ="[.]"))[1]
     MEAN=cbind(MEAN,folder)
     colnames(MEAN)=c("mean","folder")
@@ -308,7 +308,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
         pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
 
         # Make each plot, in the correct location
-        for (i in 1:numPlots) {
+        for (i in seq_len(numPlots)) {
             # Get the i,j matrix positions of the regions that contain this 
             # subplot
             matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))

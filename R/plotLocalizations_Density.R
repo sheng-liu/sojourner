@@ -98,7 +98,7 @@
     cat("Plotting...A PDF file will be output in the working directory.\n")
 
     ## Get trackl info and plot localization map for each file in the trackll.
-    for (i in c(1:length(trackll))){
+    for (i in c(seq_along(trackll))){
     plot.new()
     plot.window(xlim=c(0,scale*0.107),ylim=c(0,scale*0.107),xaxs = "i", 
                 yaxs = "i")
@@ -114,7 +114,7 @@
     ## Get the localization of each track (molecule) as the first position of 
     ## the track.
     localizations<-data.frame(matrix(ncol = 3, nrow = 0))
-    for (j in c(1:length(trackll[[i]]))){
+    for (j in c(seq_along(trackll[[i]]))){
         localizations<-rbind(localizations,setNames(
             data.frame(paste0(names(trackll[[i]][j])),
             trackll[[i]][[j]]$x[[1]]*0.107,trackll[[i]][[j]]$y[[1]]*0.107), 
@@ -123,7 +123,7 @@
     ## Calculate local molecule density by counting the molecule number within 
     ## a given radius.
     sp::coordinates(localizations) <- c("x", "y")
-    for (k in c(1:length(localizations$x))){
+    for (k in c(seq_along(localizations$x))){
         ## Generate a named vector "cp" to make this loop work in both Mac and 
         ## PC version of R.
         cp=c(localizations[k,]$x,localizations[k,]$y)
@@ -142,7 +142,7 @@
                              "white", "red"))(n = max(localizations$density))
     
     ## plot the molecules as dots color coded by it's local density.
-    for(i in c(1:length(localizations$x))){
+    for(i in c(seq_along(localizations$x))){
         points(localizations[i,]$x,localizations[i,]$y,pch=16,
                col=cl[localizations[i,]$density],cex=point.scale)
     }

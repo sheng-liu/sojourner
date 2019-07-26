@@ -96,7 +96,7 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
     
     if(is.null(trackll)){
         trackll=c()
-        for(i in c(1:Totaltracklls)){
+        for(i in c(seq_len(Totaltracklls))){
             trackll.label<-readline(
                 cat("Enter the trackll you want to plot:  "))
             t.interval[i]<-as.numeric(readline(
@@ -135,7 +135,7 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
     ONE_CDF<-setNames(data.frame(seq(min(t.interval),2*x.max,
                                     by=min(t.interval))),"Time intervals (s)")
     
-    for(i in c(1:Totaltracklls)){
+    for(i in c(seq_len(Totaltracklls))){
     trackll.n<-filterTrack(trackll[i],filter=filter)
     trackllname<-append(trackllname,gsub("ST_","",names(trackll)[i]))
     n<-append(n,length(trackll.n[[1]]))
@@ -147,11 +147,11 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
     one_CDF<-(1-(CDF$CDF))
     ## Plot survival curve
     points(seq(min(t.interval),x.max,by=min(t.interval)),
-        one_CDF[1:(x.max/min(t.interval))],type="l",lwd=4,col=cl[i])
+        one_CDF[seq_len(x.max/min(t.interval))],type="l",lwd=4,col=cl[i])
     ## Record time intervals and corresponding 1-CDF into one data.frame
-    ONE_CDF<-cbind(ONE_CDF,
-                    setNames(data.frame(one_CDF[1:(2*x.max/min(t.interval))]),
-                    trackllname[i]))
+    ONE_CDF<-cbind(ONE_CDF,setNames(
+        data.frame(one_CDF[seq_len((2*x.max/min(t.interval)))]
+                   ),trackllname[i]))
     }
     
     ## Output time intervals and corrsponding 1-CDF in .csv format.

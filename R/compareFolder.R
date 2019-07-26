@@ -58,7 +58,7 @@ compareFolder=function(folders, input=1, ab.track=FALSE,cores=1){
 
     if (ab.track == TRUE){
 
-        for (i in 1:length(folder.list)) {
+        for (i in seq_along(folder.list)) {
             sample.list[i] = mergeTracks(
                 folder=folder.list[[i]], 
                 createTrackll(folder=folder.list[[i]],input = input, 
@@ -69,7 +69,7 @@ compareFolder=function(folders, input=1, ab.track=FALSE,cores=1){
 
     }else{
 
-        for (i in 1:length(folder.list)) {
+        for (i in seq_along(folder.list)) {
             # i=1
             sample.list[i] = mergeTracks(
                 folder=folder.list[[i]], 

@@ -132,13 +132,13 @@
     
     #Get trackl information in the un-merged trackll and filter by 
     #Dcoef range and rsquare.
-    for (i in c(1:length(trackll))){
+    for (i in c(seq_along(trackll))){
         
         x=(2:5)*t.interval
         dimension=2
         trackl=list()
         
-        for (j in c(1:length(trackll[[i]]))){
+        for (j in c(seq_along(trackll[[i]]))){
             track=trackll[[i]][[j]]
             msd.n=msd_track(track, dt=dt, at.dt=FALSE)
             
@@ -188,7 +188,7 @@
         mtext(expression(paste("Y (",mu,"m)")),side=2,line=2,cex.lab=1,
               col="white")
         box()
-        for(k in c(1:length(trackl))){
+        for(k in c(seq_along(trackl))){
             lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*
                       resolution,
                   col=cl[(Dcoef[k]-Dcoef.range[1])/
@@ -242,7 +242,7 @@
     xx <- rep(box.cx, each = 2)
     
     par(xpd = TRUE)
-    for(i in 1:n){
+    for(i in seq_len(n)){
         
         yy <- c(box.cy[1] + (box.sy * (i - 1)),
                 box.cy[1] + (box.sy * (i)),

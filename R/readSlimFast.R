@@ -65,7 +65,7 @@
     cat("\nReading SlimFast file: ",file.name,"...\n");
     
     #Read first four columns of input SLIMFAST file
-    data <- as.data.frame(subset(read.table(file,skip=1), select=c(1:4)));
+    data <- as.data.frame(subset(read.table(file,skip=1), select=c(seq_len(4))))
     
     #Name columns and add z column of 1s in the appropriate location
     colnames(data) <- c("x","y","Frame", "track");
@@ -82,7 +82,7 @@
     last.trajectory = data[nrow(data), ][[5]];
     
     #Loop through every given trajectory number
-    for (i in 1:last.trajectory){
+    for (i in seq_len(last.trajectory)){
         
         #Create track data frame
         track <- data.frame();
@@ -117,7 +117,7 @@
         #Rename row names of track to appropriate index values
         print(track)
         print(nrow(track))
-        rownames(track) <- sapply(1:nrow(track),toString);
+        rownames(track) <- sapply(seq_len(nrow(track)),toString);
         
         #Add start frame of track to frame list
         frame.list[[length(frame.list) + 1]] <- track[[4]][[1]];
@@ -133,7 +133,7 @@
     #[Last five characters of the file name without extension 
     #(cannot contain ".")].[Start frame #].[Length].[Track #]
     names(track.list) = paste(file.subname, frame.list, length.list, 
-                              c(1:length(track.list)), sep=".");
+                              c(seq_along(track.list)), sep=".");
     
     cat("\n", file.subname, "read and processed.\n")
     #Return track list
@@ -163,13 +163,13 @@ readSlimFast = function(folder, ab.track = FALSE, cores = 1,
     
     if (cores == 1){
         
-        for (i in 1:length(file.list)){
+        for (i in seq_along(file.list)){
             
             track.list = .readSlimFast(file = file.list[i], ab.track = ab.track,
                                        frameRecord = frameRecord)
             
             # add indexPerTrackll to track name
-            indexPerTrackll = 1:length(track.list)
+            indexPerTrackll = seq_along(track.list)
             names(track.list) = mapply(paste, names(track.list), 
                                        indexPerTrackll,sep = ".")
             
@@ -204,7 +204,7 @@ readSlimFast = function(folder, ab.track = FALSE, cores = 1,
             track=.readSlimFast(file=fname,ab.track=ab.track, 
                                 frameRecord = frameRecord)
             # add indexPerTrackll to track name
-            indexPerTrackll=1:length(track)
+            indexPerTrackll=seq_along(track)
             names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")
             return(track)
         })

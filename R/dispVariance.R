@@ -141,7 +141,7 @@ dispVariance=function(trackll, min=7, plot=FALSE, limits=c(), log=FALSE,
     }
     
     if (output == TRUE) {
-        for (i in 1:length(result)) {
+        for (i in seq_along(result)) {
             track.df = reshape2::melt(result[[i]])
             names(track.df) = c("dispVariance", "track.name")
             track.df = track.df[,c(2,1)]

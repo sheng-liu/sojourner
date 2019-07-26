@@ -96,7 +96,7 @@ bootstrap=function(fittedObj, n.reps=100){
 plotBootstrap=function(d.boot,alpha=1/2){
     # transpose for plotting
     sample_names=names(d.boot)
-    for (i in 1:length(d.boot)){
+    for (i in seq_along(d.boot)){
         bs=as.data.frame(t(d.boot[[i]]))
         bsf=reshape2::melt(bs)
     

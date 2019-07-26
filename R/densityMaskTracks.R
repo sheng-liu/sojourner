@@ -204,8 +204,8 @@ createMask = function (track.list, scale = 128, kernel.density, p = NULL,
     
     # Calculate contours to plot
     prob <- c(p)
-    dx <- diff(kernel.density$x[1:2])
-    dy <- diff(kernel.density$y[1:2])
+    dx <- diff(kernel.density$x[seq_len(2)])
+    dy <- diff(kernel.density$y[seq_len(2)])
     sz <- sort(kernel.density$z)
     c1 <- cumsum(sz) * dx * dy 
     levels <- sapply(prob, function(x){ 
@@ -243,7 +243,7 @@ createMask = function (track.list, scale = 128, kernel.density, p = NULL,
         while (length(ls) >  num.clusters){
             noise = 0;
             min = Inf;
-            for (i in 1:length(ls)){
+            for (i in seq_along(ls)){
                 if(length(ls[[i]][[2]]) < min){
                     noise = i
                     min = length(ls[[i]][[2]])
@@ -255,7 +255,7 @@ createMask = function (track.list, scale = 128, kernel.density, p = NULL,
     
     #Use coordinate coordinate polygon to create the cluster shape
     cluster <- list()
-    for (i in 1:length(ls)){
+    for (i in seq_along(ls)){
         cluster[[i]] <- point.in.polygon(df[[1]], df[[2]], ls[[i]]$x, ls[[i]]$y)
     }
     
@@ -296,11 +296,11 @@ applyMask = function(track.list, mask){
     index = 1;
     
     #Loop through all tracks
-    for(i in 1:length(track.list)){
+    for(i in seq_along(track.list)){
         mask.bool = TRUE;
         
         #Remove any tracks outside mask
-        for (j in 1:nrow(track.list[[i]])){
+        for (j in seq_len(nrow(track.list[[i]]))){
             if (mask[[index]] == 1){
                 mask.bool = FALSE;
             }
@@ -479,7 +479,7 @@ mergeAllPoints = function(track.list){
         masked.trackll.cells.names <- list()
         
         #Loop through separated masks and apply to track list
-        for (i in 1:length(mask)){
+        for (i in seq_along(mask)){
             masked.trackll.cells[[length(masked.trackll.cells)+1]] <- applyMask(
                 track.list, mask[[i]]);
             masked.trackll.cells.names[[length(
@@ -509,7 +509,7 @@ densityMaskTracks = function (trackll, scale = 128, removeEdge = FALSE,
         
         #Apply separation to each track list and append the resulting list of
         #track lists to each other
-        for (i in 1:length(trackll)){
+        for (i in seq_along(trackll)){
             tracks <- .densityMaskTracks(trackll[[i]], scale = scale, 
                                          removeEdge = removeEdge, 
                                          separate = separate, 
@@ -521,7 +521,7 @@ densityMaskTracks = function (trackll, scale = 128, removeEdge = FALSE,
     } else {
         
         #Apply algorithm to each track list
-        for (i in 1:length(trackll)){
+        for (i in seq_along(trackll)){
             masked.trackll[[i]] <- .densityMaskTracks(trackll[[i]], 
                                                       scale = scale, 
                                                       removeEdge = removeEdge, 
@@ -539,7 +539,7 @@ densityMaskTracks = function (trackll, scale = 128, removeEdge = FALSE,
 #### plotPoints ####
 
 plotPoints = function(trackll, scale = 128){
-    for (i in 1:length(trackll)){
+    for (i in seq_along(trackll)){
         plotPointsTrackl(trackll[[i]], scale = scale)
         title(sub= names(trackll)[[i]])
     }
@@ -556,7 +556,7 @@ plotPointsTrackl = function(track.list, scale = 128){
 #### plotLines ####
 
 plotLines = function(trackll, scale = 128){
-    for (i in 1:length(trackll)){
+    for (i in seq_along(trackll)){
         plotLinesTrackl(trackll[[i]], scale = scale)
         title(sub= names(trackll)[[i]])
     }

@@ -51,7 +51,7 @@ mergeTracks=function(folder, trackll){
     folder.name=basename(folder)
     
     # concatenate track list into one list of data.frames
-    for (i in 1:length(file.list)){
+    for (i in seq_along(file.list)){
         track.holder=c(track.holder,trackll[[i]])
     }
     
@@ -61,11 +61,11 @@ mergeTracks=function(folder, trackll){
     
     # remove the last old indexPerTrackll
     Index=lapply(Index,function(x){
-        x=x[1:(length(x)-1)]
+        x=x[seq_len((length(x)-1))]
         x=paste(x,collapse=".")})
     
     # add indexPerTrackll to track name
-    indexPerTrackll=1:length(track.holder)
+    indexPerTrackll=seq_along(track.holder)
     names(track.holder)=mapply(paste,Index,
                                 indexPerTrackll,sep=".")
     

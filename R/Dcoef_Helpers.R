@@ -53,7 +53,7 @@ Dcoef.static=function(MSD,lag.start=2,lag.end=5,t.interval=0.010){
 
 # for-lapply setup
 #     D.coef=list()
-#     for (i in 1:length(MSD)){
+#     for (i in seq_along(MSD)){
 #         D.coef[[i]]=apply(MSD[[i]][lag.start:lag.end,],MARGIN=2,function(y){
 #             fit=lm(y~x)
 #             MSDslope=coefficients(fit)[2]/2/dimension
@@ -87,12 +87,12 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
     D.coef=list()
     D.coef.roll=list()
     names.D.coef.roll=c()
-    window=1:window.size
+    window=seq_len(window.size)
     dt=dim(MSD[[1]])[1]
     dimension=2
 
 
-    for (i in 1:length(MSD)){
+    for (i in seq_along(MSD)){
 
         # zero stands for the first window as subsetting using window+j
         for ( j in 0:(dt-window.size)){
@@ -122,8 +122,8 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 
 
     # change shape of the matrix
-    for (i in 1:length(D.coef)){
-        for (j in 1:length(D.coef[[i]])){
+    for (i in seq_along(D.coef)){
+        for (j in seq_along(D.coef[[i]])){
             D.coef[[i]][[j]]=t(D.coef[[i]][[j]])
         }
     }
@@ -144,7 +144,7 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 # 
 #     dt=dim(MSD[[1]])[1]
 # 
-#     start=1:(dt-window.size+1)
+#     start=seq_len((dt-window.size+1))
 #     end=lag.start+window.size-1
 # 
 #     D.coef=list()
@@ -174,14 +174,14 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 # #n=c()
 #     # take the first item of the list to form a new list
 # #     for (i in start){
-# #         for (file.number in 1:length(MSD)){
+# #         for (file.number in seq_along(MSD)){
 # #             n=c(n,list(D.coef.vec[[i]][file.number]))
 # #         }
 # #
 # #     }
 # #
 # #     n=c()
-# #     for (file.number in 1:length(MSD)){
+# #     for (file.number in seq_along(MSD)){
 # #
 # #         for (i in start){
 # #
@@ -204,8 +204,8 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 # 
 #     # remove last level of list
 #     z=l
-#     for (i in 1:length(l)){
-#         for (j in 1:length(l[[i]])){
+#     for (i in seq_along(l)){
+#         for (j in seq_along(l[[i]])){
 #             z[[i]][j]=l[[i]][[j]]
 #         }
 #     }
@@ -274,14 +274,14 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,
 
     # exclude the first time lag for fitting for all category
     msd.remove1st=lapply(msd.lst,function(x){
-        for (i in 1:length(x)){x[[i]]=x[[i]][-1]}
+        for (i in seq_along(x)){x[[i]]=x[[i]][-1]}
         return(x)
     })
 
 
 #     # the reverse setup is not as convenient
 #     msd.remove2st=list()
-#     for (i in 1:length(msd.list)){
+#     for (i in seq_along(msd.list)){
 #         msd.remove2st[[i]]=lapply(msd.list[[i]],function(x){
 #             x=x[-1]
 #         })
@@ -299,9 +299,9 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,
 
 
     ## this works for trajecotries length >=7 frames
-    for (i in 1:length(msd.remove1st)){
+    for (i in seq_along(msd.remove1st)){
 
-        for (j in 1:length(msd.remove1st[[i]])){
+        for (j in seq_along(msd.remove1st[[i]])){
 
             y=msd.remove1st[[i]][[j]]
             len=length(msd.remove1st[[i]][[j]])
@@ -310,7 +310,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,
             x=seq(from=t.interval*2,to=(len+1)*t.interval,by=t.interval)
 
             if (weighted == TRUE){
-                w=1:len; fit=lm(y~x,weights =w )
+                w=seq_len(len); fit=lm(y~x,weights =w )
             }else{
                 fit=lm(y~x)
             }
@@ -328,7 +328,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,
     # lapply can't be used as need two variable function
     # however you can use lapply and for loop inside
 
-#     for (i in 1:length(y)){
+#     for (i in seq_along(y)){
 #         lapply(y[[i]],function(x,t.interval){
 #             len=length(x)
 #
@@ -348,7 +348,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,
 # # an attempt to incorperate trajecotry has length less than 6
 #     # remove first element of msd.lst
 #     msd.remove1st=lapply(msd.lst,function(x){
-#         for (i in 1:length(x)){
+#         for (i in seq_along(x)){
 #
 #             # if 3=<frames<=6 are selected, all points needs to be used
 #
@@ -373,7 +373,7 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,
 
 
 # x=lst()
-# for (i in 1:length(D.coef)){
+# for (i in seq_along(D.coef)){
 #     x[[i]]=do.call(rbind,D.coef[i])
 # }
 #
@@ -458,8 +458,8 @@ rsquare.filter.roll=function(D.coef,rsquare=0.8){
     D.coef.subset=list()
     length(D.coef.subset)=length(D.coef)
     names(D.coef.subset)=names(D.coef)
-    for (i in 1:length(D.coef)) {
-        for(j in 1:length(D.coef[[i]])){
+    for (i in seq_along(D.coef)) {
+        for(j in seq_along(D.coef[[i]])){
             D.coef.subset[[i]][j]=rsquare.filter(D.coef[[i]][j],
                                                 rsquare=rsquare)
             #names(D.coef.subset[[i]][j])=names(D.coef[[i]][j])
@@ -488,8 +488,8 @@ rsquare.filter.roll=function(D.coef,rsquare=0.8){
 
 
 ## alternative  works
-#             for (m in 1:length(corr)){
-#                 for (n in 1:length(corr[[m]])){
+#             for (m in seq_along(corr)){
+#                 for (n in seq_along(corr[[m]])){
 #                     if (corr[[m]][n]<rsquare)
 #                         slope[[m]][n]=NaN
 #                 }
@@ -504,9 +504,9 @@ rsquare.filter.roll=function(D.coef,rsquare=0.8){
 ## if corr <rsquare, replace slope with NaN
 
 ## alternative
-#     for (i in 1: length(D.coef)){
+#     for (i in seq_along(D.coef)){
 #
-#         for (j in 1: length(D.coef[[i]])){
+#         for (j in seq_along(D.coef[[i]])){
 #
 #             # dim(D.coef[[i]][[j]])[2] is the length of the matrix
 #             for (k in 1:dim(D.coef[[i]][[j]])[2]){
@@ -543,7 +543,7 @@ rsquare.filter.roll=function(D.coef,rsquare=0.8){
 #     }else{
 #         ## logorithm
 #         Log.D.coef=list()
-#         for (i in 1:length(D.coef.subset)){
+#         for (i in seq_along(D.coef.subset)){
 #             #Log.D.coef=suppressWarnings(lapply(D.coef,log))
 #             Log.D.coef[[i]]=lapply(D.coef.subset[[i]],log)
 #         }

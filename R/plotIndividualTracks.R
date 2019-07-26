@@ -71,7 +71,7 @@ plotIndividualTracks<-function(trackll=trackll,grid.size=c(1000,1000),
 
 traj.df<-setNames(data.frame(matrix(ncol = 5, nrow = 0)), c("x", "y", "z",
                                                             "Frame","trajNo"))
-for(i in c(1:length(trackll[[1]]))){
+for(i in c(seq_along(trackll[[1]]))){
     traj.n<-trackll[[1]][[i]][,c("x","y","z")]
     traj.n$x<-(traj.n$x-min(traj.n$x))*resolution*1000
     traj.n$y<-(traj.n$y-min(traj.n$y))*resolution*1000
@@ -84,7 +84,7 @@ for(i in c(1:length(trackll[[1]]))){
 traj.df<-traj.df[order(traj.df$trajLength,decreasing=TRUE),]
 new.trajSeq<-sort(table(traj.df$trajNo),decreasing = TRUE)
 new.trajNo<-c()
-for(i in c(1:length(new.trajSeq))){
+for(i in c(seq_along(new.trajSeq))){
     f.n<-rep(i,new.trajSeq[[i]])
     new.trajNo<-append(new.trajNo,f.n)
 }
@@ -92,7 +92,7 @@ traj.df$new.trajNo<-unlist(new.trajNo)
 traj.df<-transform(traj.df,new.trajNo=factor(new.trajNo))
 
 dwellTimes<-c()
-for(i in c(1:length(trackll[[1]]))){
+for(i in c(seq_along(trackll[[1]]))){
     dwellTimes=append(dwellTimes,paste(new.trajSeq[[i]]*t.interval,"s",sep=""))
 }
 

@@ -188,7 +188,7 @@
                    "and parameter vector length does not match"))
     }
 
-    for (i in 1:len){
+    for (i in seq_len(len)){
         data=dcoef[[name[i]]][,"slope"]
 
         # log transformation
@@ -250,7 +250,7 @@
         length(result.lst)=len
         names(result.lst)=name
 
-        for (i in 1:len){
+        for (i in seq_len(len)){
             result=.getSummaryResult(mixmdl.lst[[i]], log.transform)
             result.lst[[i]]=result
         }

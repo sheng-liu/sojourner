@@ -66,7 +66,7 @@ squareDisp=function(track,dt=1,resolution=0.107){
 
     # store dt-wise sub tracks into a list
     track.dt=list()
-    for (i in 1:dt){
+    for (i in seq_len(dt)){
 
         # dt, time lags; the number of time interval used for measurement.
         # default every one step. i, indexing through dt

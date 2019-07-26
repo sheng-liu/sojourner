@@ -72,7 +72,7 @@
     if (ncol(track.list[[1]]) != 3){
         
         #Rename track list as trajectory numbers
-        names(track.list) <- c(1:length(track.list));
+        names(track.list) <- c(seq_along(track.list));
         
         #Combine track data frames by trajectory and reorder column
         df <- bind_rows(track.list, .id = "Trajectory")[, c("Trajectory", 
@@ -84,13 +84,13 @@
         df <- NULL;
         
         #Loop through every trajectory in input track.list
-        for (i in 1:length(track.list)){
+        for (i in seq_along(track.list)){
             
             #Create a data frame temp with trajectory, frame, and track 
             # coordinate data 
             temp <- data.frame("Trajectory" = i, 
                                "Frame" = getStartFrame(track.list, i), 
-                               track.list[[i]][1:3]);
+                               track.list[[i]][seq_len(3)]);
 
             #Append data frame df with data frame temp
             df <- rbind(df, temp);
@@ -121,13 +121,13 @@
     frame.list <- list()
     
     #Loop through every trajectory in input track.list
-    for (i in 1:length(track.list)){
+    for (i in seq_along(track.list)){
         
         start.frame = getStartFrame(track.list[i])
         
         frame.list <- c(frame.list, start.frame, 0, 0)
         
-        temp <- track.list[[i]][1:3]
+        temp <- track.list[[i]][seq_len(3)]
         
         if (i != 1){
             df <- cbind.fill(df, temp, fill = 0) 

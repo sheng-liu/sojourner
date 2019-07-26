@@ -122,7 +122,7 @@ trackCenter=function(trackll){
     length(track.center)=length(trackll)
     names(track.center)=names(trackll)
     
-    for (i in 1:length(trackll)){
+    for (i in seq_along(trackll)){
         track.center[[i]]=lapply(trackll[[i]],function(x){
             # round coords
             apply(x,2,function(coord){round(mean(coord))})})
@@ -169,9 +169,9 @@ maskTracks=function(folder, trackll){
     maskl.check = list()
     maskl.names = gsub("_MASK.tif","",basename(maskl))
     trackll.names = gsub("[.].*","",names(trackll))
-    for (i in 1:length(trackll.names)) {
+    for (i in seq_along(trackll.names)) {
         found = FALSE
-        for (j in 1:length(maskl.names)) {
+        for (j in seq_along(maskl.names)) {
             if (trackll.names[[i]] == maskl.names[[j]]) {
                 maskl.check[[length(maskl.check)+1]] = maskl[j]
                 found = TRUE
@@ -195,7 +195,7 @@ maskTracks=function(folder, trackll){
     length(masked.tracks)=length(trackll)
     names(masked.tracks)=names(trackll)
     
-    for (i in 1:length(trackll)){
+    for (i in seq_along(trackll)){
         
         ## Finds all track centers
         track.center=trackCenter(trackll)[[i]]
@@ -243,9 +243,9 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
     maskl.check = list()
     maskl.names = gsub("_MASK.tif","",basename(maskl))
     trackll.names = gsub("[.].*","",names(trackll))
-    for (i in 1:length(trackll.names)) {
+    for (i in seq_along(trackll.names)) {
         found = FALSE
-        for (j in 1:length(maskl.names)) {
+        for (j in seq_along(maskl.names)) {
             if (trackll.names[[i]] == maskl.names[[j]]) {
                 maskl.check[[length(maskl.check)+1]] = maskl[j]
                 found = TRUE
@@ -274,7 +274,7 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
     track.center=trackCenter(trackll)
     
     # Loop through each trackl
-    for (i in 1:length(trackll)){
+    for (i in seq_along(trackll)){
         
         ## Returns all positive mask pixel locations
         invisible(capture.output(pos.point <- maskPoint(maskl[[i]],plot=FALSE)))
@@ -283,7 +283,7 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
         binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)
         
         #Fill with binary pospoints
-        for (m in 1:nrow(pos.point)){
+        for (m in seq_len(nrow(pos.point))){
             binary.mat[pos.point[[1]][[m]], pos.point[[2]][[m]]] = 1
         }
         
@@ -298,7 +298,7 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
         length(pos.points.indexed) = max(labeled.mat)
 
         # Convert labeled.mat to lists of pos.points per cell
-        for (j in 1:nrow(pos.point)) {
+        for (j in seq_len(nrow(pos.point))) {
             pos.points.indexed[[
                 labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]] <- rbind(
                     pos.points.indexed[[
@@ -318,8 +318,8 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
         glow = t(matrix(pixmap::getChannels(rtiff::readTiff(glowl[[i]])), 
                         nrow = max.pixel, ncol = max.pixel))
         raw.intensities = rep(list(list()), max(labeled.mat))
-        for(row in 1:nrow(labeled.mat)) {
-            for(col in 1:ncol(labeled.mat)) {
+        for(row in seq_len(nrow(labeled.mat))) {
+            for(col in seq_len(ncol(labeled.mat))) {
                 if (labeled.mat[row, col] != 0){
                     raw.intensities[[
                         labeled.mat[row, col]]][[
@@ -330,7 +330,7 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
         }
         cat("Cell Intensities (grayscale): ", "\n", sep = "")
         intensityl <- list()
-        for (cell in 1:length(raw.intensities)){
+        for (cell in seq_along(raw.intensities)){
             intensityl[[cell]] <- mean(unlist(raw.intensities[[cell]]))
             cat(paste(intensityl[[cell]], "\n"))
         }
@@ -342,7 +342,7 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
         cell.count[[i]] <- length(pos.points.indexed)
         
         # Loop through each cell
-        for (k in 1:length(pos.points.indexed)){
+        for (k in seq_along(pos.points.indexed)){
             
             mask.track.index=list()
             length(mask.track.index)=length(trackll)
@@ -368,8 +368,8 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
 
     # Edit the names with concatenated cell number to trackl names
     masked.names = list()
-    for (c in 1:length(cell.count)){
-        for (v in 1:cell.count[[c]]){
+    for (c in seq_along(cell.count)){
+        for (v in seq_len(cell.count[[c]])){
             masked.names[[length(masked.names)+1]] <- paste(
                 raw.names[c], toString(v), sep = "_")
         }
@@ -383,7 +383,7 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
     
     # Filter
     j = 1
-    for(i in 1:length(areas)){
+    for(i in seq_along(areas)){
         if (areas[[i]] > areaFilter[[2]] || areas[[i]] < areaFilter[[1]] || 
             intensities[[i]] > intensityFilter[[2]] || intensities[[i]] < 
             intensityFilter[[1]]){
@@ -430,7 +430,7 @@ sampleTracks = function(trackll, num = 0){
     if (num == 0) {
         cat("\nEnter sample size.\n")
     } else {
-        for (i in 1:length(trackll)){
+        for (i in seq_along(trackll)){
             trackll[[i]] <- sample(trackll[[i]], num)
         }
         return(trackll)

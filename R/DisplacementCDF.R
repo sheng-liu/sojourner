@@ -100,7 +100,7 @@ displacement.track=function(track,dt=1,resolution=0.107,bivar=FALSE){
     # summarize displacement for track at all dt
     # note this function calculates only "at" all dt
     # displacement.dt.track=list()
-    # for (i in 1:dt){
+    # for (i in 1:(dt)){
 
         # at each dt, there are dt number of sub-trajectory/sub-tracks
         # displacement of dt-wise sub-trajectories/ step-wise sub tracks
@@ -182,7 +182,7 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
 
     displacement=list()
 
-    for (i in 1:dt){
+    for (i in seq_len(dt)){
 
         # select tracks longer than i (i.e. "satisfy" dt=i)
         trackl.dt=trackl[(track.len-1)>=i]
@@ -211,7 +211,7 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
 
         # calculate mean and sd for displacement at each dt
         N=length(displacement.individual)
-        for ( i in 1:N){
+        for ( i in seq_len(N)){
             displacement.summarized[i]=list(sapply(
                 displacement.individual[[i]],mean,na.rm=TRUE,simplify=FALSE))
 
@@ -267,7 +267,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
     InidvidualDisplacement=list()
     length(InidvidualDisplacement)=length(dp)
     names(InidvidualDisplacement)=names(dp)
-    for (i in 1:length(dp)){
+    for (i in seq_along(dp)){
 
         InidvidualDisplacement[[i]]=dp[[i]]["InidvidualDisplacement"]
     }
@@ -286,7 +286,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
     dp.dt=list()
     length(dp.dt)=length(dp)
     names(dp.dt)=names(dp)
-    for ( i in 1:length(dp)){
+    for ( i in seq_along(dp)){
         # InidvidualDisplacement[[i]][[1]] # the [[1]] is to move it one level
         # off "IndividualDisplacement"
         if (bivar == FALSE){
@@ -392,14 +392,14 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
         names(x)=c("CDF","UniqueDisplacement")
         return(x)})
 
-    for (i in 1:length(stepwise.displacement)){
+    for (i in seq_along(stepwise.displacement)){
         stepwise.displacement[[i]]["L2"]=NULL
         colnames(stepwise.displacement[[i]])=c(
             "stepwiseDisplacement","trackIndex")
     }
 
     if (output == TRUE){
-        for (i in 1:length(stepwise.displacement)){
+        for (i in seq_along(stepwise.displacement)){
             fileName=paste("stepwiseDisplacement-",
                             .timeStamp(file.name[i]),"___.csv",sep="")
             cat("\nOutput stepwiseDisplacement for",file.name[i],"\n")
@@ -407,7 +407,7 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
                       row.names = FALSE)
         }
 
-        for (i in 1:length(CDF.displacement)){
+        for (i in seq_along(CDF.displacement)){
             fileName=paste("CDFDisplacement-",
                             .timeStamp(file.name[i]),"___.csv",sep="")
             cat("\nOutput CDFDisplacement for",file.name[i],"\n")

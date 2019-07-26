@@ -64,6 +64,14 @@
 ##' @importFrom compiler enableJIT
 ##' @importFrom plyr rbind.fill
 ##' @importFrom rlang .data
+##' @importFrom shinyjs hidden
+##' @importFrom shinyjs enable
+##' @importFrom shinyjs disable
+##' @importFrom shinyjs show
+##' @importFrom shinyjs hide
+##' @importFrom shinyjs delay
+##' @importFrom shinyjs html
+##' @importFrom shinyjs useShinyjs
 
 ## @import dplyr
 
@@ -80,7 +88,6 @@
 ##' @importFrom sp point.in.polygon
 
 ##' @import shiny
-##' @import shinyjs
 ##' @export sojournerGUI
 ##' @return launch sojourner
 sojourner=function(){}

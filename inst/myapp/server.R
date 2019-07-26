@@ -29,7 +29,7 @@ shinyServer(function(input, output, session){
         withBusyIndicatorServer("read", {    
             ab.track = FALSE;
             frameRecord = FALSE;
-            for(i in 1:length(input$parameters)){
+            for(i in seq_along(input$parameters)){
                 if (input$parameters[[i]] == 1){
                     ab.track = TRUE;
                 } else if (input$parameters[[i]] == 2) {

@@ -86,7 +86,7 @@ same.scale=function(mixmdl.lst){
     length(scale)=length(mixmdl.lst)
     names(scale)=names(mixmdl.lst)
 
-    for (i in 1:length(mixmdl.lst)){
+    for (i in seq_along(mixmdl.lst)){
 
         den=density(mixmdl.lst[[i]]$x)
         scale.x=c(min=min(den$x),max=max(den$x))
@@ -159,7 +159,7 @@ abTrack = function(track){
 
 ##@export removeFrameRecord
 removeFrameRecord = function(track.list){
-    for (i in 1:length(track.list)){
+    for (i in seq_along(track.list)){
         track.list[[i]] <- track.list[[i]][-c(4)];
     }
     return (track.list);

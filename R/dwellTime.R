@@ -100,7 +100,7 @@ dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=TRUE,
     if (output == TRUE){
 
         # output csv
-#         for (i in 1:length(trackll)){
+#         for (i in seq_along(trackll)){
 #             fileName=paste("Dwell Time-",.timeStamp(file.name[i]),
 #        ".csv",sep="")
 #             write.csv(file=fileName,dwell.time[[i]])

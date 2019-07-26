@@ -68,7 +68,7 @@ filterTrack=function(trackll,filter=c(min=7,max=Inf)){
 
 
     track.len=list()
-    for (i in 1:length(trackll)){
+    for (i in seq_along(trackll)){
         track.len[[i]]=sapply(trackll[[i]],function(track){dim(track)[1]})
         trackll[[i]]=trackll[[i]][ track.len[[i]]>=filter["min"] & 
                                        track.len[[i]]<filter["max"]]
@@ -103,7 +103,7 @@ trimTrack=function(trackll,trimmer=c(min=1,max=32)){
     trackll.trim=list()
     length(trackll.trim)=length(trackll)
     names(trackll.trim)=names(trackll)
-    for (i in 1:length(trackll)){
+    for (i in seq_along(trackll)){
         trackll.trim[[i]]=lapply(trackll[[i]],.trimTrack,
                             min=trimmer["min"],max=trimmer["max"])
     }
@@ -121,7 +121,7 @@ trackLength=function(trackll){
     length(len)=length(trackll)
     names(len)=names(trackll)
 
-    for (i in 1:length(trackll)){
+    for (i in seq_along(trackll)){
         len[[i]]=sapply(trackll[[i]],function(track){
             dim(track)[1]}
         )

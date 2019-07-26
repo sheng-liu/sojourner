@@ -217,7 +217,7 @@
     #[Last five characters of the file name without extension 
     #(cannot contain ".")].[Start frame #].[Length].[Track #]
     names(track.list) = paste(file.subname, frame.list, 
-                              length.list, c(1:length(track.list)), sep=".");
+                              length.list, c(seq_along(track.list)), sep=".");
     
     #File read and processed confirmation text
     cat("\n", file.subname, "read and processed.\n")
@@ -258,14 +258,14 @@ readDiaSessions = function(folder, ab.track = FALSE, cores = 1,
     
     if (cores == 1){
         
-        for (i in 1:length(file.list)){
+        for (i in seq_along(file.list)){
             
             track.list = .readDiaSessions(file = file.list[i], 
                                           ab.track = ab.track, 
                                           frameRecord = frameRecord)
             
             # add indexPerTrackll to track name
-            indexPerTrackll = 1:length(track.list)
+            indexPerTrackll = seq_along(track.list)
             names(track.list) = mapply(paste, names(track.list), 
                                        indexPerTrackll,sep = ".")
             
@@ -300,7 +300,7 @@ readDiaSessions = function(folder, ab.track = FALSE, cores = 1,
             track=.readDiaSessions(file=fname,ab.track=ab.track, 
                                    frameRecord = frameRecord)
             # add indexPerTrackll to track name
-            indexPerTrackll=1:length(track)
+            indexPerTrackll=seq_along(track)
             names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")
             return(track)
         })

@@ -180,7 +180,7 @@
     #Name track list:
     #[File name from input].[Start frame #].[Length].[Track #].[# of links]
     names(track.list.linked) = paste(file.subname, frame.list, length.list, 
-                                     c(1:length(track.list.linked)), 
+                                     c(seq_along(track.list.linked)), 
                                      linknum.list, sep=".");
     
     #Return linked track list and confirmation text
@@ -241,8 +241,8 @@ findMaxLinks = function(track.list, maxTolerance = 10, maxMaxSkip = 500){
     minTolerance = maxTolerance
     minSkip = maxMaxSkip
     cat("Searching...");
-    for (i in 1:maxTolerance){
-        for (j in 1:maxMaxSkip){
+    for (i in seq_len(maxTolerance)){
+        for (j in seq_len(maxMaxSkip)){
             length = length(linkSkippedFrames(track.list, tolerance = i, 
                                               maxSkip = j));
             if (length < minLength){

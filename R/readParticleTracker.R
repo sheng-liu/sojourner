@@ -190,14 +190,14 @@ readParticleTracker=function(folder,ab.track=FALSE,cores=1, frameRecord=TRUE){
         # if (cores == 1 & max.cores>1)
         # switch cores=c(1,n,auto)
 
-        for (i in 1:length(file.list)){
+        for (i in seq_along(file.list)){
 
 
             track=.readParticleTracker(file=file.list[i],ab.track=ab.track, 
                                        frameRecord = frameRecord)
 
             # add indexPerTrackll to track name
-            indexPerTrackll=1:length(track)
+            indexPerTrackll=seq_along(track)
             names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")
 
             trackll[[i]]=track
@@ -235,7 +235,7 @@ readParticleTracker=function(folder,ab.track=FALSE,cores=1, frameRecord=TRUE){
                                        frameRecord = frameRecord)
 
             # add indexPerTrackll to track name
-            indexPerTrackll=1:length(track)
+            indexPerTrackll=seq_along(track)
             names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")
             return(track)
         })

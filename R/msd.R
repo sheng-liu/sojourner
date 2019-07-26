@@ -124,7 +124,7 @@ msd_track=function(track,dt=6,resolution=0.107,at.dt=FALSE){
 
         # calculate msd for track at 1~dt
         msd_track=c()
-        for (i in 1:dt){
+        for (i in seq_len(dt)){
 
             # caculate msd for track at specified dt
             track.sqd=squareDisp(track,dt=i,resolution=resolution)
@@ -185,7 +185,7 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
 
     # compute msd for 1:dt
     # note the number of tracks selected at each can vary
-    for (i in 1:dt){
+    for (i in seq_len(dt)){
 
         # select tracks longer than i to compute
         trackl.sel=trackl[(track.len-1)>=i]
@@ -490,7 +490,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,
                 return(x)
             })
 
-            for (i in 1:length(MSD.individual.output)){
+            for (i in seq_along(MSD.individual.output)){
                 fileName=paste("MSD individual-",
                                 .timeStamp(file.name[i]),".csv",sep="")
                 cat("\nOutput MSD for individual trajectories.\n")
@@ -531,10 +531,10 @@ msd_track_vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
     track.name=sapply(vecdt,names)
 
     # i folder name level
-    for (i in 1:length(trackll)){
+    for (i in seq_along(trackll)){
 
         # j data.frame level
-        for (j in 1:length(trackll[[i]])){
+        for (j in seq_along(trackll[[i]])){
 
             # add "\n" at the end makes it print all, when removed, "\r" it has
             # the effect of animation; add an extra "\n" outside of the loop to
@@ -601,7 +601,7 @@ msd_perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
     # msd, manipulate N before hand, then pass in the N vector to dt
     N=list()
 
-    for (i in 1: length(trackll)){
+    for (i in seq_along(trackll)){
         N[[i]]=sapply(trackll[[i]],function(x){dim(x)[1]})
     }
     names(N)=names(trackll)
@@ -612,9 +612,9 @@ msd_perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
 
 
     # for loop, use i to traversing through list, j traversing though vector
-    for (i in 1:length(n)){
+    for (i in seq_along(n)){
 
-        for (j in 1:l[i]) {
+        for (j in seq_len(l[i])) {
 
             # remove last frame to derive dt
             # remove last dt to be more accurate in slope calculation

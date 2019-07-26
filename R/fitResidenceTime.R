@@ -245,7 +245,7 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5,
     ## Remove multiple "1" of P values, leaving only one "1" value.
     ## The rest P values will be used for fitting.
     if(length(which(P == 1))>=2){
-    P.fit<-P[-(1:(length(which(P == 1))-1))]
+    P.fit<-P[-(seq_len(length(which(P == 1))-1))]
     }else{
     P.fit<-P
     }
@@ -262,7 +262,7 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5,
     ##### Plot raw data ###############
     par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=FALSE)
     par(mfrow=c(1,1),bg="white",fg="black")
-    plot(t.plot,P[1:length(t.plot)],main=title,xlab="Time (s)",
+    plot(t.plot,P[seq_along(t.plot)],main=title,xlab="Time (s)",
          ylab="Uncorrected survival probability (1-CDF)",
         cex.main=1.5,xlim=c(0,x.max),ylim=c(0,max(P)),cex.axis=1.5,cex.lab=1.5,
         pch=20,cex=1.5)

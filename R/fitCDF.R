@@ -313,7 +313,7 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     length(fit)=length(cdf.displacement)
     names(fit)=names(cdf.displacement)
 
-    for (i in 1:length(cdf.displacement)){
+    for (i in seq_along(cdf.displacement)){
 
         r=cdf.displacement[[i]]$UniqueDisplacement
         P=cdf.displacement[[i]]$CDF
