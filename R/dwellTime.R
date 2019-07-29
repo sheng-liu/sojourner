@@ -15,8 +15,8 @@
 ##' @param trackll Track list output from readDiatrack().
 ##' @param t.interval t.interval time, default = 10ms.
 ##' @param x.scale x-scale min and max range.
-##' @param plot An Logical indicate if plot should be generated. If plot = TRUE,
-##'  the plot data will also be output.
+##' @param plot An Logical indicate if plot should be generated. If 
+##' plot = TRUE, the plot data will also be output.
 ##' @param output An Logical indicate if output should be generated. 1) dwell 
 ##' time of tracks in the track list output to csv file. Each item in the list 
 ##' will have an individual csv file. 2) Plot PDF and plot data will be saved.
@@ -24,10 +24,10 @@
 
 ##' @return
 ##' \itemize{
-##' \item{dwell time list} A list of dwell time for every trajectory, separated 
-##' by file names of the trajectory file in Diatrack file folder. If combined 
-##' dwell time is intended, use readDiatrack(folder, merge=TRUE) to generate a 
-##' single length list, then apply this function.
+##' \item{dwell time list} A list of dwell time for all trajectories, 
+##' separated by file names of the trajectory file in Diatrack file folder. 
+##' If combined dwell time is intended, use readDiatrack(folder, merge=TRUE) 
+##' to generate a  single length list, then apply this function.
 ##' \item{PDF} dwell time frequency plot in PDF format, when plot = TRUE.
 ##' \item{csv} dwell time output in csv format, when output = TRUE.
 ##' }
@@ -42,15 +42,15 @@
 ###############################################################################
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## .dwellTime
-## a function to calculate dwell time from a list of data.frame track (trackl). 
+## a function to calculate dwell time from a list of data.frame track (trackl) 
 # and returns a vector of dwell time.
 
 ## nomenclature
 ## track    data.frame with x,y,z coordinates
-## trackl   list of data.frames with x,y,z coordinates, read from one track file
-## trackll  list of list of data.frames with x,y,z coordinates, read from 
+## trackl   list of data.frames with x,y,z coordinates, read from one track 
+## file trackll  list of list of data.frames with x,y,z coordinates, read from 
 # bmultiple track file
 
 .dwellTime=function(trackl,t.interval=10){
@@ -124,7 +124,7 @@ dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=TRUE,
 ##
 
 # freqpoly=ggplot(dwell.time.mlt,aes(x=value,color=variable)) + 
-#       geom_freqpoly(binwidth=t.interval)+labs(x="Dwell time (ms)", y="Count")+
+#       geom_freqpoly(binwidth=t.interval)+labs(x="Dwell time (ms)",y="Count")+
 #       theme_bw()+ theme(legend.title=element_blank())+xlim(0,200)
 
 #     histodensity=ggplot(dwell.time.mlt,aes(x=value,color=variable,

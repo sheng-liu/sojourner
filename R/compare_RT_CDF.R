@@ -126,7 +126,7 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
     ## Generate color set
     cl<-c("grey30","#FF8E8B","#65B9FF","#FF7DE6","#44D03D","#DF96FF",
         "#F6A600","#00D4EF","#00D9B0","#B1C100")
-    ## Generate data.frame storing information of trackll name, time intervals, 
+    ## Generate data.frame storing information of trackll name, time intervals,
     ## and corresponding 1-CDF.  
     trackllname<-c()
     n<-c()
@@ -160,7 +160,7 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
                                             "%Y%m%d_%H%M%S"),".csv",sep="")
         write.table(ONE_CDF, filename  , append= FALSE, sep=',',
                     row.names = FALSE)
-        cat("  1-CDF of selected tracklls were output in the working directory. 
+        cat(" 1-CDF of selected tracklls were output in the working directory. 
         If using the same filter range, the curve is exactly the same as the
         raw data curve in compare_RT_CDF(). Therefore, this output can be used 
         for plotting and fitting in other programs such as Prism")

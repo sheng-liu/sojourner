@@ -7,8 +7,8 @@
 ##' @title fitNormDistr
 ##' @rdname fitNormDistr-methods
 ##' @docType methods
-##' @description fit normal distributions to diffusion coefficient caclulated by
-##'  Dcoef method and saves seed state as a attribute of the result
+##' @description fit normal distributions to diffusion coefficient caclulated 
+##' by Dcoef method and saves seed state as a attribute of the result
 ##'
 ##' @usage
 ##' fitNormDistr(dcoef,components=NULL,log.transform=FALSE,binwidth=NULL,
@@ -22,16 +22,16 @@
 ##' default F.
 ##' @param binwidth binwidth for the combined plot. If NULL (default), will 
 ##' automatic assign binwidth.
-##' @param combine.plot Logical indicate if all the plot should be combined into
-##'  one, with same scale (/same axises breaks), same color theme, and same bin 
-##'  size for comparison.
+##' @param combine.plot Logical indicate if all the plot should be combined 
+##' into one, with same scale (/same axises breaks), same color theme, and same
+##'  bin size for comparison.
 ##' @param output logical indicate if output file should be generated.
 ##' @param proportion numeric vector with estimates of each component's 
 ##' proportion of the whole data.
 ##' @param means numeric vector with estimates of mean(mu) values for each 
 ##' component.
-##' @param sd numeric vector with estimates of standard deviation(sigma) values 
-##' for each component.
+##' @param sd numeric vector with estimates of standard deviation(sigma)
+##'  values for each component.
 ##' @param constrain logical indicate if mean and std deviation are set to the 
 ##' given value. This will not work for the unimodal distribution.
 ##' @details
@@ -40,17 +40,17 @@
 ##' Bad Random seed generation may cause normalmixEM to crash. Using another 
 ##' seed will solve the issue.
 ##' 
-##' Note: Ensure that a random number generator seed has been manually set! The 
-##' seed is stored as an attribute of the returned object of fitNormDistr() and 
-##' using the same seed makes results repeatable (see examples).
+##' Note: Ensure that a random number generator seed has been manually set! 
+##' The seed is stored as an attribute of the returned object of fitNormDistr()
+##'  and using the same seed makes results repeatable (see examples).
 ##' 
 ##' @return
 ##' \describe{
 ##' \item{proportions}{The proportions of mixing components.}
 ##' \item{mean}{The Means of the components.}
-##' \item{sd}{The Standard Deviations (SD) of components if not log transformed;
-##'  if log transformed, it is then interpreted as Coefficient of Variation 
-##'  (CV).}
+##' \item{sd}{The Standard Deviations (SD) of components if not log 
+##' transformed; if log transformed, it is then interpreted as Coefficient of 
+##' Variation (CV).}
 ##' \item{loglik}{The log likelihood, useful for compare different fitting 
 ##' result, the bigger the better fit.}
 ##' }
@@ -66,10 +66,10 @@
 ##' # set unique seed (use any number)
 ##' set.seed(123)
 ##' 
-##' # fit dcoef (function automatically saves seed state as an attribute of the 
-##' # result)
-##' a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,combine.plot=FALSE,
-##'                output=FALSE)
+##' # fit dcoef (function automatically saves seed state as an attribute of 
+##' # the result)
+##' a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,
+##'                combine.plot=FALSE, output=FALSE)
 ##' 
 ##' # to repeat results of 'a', load seed attribute of a into RNG state
 ##' .Random.seed=attr(a,"seed")
@@ -98,7 +98,7 @@
 ##' MSD=msd(trackll=trackll)
 ##' dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 ##' 
-##' # try with constrain =TRUE, the values will be forced to eqaul the provided 
+##' # try with constrain=TRUE, the values will be forced to equal the provided 
 ##' # ones.
 ##' set.seed(345)
 ##' e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=TRUE)
@@ -111,13 +111,13 @@
 .singlecompFit=function(data, mean=NULL, sd=NULL, constrain=FALSE){
     if (constrain == TRUE){warning(
         "single component fitting cannot be constrained.")}
-    #    if(!is.null(mean) & !is.null(sd)){stop("Please provide only one of the 
-    #    mean or sd constraints.")}
+    #    if(!is.null(mean) & !is.null(sd)){stop("Please provide only one of 
+    #    the mean or sd constraints.")}
     #    fixlist = list(c(mean=mean, sd=sd))
     #    fit.info = fitdist(data,"norm", fix.arg=list(mean=mean))
     #} else{fit.info = fitdist(data=data, distr="norm")}
-    #This dummy matrix is used to make it work out with the gg.mixEM function in
-    #Plotting.Helpers.R
+    #This dummy matrix is used to make it work out with the gg.mixEM function 
+    #in Plotting.Helpers.R
     fit.info = fitdist(data=data, distr="norm")
     dummy.posterior = matrix()
     colnames(dummy.posterior) = c("comp1")
@@ -125,7 +125,7 @@
     # gg.mixEM
     fit.output = list(x=as.vector(data), lambda = c(1), 
                       mu = fit.info$estimate[1], sigma = fit.info$sd[1],
-                        loglik = fit.info$loglik, restarts=0, ft="normalmixEM", 
+                        loglik = fit.info$loglik, restarts=0, ft="normalmixEM",
                       posterior= dummy.posterior)
     return(list(fit.output))
 }
@@ -226,7 +226,8 @@
         } else{
             if(constrain == TRUE) {
                 mixmdl=normalmixEM(data,k=components.int,maxit=1e4,
-                                   epsilon=1e-10,lambda=proportion,sd.constr=sd,
+                                   epsilon=1e-10,lambda=proportion,
+                                   sd.constr=sd,
                                    mean.constr=means)
             } else {
                 mixmdl=normalmixEM(data,k=components.int,maxit=1e4,

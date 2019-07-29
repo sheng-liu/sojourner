@@ -16,8 +16,8 @@ output=FALSE)
 
 \item{x.scale}{x-scale min and max range.}
 
-\item{plot}{An Logical indicate if plot should be generated. If plot = TRUE,
-the plot data will also be output.}
+\item{plot}{An Logical indicate if plot should be generated. If 
+plot = TRUE, the plot data will also be output.}
 
 \item{output}{An Logical indicate if output should be generated. 1) dwell 
 time of tracks in the track list output to csv file. Each item in the list 
@@ -25,10 +25,10 @@ will have an individual csv file. 2) Plot PDF and plot data will be saved.}
 }
 \value{
 \itemize{
-\item{dwell time list} A list of dwell time for every trajectory, separated 
-by file names of the trajectory file in Diatrack file folder. If combined 
-dwell time is intended, use readDiatrack(folder, merge=TRUE) to generate a 
-single length list, then apply this function.
+\item{dwell time list} A list of dwell time for all trajectories, 
+separated by file names of the trajectory file in Diatrack file folder. 
+If combined dwell time is intended, use readDiatrack(folder, merge=TRUE) 
+to generate a  single length list, then apply this function.
 \item{PDF} dwell time frequency plot in PDF format, when plot = TRUE.
 \item{csv} dwell time output in csv format, when output = TRUE.
 }

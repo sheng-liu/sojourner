@@ -15,24 +15,24 @@
 ##' linkSkippedFrames(trackll, tolerance, maxSkip, cores = 1)
 ##' 
 ##' @param trackll A list of track lists.
-##' @param tolerance Distance tolerance level measured in pixels after the frame
-##'  skip.
+##' @param tolerance Distance tolerance level measured in pixels after the 
+##' frame skip.
 ##' @param maxSkip Maximum number of frames a trajectory can skip.
-##' @param cores Number of cores used for parallel computation. This can be the 
-##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-##' read in a file when paralleled.
+##' @param cores Number of cores used for parallel computation. This can be 
+##' the cores on a workstation, or on a cluster. Tip: each core will be 
+##' assigned to read in a file when paralleled.
 ##' @return linked trackll
 ##' @details
-##' Given user input for a tolerance level to limit how far the next point after
-##'  the skip can deviate from the last point in pixel distance 
+##' Given user input for a tolerance level to limit how far the next point 
+##' after the skip can deviate from the last point in pixel distance 
 ##' and a maximum number of frame skips possible, all trajectories falling 
 ##' within these parameters are automatically linked, renamed, and ordered 
 ##' accordingly. 
-##' For a maxSkip example, if the maxSkip for a trajectory ending in frame 7 was
-##'  3, the next linked trajectory can start up to a maximum frame of 11.
+##' For a maxSkip example, if the maxSkip for a trajectory ending in frame 7 
+##' was 3, the next linked trajectory can start up to a maximum frame of 11.
 ##' 
-##' Although not required, in order for the output to have a frame record column
-##'  (recommended), the input must have one as well.
+##' Although not required, in order for the output to have a frame record 
+##' column (recommended), the input must have one as well.
 ##' 
 ##' The naming scheme for each linked track is as follows:
 ##' 
@@ -90,8 +90,8 @@
     #Loop through each new linked trajectory
     repeat{
         
-        #Extract first trajectory in track list into data frame temp for linking
-        #trajectories
+        #Extract first trajectory in track list into data frame temp for 
+        #linking trajectories
         temp <- track.list[[1]];
         
         #Record the start amd last frame of the starting trajectory from track 
@@ -99,10 +99,10 @@
         startFrame = getStartFrame(track.list, 1);
         lastFrame = getStartFrame(track.list, 1) + nrow(temp) - 1;
         
-        #Delete the extracted first trajectory from track list and shift list to
-        #replace
-        #The first trajectory in the track list is the next trajectory after the
-        #data frame temp
+        #Delete the extracted first trajectory from track list and shift list 
+        #to replace
+        #The first trajectory in the track list is the next trajectory after 
+        #the data frame temp
         track.list[[1]] <- NULL
         
         #Record the last X and Y coordinate values of data frame temp
@@ -112,13 +112,13 @@
         #Set link counter to 0;
         linkCounter = 0;
         
-        #Instantiate index i and loop through trajectories in track list to look
-        #for frame skips 
+        #Instantiate index i and loop through trajectories in track list to 
+        #look for frame skips 
         i = 1;
         repeat{
             
-            #If the starting frame of the trajectory is beyond the maximum skips
-            #tpossible or the last frame, break
+            #If the starting frame of the trajectory is beyond the maximum 
+            #skips possible or the last frame, break
             nextFrame =  getStartFrame(track.list, i);
             if (i > length(track.list) || nextFrame > lastFrame + maxFrame){
                 break;

@@ -16,26 +16,26 @@
 ##' exportTrackll(trackll, cores = 1)
 ##' 
 ##' @param trackll A list of track lists.
-##' @param cores Number of cores used for parallel computation. This can be the 
-##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-##' read in a file when paralleled.
+##' @param cores Number of cores used for parallel computation. This can be 
+##' the cores on a workstation, or on a cluster. Tip: each core will be 
+##' assigned to read in a file when paralleled.
 ##' @return .csv file output
 ##' @details
 ##' The reason why ImageJ/MOSAIC style .csv export was chosen is because it 
 ##' fully preserves track frame data, while maintaining short computation time 
 ##' and easy readability in Excel/etc.
 ##' 
-##' In order to import this .csv export back into a trackll at any point (while 
-##' preserving all information), select input = 3 in createTrackll.
+##' In order to import this .csv export back into a trackll at any point 
+##' (while preserving all information), select input = 3 in createTrackll.
 ##' 
 ##' If the track list does not have a fourth frame record column (not 
-##' recommended), it will just output the start frame of each track instead and 
-##' will take noticeably longer.
-##' 
+##' recommended), it will just output the start frame of each track instead 
+##' and will take noticeably longer.
+##'
 ##' It is not recommended that exportTrackll be run on merged list of track 
 ##' lists (trackll).
-##' Also, ensure that the input trackll is a list of track lists and not just a 
-##' track list.
+##' Also, ensure that the input trackll is a list of track lists and not just 
+##' a track list.
 ##' 
 ##' The naming scheme for each export is as follows:
 ##' 

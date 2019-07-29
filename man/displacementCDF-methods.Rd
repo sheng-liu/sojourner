@@ -35,8 +35,8 @@ track folder name.}
 
 \item{Output file,} {Displacement of individual trajectoreis at specified
 dt. The output file is for user to plot in other applications. The column
-"UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a CDF
-plot. The distribution of "UniqueDisplacement" is the density plot. }
+"UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a 
+CDF plot. The distribution of "UniqueDisplacement" is the density plot. }
 
 
 \item{CDF plot,} {CDF plot of displacement for individual files. 
@@ -56,8 +56,8 @@ P(r,i*dt) = 1 - e^(-r^2/4*D*(i*dt))
 
 the CDF and UniqueDisplacement in the output file is corresponding to P and
 r in this formula. If intend to generate the CDF plot from the output file,
-the CDF and UniqueDisplacement is corresponding to the y and x values in the
-CDF output plot.
+the CDF and UniqueDisplacement is corresponding to the y and x values in 
+the CDF output plot.
 }
 \examples{
 folder1=system.file("extdata","SWR1",package="sojourner")

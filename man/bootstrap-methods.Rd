@@ -25,8 +25,8 @@ standard error for the mean, lambda
 }
 \description{
 Bootstrap confidience intervals with standard errors. bootstrap resamples
-dataset (e.g. diffusion coefficients) to calculate confidience intervals for
-a statistic measure of dataset.
+dataset (e.g. diffusion coefficients) to calculate confidience intervals 
+for a statistic measure of dataset.
 }
 \details{
 A wrapper of boot::boot and mixtools::boot.se adapted for data format in

@@ -13,10 +13,10 @@ log.transformed=FALSE,output=FALSE)
 
 \item{fit}{Component fitting result form fitNormDistr() function.}
 
-\item{likelihood}{The likelihood of a trajecotry to be in fitted group. This
-parameter specifies the strigency of selecting trajectories to be in the 
-fitted group and therefore influence the number of trajectories been 
-selected.}
+\item{likelihood}{The likelihood of a trajecotry to be in fitted group. 
+This parameter specifies the strigency of selecting trajectories to be in 
+the fitted group and therefore influence the number of trajectories been 
+ selected.}
 
 \item{dcoef}{Diffusion coefficent calcualted by Dcoef, which provide the 
 link between trajecotry index and diffusion coefficent.}
@@ -42,7 +42,7 @@ coefficient.
 \examples{
 
 ## selComponentTracks() usage
-# 1. select componentTracks per folder (cross movie) by using compareFolders
+# 1. select componentTracks per folder (cross movie) using compareFolders
 # 2. select componentTracks per movie base, use plotComponentTracks to plot
 # component tracks back to initial Nuclei image.
 
@@ -76,7 +76,8 @@ dwellTime(trackll.swr1)
 trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
 dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 # specify index file path.
-index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",
+index.file=system.file("extdata","INDEX",
+                       "componentTrackID-SWR1.comp.1.csv",
                        package="sojourner")
 index.file2=system.file("extdata","INDEX",
                         "componentTrackID-SWR1.comp.2.csv",
@@ -88,8 +89,8 @@ plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder,
                    input = 3)
 
 
-## 2. select componentTracks per movie base, use plotComponentTracks to plot
-##component tracks back to initial Nuclei image.
+## 2. select componentTracks per movie base, use plotComponentTracks to 
+##plot component tracks back to initial Nuclei image.
 ## plotComponentTrackOverlay
 folder3=system.file("extdata","SWR1_2",package="sojourner")
 trackll=createTrackll(folder=folder3, input=3)

@@ -1,8 +1,8 @@
 ## helperFunctions
 #
-################################################################################
+###############################################################################
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## .timeStamp
 # add time stamp and file name as a unique signature of the output file
 ##@export .timeStamp
@@ -15,7 +15,7 @@
 
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## .valid
 
 # validity check for dt less than track length (-1)
@@ -49,7 +49,7 @@
 
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## tracks.msda2sjr
 
 ## @export tracks.msda2sjr
@@ -77,7 +77,7 @@ tracks.msda2sjr=function(file){
 # convert msda to sojourner format
 # not used in functions yet
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## same.scale
 
 same.scale=function(mixmdl.lst){
@@ -102,15 +102,15 @@ same.scale=function(mixmdl.lst){
 
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## getStartFrame
-# returns starting frame of a track/trajectory (using its name) at a given index
-# for a track list
+# returns starting frame of a track/trajectory (using its name) at a given 
+# index for a track list
 
 #PARAMETERS:
 #track.list = named track list output
-#Note: Last five characters of the original file name without extension (cannot 
-#contain ".")
+#Note: Last five characters of the original file name without extension 
+#(cannot contain ".")
 #index = index of the track in the track list (track number)
 
 ##@export getStartFrame
@@ -119,17 +119,18 @@ getStartFrame = function(track.list, index){
                                 gregexpr(pattern = '\\.', 
                                          names(track.list[index]))[[1]][1]+1,
                                 gregexpr(pattern = '\\.', 
-                                         names(track.list[index]))[[1]][2]-1)));
+                                         names(
+                                             track.list[index]))[[1]][2]-1)));
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## getTrackFileName
 # returns the shortened file name of the track
 
 #PARAMETERS:
 #track.list = named track list output
-#Note: Last five characters of the original file name without extension (cannot 
-#contain ".")
+#Note: Last five characters of the original file name without extension 
+#(cannot contain ".")
 
 ##@export getTrackFileName
 getTrackFileName = function(track.list){
@@ -137,7 +138,7 @@ getTrackFileName = function(track.list){
                   gregexpr(pattern = '\\.', names(track.list[1]))[[1]][1]-1));
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## abTrack
 # returns absolute corrdinates of a track (for plotting)
 
@@ -150,7 +151,7 @@ abTrack = function(track){
     min.y = min(track$y);
     return(data.frame(x=track$x-min.x, y=track$y-min.y));
 }
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## removeFrameRecord
 # remove frame record for backwards compatibility
 

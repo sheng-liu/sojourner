@@ -12,7 +12,7 @@ plot=FALSE,output=FALSE,t.interval=0.01,profile=NULL)
 }
 \arguments{
 \item{MSD}{Mean Square Displacement calculated using msd() function. 
-Either MSD or trackll can be passed into Dcoef for calculation of diffusion 
+Either MSD or trackll can be passed into Dcoef for calculation of diffusion
 coefficient.}
 
 \item{trackll}{Track list output from readDiatrack().}
@@ -23,8 +23,8 @@ coefficient.}
 to be analyzed. Take only trajectories that has number of frames greater
 than (>=) min and less than (<) max.}
 
-\item{rsquare}{rsquare filter on Dcoef results. Default to be 0.8. Set value
-to 0 if rsquare filter is not desired.}
+\item{rsquare}{rsquare filter on Dcoef results. Default to be 0.8. Set 
+value to 0 if rsquare filter is not desired.}
 
 \item{resolution}{ratio of pixel to uM.}
 
@@ -47,9 +47,9 @@ for detail.}
 \item{t.interval}{time interval between frames, default 0.010 s (10ms).}
 
 \item{profile}{Location of preference file. By default (NULL), it is stored
-at : system.file("extdata","PREF","profile.csv",package="sojourner"). User
- can provide preference file by specifying the location of the file, e.g. 
- profile="/Users/shengliu/Desktop/profile.csv".}
+at : system.file("extdata","PREF","profile.csv",package="sojourner").
+User can provide preference file by specifying the location of the file, 
+e.g. profile="/Users/shengliu/Desktop/profile.csv".}
 }
 \value{
 \itemize{
@@ -89,7 +89,7 @@ method for calculating Dcoef:
     [,6] \tab 7~9 \tab 1 \tab 2~5-2~7
 }
 
-    \item \bold{rolling.window}  time lags uses for Dcoef follows a rolling 
+    \item \bold{rolling.window}  time lags uses for Dcoef follows a rolling
     window with specified window size (default 4).
 }
 }

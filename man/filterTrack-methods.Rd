@@ -28,10 +28,10 @@ trackLength(trackll)
 methods for filter and trim tracks based on track length.
 }
 \details{
-filterTrack() is used to filter out tracks that has length within a
-specified range (default 7~Inf). On the other hand, despite the lengths of
-tracks, trimTrack() is used to trim /cutoff all tracks to a specified range
-(default 1~32).
+filterTrack() is used to filter out tracks that has length within 
+a specified range (default 7~Inf). On the other hand, despite the lengths 
+of tracks, trimTrack() is used to trim /cutoff all tracks to a specified 
+range (default 1~32).
 }
 \examples{
 folder=system.file("extdata","SWR1",package="sojourner")

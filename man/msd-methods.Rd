@@ -29,8 +29,8 @@ to be analyzed. Take only trajectories that has number of frames greater
 than (>=) min and less than (<) max.}
 
 \item{cores}{Number of cores used for parallel computation. This can be the
-cores on a workstation, or on a cluster. Tip: the computation on each file
-will be parallel assigned to each CPU core.}
+cores on a workstation, or on a cluster. Tip: the computation on each 
+file will be parallel assigned to each CPU core.}
 
 \item{plot}{An logical indicate if plot should be generated. See Values for
 detail.}
@@ -67,19 +67,20 @@ passed to a variable, one can then export the trackll with this variable.
 }
 }
 \description{
-calculate mean square displacement for individual trajectory or
-summarize on trajectories.
+calculate mean square displacement for individual trajectory 
+or summarize on trajectories.
 }
 \details{
-msd() calculate track (/trajectory)'s mean square displacement as a function
-of time (dt). For a track of N steps, at each dt, there are N-dt number of
-sub-trajectory/sub-tracks, mean of dt-wise sub-trajectories/ step-wise sub
-tracks average subtracks into one number at each dt.
+msd() calculate track (/trajectory)'s mean square displacement as a 
+function of time (dt). For a track of N steps, at each dt, there are N-dt 
+number of sub-trajectory/sub-tracks, mean of dt-wise 
+sub-trajectories/step-wise sub tracks average subtracks into one number at 
+each dt.
 
-the dt number of su-btracks each contains N:N-dt steps. Because minimum step
-is 1 (N-dt > = 1), so the maxium dt is N-1 (dt < = N-1). As dt increase, the
-number of steps used to generate that mean decrease with the maxmum dt
-(dt=N-1) generated from one step.
+the dt number of su-btracks each contains N:N-dt steps. Because minimum 
+step is 1 (N-dt > = 1), so the maxium dt is N-1 (dt < = N-1). As dt 
+increase, the number of steps used to generate that mean decrease with the 
+maxmum dt (dt=N-1) generated from one step.
 
 if one wants to focus on a group of trajectory's evolution, he can simply
 filter on a number that is bigger than the dt he wanted to plot MSD.

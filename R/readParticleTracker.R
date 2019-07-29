@@ -13,15 +13,15 @@
 ##' ParticleTracker (a program of ImageJ plugin MosaicSuit).
 
 ##' @usage
-##' readParticleTracker(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
+##' readParticleTracker(folder, ab.track=FALSE, cores=1, frameRecord=TRUE)
 ##'
 ##'
 ## @method # this roxygen directive does not working
 ##' @param folder Full path to ImageJ .csv files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be the 
-##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-##' read in a file when paralleled.
+##' @param cores Number of cores used for parallel computation. This can be 
+##' the cores on a workstation, or on a cluster. Tip: each core will be 
+##' assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the 
 ##' xyz-coordinates for the frame that coordinate point was found (especially 
 ##' helpful when linking frames).
@@ -45,17 +45,18 @@
 ##'
 ##' This "indexPerTrackll" is the index within a trackll, which is unique.
 ##'
-##' The macro used for generating the csv file is also included in ImageJ folder
-##'  of the package: folder=system.file("extdata","ImageJ",package="sojourner")
+##' The macro used for generating the csv file is also included in ImageJ 
+##' folder of the package: 
+##' folder=system.file("extdata","ImageJ",package="sojourner")
 ##'
 
 ##' @export readParticleTracker
 
 ###############################################################################
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## .readParticleTracker
-## a function to read ParticleTracker (a program of ImageJ plugin MosaicSuit) 
+## a function to read ParticleTracker (a program of ImageJ plugin MosaicSuite) 
 ## output .csv file and returns a list of tracks
 
 
@@ -84,8 +85,8 @@
 
     ## name the track.list
     # the track list already has name, which is named in the particle tracker,
-    # to be compatible with downstream operation, need to first remove the name,
-    # and rename it.
+    # to be compatible with downstream operation, need to first remove the 
+    # name, and rename it.
     # names(track.list)=NULL
 
     # somehow flow thorugh the same code
@@ -227,8 +228,10 @@ readParticleTracker=function(folder,ab.track=FALSE,cores=1, frameRecord=TRUE){
         # trackll=parallel::parLapply(cl,file.list,function(fname){
         #     track=.readParticleTracker(file=fname,ab.track=ab.track)
 
-        parallel::clusterExport(cl,varlist=c(".readParticleTracker","ab.track", 
-                                             "frameRecord"),envir=environment())
+        parallel::clusterExport(cl,varlist=c(".readParticleTracker",
+                                             "ab.track", 
+                                             "frameRecord"),
+                                envir=environment())
 
         trackll=parallel::parLapply(cl,file.list,function(fname){
             track=.readParticleTracker(file=fname,ab.track=ab.track, 

@@ -29,8 +29,8 @@ sampleTracks(trackll, num = 0)
 
 \item{areaFilter}{Range of cell areas (pixel sq) to keep in filtering}
 
-\item{intensityFilter}{Range of avg cell intensities (grayscale) to keep in 
-filtering}
+\item{intensityFilter}{Range of avg cell intensities (grayscale) to keep 
+in filtering}
 
 \item{numTracks}{Minimum number of required tracks in the trackll}
 
@@ -60,8 +60,8 @@ There is also the capability to export the final areas/intensities as
 "indexCell.csv" to the home directory and the pixel dimensions can be 
 changed.
 
-filterOnCell() eliminates all trackl in trackll that has less than numTracks
- tracks.
+filterOnCell() eliminates all trackl in trackll that has less than 
+numTracks tracks.
 
 sampleTracks() randomly samples num number of tracks for each trackl in 
 trackll.

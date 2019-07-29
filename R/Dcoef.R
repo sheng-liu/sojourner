@@ -15,15 +15,15 @@
 ##' method=c("static","percentage","rolling.window"),
 ##' plot=FALSE,output=FALSE,t.interval=0.01,profile=NULL)
 ##' @param MSD Mean Square Displacement calculated using msd() function. 
-##' Either MSD or trackll can be passed into Dcoef for calculation of diffusion 
+##' Either MSD or trackll can be passed into Dcoef for calculation of diffusion
 ##' coefficient.
 ##' @param trackll Track list output from readDiatrack().
 ##' @param dt Time intervals. Default 6.
 ##' @param filter a vector specifies the minimum and max length of trajecotries
 ##'   to be analyzed. Take only trajectories that has number of frames greater
 ##'   than (>=) min and less than (<) max.
-##' @param rsquare rsquare filter on Dcoef results. Default to be 0.8. Set value
-##'   to 0 if rsquare filter is not desired.
+##' @param rsquare rsquare filter on Dcoef results. Default to be 0.8. Set 
+##' value to 0 if rsquare filter is not desired.
 ##' @param resolution ratio of pixel to uM.
 ##' @param plot A parameter for plotting. Default FALSE, no plot; If TRUE,
 ##'   automatically plots "histogram" with count information, binwidth can be
@@ -41,9 +41,9 @@
 ##'   for detail.
 ##' @param t.interval time interval between frames, default 0.010 s (10ms).
 ##' @param profile Location of preference file. By default (NULL), it is stored
-##'   at : system.file("extdata","PREF","profile.csv",package="sojourner"). User
-##'    can provide preference file by specifying the location of the file, e.g. 
-##'    profile="/Users/shengliu/Desktop/profile.csv".
+##'   at : system.file("extdata","PREF","profile.csv",package="sojourner").
+##'   User can provide preference file by specifying the location of the file, 
+##'   e.g. profile="/Users/shengliu/Desktop/profile.csv".
 ##'
 ##' @return
 ##' \itemize{
@@ -78,7 +78,7 @@
 ##'     [,6] \tab 7~9 \tab 1 \tab 2~5-2~7
 ##' }
 ##'
-##'     \item \bold{rolling.window}  time lags uses for Dcoef follows a rolling 
+##'     \item \bold{rolling.window}  time lags uses for Dcoef follows a rolling
 ##'     window with specified window size (default 4).
 ##'}
 
@@ -111,7 +111,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
                 plot=FALSE,output=FALSE,t.interval=0.01,profile=NULL){
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
     # validity check for input
 
     # if neither MSD or trackll is provided
@@ -202,7 +202,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 #             rolling.window=FALSE
 #         }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## call corresponding functions
 
 #     if (rolling.window == TRUE){
@@ -265,7 +265,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 
     }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## plot
 
     if (plot == TRUE){
@@ -286,7 +286,7 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 #                if (method == "static"||method == "percentage"){
 #
 #                    cat(paste("\n\nvariance plot for method static",
-#                       "and percentage not available for sojourner v0.2 \n\n"))
+#                       "and percentage not available for sojourner v0.2\n\n"))
 #
 # #                    cat(paste("variance plot for method static", 
 #                       "and percentage does not use rsquare filter. \n"))
@@ -308,13 +308,14 @@ Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 #            # else do nothing
 #            )
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## output
 
     if (output == TRUE){
         # output csv
         for (i in seq_along(trackll)){
-            fileName=paste("Dcoef-",.timeStamp(names(trackll)[i]),".csv",sep="")
+            fileName=paste("Dcoef-",.timeStamp(names(trackll)[i]),
+                           ".csv",sep="")
             write.csv(file=fileName,D.coef.subset[[i]])
         }
     }

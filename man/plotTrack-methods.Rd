@@ -78,9 +78,9 @@ file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).}
 }
 \value{
 \itemize{
-\item{PDF} One PDF file with all the frames satisfy the creteria. If trackll
-has multiple items, it ouptus mutiple PDF files each corresponding to one
-item.
+\item{PDF} One PDF file with all the frames satisfy the creteria. If 
+trackll has multiple items, it ouptus mutiple PDF files each corresponding 
+to one item.
 
 \item{csv} Outputs csv file of the coordiantes of the trajectory, which
 users can use other plotting software (e.g. Prism or Excel) to plot tracks
@@ -95,10 +95,10 @@ specified.
 \itemize{
 \item{plotTrackFromIndex:} if user provide a csv file with first column
 listing the index of trajectories, this program will plot the tracks isted
-in the csv file. It is useful after manipulating with the output from Dceof,
-to plot the tracks that of interest to the user (e.g. highest Dcoef). User
-need to provide the indexFile.csv, and specify the movie folder which
-contains the movies where specified trajectories are tracked.
+in the csv file. It is useful after manipulating with the output from 
+Dcoef, to plot the tracks that of interest to the user (e.g. highest 
+Dcoef). User need to provide the indexFile.csv, and specify the movie 
+folder which contains the movies where specified trajectories are tracked.
 
 \item{plotTrackOverlay:} plot all tracks in trackll overlaid on one plot.
 
@@ -109,9 +109,9 @@ folder and return trackll, otherwise it will take the specified trackll
 directly.
 
 \item{plotComponentTrackOverlay:} plot tracks base on component fitting of
-diffusion coefficient. Combined with selComponentTracks() function, together
-it allows select and plot tracks based on component fitting of track
-diffusion coefficient.
+diffusion coefficient. Combined with selComponentTracks() function, 
+together it allows select and plot tracks based on component fitting of 
+track diffusion coefficient.
 
 \item{plotMask:} plot image mask. The mask file name must ended with
 _MASK.tiff to be recognized.
@@ -135,7 +135,8 @@ folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
 index.file2=system.file("extdata","INDEX","indexFile2.csv",
 package="sojourner")
-plotTrackFromIndex(index.file=index.file2,movie.folder = c(folder1,folder2),
+plotTrackFromIndex(index.file=index.file2,
+ movie.folder = c(folder1,folder2),
  input = 3)
 
 ## masking with image mask

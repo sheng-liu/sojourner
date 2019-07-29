@@ -11,8 +11,8 @@ combine.plot=FALSE,output=FALSE, proportion=NULL, means=NULL,
 sd=NULL, constrain=FALSE)
 }
 \arguments{
-\item{sd}{numeric vector with estimates of standard deviation(sigma) values 
-for each component.}
+\item{sd}{numeric vector with estimates of standard deviation(sigma)
+values for each component.}
 
 \item{constrain}{logical indicate if mean and std deviation are set to the 
 given value. This will not work for the unimodal distribution.}
@@ -29,9 +29,9 @@ default F.}
 \item{binwidth}{binwidth for the combined plot. If NULL (default), will 
 automatic assign binwidth.}
 
-\item{combine.plot}{Logical indicate if all the plot should be combined into
-one, with same scale (/same axises breaks), same color theme, and same bin 
-size for comparison.}
+\item{combine.plot}{Logical indicate if all the plot should be combined 
+into one, with same scale (/same axises breaks), same color theme, and same
+ bin size for comparison.}
 
 \item{output}{logical indicate if output file should be generated.}
 
@@ -45,16 +45,16 @@ component.}
 \describe{
 \item{proportions}{The proportions of mixing components.}
 \item{mean}{The Means of the components.}
-\item{sd}{The Standard Deviations (SD) of components if not log transformed;
- if log transformed, it is then interpreted as Coefficient of Variation 
- (CV).}
+\item{sd}{The Standard Deviations (SD) of components if not log 
+transformed; if log transformed, it is then interpreted as Coefficient of 
+Variation (CV).}
 \item{loglik}{The log likelihood, useful for compare different fitting 
 result, the bigger the better fit.}
 }
 }
 \description{
-fit normal distributions to diffusion coefficient caclulated by
- Dcoef method and saves seed state as a attribute of the result
+fit normal distributions to diffusion coefficient caclulated 
+by Dcoef method and saves seed state as a attribute of the result
 }
 \details{
 Components analysis uses the likelihood ratio test (LRT) to assess the 
@@ -62,9 +62,9 @@ number of mixture components.
 Bad Random seed generation may cause normalmixEM to crash. Using another 
 seed will solve the issue.
 
-Note: Ensure that a random number generator seed has been manually set! The 
-seed is stored as an attribute of the returned object of fitNormDistr() and 
-using the same seed makes results repeatable (see examples).
+Note: Ensure that a random number generator seed has been manually set! 
+The seed is stored as an attribute of the returned object of fitNormDistr()
+ and using the same seed makes results repeatable (see examples).
 }
 \examples{
 # compare folders
@@ -77,10 +77,10 @@ dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 # set unique seed (use any number)
 set.seed(123)
 
-# fit dcoef (function automatically saves seed state as an attribute of the 
-# result)
-a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,combine.plot=FALSE,
-               output=FALSE)
+# fit dcoef (function automatically saves seed state as an attribute of 
+# the result)
+a=fitNormDistr(dcoef,components=NULL,log.transform=FALSE,
+               combine.plot=FALSE, output=FALSE)
 
 # to repeat results of 'a', load seed attribute of a into RNG state
 .Random.seed=attr(a,"seed")
@@ -109,7 +109,7 @@ trackll=compareFolder(c(folder3),input=3)
 MSD=msd(trackll=trackll)
 dcoef=Dcoef(MSD,dt=6,plot=TRUE,output=FALSE)
 
-# try with constrain =TRUE, the values will be forced to eqaul the provided 
+# try with constrain=TRUE, the values will be forced to equal the provided 
 # ones.
 set.seed(345)
 e=fitNormDistr(dcoef,means=c(0.3,0.5), constrain=TRUE)

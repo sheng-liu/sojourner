@@ -75,10 +75,10 @@ Dcoef.static=function(MSD,lag.start=2,lag.end=5,t.interval=0.010){
 
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## .Dcoef.roll
 
-## cant use roll on MSD method = percentage, as its MSD is different length, MSD
+## cant use roll on MSD method=percentage, as its MSD is different length, MSD
 ## method = percentage is calculated differently, using msd_track_vecdt(),
 ## instead of msd().
 
@@ -218,10 +218,10 @@ Dcoef.roll=function(MSD,window.size=4,t.interval=0.010){
 
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## percentage
 ## To determine the diffusion constant from a trajectory, a line was fit to 
-## MSD(n􏲄t) with n running from 1 to the largest integer less than or equal t
+## MSD with n running from 1 to the largest integer less than or equal t
 ## o L/4 (Saxton, 1997).
 
 ## "The short-range diffusion coefficients D*(0: 4) and D*(O: 8) are well 
@@ -414,12 +414,12 @@ Dcoef.perc=function(trackll,percentage=0.25,weighted=FALSE,
 
 ## instead of trackll, it maybe better to store tracks in data.table, then
 ## folders
-## instead of (second) list of data.frame, it may worth the effort simply making
-## it a data.frame (data.table) with fourth column as trajectory numbers.
+## instead of (second) list of data.frame, it may be worth the effort simply 
+## making it a data.frame (data.table) with 4th column as trajectory numbers.
 
 ## it makes program (maybe) easier, computation faster
 
-##------------------------------------------------------------------------------
+##--------------------------------------------------------------------------
 ## rsquare.filter
 ## r.squared >= rsquaae as quality control
 
@@ -525,7 +525,7 @@ rsquare.filter.roll=function(D.coef,rsquare=0.8){
 
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## Dcoef.log
 ##@export Dcoef.log
 # Dcoef.log=function(D.coef.subset,static=TRUE){

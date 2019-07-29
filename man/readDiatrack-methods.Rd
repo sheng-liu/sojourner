@@ -17,9 +17,9 @@ helpful when linking frames).}
 
 \item{folder}{Full path to Diatrack .txt session files output folder.}
 
-\item{cores}{Number of cores used for parallel computation. This can be the 
-cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-read in a file when paralleled.}
+\item{cores}{Number of cores used for parallel computation. This can be 
+the cores on a workstation, or on a cluster. Tip: each core will be 
+assigned to read in a file when paralleled.}
 }
 \value{
 trackll
@@ -28,7 +28,7 @@ trackll
 read output file (tracks/trajecotries) from Diatrack.
 }
 \details{
-Note: the folder name should not contain ".", as it is a key charactero for 
+Note: the folder name should not contain ".", as it is a key character for 
 subsequent indexing of file names.
 
 the absolute coordinates trajectory has moved

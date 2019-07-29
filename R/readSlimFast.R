@@ -9,8 +9,8 @@
 ##' @docType methods
 ##'
 ##' @description take in a SlimFast .txt session file as input, along with
-##'  several other user-configurable parameters and output options, to return a 
-##'  track list of all the trajectories
+##'  several other user-configurable parameters and output options, to return 
+##'  a track list of all the trajectories
 
 ##' @usage 
 ##' readSlimFast(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
@@ -19,9 +19,9 @@
 
 ##' @param folder Full path to SlimFast .txt files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be the 
-##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-##' read in a file when paralleled.
+##' @param cores Number of cores used for parallel computation. This can be 
+##' the cores on a workstation, or on a cluster. Tip: each core will be 
+##' assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the 
 ##' xyz-coordinates for the frame that coordinate point was found (especially 
 ##' helpful when linking frames).
@@ -65,7 +65,8 @@
     cat("\nReading SlimFast file: ",file.name,"...\n");
     
     #Read first four columns of input SLIMFAST file
-    data <- as.data.frame(subset(read.table(file,skip=1), select=c(seq_len(4))))
+    data <- as.data.frame(subset(read.table(file,skip=1), 
+                                 select=c(seq_len(4))))
     
     #Name columns and add z column of 1s in the appropriate location
     colnames(data) <- c("x","y","Frame", "track");
@@ -93,7 +94,7 @@
             
             #If trajectory number is equal to the track number, add line to 
             #track and update counter
-            if (i == as.integer(data[counter, ][[5]]) && counter <= nrow(data)){
+            if (i == as.integer(data[counter,][[5]]) && counter <= nrow(data)){
                 track <- rbind(track, data[counter, ]);
                 counter = counter + 1;
             } else { #Break out of loop if they are unequal and the track ends
@@ -165,7 +166,8 @@ readSlimFast = function(folder, ab.track = FALSE, cores = 1,
         
         for (i in seq_along(file.list)){
             
-            track.list = .readSlimFast(file = file.list[i], ab.track = ab.track,
+            track.list = .readSlimFast(file = file.list[i], 
+                                       ab.track = ab.track,
                                        frameRecord = frameRecord)
             
             # add indexPerTrackll to track name
@@ -197,7 +199,8 @@ readSlimFast = function(folder, ab.track = FALSE, cores = 1,
         
         # pass environment variables to workers
         parallel::clusterExport(cl,varlist=c(".readSlimFast","ab.track", 
-                                             "frameRecord"),envir=environment())
+                                             "frameRecord"),
+                                envir=environment())
         
         # trackll=parallel::parLapply(cl,file.list,function(fname){
         trackll=parallel::parLapply(cl,file.list,function(fname){

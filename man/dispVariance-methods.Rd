@@ -21,7 +21,8 @@ plot.
 This will not affect the returned result.}
 
 \item{log}{default: False, if true, apply log10 to variance value for new 
-spread. like limits, this will only affect the plot, not the returned value.}
+spread. like limits, this will only affect the plot, not the returned 
+value.}
 
 \item{output}{if True, generate a csv output for each tracklist files that 
 are in trackll.}

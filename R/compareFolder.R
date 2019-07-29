@@ -19,7 +19,8 @@
 ##'   indicates multiple (unlimited) folders can be added into the function.
 ##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session
 ##'   file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).
-##' @param ab.track a Logical indicating if absolute coordinates should be used.
+##' @param ab.track a Logical indicating if absolute coordinates should be 
+##' used.
 ##' @param cores Number of cores used for parallel computation. This can be the
 ##'   cores on a workstation, or on a cluster.
 

@@ -17,9 +17,9 @@
 ##' 
 ##' @param folder Full path to Utrack files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be the 
-##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-##' read in a file when paralleled.
+##' @param cores Number of cores used for parallel computation. This can be 
+##' the cores on a workstation, or on a cluster. Tip: each core will be 
+##' assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the 
 ##' xyz-coordinates for the frame that coordinate point was found (almost 
 ##' mandatory for Utrack).
@@ -106,7 +106,8 @@
             #Skip if NaN (denoting skipped frame track)
             if (!is.nan(x)){
                 if (frameRecord){
-                    track <- rbind(track, data.frame("x" = x, "y" = y, "z" = z, 
+                    track <- rbind(track, data.frame("x" = x, "y" = y, 
+                                                     "z" = z, 
                                                      "Frame" = frame));
                 } else {
                     track <- rbind(track, data.frame("x" = x, "y" = y, 
@@ -192,7 +193,8 @@ readUtrack = function(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE){
         
         # pass environment variables to workers
         parallel::clusterExport(cl,varlist=c(".readUtrack","ab.track", 
-                                             "frameRecord"),envir=environment())
+                                             "frameRecord"),
+                                envir=environment())
         
         # trackll=parallel::parLapply(cl,file.list,function(fname){
         trackll=parallel::parLapply(cl,file.list,function(fname){

@@ -15,9 +15,9 @@
 ##' log.transformed=FALSE,output=FALSE)
 ##' @param trackll a list of track lists.
 ##' @param fit Component fitting result form fitNormDistr() function.
-##' @param likelihood The likelihood of a trajecotry to be in fitted group. This
-##'  parameter specifies the strigency of selecting trajectories to be in the 
-##'  fitted group and therefore influence the number of trajectories been 
+##' @param likelihood The likelihood of a trajecotry to be in fitted group. 
+##' This parameter specifies the strigency of selecting trajectories to be in 
+##' the fitted group and therefore influence the number of trajectories been 
 ##'  selected.
 ##' @param dcoef Diffusion coefficent calcualted by Dcoef, which provide the 
 ##' link between trajecotry index and diffusion coefficent.
@@ -38,7 +38,7 @@
 ##' @examples
 ##'
 ##' ## selComponentTracks() usage
-##' # 1. select componentTracks per folder (cross movie) by using compareFolders
+##' # 1. select componentTracks per folder (cross movie) using compareFolders
 ##' # 2. select componentTracks per movie base, use plotComponentTracks to plot
 ##' # component tracks back to initial Nuclei image.
 ##'
@@ -72,7 +72,8 @@
 ##' trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
 ##' dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 ##' # specify index file path.
-##' index.file=system.file("extdata","INDEX","componentTrackID-SWR1.comp.1.csv",
+##' index.file=system.file("extdata","INDEX",
+##'                        "componentTrackID-SWR1.comp.1.csv",
 ##'                        package="sojourner")
 ##' index.file2=system.file("extdata","INDEX",
 ##'                         "componentTrackID-SWR1.comp.2.csv",
@@ -84,8 +85,8 @@
 ##'                    input = 3)
 ##'
 ##'
-##' ## 2. select componentTracks per movie base, use plotComponentTracks to plot
-##' ##component tracks back to initial Nuclei image.
+##' ## 2. select componentTracks per movie base, use plotComponentTracks to 
+##' ##plot component tracks back to initial Nuclei image.
 ##' ## plotComponentTrackOverlay
 ##' folder3=system.file("extdata","SWR1_2",package="sojourner")
 ##' trackll=createTrackll(folder=folder3, input=3)
@@ -136,12 +137,12 @@ selComponentTracks=function(
     length(comp.track.index.lst)=length(fit)
     names(comp.track.index.lst)=names(fit)
 
-    # secondary /internal list structure of comp.track.index.lst is created in a
-    # loop below
+    # secondary /internal list structure of comp.track.index.lst is created in 
+    # a loop below
 
     # lapply(comp.track.index.lst,function(){})
 
-    #---------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # select tracks from fitNormDistr() outputs
     for (i in seq_along(fit)){
 
@@ -224,7 +225,7 @@ selComponentTracks=function(
     })
 
 
-    #---------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # export as index file to plot individually
 
     if (output == TRUE){
@@ -232,7 +233,8 @@ selComponentTracks=function(
             for (j in seq_along(comp.trackID.lst[[i]])){
                 fileName=paste("componentTrackID-",
                                 paste(names(comp.trackID.lst)[[i]],".",
-                                        names(comp.trackID.lst[[i]][j]),sep=""),
+                                        names(comp.trackID.lst[[i]][j]),
+                                      sep=""),
                                 .timeStamp("-"),".csv",sep="")
                 write.csv(file=fileName,comp.trackID.lst[[i]][[j]])
             }
@@ -240,9 +242,9 @@ selComponentTracks=function(
 
     }
 
-    #---------------------------------------------------------------------------
-    # subset selected component tracks from original trackll for msd, dwell time
-    # and further analysis
+    #--------------------------------------------------------------------------
+    # subset selected component tracks from original trackll for msd, dwell 
+    # time and further analysis
 
     # extract trackID
 

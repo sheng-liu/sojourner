@@ -10,8 +10,8 @@
 ##'
 ##' @description 
 ##' Bootstrap confidience intervals with standard errors. bootstrap resamples
-##' dataset (e.g. diffusion coefficients) to calculate confidience intervals for
-##' a statistic measure of dataset.
+##' dataset (e.g. diffusion coefficients) to calculate confidience intervals 
+##' for a statistic measure of dataset.
 
 ##' @usage
 ##' bootstrap(fittedObj,n.reps=100)
@@ -61,7 +61,7 @@
 ##' @import boot
 ###############################################################################
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## bootstrap
 
 ##bootstrap and then return stderr for means 
@@ -112,12 +112,12 @@ plotBootstrap=function(d.boot,alpha=1/2){
 
 
 
-# TODO: isolate the boot.se part from fitNormDistr(), so the bootstrap is all in
+# TODO:isolate the boot.se part from fitNormDistr(), so the bootstrap is all in
 # one place.
 
 
-# Note the calculation of means for the bootstrapped sample seems to be directly
-# using fitted posterior distributions, rather than fitted 100 times.
+# Note the calculation of means for the bootstrapped sample seems to be 
+# directly using fitted posterior distributions, rather than fitted 100 times.
 
 
 

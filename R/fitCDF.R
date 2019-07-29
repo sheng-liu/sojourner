@@ -42,14 +42,14 @@
 ##' @details Calculating Dcoef by fitting displacementCDF.
 ##'
 ##' Reducing the range can greatly increase the precision of the searching; 
-##' alternatively, if the range are unavailable, increase the maxiter.search so 
-##' more points will be searched through with the cost of computation time. 
+##' alternatively, if the range are unavailable, increase the maxiter.search 
+##' so more points will be searched through with the cost of computation time. 
 ##' maxiter.optim barely need to change, if it does not converge with default 
 ##' setting maxiter=1000, most likely the problem is in the initial values.
 ##' 
-##' Note: Ensure that a random number generator seed has been manually set! The 
-##' seed is stored as an attribute of the returned object of fitCDF() and using 
-##' the same seed makes results repeatable (see examples).
+##' Note: Ensure that a random number generator seed has been manually set! 
+##' The seed is stored as an attribute of the returned object of fitCDF() and 
+##' using the same seed makes results repeatable (see examples).
 
 ##'
 ##' @examples
@@ -88,8 +88,8 @@
 ##'                 )
 
 
-# the only difference is the function environment, of course it is runned in two
-# functions
+# the only difference is the function environment, of course it is runned in 
+# two functions
 # > mapply(identical,summary(a[[1]]),summary(b[[1]]))
 # formula    residuals        sigma           df cov.unscaled         call
 # FALSE         TRUE         TRUE         TRUE         TRUE         TRUE
@@ -105,10 +105,10 @@
 ##
 ###############################################################################
 
-## dt needs to be avariable in this equation so it is flexible and has a meaning
-## to its unit um/s
+## dt needs to be avariable in this equation so it is flexible and has a 
+## meaning to its unit um/s
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # one component fit
 # library(truncnorm)
 
@@ -122,8 +122,8 @@ one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,
 
     # it seems for one parameter fit, any nls program does really well, in
     # another words, the fitting seems independent of the intial value.
-    # maybe one parameter makes the relationship linear, so it always reaches to
-    # one conclusion
+    # maybe one parameter makes the relationship linear, so it always reaches 
+    # to one conclusion
 
     D=truncnorm::rtruncnorm(1,a=data.frame(start)[1,],b=data.frame(start)[2,])
     # this defaults normal distribution with mean = 0, sd = 1
@@ -154,7 +154,7 @@ one.comp.fit=function(r,P,start=list(D=c(0,3)),t.interval=0.01,
     return(ocfit)
 }
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # two components fit
 
 two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
@@ -213,7 +213,7 @@ two.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),alpha=c(0,1)),
 
     return(tcfit)
 }
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # three components fit
 
 three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
@@ -237,8 +237,8 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     r.search.thcfit=nls2(P ~ p5(r,D1,D2,D3,alpha,beta),start=data.frame(start),
 
                         # the virtue of using random search is it reduces the
-                        # chance that one parameters is fixed at the edge value,
-                        # which is barely the case.
+                        # chance that one parameters is fixed at the edge 
+                        # value, which is barely the case.
 
                         # algorithm="brute-force",
                         algorithm="random-search",
@@ -269,8 +269,8 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     
     pdf(paste(format(Sys.time(),"%Y%m%d_%H%M%S"), ".pdf", sep = ""))
     p5.curve=function(x){
-        1 - (coef(thcfit)["alpha"]*exp(-x^2/(4*coef(thcfit)["D1"]*t.interval)) +
-            coef(thcfit)["beta"]*exp(-x^2/(4*coef(thcfit)["D2"]*t.interval)) +
+        1 - (coef(thcfit)["alpha"]*exp(-x^2/(4*coef(thcfit)["D1"]*t.interval))+
+            coef(thcfit)["beta"]*exp(-x^2/(4*coef(thcfit)["D2"]*t.interval))+
             (1-coef(thcfit)["alpha"]-coef(thcfit)["beta"])*
                 exp(-x^2/(4*coef(thcfit)["D3"]*t.interval))
         )
@@ -286,7 +286,7 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
     return(thcfit)
 }
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # fitCDF
 ##' @export fitCDF
 .fitCDF=function(cdf, components=c("one","two","three"),
@@ -346,7 +346,7 @@ three.comp.fit=function(r,P,start=list(D1=c(0,2),D2=c(0,2),D3=c(0,2),
 #     lapply(fit,function(x) logLik(x))
 #
 #     lapply(fit,function(x) sum(residuals(x)^2)) # residual sum-of-squares
-#     lapply(fit,function(x) deviance(x)) # is/equals to residual sum-of-squares
+#     lapply(fit,function(x) deviance(x)) # equals to residual sum-of-squares
 
     result.lst=lapply(fit,function(x) {
         estimate=coef(summary(x))[,"Estimate"]
@@ -400,7 +400,7 @@ fitCDF=function(cdf, components=c("one","two","three"),
 
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # DONE:
 
 # a better density plot than ggplot2 there, or adjust it to be better 

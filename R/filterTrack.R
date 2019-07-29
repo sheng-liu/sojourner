@@ -26,10 +26,10 @@
 ##' \item{len} list of track lengths.
 ##' }
 
-##' @details filterTrack() is used to filter out tracks that has length within a
-##' specified range (default 7~Inf). On the other hand, despite the lengths of
-##' tracks, trimTrack() is used to trim /cutoff all tracks to a specified range
-##' (default 1~32).
+##' @details filterTrack() is used to filter out tracks that has length within 
+##' a specified range (default 7~Inf). On the other hand, despite the lengths 
+##' of tracks, trimTrack() is used to trim /cutoff all tracks to a specified 
+##' range (default 1~32).
 ##'
 ##'
 ##' @examples
@@ -50,7 +50,7 @@
 
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## filterTrack
 
 ## a function to filter trackll based on specified fitler value 

@@ -38,7 +38,7 @@
 
 ###############################################################################
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 
 # conversion
 # > trackll[[1]][[1]]
@@ -93,8 +93,8 @@
 hmmTrackll=function(trackll,t.interval=0.01){
 
     # numericIndex=FALSE
-    # all the downstrain hmm analysis based on a bivariate model, so no need to 
-    # have a bivar=TRUE paramter
+    # all the downstrain hmm analysis based on a bivariate model, so no need 
+    # to have a bivar=TRUE paramter
     
     
     cat("calculating displacement...\n")
@@ -205,7 +205,8 @@ hmmTrackll=function(trackll,t.interval=0.01){
             # with Mapp no need for these
             # id.df=reshape2::melt(id.lst)
             # colnames(id.df)=c("stepNum","trackIndex")
-            # id.df$trackStepIndex=paste(id.df$trackIndex,id.df$stepNum,sep=".")
+            # id.df$trackStepIndex=paste(id.df$trackIndex,
+            #                                id.df$stepNum,sep=".")
 
             
 
@@ -305,7 +306,7 @@ hmmTrackll=function(trackll,t.interval=0.01){
 
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## TODO
 ## in cat information add folder name
 

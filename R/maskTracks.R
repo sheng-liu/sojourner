@@ -26,8 +26,8 @@
 ##' @param export Logical indicate if .csv output file should be generated
 ##' @param max.pixel Pixel dimension of image
 ##' @param areaFilter Range of cell areas (pixel sq) to keep in filtering
-##' @param intensityFilter Range of avg cell intensities (grayscale) to keep in 
-##' filtering
+##' @param intensityFilter Range of avg cell intensities (grayscale) to keep 
+##' in filtering
 ##' @param numTracks Minimum number of required tracks in the trackll
 ##' @param num Number of tracks to randomly sample per trackl in trackll
 ##' @return masked tracks in trackll format
@@ -70,8 +70,8 @@
 ##' "indexCell.csv" to the home directory and the pixel dimensions can be 
 ##' changed.
 ##' 
-##' filterOnCell() eliminates all trackl in trackll that has less than numTracks
-##'  tracks.
+##' filterOnCell() eliminates all trackl in trackll that has less than 
+##' numTracks tracks.
 ##' 
 ##' sampleTracks() randomly samples num number of tracks for each trackl in 
 ##' trackll.
@@ -83,7 +83,7 @@
 ##' @export filterOnCell
 ##' @export sampleTracks
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ##
 # read in mask and derive positive pix form a mask
 maskPoint=function(mask.file,plot=FALSE){
@@ -110,7 +110,7 @@ maskPoint=function(mask.file,plot=FALSE){
     return(pos.point)
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ##
 # Use each trajectory's geometric center as unit for clusterization.
 # Each data point is an averaged trajectory.
@@ -132,7 +132,7 @@ trackCenter=function(trackll){
 }
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ##
 # track.center and pos.point should be one to one cooresponding
 posTracks=function(track.center,pos.point){
@@ -149,7 +149,7 @@ posTracks=function(track.center,pos.point){
     
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ##
 
 maskTracks=function(folder, trackll){
@@ -277,10 +277,12 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
     for (i in seq_along(trackll)){
         
         ## Returns all positive mask pixel locations
-        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],plot=FALSE)))
+        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],
+                                                        plot=FALSE)))
         
         #Instantiate empty
-        binary.mat = matrix( rep( 0, len=max.pixel*max.pixel), nrow = max.pixel)
+        binary.mat = matrix( rep( 0, len=max.pixel*max.pixel),
+                             nrow = max.pixel)
         
         #Fill with binary pospoints
         for (m in seq_len(nrow(pos.point))){
@@ -390,7 +392,8 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
             masked.trackll[[j]] <- NULL;
         } else {
             if (export){
-                df[nrow(df) + 1,] = list(names(masked.trackll)[[j]], areas[[i]],
+                df[nrow(df) + 1,] = list(names(masked.trackll)[[j]], 
+                                         areas[[i]],
                                          intensities[[i]])
             }
             j = j + 1

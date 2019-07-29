@@ -9,8 +9,8 @@
 ##' @rdname densityMaskTracks-methods
 ##' @docType methods
 ##'
-##' @description mask track lists and lists of track lists using kernel density 
-##' clusters
+##' @description mask track lists and lists of track lists using kernel 
+##' density clusters
 
 ##' @usage 
 ##' densityMaskTracks(trackll, scale = 128, removeEdge = FALSE, 
@@ -33,21 +33,21 @@
 ##' @details
 ##' 
 ##' This algorithm relies on one parameter, the kernel density probability (p),
-##' to mask track lists. Following, describes a method to optimize a workflow to
-##' predict p actively.
+##' to mask track lists. Following, describes a method to optimize a workflow 
+##' to predict p actively.
 ##' 
 ##' When densityMaskTracks() is called with buildModel = TRUE, it will 
 ##' repeatedly ask the user for the kernel density probability (p) and the 
-##' number of smallest clusters to elimnate. The kernel density probability (p) 
-##' is a factor that determines the cluster contours density. Low p creates
+##' number of smallest clusters to elimnate. The kernel density probability 
+##' (p) is a factor that determines the cluster contours density. Low p creates
 ##' smaller and/or fewer clusters and vice versa. Adjust p accordingly, but if
 ##' there are still small extra clusters made in undesired areas, raise the
 ##' number of smallest clusters to eliminate accordingly (note: sometimes noise
 ##' clusters are too small to see). Manual input will get progressively easier
-##' after 3 data points as the model is continuously being improved and applied.
-##' Building the model will create a MODEL.csv in the working directory that can
-##' be used to mask automatically if buildModel = FALSE (this will look for one
-##' MODEL.csv in the working directory).
+##' after 3 data points as the model is continuously being improved and 
+##' applied. Building the model will create a MODEL.csv in the working 
+##' directory that can be used to mask automatically if buildModel = FALSE 
+##' (this will look for one MODEL.csv in the working directory).
 ##' 
 ##' The separate parameter allows users to separate each track list from one
 ##' video into their cluster components, creating a list of track lists. 
@@ -66,18 +66,19 @@
 ##' 
 ##' EXTRA:
 ##' 
-##' The general method for creating a masked track list from a single track list
-##' begins by first calculating its kernel density using kernelDensity(), 
-##' creating the mask using this value createMask() (while adjusting the kernel
-##' density probability [p] as needed), then generating the masked track list
-##' using applyMask. The reason why these three steps are separated in the
-##' source code is to allow for quick repeated adjustments to the kernel density
-##' probability (p), as the other two steps can take more time.
+##' The general method for creating a masked track list from a single 
+##' track list begins by first calculating its kernel density using 
+##' kernelDensity(), creating the mask using this value createMask() (while 
+##' adjusting the kernel density probability [p] as needed), then generating 
+##' the masked track list using applyMask. The reason why these three steps 
+##' are separated in the source code is to allow for quick repeated 
+##' adjustments to the kernel density probability (p), as the other two steps 
+##' can take more time.
 ##' 
-##' The value for the kernel density probability (p) is automatically calculated
-##' by default using a regression model estimating the approximate desired
-##' probability using the track list's average track length (derived from a
-##' specific data set).Thus, it is highly recommended to use
+##' The value for the kernel density probability (p) is automatically 
+##' calculated by default using a regression model estimating the approximate 
+##' desired probability using the track list's average track length (derived 
+##' from a specific data set).Thus, it is highly recommended to use
 ##' uncensored/unfiltered track lists.
 ##' 
 ##' If one had to apply this function to a large number of typically unvariable
@@ -106,7 +107,7 @@
 ##' plotTrackOverlay(trackll)
 ##' plotTrackOverlay(trackll.masked)
 ##'
-##' # create trackll by build model manually, useful when default model does not
+##' # create trackll by build model manually, useful when default model doesn't
 ##' # yield good masking either too strigent or too lose
 ##' ###trackll.masked.md <- densityMaskTracks(trackll, buildModel = TRUE)
 ##'
@@ -142,11 +143,11 @@
 ##' ###plotTrackOverlay(trackll.masked.md) # masked using losened up masking 
 ##' # model 
 ##'
-##' # now one can used this modified Model.csv to process data that was not
-##' # masked well using default model by simply putting Model.csv in the working
+##' # now one can use this modified Model.csv to process data that was not
+##' # masked well using default model by simply putting Model.csv in working
 ##' # directory and set buildModel=FALSE
 ##' ###trackll.masked2 <- densityMaskTracks(trackll, buildModel = FALSE)
-##' ###plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up) 
+##' ###plotTrackOverlay(trackll.masked.md) # masked by building new (lossen up)
 ##' # model
 ##' ###plotTrackOverlay(trackll.masked2) # masked using provided (lossen up) 
 ##' # model without building it
@@ -256,7 +257,8 @@ createMask = function (track.list, scale = 128, kernel.density, p = NULL,
     #Use coordinate coordinate polygon to create the cluster shape
     cluster <- list()
     for (i in seq_along(ls)){
-        cluster[[i]] <- point.in.polygon(df[[1]], df[[2]], ls[[i]]$x, ls[[i]]$y)
+        cluster[[i]] <- point.in.polygon(df[[1]], df[[2]], ls[[i]]$x, 
+                                         ls[[i]]$y)
     }
     
     #Create binary mask of track coordinates
@@ -374,7 +376,7 @@ mergeAllPoints = function(track.list){
             cat("\nPredicting p...\n")
             p = model.fit$coefficients[[1]] + model.fit$coefficients[[2]] * avg
             if (!(p > 0 || p < 1)){
-                cat("\nWarning: Model inaccuracy! p set to safe default 0.5.\n")
+                cat("\nWarning: Model inaccuracy! p set to safe default 0.5\n")
                 p = 0.5
             }
         }
@@ -420,7 +422,8 @@ mergeAllPoints = function(track.list){
                 new.model <- data.frame(track.name, points, tracks, 
                                         points/tracks, p);
                 colnames(new.model) <- c("File Name", "Points", "Tracks", 
-                                         "Average Track Length", "Probability");
+                                         "Average Track Length", 
+                                         "Probability");
                 break;
             }
             
@@ -480,8 +483,8 @@ mergeAllPoints = function(track.list){
         
         #Loop through separated masks and apply to track list
         for (i in seq_along(mask)){
-            masked.trackll.cells[[length(masked.trackll.cells)+1]] <- applyMask(
-                track.list, mask[[i]]);
+            masked.trackll.cells[[length(masked.trackll.cells)+1]] <- 
+                applyMask(track.list, mask[[i]]);
             masked.trackll.cells.names[[length(
                 masked.trackll.cells.names)+1]] <- i;
         }

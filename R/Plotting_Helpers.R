@@ -1,6 +1,6 @@
 ## plotting helpers
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## automate binwidth
 auto.binwidth=function(x){
     x=x[is.na(x) == FALSE]
@@ -11,7 +11,7 @@ auto.binwidth=function(x){
     return(binwidth)
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## plotHistogram
 plotHistogram=function(Log.D.coef,binwidth=0.5, method){
     p=reshape2::melt(Log.D.coef)
@@ -82,7 +82,7 @@ plotHistogram=function(Log.D.coef,binwidth=0.5, method){
 ## change the 0.5 to binwidth, so it is dynamic, it is not recognized somehow.
 
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## plotDensity
 plotDensity=function(Log.D.coef,binwidth=0.5,method){
 
@@ -157,7 +157,7 @@ plotDensity=function(Log.D.coef,binwidth=0.5,method){
 #        aes(x=Log.D.coef))+
 #     geom_density()
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## plotVariance
 
 ## not used but keep for now.
@@ -252,7 +252,7 @@ plotVariance=function(Log.D.coef,method){
     # mapply(function(x){mean(x,na.rm=TRUE)},
     #        Log.D.coef[[1]][[1]],Log.D.coef[[1]][[2]])
 
-    # this means mapply is not taking the elements of each list into one vector,
+    # this means mapply is not taking the elements of each list into 1 vector,
     # but used them as seperate
 
 
@@ -279,7 +279,7 @@ plotVariance=function(Log.D.coef,method){
 
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## .
 ## from Rcookbook
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
@@ -305,7 +305,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     } else {
         # Set up the page
         grid.newpage()
-        pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+        pushViewport(viewport(layout = grid.layout(nrow(layout),ncol(layout))))
 
         # Make each plot, in the correct location
         for (i in seq_len(numPlots)) {
@@ -319,7 +319,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     }
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## .
 ## from StackOverflow
 
@@ -384,9 +384,9 @@ gg.mixEM <- function(EM,binwidth=NULL,reorder=TRUE) {
     ggplot(data.frame(x=EM$x),aes_string(x="x",y="..density..")) +
         geom_histogram(fill=NA,color="black",binwidth=binwidth)+
         # when distribution is truncated, it plots flippers
-        # geom_polygon(data=em.df,aes(x,y,fill=comp),color="grey50", alpha=0.5)+
-        geom_area(data=em.df,aes_string(x="x",y="y",fill="comp"),color="grey50",
-                  alpha=0.5,position = "identity")+
+        # geom_polygon(data=em.df,aes(x,y,fill=comp),color="grey50" alpha=0.5)+
+        geom_area(data=em.df,aes_string(x="x",y="y",fill="comp"),
+                  color="grey50",alpha=0.5,position = "identity")+
         scale_fill_discrete("Component\nMeans",
                             labels=format(em.df$mu,digits=3))+theme_bw()
 }

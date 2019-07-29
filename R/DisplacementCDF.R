@@ -35,8 +35,8 @@
 ##'
 ##' the CDF and UniqueDisplacement in the output file is corresponding to P and
 ##' r in this formula. If intend to generate the CDF plot from the output file,
-##' the CDF and UniqueDisplacement is corresponding to the y and x values in the
-##' CDF output plot.
+##' the CDF and UniqueDisplacement is corresponding to the y and x values in 
+##' the CDF output plot.
 
 ##' @return
 ##' \itemize{
@@ -46,8 +46,8 @@
 ##' 
 ##' \item{Output file,} {Displacement of individual trajectoreis at specified
 ##' dt. The output file is for user to plot in other applications. The column
-##' "UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a CDF
-##' plot. The distribution of "UniqueDisplacement" is the density plot. }
+##' "UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a 
+##' CDF plot. The distribution of "UniqueDisplacement" is the density plot. }
 ##'
 ##'
 ##' \item{CDF plot,} {CDF plot of displacement for individual files. 
@@ -70,8 +70,8 @@
 
 
 # it is of different length at different dt,
-# for each dt for all trajectories, can use a matrix/data.frame as it is of same
-# length, and dt number of such matrix/data.frame
+# for each dt for all trajectories, can use a matrix/data.frame as it is of 
+# same length, and dt number of such matrix/data.frame
 
 
 ## calculate displacement for tracks (data.frame)
@@ -81,7 +81,7 @@
 # focus only on displacement, however a one step displacement is also a track,
 # for the consistancy in naming, also called displacement.track
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## displacement.track
 ## displacement for a single data.frame
 ##@export displacement.track
@@ -153,7 +153,7 @@ displacement.track=function(track,dt=1,resolution=0.107,bivar=FALSE){
     return(displacement.dt.track)
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## displacement.trackl
 ## calculate displacement for a list of data.frame
 
@@ -235,7 +235,7 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
 
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## displacement_trackll
 ##'@export displacement_trackll
 displacement_trackll=function(trackll,dt=1,resolution=0.107,bivar=FALSE){
@@ -252,7 +252,7 @@ displacement_trackll=function(trackll,dt=1,resolution=0.107,bivar=FALSE){
     return(displacement.trackll.lst)
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## plot CDF of individual displacement
 
 # the minimum tracks to include for the dt is recommended as 50. Users can see
@@ -309,8 +309,8 @@ displacementCDF=function(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
             labs(x="Displacement (um)",y="CDF")+
             theme_classic()+
             theme(legend.title=element_blank())
-        # can use stat_ecdf(pad=FALSE) to remove first -Inf and Inf dded on x in
-        # ggplot2::stat_cdf, however it seems not working in current version
+        # can use stat_ecdf(pad=FALSE) to remove first -Inf and Inf dded on x 
+        # in ggplot2::stat_cdf, however it seems not working in current version
         # ggplot2 2.1.10, remove it manually in "preprocessing of data for
         # output"
 

@@ -6,7 +6,7 @@
 \alias{.readParticleTracker}
 \title{readParticleTracker}
 \usage{
-readParticleTracker(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
+readParticleTracker(folder, ab.track=FALSE, cores=1, frameRecord=TRUE)
 }
 \arguments{
 \item{ab.track}{Use absolute coordinates for tracks.}
@@ -17,9 +17,9 @@ helpful when linking frames).}
 
 \item{folder}{Full path to ImageJ .csv files output folder.}
 
-\item{cores}{Number of cores used for parallel computation. This can be the 
-cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-read in a file when paralleled.}
+\item{cores}{Number of cores used for parallel computation. This can be 
+the cores on a workstation, or on a cluster. Tip: each core will be 
+assigned to read in a file when paralleled.}
 }
 \value{
 trackll
@@ -40,8 +40,9 @@ This "indexPerFile" is the index within a track file.
 
 This "indexPerTrackll" is the index within a trackll, which is unique.
 
-The macro used for generating the csv file is also included in ImageJ folder
- of the package: folder=system.file("extdata","ImageJ",package="sojourner")
+The macro used for generating the csv file is also included in ImageJ 
+folder of the package: 
+folder=system.file("extdata","ImageJ",package="sojourner")
 }
 \examples{
 # reading in tracks

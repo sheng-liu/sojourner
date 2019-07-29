@@ -52,8 +52,8 @@
 ##' 
 ###TODO add plot with confidence interval
 
-##small helper function that calculates the CI in terms of stderr. This returns 
-##the critical t-values, given the confidence.
+##small helper function that calculates the CI in terms of stderr. This 
+##returns the critical t-values, given the confidence.
 .get.seRange=function(confidence, num.samples){
     diff=(1-confidence)/2
     range.vector=c(diff, 1-diff)
@@ -106,7 +106,8 @@ getCI=function(bootstrap.result, confidence=0.95, output=FALSE){
                     Std.Error = fit.se[[i]]$lambda.se[j]
                 )
             )
-            proportionnames = c(proportionnames, paste(j, "-ProportionCI", sep =
+            proportionnames = c(proportionnames, 
+                                paste(j, "-ProportionCI", sep =
                                                             ""))
         }
         
@@ -121,7 +122,8 @@ getCI=function(bootstrap.result, confidence=0.95, output=FALSE){
     if (output == TRUE){
         whole.df = data.frame()
         fileName=paste("ConfidenceInterval-",
-                        .timeStamp(paste(names(ciList),sep = "")),".csv",sep="")
+                        .timeStamp(paste(names(ciList),sep = "")),".csv",
+                       sep="")
         for (i in seq_along(ciList)){
             single.df = data.frame(ciList[[i]])
             rownames(single.df) = paste(inputNames[[i]],rownames(single.df), 

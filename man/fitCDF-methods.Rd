@@ -50,14 +50,14 @@ trajecotries by fitting displacementCDF.
 Calculating Dcoef by fitting displacementCDF.
 
 Reducing the range can greatly increase the precision of the searching; 
-alternatively, if the range are unavailable, increase the maxiter.search so 
-more points will be searched through with the cost of computation time. 
+alternatively, if the range are unavailable, increase the maxiter.search 
+so more points will be searched through with the cost of computation time. 
 maxiter.optim barely need to change, if it does not converge with default 
 setting maxiter=1000, most likely the problem is in the initial values.
 
-Note: Ensure that a random number generator seed has been manually set! The 
-seed is stored as an attribute of the returned object of fitCDF() and using 
-the same seed makes results repeatable (see examples).
+Note: Ensure that a random number generator seed has been manually set! 
+The seed is stored as an attribute of the returned object of fitCDF() and 
+using the same seed makes results repeatable (see examples).
 }
 \examples{
 

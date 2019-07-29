@@ -9,22 +9,22 @@ createTrackll(folder, interact = FALSE, input = 1, ab.track = FALSE,
 cores = 1, frameRecord = TRUE)
 }
 \arguments{
-\item{folder}{Full path output file folder (ensure each folder has files of 
-only one input type).}
+\item{folder}{Full path output file folder (ensure each folder has files 
+of only one input type).}
 
 \item{interact}{Open interactive menu to choose the desired folder by 
 selecting any file in it and select input type (script will process all 
 files of that type in this folder).}
 
-\item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat session 
-file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4; 
+\item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat 
+session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4; 
 U-Track .mat file = 5).}
 
 \item{ab.track}{Use absolute coordinates for tracks.}
 
-\item{cores}{Number of cores used for parallel computation. This can be the 
-cores on a workstation, or on a cluster. Each core will be assigned to read 
-one file when in parallel.}
+\item{cores}{Number of cores used for parallel computation. This can be 
+the cores on a workstation, or on a cluster. Each core will be assigned to 
+read one file when in parallel.}
 
 \item{frameRecord}{Add a fourth column to the track list after the 
 xyz-coordinates for the frame that coordinate point was found (especially 
@@ -53,8 +53,9 @@ coordinate point.
 The pre-censoring of single-frame tracks is dependent on the tracking 
 software. For complete lossless track data, use Diatrack (.mat) session 
 files.
-If the initial creation of the trackll does not have a frame record, future 
-exports and imports of the trackll will only preserve the start frames.
+If the initial creation of the trackll does not have a frame record, 
+future exports and imports of the trackll will only preserve the start 
+frames.
 
 If the cores are set to the maximum number of cores available on the 
 system, the script may return a error after processing all the files. 

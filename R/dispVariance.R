@@ -1,6 +1,6 @@
 ## dispVariance-methods
 ##
-################################################################################
+###############################################################################
 ##
 ##
 ##' @name dispVariance
@@ -23,7 +23,8 @@
 ##' plot.
 ##' This will not affect the returned result.
 ##' @param log default: False, if true, apply log10 to variance value for new 
-##' spread. like limits, this will only affect the plot, not the returned value.
+##' spread. like limits, this will only affect the plot, not the returned 
+##' value.
 ##' @param output if True, generate a csv output for each tracklist files that 
 ##' are in trackll.
 ##' @return \itemize{
@@ -68,9 +69,9 @@
 ##' 
 ##' @export dispVariance
 
-################################################################################
+###############################################################################
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ##dispVariance_track
 
 ##calculate variance for displacements single track
@@ -85,7 +86,7 @@ dispVariance_track=function(track) {
     var(clean) # return variance value
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ##dispVariance.trackl
 
 ##calculate variance for displacements single tracklist
@@ -94,13 +95,13 @@ dispVariance.trackl=function(trackl) {
     lapply(trackl, dispVariance_track)
     #track.df = lapply(trackl, data.frame)
     #track.withdisp = sapply(track.df, squareDisp)
-    #sqdisp = lapply(track.withdisp,function(x) {x[7]}) #column with square-disp
+    #sqdisp = lapply(track.withdisp,function(x) {x[7]})#column with square-disp
     #sqdisp.clean = lapply(sqdisp, function(x) {x[!is.na(x)]})
     #disp.var = lapply(sqdisp.clean, var)
     #disp.var
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ##dispVariance
 
 ##calculate displacement variance for all tracks in given trackll
@@ -130,7 +131,8 @@ dispVariance=function(trackll, min=7, plot=FALSE, limits=c(), log=FALSE,
         #different tracklists will show up as different colors with some 
         # transparency
         plt=ggplot2::ggplot(melted, ggplot2::aes_string(x="variance", 
-        color="trackList")) + ggplot2::geom_line(alpha=0.5, position="identity",
+        color="trackList")) + ggplot2::geom_line(alpha=0.5, 
+                                                 position="identity",
                                                  stat="density")
         if (length(limits) != 2) {
             plot(plt)

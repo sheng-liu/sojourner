@@ -17,9 +17,9 @@
 ## @method # this roxygen directive does not working
 ##' @param folder Full path to Diatrack .txt session files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be the 
-##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-##' read in a file when paralleled.
+##' @param cores Number of cores used for parallel computation. This can be 
+##' the cores on a workstation, or on a cluster. Tip: each core will be 
+##' assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the 
 ##' xyz-coordinates for the frame that coordinate point was found (especially 
 ##' helpful when linking frames).
@@ -32,7 +32,7 @@
 
 ##' @details
 ##'
-##' Note: the folder name should not contain ".", as it is a key charactero for 
+##' Note: the folder name should not contain ".", as it is a key character for 
 ##' subsequent indexing of file names.
 ##'
 ##' the absolute coordinates trajectory has moved
@@ -50,7 +50,7 @@
 
 ###############################################################################
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## .readDiatrack
 ## a function to read one diatrack txt file and returns a list of tracks
 
@@ -159,7 +159,7 @@
 
 }
 
-##------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
 ## Note:the list can be named, this wil change the read.distrack.folder 's
 ## naming no need for naming it
 
@@ -255,14 +255,14 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
     # merge masked tracks
     # merge has to be done after mask
 
-    #Merge start################################################################
+    #Merge start###############################################################
     # if (merge == TRUE){
     #     for (i in seq_along(file.list)){
     #         trackll[[i]]=track[[i]]
     #         names(trackll)[i]=file.name[i]
     #     }
     # }
-    #Merge end##################################################################
+    #Merge end#################################################################
 
     # trackll naming scheme
     # if merge == FALSE, list takes the name of individual file name within 
@@ -273,12 +273,12 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
     
     # merge masked tracks
     # merge has to be done after mask
-    #Mask start#################################################################
+    #Mask start################################################################
     #if (merge == TRUE){
 
         # trackll naming scheme
-        # if merge == FALSE, list takes the name of individual file name within 
-        # folder
+        # if merge == FALSE, list takes the name of individual file name 
+        # within folder
         # file.name > data.frame.name
         # if merge == TRUE, list takes the folder name
         # folder.name > data.frame.name
@@ -307,7 +307,7 @@ readDiatrack=function(folder,ab.track=FALSE,cores=1, frameRecord = TRUE){
         #trackll[[1]]=track.holder
         #names(trackll)[[1]]=folder.name
     #}
-        #Mask end ##############################################################
+        #Mask end #############################################################
         # trackll=track.holder
 
     #     }else{

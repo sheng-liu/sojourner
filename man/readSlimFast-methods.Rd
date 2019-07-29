@@ -23,17 +23,17 @@ helpful when linking frames).}
 
 \item{folder}{Full path to SlimFast .txt files output folder.}
 
-\item{cores}{Number of cores used for parallel computation. This can be the 
-cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-read in a file when paralleled.}
+\item{cores}{Number of cores used for parallel computation. This can be 
+the cores on a workstation, or on a cluster. Tip: each core will be 
+assigned to read in a file when paralleled.}
 }
 \value{
 trackll
 }
 \description{
 take in a SlimFast .txt session file as input, along with
- several other user-configurable parameters and output options, to return a 
- track list of all the trajectories
+ several other user-configurable parameters and output options, to return 
+ a track list of all the trajectories
 }
 \details{
 The naming scheme for each track is as follows:

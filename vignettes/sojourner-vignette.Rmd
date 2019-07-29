@@ -51,6 +51,22 @@ displacement cumulative distribution function (CDF)-based, as well as hidden
 Markov model (HMM) based methods (in next release) from such input file. This
 vignette explains some basic usage of the package.
 
+## Installation
+
+Using BiocManager:
+
+```{r, eval = FALSE}
+if(!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("sojourner")
+```
+
+Using the release version from GitHub:
+
+```{r, eval = FALSE}
+devtools::install_github("sheng-liu/sojourner", build_vignettes = TRUE)
+```
+
 # Input Data Preparation
 
 ## Storing Track Information
@@ -583,8 +599,8 @@ sojournerGUI()
 
 ## Helpful Tips
 
-* If in doubt, check the console output of each command inputted through the GUI. 
-These will show error and warning messages as needed.
+* If in doubt, check the console output of each command inputted through the 
+GUI. These will show error and warning messages as needed.
 
 * Normal distribution, compare folder, and kernel density masking features are 
 currently not supported.

@@ -16,9 +16,9 @@
 ##' 
 ##' @param folder Full path to Diatrack .mat session files output folder.
 ##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be the 
-##' cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-##' read in a file when paralleled.
+##' @param cores Number of cores used for parallel computation. This can be 
+##' the cores on a workstation, or on a cluster. Tip: each core will be 
+##' assigned to read in a file when paralleled.
 ##' @param frameRecord Add a fourth column to the track list after the 
 ##' xyz-coordinates for the frame that coordinate point was found (especially 
 ##' helpful when linking frames).
@@ -59,10 +59,10 @@
 
 #A .mat session file with 10117 frames was used to test both scripts.
 
-#Using the MATLAB script, a 272.6MB .txt file was first created and was then fed
-#into the readDiatrack() script to output track lists. Automating this process
-#using "matlabr" resulted in 4488 censored tracks (should be 4487 tracks since
-#the script does not censor first frame) in 3:48 mins.
+#Using the MATLAB script, a 272.6MB .txt file was first created and was then 
+#fed into the readDiatrack() script to output track lists. Automating this 
+#process using "matlabr" resulted in 4488 censored tracks (should be 4487 
+#tracks since the script does not censor first frame) in 3:48 mins.
 
 #Using readDiaSessions, the intermediate .txt file was no longer needed to be
 #created and the session file directly results in track lists. This script
@@ -97,8 +97,8 @@
     
     #Pre-process data (for both newer and older session file versions)
     #Successor and predecessor rows of first frame switched for consistency
-    #(Unsure why Diatrack reverses the ordering of these two rows for the first 
-    #frame)
+    #(Unsure why Diatrack reverses the ordering of these two rows for the 
+    #first frame)
     data <- readMat(file)$tracks;
     if (length(data[1][[1]][[1]]) == 7){
         temp <- data[1][[1]][[1]][[7]]; 
@@ -148,7 +148,7 @@
             } else if (length(data[startFrame][[1]][[1]][[1]]) == 0){ #Iterate 
                 #to next frame at empty frames
                 next;
-            } else if (data[startFrame][[1]][[1]][[pred]][[startIndex]] == 0) { 
+            } else if (data[startFrame][[1]][[1]][[pred]][[startIndex]] == 0){ 
                 #Break if particle is found
                 break;
             }
@@ -161,8 +161,8 @@
             break;
         }
         
-        #Instantiate initial frame and index coordinates into looping frame and 
-        #index coordinates
+        #Instantiate initial frame and index coordinates into looping frame 
+        #and index coordinates
         frame = startFrame;
         index = startIndex;
         
@@ -208,8 +208,8 @@
             track <- abTrack(track);
         }
         
-        #Append temporary track for particle into track list and iterate to the 
-        #next trajectory
+        #Append temporary track for particle into track list and iterate to 
+        #the next trajectory
         track.list[[trajectoryIndex]] <- track;
         trajectoryIndex = trajectoryIndex + 1;
     }
@@ -293,7 +293,8 @@ readDiaSessions = function(folder, ab.track = FALSE, cores = 1,
         
         # pass environment variables to workers
         parallel::clusterExport(cl,varlist=c(".readDiaSessions","ab.track", 
-                                             "frameRecord"),envir=environment())
+                                             "frameRecord"),
+                                envir=environment())
         
         # trackll=parallel::parLapply(cl,file.list,function(fname){
         trackll=parallel::parLapply(cl,file.list,function(fname){
