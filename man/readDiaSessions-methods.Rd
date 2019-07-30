@@ -43,4 +43,5 @@ cannot contain ".")
 #Basic function call of readDiaSessions
 # hsf_folder=system.file("extdata", "HSF_2", package="sojourner")
 # trackll <- readDiaSessions(folder=hsf_folder)
+
 }

@@ -41,7 +41,8 @@
 ##' # trackll <- readSlimFast(folder = folder, cores = 1)
 ##'
 ##' 
-##' @export readSlimFast
+##' 
+#@export readSlimFast
 ###############################################################################
 
 ## TO DO: More efficient way of reading by using dplyr split

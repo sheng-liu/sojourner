@@ -46,7 +46,7 @@ folder=system.file("extdata","ImageJ",package="sojourner")
 }
 \examples{
 # reading in tracks
-folder=system.file("extdata","ImageJ",package="sojourner")
-trackll=readParticleTracker(folder)
-str(trackll,max.level=2)
+#folder=system.file("extdata","ImageJ",package="sojourner")
+#trackll=readParticleTracker(folder)
+#str(trackll,max.level=2)
 }

@@ -104,9 +104,18 @@
 ##' trackll.masked=densityMaskTracks(trackll)
 ##'
 ##' # plot to see the masking effect
-##' plotTrackOverlay(trackll)
-##' plotTrackOverlay(trackll.masked)
-##'
+##' plotNucTrackOverlay(folder=track.folder, trackll=trackll)
+##' plotNucTrackOverlay(folder=track.folder, trackll=trackll.masked)
+##' 
+##' # One can also use plotLines and plotPoints for simple visualization
+##' plotPoints(trackll.masked)
+##' plotLines(trackll.masked)
+##' 
+##' # To visualize a single trackl (the trackll in the example only contains
+##' # one trackl)
+##' plotPointsTrackl(trackll.masked[[1]])
+##' plotLinesTrackl(trackll.masked[[1]])
+##' 
 ##' # create trackll by build model manually, useful when default model doesn't
 ##' # yield good masking either too strigent or too lose
 ##' ###trackll.masked.md <- densityMaskTracks(trackll, buildModel = TRUE)

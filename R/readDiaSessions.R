@@ -38,7 +38,8 @@
 ##' # hsf_folder=system.file("extdata", "HSF_2", package="sojourner")
 ##' # trackll <- readDiaSessions(folder=hsf_folder)
 
-##' @export readDiaSessions
+##' 
+#@export readDiaSessions
 
 ##' @importFrom R.matlab readMat
 

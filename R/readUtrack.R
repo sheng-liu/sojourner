@@ -36,7 +36,7 @@
 ##' #Basic function call of readUtrack
 ##' # trackll <- readUtrack(folder=folder)
 ##' 
-##' @export readUtrack
+#@export readUtrack
 
 ##' @importFrom R.matlab readMat
 

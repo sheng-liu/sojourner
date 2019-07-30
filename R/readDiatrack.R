@@ -46,7 +46,8 @@
 ##' translated to "index per folder".
 ##'
 
-##' @export readDiatrack
+##' 
+#@export readDiatrack
 
 ###############################################################################
 
