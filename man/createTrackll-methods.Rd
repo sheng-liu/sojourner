@@ -72,12 +72,12 @@ Track: [Last five characters of the file name].[Start frame].[Length].
 [Track].[Index in overall list (will differ from Track # when merging)]
 
 (Note: The last five characters of the file name, excluding the extension, 
-cannot contain ".")
+cannot contain '.')
 }
 \examples{
 
 # Designate a folder and then create trackll from .csv data
-folder=system.file("extdata","SWR1",package="sojourner")
+folder=system.file('extdata','SWR1',package='sojourner')
 trackll = createTrackll(folder=folder, input=3)
 # Alternatively, use interact to open file 
 # browser and select input data type

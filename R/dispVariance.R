@@ -1,8 +1,4 @@
 ## dispVariance-methods
-##
-###############################################################################
-##
-##
 ##' @name dispVariance
 ##' @aliases dispVariance
 ##' @title dispVariance
@@ -31,7 +27,7 @@
 ##' \item{Variances} calculated variacne for all trakcs in trackll}
 ##' 
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="sojourner")
+##' folder=system.file('extdata','SWR1',package='sojourner')
 ##' trackll=createTrackll(folder=folder, input=3)
 ##'
 ##' # run dispVariance with default minimum tracklength (min=7)
@@ -69,76 +65,72 @@
 ##' 
 ##' @export dispVariance
 
-###############################################################################
+############################################################################### 
 
 ##-----------------------------------------------------------------------------
-##dispVariance_track
+## dispVariance_track
 
-##calculate variance for displacements single track
+## calculate variance for displacements single track
 
 ##' @export dispVariance_track
-dispVariance_track=function(track) {
-    withDisp = squareDisp(track) # get displacement
-    sqDisp = withDisp[[1]]$square.disp #[[1]] is necessary b/c 
+dispVariance_track = function(track) {
+    withDisp = squareDisp(track)  # get displacement
+    sqDisp = withDisp[[1]]$square.disp  #[[1]] is necessary b/c 
     # squaredisplacement give a list in result
-    clean = sqrt(sqDisp[!is.na(sqDisp)]) #get rid of NA and do the sqrt since 
+    clean = sqrt(sqDisp[!is.na(sqDisp)])  #get rid of NA and do the sqrt since 
     # it is currently dx^2 + dy^2
-    var(clean) # return variance value
+    var(clean)  # return variance value
 }
 
 ##-----------------------------------------------------------------------------
-##dispVariance.trackl
+## dispVariance.trackl
 
-##calculate variance for displacements single tracklist
-dispVariance.trackl=function(trackl) {
+## calculate variance for displacements single tracklist
+dispVariance.trackl = function(trackl) {
     
     lapply(trackl, dispVariance_track)
-    #track.df = lapply(trackl, data.frame)
-    #track.withdisp = sapply(track.df, squareDisp)
-    #sqdisp = lapply(track.withdisp,function(x) {x[7]})#column with square-disp
-    #sqdisp.clean = lapply(sqdisp, function(x) {x[!is.na(x)]})
-    #disp.var = lapply(sqdisp.clean, var)
-    #disp.var
+    # track.df = lapply(trackl, data.frame) track.withdisp =
+    # sapply(track.df, squareDisp) sqdisp =
+    # lapply(track.withdisp,function(x) {x[7]})#column with square-disp
+    # sqdisp.clean = lapply(sqdisp, function(x) {x[!is.na(x)]}) disp.var =
+    # lapply(sqdisp.clean, var) disp.var
 }
 
 ##-----------------------------------------------------------------------------
-##dispVariance
+## dispVariance
 
-##calculate displacement variance for all tracks in given trackll
-##also filter based on tracklength(must be greater than 2)
-##plotting feature can be enabled when plot=TRUE is set.
-##limits on the variance range can be set by providing a  vector
-## of length 2.
+## calculate displacement variance for all tracks in given trackll also
+## filter based on tracklength(must be greater than 2) plotting feature
+## can be enabled when plot=TRUE is set. limits on the variance range
+## can be set by providing a vector of length 2.
 
 ##' @export dispVariance
-dispVariance=function(trackll, min=7, plot=FALSE, limits=c(), log=FALSE, 
-                      output=FALSE) {
+dispVariance = function(trackll, min = 7, plot = FALSE, limits = c(), 
+    log = FALSE, output = FALSE) {
     if (min < 3) {
         stop("min value should be at least 3")
     }
     
-    #filter by length
-    filtered=filterTrack(trackll, filter=c(min=min, max=Inf))
-    result=lapply(filtered, dispVariance.trackl)
+    # filter by length
+    filtered = filterTrack(trackll, filter = c(min = min, max = Inf))
+    result = lapply(filtered, dispVariance.trackl)
     
     if (plot == TRUE) {
-        melted=reshape2::melt(result) #convert to dataframe
-        #rename columns to more reasonable ones
-        names(melted)=c("variance", "track.name", "trackList")
+        melted = reshape2::melt(result)  #convert to dataframe
+        # rename columns to more reasonable ones
+        names(melted) = c("variance", "track.name", "trackList")
         if (log) {
-            melted$variance=log10(melted$variance)
+            melted$variance = log10(melted$variance)
         }
-        #different tracklists will show up as different colors with some 
+        # different tracklists will show up as different colors with some
         # transparency
-        plt=ggplot2::ggplot(melted, ggplot2::aes_string(x="variance", 
-        color="trackList")) + ggplot2::geom_line(alpha=0.5, 
-                                                 position="identity",
-                                                 stat="density")
+        plt = ggplot2::ggplot(melted, ggplot2::aes_string(x = "variance", 
+            color = "trackList")) + ggplot2::geom_line(alpha = 0.5, 
+            position = "identity", stat = "density")
         if (length(limits) != 2) {
             plot(plt)
-        }
-        else {
-            plot(plt + ggplot2::xlim(limits)) #apply range limits
+        } else {
+            plot(plt + ggplot2::xlim(limits))  #apply range limits
         }
     }
     
@@ -146,11 +138,11 @@ dispVariance=function(trackll, min=7, plot=FALSE, limits=c(), log=FALSE,
         for (i in seq_along(result)) {
             track.df = reshape2::melt(result[[i]])
             names(track.df) = c("dispVariance", "track.name")
-            track.df = track.df[,c(2,1)]
-            fileName=paste("DispVariance Individual-",
-                            .timeStamp(names(result)[i]),".csv",sep="")
+            track.df = track.df[, c(2, 1)]
+            fileName = paste("DispVariance Individual-", 
+                .timeStamp(names(result)[i]), ".csv", sep = "")
             cat("\nOutput dispVariance for individual trajectories.\n")
-            write.csv(file=fileName,track.df)
+            write.csv(file = fileName, track.df)
         }
     }
     return(result)

@@ -39,13 +39,13 @@ confidence interval.
 }
 \examples{
 # read in track files
-folder=system.file("extdata","SWR1",package="sojourner")
+folder=system.file('extdata','SWR1',package='sojourner')
 trackll=createTrackll(folder=folder, input = 3)
 
 # filter track based length
 trackll.flt=filterTrack(trackll,filter=c(min=5,max=Inf))
 MSD=msd(trackll.flt,dt=6,summarize=FALSE,plot=TRUE)
-dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
+dcoef=Dcoef(MSD=MSD,method='static',plot=FALSE)
 # fit the dcoef result
 fittedObj=fitNormDistr(dcoef)
 

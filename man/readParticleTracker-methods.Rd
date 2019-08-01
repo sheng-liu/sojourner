@@ -31,22 +31,22 @@ ParticleTracker (a program of ImageJ plugin MosaicSuit).
 \details{
 The usage of readParticleTracker() is equivalent to readDiatrack().
 
-Note: the folder name should not contain ".", as it is a key character for 
+Note: the folder name should not contain '.', as it is a key character for 
 subsequent indexing of file names.
 
 trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
 
-This "indexPerFile" is the index within a track file.
+This 'indexPerFile' is the index within a track file.
 
-This "indexPerTrackll" is the index within a trackll, which is unique.
+This 'indexPerTrackll' is the index within a trackll, which is unique.
 
 The macro used for generating the csv file is also included in ImageJ 
 folder of the package: 
-folder=system.file("extdata","ImageJ",package="sojourner")
+folder=system.file('extdata','ImageJ',package='sojourner')
 }
 \examples{
 # reading in tracks
-#folder=system.file("extdata","ImageJ",package="sojourner")
+#folder=system.file('extdata','ImageJ',package='sojourner')
 #trackll=readParticleTracker(folder)
 #str(trackll,max.level=2)
 }

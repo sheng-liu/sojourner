@@ -47,7 +47,7 @@ IMPORTANT: It will take an extremely long time to mask large datasets.
 Filter/trim first using filterTrack() and trimTrack(), then mask using 
 maskTracks(folder, trackll)! 
 Note the mask file should have the same name as the output files with a 
-"_MASK.tif" ending. 
+'_MASK.tif' ending. 
 If there are more mask files than trackll, masking will fail. If there are 
 less mask files, trackls without masks will be deleted. Users can use 
 plotMask() and plotTrackOverlay() to see the mask and its effect on 
@@ -57,7 +57,7 @@ indexCell() will mask a trackll, separate each cell into a trackl, display
 all cell areas and mean intensities, and then apply any area and intensity 
 filters.
 There is also the capability to export the final areas/intensities as 
-"indexCell.csv" to the home directory and the pixel dimensions can be 
+'indexCell.csv' to the home directory and the pixel dimensions can be 
 changed.
 
 filterOnCell() eliminates all trackl in trackll that has less than 
@@ -68,7 +68,7 @@ trackll.
 }
 \examples{
 #Basic masking with folder path with image masks
-folder = system.file("extdata","ImageJ",package="sojourner")
+folder = system.file('extdata','ImageJ',package='sojourner')
 trackll = createTrackll(folder=folder, input=3)
 trackll.masked <- maskTracks(folder = folder, trackll = trackll)
 
@@ -77,7 +77,7 @@ plotTrackOverlay(trackll)
 plotTrackOverlay(trackll.masked)
 
 #Plot mask
-mask.list=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
+mask.list=list.files(path=folder,pattern='_MASK.tif',full.names=TRUE)
 plotMask(folder)
 
 #If Nuclear image is available

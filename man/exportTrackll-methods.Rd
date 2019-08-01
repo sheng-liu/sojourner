@@ -44,7 +44,7 @@ The naming scheme for each export is as follows:
 [Last five characters of the file name]_[yy-MM-dd]_[HH-mm-ss].csv
 }
 \examples{
-folder=system.file("extdata","SWR1",package="sojourner")
+folder=system.file('extdata','SWR1',package='sojourner')
 trackll=createTrackll(folder=folder, input=3)
 #Basic function call to exportTrackll with 2 cores into current directory
 exportTrackll(trackll)

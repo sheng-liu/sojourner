@@ -1,8 +1,5 @@
 
 ## dwellTime-methods
-##
-##
-###############################################################################
 ##' @name dwellTime
 ##' @aliases dwellTime
 ##' @title dwellTime
@@ -33,107 +30,101 @@
 ##' }
 
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="sojourner")
+##' folder=system.file('extdata','SWR1',package='sojourner')
 ##' trackll=createTrackll(folder=folder, input=3)
 ##' dwellTime(trackll,plot=TRUE)
 
 ##' @import reshape2
 ##' @export dwellTime
-###############################################################################
+############################################################################### 
 
 
 ##-----------------------------------------------------------------------------
-## .dwellTime
-## a function to calculate dwell time from a list of data.frame track (trackl) 
-# and returns a vector of dwell time.
+## .dwellTime a function to calculate dwell time from a list of data.frame
+## track (trackl) and returns a vector of dwell time.
 
-## nomenclature
-## track    data.frame with x,y,z coordinates
-## trackl   list of data.frames with x,y,z coordinates, read from one track 
-## file trackll  list of list of data.frames with x,y,z coordinates, read from 
-# bmultiple track file
+## nomenclature track data.frame with x,y,z coordinates trackl list of
+## data.frames with x,y,z coordinates, read from one track file trackll list
+## of list of data.frames with x,y,z coordinates, read from bmultiple track
+## file
 
-.dwellTime=function(trackl,t.interval=10){
-    sapply(trackl,function(x){dim(x)[1]*t.interval})
+.dwellTime = function(trackl, t.interval = 10) {
+    sapply(trackl, function(x) {
+        dim(x)[1] * t.interval
+    })
 }
 
 
-dwellTime=function(trackll,t.interval=10,x.scale=c(min=0,max=250),plot=TRUE,
-                   output=FALSE){
-
+dwellTime = function(trackll, t.interval = 10, x.scale = c(min = 0, max = 250), 
+    plot = TRUE, output = FALSE) {
+    
     ## compute dwell time
-    dwell.time=sapply(trackll,function(x){.dwellTime(x,t.interval)})
-    file.name=names(trackll)
-
+    dwell.time = sapply(trackll, function(x) {
+        .dwellTime(x, t.interval)
+    })
+    file.name = names(trackll)
+    
     ## reshape data for plot
-    dwell.time.mlt=reshape2::melt(dwell.time)
-
-    if (length(trackll) == 1){
-
-        colnames(dwell.time.mlt)=c("index","variable","value")
-    }else{
-        colnames(dwell.time.mlt)=c("value","variable")
-
+    dwell.time.mlt = reshape2::melt(dwell.time)
+    
+    if (length(trackll) == 1) {
+        
+        colnames(dwell.time.mlt) = c("index", "variable", "value")
+    } else {
+        colnames(dwell.time.mlt) = c("value", "variable")
+        
     }
-
-    histo.plot=ggplot(dwell.time.mlt,
-                    aes_string(x="value",group="variable",fill="variable"))+
-        geom_histogram(binwidth=t.interval,position="dodge",colour="white")+ 
-        ##change from white to red?
-        xlim(x.scale["min"],x.scale["max"])+
-        theme_bw()+
-        theme(legend.title=element_blank())+
-        labs(x="Lifetime of trajectories (ms)", y="Number of trajecotries")
-
-    density.plot=ggplot(dwell.time.mlt,
-                        aes_string(x="value",group="variable",col="variable",
-                                   fill="variable"))+
-        geom_density(alpha=0.2)+
-        xlim(x.scale["min"],x.scale["max"])+
-        theme_bw()+
-        theme(legend.title=element_blank())+
-        labs(x="Lifetime of trajectories (ms)", y="Frequency of trajectories")
-
-    if (plot == TRUE) multiplot(histo.plot,density.plot,cols=1)
-
+    
+    histo.plot = ggplot(dwell.time.mlt, aes_string(x = "value", 
+        group = "variable", fill = "variable")) + 
+        geom_histogram(binwidth = t.interval, position = "dodge", 
+        colour = "white") + ## change from white to red?
+    xlim(x.scale["min"], x.scale["max"]) + theme_bw() + 
+        theme(legend.title = element_blank()) + 
+        labs(x = "Lifetime of trajectories (ms)", y = "Number of trajecotries")
+    
+    density.plot = ggplot(dwell.time.mlt, aes_string(x = "value", 
+        group = "variable", col = "variable", fill = "variable")) + 
+        geom_density(alpha = 0.2) + xlim(x.scale["min"], x.scale["max"]) + 
+        theme_bw() + theme(legend.title = element_blank()) + 
+        labs(x = "Lifetime of trajectories (ms)", 
+        y = "Frequency of trajectories")
+    
+    if (plot == TRUE) 
+        multiplot(histo.plot, density.plot, cols = 1)
+    
     ## output
-    if (output == TRUE){
-
-        # output csv
-#         for (i in seq_along(trackll)){
-#             fileName=paste("Dwell Time-",.timeStamp(file.name[i]),
-#        ".csv",sep="")
-#             write.csv(file=fileName,dwell.time[[i]])
-#         }
-
+    if (output == TRUE) {
+        
+        # output csv for (i in seq_along(trackll)){ fileName=paste('Dwell
+        # Time-',.timeStamp(file.name[i]), '.csv',sep='')
+        # write.csv(file=fileName,dwell.time[[i]]) }
+        
         # output plot
-        tStamp.plotName=paste(.timeStamp(file.name[1]),"___",sep="")
-        plotName=paste("Dwell Time Plot-",tStamp.plotName,".pdf",sep="")
-        ggsave(filename=plotName,plot=histo.plot,width=8,height=4)
-
+        tStamp.plotName = paste(.timeStamp(file.name[1]), "___", sep = "")
+        plotName = paste("Dwell Time Plot-", tStamp.plotName, ".pdf", sep = "")
+        ggsave(filename = plotName, plot = histo.plot, width = 8, height = 4)
+        
         # output plot data
-        plotData=ggplot_build(histo.plot)$data
-        plotFile=paste("Dwell Time Plot-",tStamp.plotName,".csv",sep="")
-        write.csv(file=plotFile,plotData)
+        plotData = ggplot_build(histo.plot)$data
+        plotFile = paste("Dwell Time Plot-", tStamp.plotName, ".csv", sep = "")
+        write.csv(file = plotFile, plotData)
     }
     return(invisible(dwell.time))
 }
 
 
 ##-----------------------------------------------------------------------------
-##
+## 
 
-# freqpoly=ggplot(dwell.time.mlt,aes(x=value,color=variable)) + 
-#       geom_freqpoly(binwidth=t.interval)+labs(x="Dwell time (ms)",y="Count")+
-#       theme_bw()+ theme(legend.title=element_blank())+xlim(0,200)
+# freqpoly=ggplot(dwell.time.mlt,aes(x=value,color=variable)) +
+# geom_freqpoly(binwidth=t.interval)+labs(x='Dwell time (ms)',y='Count')+
+# theme_bw()+ theme(legend.title=element_blank())+xlim(0,200)
 
-#     histodensity=ggplot(dwell.time.mlt,aes(x=value,color=variable,
-#           fill=variable))+
-#         geom_histogram(binwidth=t.interval,position="dodge")+
-#         geom_density(aes(y=10*..count..),alpha=0.2)+
-#         theme_bw()+
-#         theme(legend.title=element_blank())+
-#         xlim(0,200)
+# histodensity=ggplot(dwell.time.mlt,aes(x=value,color=variable,
+# fill=variable))+ geom_histogram(binwidth=t.interval,position='dodge')+
+# geom_density(aes(y=10*..count..),alpha=0.2)+ theme_bw()+
+# theme(legend.title=element_blank())+ xlim(0,200)
 
 
 

@@ -35,13 +35,13 @@ The naming scheme for each track is as follows:
 [Last five characters of the file name].[Start frame #].[Length].[Track #]
 
 (Note: The last five characters of the file name, excluding the extension, 
-cannot contain ".")
+cannot contain '.')
 
 (Note: readDiaSessions supports reading in intensity values)
 }
 \examples{
 #Basic function call of readDiaSessions
-# hsf_folder=system.file("extdata", "HSF_2", package="sojourner")
+# hsf_folder=system.file('extdata', 'HSF_2', package='sojourner')
 # trackll <- readDiaSessions(folder=hsf_folder)
 
 }

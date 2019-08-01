@@ -1,7 +1,4 @@
 ## readDiaSessions-methods
-##
-##
-###############################################################################
 ##' @name readDiaSessions
 ##' @aliases readDiaSessions
 ##' @title readDiaSessions
@@ -29,217 +26,203 @@
 ##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
 ##' 
 ##' (Note: The last five characters of the file name, excluding the extension, 
-##' cannot contain ".")
+##' cannot contain '.')
 ##' 
 ##' (Note: readDiaSessions supports reading in intensity values)
 
 ##' @examples
 ##' #Basic function call of readDiaSessions
-##' # hsf_folder=system.file("extdata", "HSF_2", package="sojourner")
+##' # hsf_folder=system.file('extdata', 'HSF_2', package='sojourner')
 ##' # trackll <- readDiaSessions(folder=hsf_folder)
 
 ##' 
-#@export readDiaSessions
+# @export readDiaSessions
 
 ##' @importFrom R.matlab readMat
 
-###############################################################################
+############################################################################### 
 
 #### Note ####
 
-#This script takes Diatrack .mat files as input, and returns a list of data
-#frames (a track list) of all the particle trajectories. The aim is to optimize
-#and un-censor this process, instead of having to use MATLAB to extract a large
-#.txt file which is then fed into R.
+# This script takes Diatrack .mat files as input, and returns a list of
+# data frames (a track list) of all the particle trajectories. The aim
+# is to optimize and un-censor this process, instead of having to use
+# MATLAB to extract a large .txt file which is then fed into R.
 
-#Additional features:
-#Adding frame records, removing frame records, outputing column-wise and
-#row-wise to .csv files, linking skipped frames
+# Additional features: Adding frame records, removing frame records,
+# outputing column-wise and row-wise to .csv files, linking skipped
+# frames
 
 #### Testing ####
 
-#A .mat session file with 10117 frames was used to test both scripts.
+# A .mat session file with 10117 frames was used to test both scripts.
 
-#Using the MATLAB script, a 272.6MB .txt file was first created and was then 
-#fed into the readDiatrack() script to output track lists. Automating this 
-#process using "matlabr" resulted in 4488 censored tracks (should be 4487 
-#tracks since the script does not censor first frame) in 3:48 mins.
+# Using the MATLAB script, a 272.6MB .txt file was first created and
+# was then fed into the readDiatrack() script to output track lists.
+# Automating this process using 'matlabr' resulted in 4488 censored
+# tracks (should be 4487 tracks since the script does not censor first
+# frame) in 3:48 mins.
 
-#Using readDiaSessions, the intermediate .txt file was no longer needed to be
-#created and the session file directly results in track lists. This script
-#resulted in 34689 uncensored tracks in 2:01 mins.
+# Using readDiaSessions, the intermediate .txt file was no longer
+# needed to be created and the session file directly results in track
+# lists. This script resulted in 34689 uncensored tracks in 2:01 mins.
 
 #### readDiaSessions ####
 
-#Install packages and dependencies
-#install.packages("R.matlab")
-#library(R.matlab)
+# Install packages and dependencies install.packages('R.matlab')
+# library(R.matlab)
 
 .readDiaSessions = function(file, interact = FALSE, ab.track = FALSE, 
-                            frameRecord = FALSE){
+    frameRecord = FALSE) {
     
-    #Interactively open window
+    # Interactively open window
     if (interact == TRUE) {
-        file=file.choose();
+        file = file.choose()
     }
     
-    #Start timer
-    #if (timer == TRUE) {
-    #    start.time = Sys.time()
-    #}
+    # Start timer if (timer == TRUE) { start.time = Sys.time() }
     
-    #Collect file name information
-    file.name = basename(file);
-    file.subname = substr(file.name, start=nchar(file.name)-8, 
-                          stop=nchar(file.name)-4);
+    # Collect file name information
+    file.name = basename(file)
+    file.subname = substr(file.name, start = nchar(file.name) - 8, 
+        stop = nchar(file.name) - 4)
     
-    #Display starter text
-    cat("\nReading Diatrack session file: ",file.name,"...\n");
+    # Display starter text
+    cat("\nReading Diatrack session file: ", file.name, "...\n")
     
-    #Pre-process data (for both newer and older session file versions)
-    #Successor and predecessor rows of first frame switched for consistency
-    #(Unsure why Diatrack reverses the ordering of these two rows for the 
-    #first frame)
-    data <- readMat(file)$tracks;
-    if (length(data[1][[1]][[1]]) == 7){
-        temp <- data[1][[1]][[1]][[7]]; 
-        data[1][[1]][[1]][[7]] <- data[1][[1]][[1]][[6]];
+    # Pre-process data (for both newer and older session file versions)
+    # Successor and predecessor rows of first frame switched for
+    # consistency (Unsure why Diatrack reverses the ordering of these two
+    # rows for the first frame)
+    data <- readMat(file)$tracks
+    if (length(data[1][[1]][[1]]) == 7) {
+        temp <- data[1][[1]][[1]][[7]]
+        data[1][[1]][[1]][[7]] <- data[1][[1]][[1]][[6]]
         succ = 7
-    } else if (length(data[1][[1]][[1]]) == 8){
-        temp <- data[1][[1]][[1]][[8]]; 
-        data[1][[1]][[1]][[8]] <- data[1][[1]][[1]][[7]];
-        succ = 8;
+    } else if (length(data[1][[1]][[1]]) == 8) {
+        temp <- data[1][[1]][[1]][[8]]
+        data[1][[1]][[1]][[8]] <- data[1][[1]][[1]][[7]]
+        succ = 8
     } else {
         cat("ERROR: Use a different Diatrack version.")
     }
-    data[1][[1]][[1]][[6]] <- temp;
-        pred = 6;
-
-    #Data structure of data for future reference:
-    #data[FRAME][[1]][[1]][[ROW]][[COL]] 
+    data[1][[1]][[1]][[6]] <- temp
+    pred = 6
     
-    #Instantiate indexing variables, the track list, and the start frame list
-    startIndex = 0;
-    startFrame = 1;
-    trajectoryIndex = 1;
-    track.list = list();
-    frame.list = list();
-    length.list = list();
+    # Data structure of data for future reference:
+    # data[FRAME][[1]][[1]][[ROW]][[COL]]
     
-    #Loop for each trajectory track to be saved into track list
-    repeat{
+    # Instantiate indexing variables, the track list, and the start frame
+    # list
+    startIndex = 0
+    startFrame = 1
+    trajectoryIndex = 1
+    track.list = list()
+    frame.list = list()
+    length.list = list()
+    
+    # Loop for each trajectory track to be saved into track list
+    repeat {
         
-        #Loop until the next particle without a predecessor is found
-        repeat{
+        # Loop until the next particle without a predecessor is found
+        repeat {
             
-            #Basic iteration through indexes and then through frames
+            # Basic iteration through indexes and then through frames
             if (startIndex == 0 || startIndex < 
-                ncol(data[[startFrame]][[1]][[1]])){
-                startIndex = startIndex + 1;
+                ncol(data[[startFrame]][[1]][[1]])) {
+                startIndex = startIndex + 1
             } else {
                 
                 
-                startFrame = startFrame + 1;
-                startIndex = 1;
+                startFrame = startFrame + 1
+                startIndex = 1
             }
             
-            #Check at each iteration
-            if (startFrame > length(data)){ #Break at end frame
-                break;
-            } else if (length(data[startFrame][[1]][[1]][[1]]) == 0){ #Iterate 
-                #to next frame at empty frames
-                next;
-            } else if (data[startFrame][[1]][[1]][[pred]][[startIndex]] == 0){ 
-                #Break if particle is found
-                break;
+            # Check at each iteration Break at end frame
+            if (startFrame > length(data)) {
+                break
+            } else if (length(data[startFrame][[1]][[1]][[1]]) == 0) {
+                # Iterate to next frame at empty frames
+                next
+            } else if (data[startFrame][[1]][[1]][[pred]][[startIndex]] == 
+                0) {
+                # Break if particle is found
+                break
             }
-            #Do nothing and iterate to next indexed particle if no particle is 
-            #found
+            # Do nothing and iterate to next indexed particle if no particle is
+            # found
         }
         
-        #Break track loop at end frame
-        if (startFrame > length(data)){
-            break;
+        # Break track loop at end frame
+        if (startFrame > length(data)) {
+            break
         }
         
-        #Instantiate initial frame and index coordinates into looping frame 
-        #and index coordinates
-        frame = startFrame;
-        index = startIndex;
+        # Instantiate initial frame and index coordinates into looping frame
+        # and index coordinates
+        frame = startFrame
+        index = startIndex
         
-        #Create temporary track to insert into track list
-        track <- data.frame("x" = numeric(), "y" = numeric(), "z" = integer());
+        # Create temporary track to insert into track list
+        track <- data.frame(x = numeric(), y = numeric(), z = integer())
         
-        #Loop through every instance the particle exists and add its data to 
-        #track
-        #Break once it no longer has successors
-        repeat{
-            RefinedCooX = round(data[frame][[1]][[1]][[2]][[index]], 2);
-            RefinedCooY = round(data[frame][[1]][[1]][[1]][[index]], 2);
-            RefinedCooZ = round(data[frame][[1]][[1]][[3]][[index]], 
-                                digits = 1);
-            Intensity = round(data[frame][[1]][[1]][[4]][[index]], 2);
-            if (frameRecord){
-                track <- rbind(track, data.frame("x" = RefinedCooX, 
-                                                 "y" = RefinedCooY, 
-                                                 "z" = RefinedCooZ, 
-                                                 "Frame" = frame, 
-                                                 "Intensity" = Intensity));
+        # Loop through every instance the particle exists and add its data to
+        # track Break once it no longer has successors
+        repeat {
+            RefinedCooX = round(data[frame][[1]][[1]][[2]][[index]], 2)
+            RefinedCooY = round(data[frame][[1]][[1]][[1]][[index]], 2)
+            RefinedCooZ = round(data[frame][[1]][[1]][[3]][[index]], digits = 1)
+            Intensity = round(data[frame][[1]][[1]][[4]][[index]], 2)
+            if (frameRecord) {
+                track <- rbind(track, data.frame(x = RefinedCooX, 
+                    y = RefinedCooY, z = RefinedCooZ, Frame = frame, 
+                    Intensity = Intensity))
             } else {
-                track <- rbind(track, data.frame("x" = RefinedCooX, 
-                                                 "y" = RefinedCooY, 
-                                                 "z" = RefinedCooZ, 
-                                                 "Intensity" = Intensity));
+                track <- rbind(track, data.frame(x = RefinedCooX, 
+                    y = RefinedCooY, z = RefinedCooZ, Intensity = Intensity))
             }
             if (data[frame][[1]][[1]][[succ]][[index]] != 0) {
-                index = data[frame][[1]][[1]][[succ]][[index]];
-                frame = frame + 1;
-            } else
-                break;
+                index = data[frame][[1]][[1]][[succ]][[index]]
+                frame = frame + 1
+            } else break
         }
         
-        #Add start frame to frame list
-        frame.list[[length(frame.list) + 1]] <- startFrame;
-            
-        #Add track length to length list
-        length.list[[length(length.list) + 1]] <- nrow(track);
-            
-        #Calcualte absolute track coordinates if desired
-        if (ab.track){
-            track <- abTrack(track);
+        # Add start frame to frame list
+        frame.list[[length(frame.list) + 1]] <- startFrame
+        
+        # Add track length to length list
+        length.list[[length(length.list) + 1]] <- nrow(track)
+        
+        # Calcualte absolute track coordinates if desired
+        if (ab.track) {
+            track <- abTrack(track)
         }
         
-        #Append temporary track for particle into track list and iterate to 
-        #the next trajectory
-        track.list[[trajectoryIndex]] <- track;
-        trajectoryIndex = trajectoryIndex + 1;
+        # Append temporary track for particle into track list and iterate to
+        # the next trajectory
+        track.list[[trajectoryIndex]] <- track
+        trajectoryIndex = trajectoryIndex + 1
     }
-    #Name track list:
-    #[Last five characters of the file name without extension 
-    #(cannot contain ".")].[Start frame #].[Length].[Track #]
-    names(track.list) = paste(file.subname, frame.list, 
-                              length.list, c(seq_along(track.list)), sep=".");
+    # Name track list: [Last five characters of the file name without
+    # extension (cannot contain '.')].[Start frame #].[Length].[Track #]
+    names(track.list) = paste(file.subname, frame.list, length.list, 
+        c(seq_along(track.list)), sep = ".")
     
-    #File read and processed confirmation text
+    # File read and processed confirmation text
     cat("\n", file.subname, "read and processed.\n")
     
-    #Display stop timer
-    #if (timer == TRUE) {
-    #    end.time = Sys.time();
-    #    time.taken = end.time - start.time;
-    #   cat("Duration: ");
-    #    cat(time.taken);
-    #    cat(" mins\n");
-    #}
+    # Display stop timer if (timer == TRUE) { end.time = Sys.time();
+    # time.taken = end.time - start.time; cat('Duration: ');
+    # cat(time.taken); cat(' mins\n'); }
     
-    #Return track list
-    return(track.list);
-} 
+    # Return track list
+    return(track.list)
+}
 
 #### readDiaSessions ####
 
 readDiaSessions = function(folder, ab.track = FALSE, cores = 1, 
-                           frameRecord = TRUE){
+    frameRecord = TRUE) {
     
     trackll = list()
     track.holder = c()
@@ -247,28 +230,25 @@ readDiaSessions = function(folder, ab.track = FALSE, cores = 1,
     # getting a file list of Diatrack files in a directory
     file.list = list.files(path = folder, pattern = ".mat", full.names = TRUE)
     file.name = list.files(path = folder, pattern = ".mat", full.names = FALSE)
-    folder.name=basename(folder)
+    folder.name = basename(folder)
     
     
-    # read in tracks
-    # list of list of data.frames,
-    # first level list of file names and
-    # second level list of data.frames
+    # read in tracks list of list of data.frames, first level list of file
+    # names and second level list of data.frames
     
-    max.cores = parallel::detectCores(logical=TRUE)
+    max.cores = parallel::detectCores(logical = TRUE)
     
-    if (cores == 1){
+    if (cores == 1) {
         
-        for (i in seq_along(file.list)){
+        for (i in seq_along(file.list)) {
             
             track.list = .readDiaSessions(file = file.list[i], 
-                                          ab.track = ab.track, 
-                                          frameRecord = frameRecord)
+                ab.track = ab.track, frameRecord = frameRecord)
             
             # add indexPerTrackll to track name
             indexPerTrackll = seq_along(track.list)
             names(track.list) = mapply(paste, names(track.list), 
-                                       indexPerTrackll,sep = ".")
+                indexPerTrackll, sep = ".")
             
             trackll[[i]] = track.list
             names(trackll)[i] = file.name[i]
@@ -276,34 +256,34 @@ readDiaSessions = function(folder, ab.track = FALSE, cores = 1,
         
     } else {
         
-        # parallel this block of code
-        # assign reading in using .readDiaSessions to each CPUs
+        # parallel this block of code assign reading in using .readDiaSessions
+        # to each CPUs
         
-        # detect number of cores
-        # FUTURE: if more than one, automatic using multicore
+        # detect number of cores FUTURE: if more than one, automatic using
+        # multicore
         
-        if (cores>max.cores)
-            stop(paste("Number of cores specified is",
-                       "greater than recomended maximum: "), max.cores)
+        if (cores > max.cores) 
+            stop(paste("Number of cores specified is", 
+                "greater than recomended maximum: "), max.cores)
         
         cat("Initiated parallel execution on", cores, "cores\n")
-        # use outfile="" to display result on screen
-        cl <- parallel::makeCluster(spec = cores,type = "PSOCK", outfile = "")
+        # use outfile='' to display result on screen
+        cl <- parallel::makeCluster(spec = cores, type = "PSOCK", outfile = "")
         # register cluster
         parallel::setDefaultCluster(cl)
         
         # pass environment variables to workers
-        parallel::clusterExport(cl,varlist=c(".readDiaSessions","ab.track", 
-                                             "frameRecord"),
-                                envir=environment())
+        parallel::clusterExport(cl, varlist = c(".readDiaSessions", "ab.track", 
+            "frameRecord"), envir = environment())
         
         # trackll=parallel::parLapply(cl,file.list,function(fname){
-        trackll=parallel::parLapply(cl,file.list,function(fname){
-            track=.readDiaSessions(file=fname,ab.track=ab.track, 
-                                   frameRecord = frameRecord)
+        trackll = parallel::parLapply(cl, file.list, function(fname) {
+            track = .readDiaSessions(file = fname, ab.track = ab.track, 
+                frameRecord = frameRecord)
             # add indexPerTrackll to track name
-            indexPerTrackll=seq_along(track)
-            names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")
+            indexPerTrackll = seq_along(track)
+            names(track) = mapply(paste, names(track), indexPerTrackll, 
+                sep = ".")
             return(track)
         })
         
@@ -311,7 +291,7 @@ readDiaSessions = function(folder, ab.track = FALSE, cores = 1,
         cat("\nStopping clusters...\n")
         parallel::stopCluster(cl)
         
-        names(trackll)=file.name
+        names(trackll) = file.name
         # names(track)=file.name
         
     }

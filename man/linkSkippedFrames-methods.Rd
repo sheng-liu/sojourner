@@ -51,10 +51,10 @@ Track: [Last five characters of the file name].[Start frame].[Length].
 [Index in overall list (will differ from Track # when merging)]
 
 (Note: The last five characters of the file name, excluding the extension, 
-cannot contain ".")
+cannot contain '.')
 }
 \examples{
-folder=system.file("extdata","SWR1",package="sojourner")
+folder=system.file('extdata','SWR1',package='sojourner')
 trackll=createTrackll(folder=folder, input=3)
 #Basic function call of linkSkippedFrames
 trackll.linked <- linkSkippedFrames(trackll, tolerance = 5, maxSkip = 10)

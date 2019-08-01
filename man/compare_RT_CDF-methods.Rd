@@ -54,12 +54,12 @@ in the trackll.
 
 # Generate trackll, and process, 
 # e.g. mask region of interest, merge tracks from multiple files.
-folder1=system.file("extdata","HSF",package="sojourner")
+folder1=system.file('extdata','HSF',package='sojourner')
 trackll1=createTrackll(folder1,input=3, cores = 2)
 trackll1=maskTracks(folder1,trackll1)
 trackll1=mergeTracks(folder1,trackll1)
 
-folder2=system.file("extdata","HSF_2",package="sojourner")
+folder2=system.file('extdata','HSF_2',package='sojourner')
 trackll2=createTrackll(folder2,input=2, cores = 2)
 trackll2=maskTracks(folder2,trackll2)
 trackll2=mergeTracks(folder2,trackll2)

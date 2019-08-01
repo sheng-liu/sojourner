@@ -8,7 +8,7 @@
 compareFolder(folders,input=1,ab.track=FALSE,cores=1)
 }
 \arguments{
-\item{folders}{a vector storing paths to the folders location."..."
+\item{folders}{a vector storing paths to the folders location.'...'
 indicates multiple (unlimited) folders can be added into the function.}
 
 \item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat session
@@ -32,8 +32,8 @@ into other functions for comparison. It keeps folder information as names
 of the resulting list.
 }
 \examples{
-folder1=system.file("extdata","SWR1",package="sojourner")
-folder2=system.file("extdata","HTZ1",package="sojourner")
+folder1=system.file('extdata','SWR1',package='sojourner')
+folder2=system.file('extdata','HTZ1',package='sojourner')
 trackll=compareFolder(folders=c(folder1,folder2), input=3)
 str(trackll,max.level=1)
 }

@@ -62,7 +62,7 @@ The separate parameter allows users to separate each track list from one
 video into their cluster components, creating a list of track lists. 
 Applying this separate parameter to a list of track lists from multiple
 videos will simply append all the separated clusters together. Each track
-list is named "c#" as the header. The # indicating the cluster number.
+list is named 'c#' as the header. The # indicating the cluster number.
 
 The removeEdge parameter allwos users to automatically remove any clusters
 that are on edges and/or have an incomplete contour line (discontinuous
@@ -104,7 +104,7 @@ during the program.
 \examples{
 
 # create trackll 
-track.folder=system.file("extdata","SWR1",package="sojourner")
+track.folder=system.file('extdata','SWR1',package='sojourner')
 trackll <- createTrackll(folder=track.folder, input = 3)
 
 # mask trackll using using default model (may not fit all data)

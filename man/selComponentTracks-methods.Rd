@@ -33,7 +33,7 @@ which can be used for plot individual trajectory using plotTrack.}
 \itemize{
 \item{combined list of trackll} The result is a combined list of selected 
 trajectories. The list is one level higher than trackll, use subsetting to 
-output trackll.e.g. trackll[[1]], or trackll[["SWR1"]]. }
+output trackll.e.g. trackll[[1]], or trackll[['SWR1']]. }
 }
 \description{
 Select trajectory based on component fitting on diffusion 
@@ -48,8 +48,8 @@ coefficient.
 
 ## 1. select componentTracks per folder (cross movie) by using 
 ## compareFolders
-folder1=system.file("extdata","SWR1",package="sojourner")
-folder2=system.file("extdata","HTZ1",package="sojourner")
+folder1=system.file('extdata','SWR1',package='sojourner')
+folder2=system.file('extdata','HTZ1',package='sojourner')
 trackll=compareFolder(folders=c(folder1,folder2), input=3)
 MSD=msd(trackll=trackll)
 dcoef=Dcoef(MSD,dt=6,plot=FALSE,output=FALSE)
@@ -63,7 +63,7 @@ fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,
 trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood=0.9,
 dcoef=dcoef,log.transformed=TRUE,output=FALSE)
 # subset component tracks to further analyze msd, dcoef
-trackll.swr1=trackll.sel[["SWR1"]]
+trackll.swr1=trackll.sel[['SWR1']]
 msd(trackll.swr1,plot=FALSE)
 msd(trackll.swr1,summarize=TRUE,plot=FALSE)
 Dcoef(trackll=trackll.swr1,plot=FALSE)
@@ -76,13 +76,13 @@ dwellTime(trackll.swr1)
 trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
 dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 # specify index file path.
-index.file=system.file("extdata","INDEX",
-                       "componentTrackID-SWR1.comp.1.csv",
-                       package="sojourner")
-index.file2=system.file("extdata","INDEX",
-                        "componentTrackID-SWR1.comp.2.csv",
-                        package="sojourner")
-movie.folder=system.file("extdata","SWR1_2",package="sojourner")
+index.file=system.file('extdata','INDEX',
+                       'componentTrackID-SWR1.comp.1.csv',
+                       package='sojourner')
+index.file2=system.file('extdata','INDEX',
+                        'componentTrackID-SWR1.comp.2.csv',
+                        package='sojourner')
+movie.folder=system.file('extdata','SWR1_2',package='sojourner')
 plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder, 
                    input = 3)
 plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder, 
@@ -92,7 +92,7 @@ plotTrackFromIndex(index.file=index.file2,movie.folder = movie.folder,
 ## 2. select componentTracks per movie base, use plotComponentTracks to 
 ##plot component tracks back to initial Nuclei image.
 ## plotComponentTrackOverlay
-folder3=system.file("extdata","SWR1_2",package="sojourner")
+folder3=system.file('extdata','SWR1_2',package='sojourner')
 trackll=createTrackll(folder=folder3, input=3)
 
 ## use merge=TRUE for per folder comparison, 
@@ -107,7 +107,7 @@ MSD=msd(trackll=trackll,plot=FALSE)
 msd(trackll=trackll,summarize=TRUE,plot=FALSE)
 
 ## calculate Dcoef
-dcoef=Dcoef(MSD=MSD,method="static",plot=FALSE)
+dcoef=Dcoef(MSD=MSD,method='static',plot=FALSE)
 
 ## fit normal distribution to define component
 ## set seed to reproduce results (see fitNormalDistr() for details on seed)

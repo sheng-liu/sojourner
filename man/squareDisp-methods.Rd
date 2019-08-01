@@ -29,8 +29,8 @@ also calculate dx, dy bivariate
 squareDispCpp is the cpp version of squareDisp
 }
 \examples{
-folder1=system.file("extdata","SWR1",package="sojourner")
-folder2=system.file("extdata","HTZ1",package="sojourner")
+folder1=system.file('extdata','SWR1',package='sojourner')
+folder2=system.file('extdata','HTZ1',package='sojourner')
 trackll=compareFolder(folders=c(folder1,folder2), input=3)
 #use default filter with min=7
 filtered.trackll=filterTrack(trackll)

@@ -28,18 +28,18 @@ trackll
 read output file (tracks/trajecotries) from Diatrack.
 }
 \details{
-Note: the folder name should not contain ".", as it is a key character for 
+Note: the folder name should not contain '.', as it is a key character for 
 subsequent indexing of file names.
 
 the absolute coordinates trajectory has moved
 
 trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
 
-This "indexPerFile" is the index within a diatrackFile, which translate to 
-"index per movie".
+This 'indexPerFile' is the index within a diatrackFile, which translate to 
+'index per movie'.
 
-This "indexPerTrackll" is a unique index within a trackll, which can be 
-translated to "index per folder".
+This 'indexPerTrackll' is a unique index within a trackll, which can be 
+translated to 'index per folder'.
 }
 \examples{
 # trackll=readDiatrack(folder=folder)

@@ -55,7 +55,7 @@ or log. Although you may use both, using only one of the two would
 do the job.
 }
 \examples{
-folder=system.file("extdata","SWR1",package="sojourner")
+folder=system.file('extdata','SWR1',package='sojourner')
 trackll=createTrackll(folder=folder, input=3)
 
 # run dispVariance with default minimum tracklength (min=7)

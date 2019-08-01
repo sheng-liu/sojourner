@@ -1,11 +1,7 @@
-#### compare_RT_CDF.R
-#### Wu Lab, Johns Hopkins University
-#### Author: Xiaona Tang
+#### compare_RT_CDF.R Wu Lab, Johns Hopkins University Author: Xiaona Tang
 #### Date: Sep 20, 2017
 
 ## compare_RT_CDF-methods
-##
-##############################################################################
 ##' @name compare_RT_CDF
 ##' @aliases compare_RT_CDF
 ##' @title Compare Residence time/Survival Curve (1-CDF)
@@ -54,12 +50,12 @@
 ##'
 ##' # Generate trackll, and process, 
 ##' # e.g. mask region of interest, merge tracks from multiple files.
-##' folder1=system.file("extdata","HSF",package="sojourner")
+##' folder1=system.file('extdata','HSF',package='sojourner')
 ##' trackll1=createTrackll(folder1,input=3, cores = 2)
 ##' trackll1=maskTracks(folder1,trackll1)
 ##' trackll1=mergeTracks(folder1,trackll1)
 ##' 
-##' folder2=system.file("extdata","HSF_2",package="sojourner")
+##' folder2=system.file('extdata','HSF_2',package='sojourner')
 ##' trackll2=createTrackll(folder2,input=2, cores = 2)
 ##' trackll2=maskTracks(folder2,trackll2)
 ##' trackll2=mergeTracks(folder2,trackll2)
@@ -71,94 +67,94 @@
 ##' @importFrom mltools empirical_cdf
 ##' @export compare_RT_CDF
 ##' 
-##############################################################################
-##############################################################################
+############################################################################## 
 
 
 
-compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
-                        t.interval=0.5,output=FALSE){
+compare_RT_CDF <- function(trackll = NULL, x.max = 30, filter = c(min = 3, 
+    max = Inf), t.interval = 0.5, output = FALSE) {
     ## Import trackll (merged) information
-    if(is.null(trackll)){
+    if (is.null(trackll)) {
         Totaltracklls <- readline(
-            paste("Set the numbers of trackll",
-                  "to compare decay (survival curve) of residence time:"))
-        Totaltracklls <- as.numeric (Totaltracklls)
+            paste("Set the numbers of trackll", 
+                    "to compare decay (survival curve) of residence time:"))
+        Totaltracklls <- as.numeric(Totaltracklls)
+    } else {
+        Totaltracklls <- as.numeric(length(trackll))
     }
-    else{
-        Totaltracklls <- as.numeric (length(trackll))
-    }
-    #cl=c("grey30",my_colorBrewer(9))
-    #cl<-cl[c(1,2,5,6,8,10,9,7,4,3)]
-    ## Record time interval of the input trackll incase the time interval
-    ## is different among tracklls.
-    t.interval=t.interval
+    # cl=c('grey30',my_colorBrewer(9)) cl<-cl[c(1,2,5,6,8,10,9,7,4,3)]
+    # Record time interval of the input trackll incase the time interval is
+    # different among tracklls.
+    t.interval = t.interval
     
-    if(is.null(trackll)){
-        trackll=c()
-        for(i in c(seq_len(Totaltracklls))){
-            trackll.label<-readline(
+    if (is.null(trackll)) {
+        trackll = c()
+        for (i in c(seq_len(Totaltracklls))) {
+            trackll.label <- readline(
                 cat("Enter the trackll you want to plot:  "))
-            t.interval[i]<-as.numeric(readline(
+            t.interval[i] <- as.numeric(readline(
                 cat("What's the t.interval for this trackll in sec:  ")))
-            trackll[i]<-get(paste(trackll.label))
-            names(trackll)[i]<-names(get(paste(trackll.label)))
+            trackll[i] <- get(paste(trackll.label))
+            names(trackll)[i] <- names(get(paste(trackll.label)))
         }
-    }
-    else{
-        t.interval=rep(t.interval,length(trackll))
+    } else {
+        t.interval = rep(t.interval, length(trackll))
     }
     
     ## Set plot area and start a plot window.
-    par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=FALSE)
-    par(mfrow=c(1,1),bg="white",fg="black")
+    par(mar = c(5.1, 5.1, 4.1, 4.1), xpd = FALSE)
+    par(mfrow = c(1, 1), bg = "white", fg = "black")
     plot.new()
-    plot.window(xlim=c(0,x.max),ylim=c(0,1))
+    plot.window(xlim = c(0, x.max), ylim = c(0, 1))
     
-    axis(1,cex.axis=1.5)
-    axis(2,cex.axis=1.5)
-    #title=readline("Set title for the plot:")
-    title(main="1-CDF of dwell time",cex.main=1.5)            
-    title(xlab="Time (s)",cex.lab=1.5)
-    title(ylab="Survival probability",cex.lab=1.5)
+    axis(1, cex.axis = 1.5)
+    axis(2, cex.axis = 1.5)
+    # title=readline('Set title for the plot:')
+    title(main = "1-CDF of dwell time", cex.main = 1.5)
+    title(xlab = "Time (s)", cex.lab = 1.5)
+    title(ylab = "Survival probability", cex.lab = 1.5)
     box()
     
     ## Generate color set
-    cl<-c("grey30","#FF8E8B","#65B9FF","#FF7DE6","#44D03D","#DF96FF",
-        "#F6A600","#00D4EF","#00D9B0","#B1C100")
-    ## Generate data.frame storing information of trackll name, time intervals,
-    ## and corresponding 1-CDF.  
-    trackllname<-c()
-    n<-c()
-    ## Set time intervals according to the minimal acquisition 
-    ## time interval of input tracklls.
-    ONE_CDF<-setNames(data.frame(seq(min(t.interval),2*x.max,
-                                    by=min(t.interval))),"Time intervals (s)")
+    cl <- c("grey30", "#FF8E8B", "#65B9FF", "#FF7DE6", "#44D03D", "#DF96FF", 
+        "#F6A600", "#00D4EF", "#00D9B0", "#B1C100")
+    ## Generate data.frame storing information of trackll name, time
+    ## intervals, and corresponding 1-CDF.
+    trackllname <- c()
+    n <- c()
+    ## Set time intervals according to the minimal acquisition time interval
+    ## of input tracklls.
+    ONE_CDF <- setNames(data.frame(seq(min(t.interval), 
+                                       2*x.max, by = min(t.interval))), 
+        "Time intervals (s)")
     
-    for(i in c(seq_len(Totaltracklls))){
-    trackll.n<-filterTrack(trackll[i],filter=filter)
-    trackllname<-append(trackllname,gsub("ST_","",names(trackll)[i]))
-    n<-append(n,length(trackll.n[[1]]))
-    ## Calculate track length and 1-CDF
-    trajLength<-sapply(trackll.n[[1]],
-                function(x){(x$Frame[dim(x)[1]]-x$Frame[1]+1)*t.interval[i]})
-    CDF<-mltools::empirical_cdf(trajLength,ubounds=seq(min(t.interval),
-                                            2*x.max, by=min(t.interval)))
-    one_CDF<-(1-(CDF$CDF))
-    ## Plot survival curve
-    points(seq(min(t.interval),x.max,by=min(t.interval)),
-        one_CDF[seq_len(x.max/min(t.interval))],type="l",lwd=4,col=cl[i])
-    ## Record time intervals and corresponding 1-CDF into one data.frame
-    ONE_CDF<-cbind(ONE_CDF,setNames(
-        data.frame(one_CDF[seq_len((2*x.max/min(t.interval)))]
-                   ),trackllname[i]))
+    for (i in c(seq_len(Totaltracklls))) {
+        trackll.n <- filterTrack(trackll[i], filter = filter)
+        trackllname <- append(trackllname, gsub("ST_", "", names(trackll)[i]))
+        n <- append(n, length(trackll.n[[1]]))
+        ## Calculate track length and 1-CDF
+        trajLength <- sapply(trackll.n[[1]], function(x) {
+            (x$Frame[dim(x)[1]] - x$Frame[1] + 1) * t.interval[i]
+        })
+        CDF <- mltools::empirical_cdf(trajLength, 
+                                        ubounds = seq(min(t.interval), 
+            2 * x.max, by = min(t.interval)))
+        one_CDF <- (1 - (CDF$CDF))
+        ## Plot survival curve
+        points(seq(min(t.interval), x.max, by = min(t.interval)), 
+                one_CDF[seq_len(x.max/min(t.interval))], 
+            type = "l", lwd = 4, col = cl[i])
+        ## Record time intervals and corresponding 1-CDF into one data.frame
+        ONE_CDF <- cbind(ONE_CDF, setNames(data.frame(one_CDF[seq_len((2 * 
+            x.max/min(t.interval)))]), trackllname[i]))
     }
     
     ## Output time intervals and corrsponding 1-CDF in .csv format.
-    if (output){
-        filename<-paste("1-CDF-DwellTime","--",format(Sys.time(),
-                                            "%Y%m%d_%H%M%S"),".csv",sep="")
-        write.table(ONE_CDF, filename  , append= FALSE, sep=',',
+    if (output) {
+        filename <- paste("1-CDF-DwellTime", "--", 
+                            format(Sys.time(), "%Y%m%d_%H%M%S"), 
+                            ".csv", sep = "")
+        write.table(ONE_CDF, filename, append = FALSE, sep = ",", 
                     row.names = FALSE)
         cat(" 1-CDF of selected tracklls were output in the working directory. 
         If using the same filter range, the curve is exactly the same as the
@@ -167,21 +163,19 @@ compare_RT_CDF<-function(trackll=NULL,x.max=30,filter=c(min=3,max=Inf),
     }
     
     ## Add legend and reset plot area.
-    par(mar=c(0, 0, 0, 0),xpd=TRUE)
-    temp <- legend("topright", legend = rep(" ", Totaltracklls),
-        text.width = max(strwidth(trackllname)),
-        xjust = 1, yjust = 1, y.intersp = 2,bty="n")
-    text(temp$rect$left + temp$rect$w, temp$text$y,
-        paste(rep(trackllname), 
-        rep(" ( n=",Totaltracklls),
-        rep(n),
-        rep(")",Totaltracklls)), 
-        col=cl,pos = 2,cex=1.5)
+    par(mar = c(0, 0, 0, 0), xpd = TRUE)
+    temp <- legend("topright", legend = rep(" ", Totaltracklls), 
+        text.width = max(strwidth(trackllname)), 
+        xjust = 1, yjust = 1, y.intersp = 2, bty = "n")
+    text(temp$rect$left + temp$rect$w, temp$text$y, paste(rep(trackllname), 
+        rep(" ( n=", Totaltracklls), rep(n), rep(")", Totaltracklls)), 
+        col = cl, pos = 2, cex = 1.5)
     
-    #legend("topright",legend =paste(trackllname," ( n =",n,")"),
-    #text.col = cl,col=cl, pch=NULL, lty=1, lwd=4,bty = "n",cex=2)
-    par(mar=c(5.1, 5.1, 4.1, 4.1),xpd=TRUE)
+    # legend('topright',legend =paste(trackllname,' ( n =',n,')'), text.col
+    # = cl,col=cl, pch=NULL, lty=1, lwd=4,bty = 'n',cex=2)
+    par(mar = c(5.1, 5.1, 4.1, 4.1), xpd = TRUE)
     
-    ##Return value: data.frame containing time intervals and corrsponding 1-CDF
+    ## Return value: data.frame containing time intervals and corrsponding
+    ## 1-CDF
     return(invisible(ONE_CDF))
 }

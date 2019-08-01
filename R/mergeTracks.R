@@ -1,7 +1,4 @@
 ## mergeTracks-methods
-##
-##
-###############################################################################
 ##' @name mergeTracks
 ##' @aliases mergeTracks
 ##' @title mergeTracks
@@ -18,7 +15,7 @@
 ##' @return modified trackll
 ##' @examples
 ##' #Basic masking with folder path with image masks
-##' folder = system.file("extdata", "SWR1", package = "sojourner")
+##' folder = system.file('extdata', 'SWR1', package = 'sojourner')
 ##' trackll=createTrackll(folder=folder, input=3)
 ##' trackll.merged <- mergeTracks(folder = folder, trackll = trackll)
 
@@ -37,42 +34,41 @@
 ##' @export mergeTracks
 
 ##-----------------------------------------------------------------------------
-##
+## 
 
-mergeTracks=function(folder, trackll){
+mergeTracks = function(folder, trackll) {
     
     first.name = names(trackll)[[1]]
-    pattern = substr(first.name, nchar(first.name)-3, nchar(first.name))
+    pattern = substr(first.name, nchar(first.name) - 3, nchar(first.name))
     
-    track.holder=c()
+    track.holder = c()
     
     # getting a file list of track files in a directory
-    file.list=list.files(path=folder,pattern=pattern,full.names=TRUE)
-    folder.name=basename(folder)
+    file.list = list.files(path = folder, pattern = pattern, full.names = TRUE)
+    folder.name = basename(folder)
     
     # concatenate track list into one list of data.frames
-    for (i in seq_along(file.list)){
-        track.holder=c(track.holder,trackll[[i]])
+    for (i in seq_along(file.list)) {
+        track.holder = c(track.holder, trackll[[i]])
     }
     
-    # rename indexPerTrackll of index
-    # extrac index
-    Index=strsplit(names(track.holder),split="[.]")  # split="\\."
+    # rename indexPerTrackll of index extrac index
+    Index = strsplit(names(track.holder), split = "[.]")  # split='\\.'
     
     # remove the last old indexPerTrackll
-    Index=lapply(Index,function(x){
-        x=x[seq_len((length(x)-1))]
-        x=paste(x,collapse=".")})
+    Index = lapply(Index, function(x) {
+        x = x[seq_len((length(x) - 1))]
+        x = paste(x, collapse = ".")
+    })
     
     # add indexPerTrackll to track name
-    indexPerTrackll=seq_along(track.holder)
-    names(track.holder)=mapply(paste,Index,
-                                indexPerTrackll,sep=".")
+    indexPerTrackll = seq_along(track.holder)
+    names(track.holder) = mapply(paste, Index, indexPerTrackll, sep = ".")
     
     # make the result a list of list with length 1
-    trackll=list()
-    trackll[[1]]=track.holder
-    names(trackll)[[1]]=folder.name
+    trackll = list()
+    trackll[[1]] = track.holder
+    names(trackll)[[1]] = folder.name
     
     cat(paste("\nMerging of folder", folder.name, "complete.\n", sep = " "))
     

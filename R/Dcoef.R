@@ -1,7 +1,4 @@
 ## Dcoef-methods
-##
-##
-###############################################################################
 ##' @name Dcoef
 ##' @aliases Dcoef
 ##' @title Dcoef
@@ -12,7 +9,7 @@
 ##' @usage
 ##' Dcoef( MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
 ##' resolution=0.107, binwidth=NULL,
-##' method=c("static","percentage","rolling.window"),
+##' method=c('static','percentage','rolling.window'),
 ##' plot=FALSE,output=FALSE,t.interval=0.01,profile=NULL)
 ##' @param MSD Mean Square Displacement calculated using msd() function. 
 ##' Either MSD or trackll can be passed into Dcoef for calculation of diffusion
@@ -26,24 +23,24 @@
 ##' value to 0 if rsquare filter is not desired.
 ##' @param resolution ratio of pixel to uM.
 ##' @param plot A parameter for plotting. Default FALSE, no plot; If TRUE,
-##'   automatically plots "histogram" with count information, binwidth can be
-##'   set through parameter binwidth; as well as "density" with
+##'   automatically plots 'histogram' with count information, binwidth can be
+##'   set through parameter binwidth; as well as 'density' with
 ##'   density/frequency.
 ##'
 ##' @param binwidth binwidth used for histogram. Default NULL, automatically
 ##'   assign binwidth.
-##' @param method "static", uses time lags 2~5 to calculate diffusion
-##'   coefficient; "percentage", uses (tierd) percentage (default 0.25) of time
-##'   lags (see Details). "rolling.window", time lags uses for Dcoef follows a
+##' @param method 'static', uses time lags 2~5 to calculate diffusion
+##'   coefficient; 'percentage', uses (tierd) percentage (default 0.25) of time
+##'   lags (see Details). 'rolling.window', time lags uses for Dcoef follows a
 ##'   rolling window with specified window size (default 4).
 ##'
 ##' @param output An Logical indicate if output should be generated. See Values
 ##'   for detail.
 ##' @param t.interval time interval between frames, default 0.010 s (10ms).
 ##' @param profile Location of preference file. By default (NULL), it is stored
-##'   at : system.file("extdata","PREF","profile.csv",package="sojourner").
+##'   at : system.file('extdata','PREF','profile.csv',package='sojourner').
 ##'   User can provide preference file by specifying the location of the file, 
-##'   e.g. profile="/Users/shengliu/Desktop/profile.csv".
+##'   e.g. profile='/Users/shengliu/Desktop/profile.csv'.
 ##'
 ##' @return
 ##' \itemize{
@@ -54,10 +51,10 @@
 ##' }
 ##' @details Generic parameters (parameter applied to all methods, such as
 ##' resolution etc) are set in the function. Method dependent parameters (such
-##' as lag.start, lag.end for method = "static"), are stored in profile.csv in
+##' as lag.start, lag.end for method = 'static'), are stored in profile.csv in
 ##' PREF folder under extdata. To change preference parameter, can either
 ##' programably or manually go to folder
-##' system.file("extdata","PREF","profile.csv",package="sojourner"), and c
+##' system.file('extdata','PREF','profile.csv',package='sojourner'), and c
 ##' hange the profile.csv.
 ##' 
 ##' lag.start: time lag used as start of dt for compute Dcoef. Default 2.
@@ -67,7 +64,7 @@
 ##' \itemize{
 ##'     \item \bold{static} stabilize the number of time lags used for fitting
 ##'     using time lag 2~ 5 despite the total time lags measured.
-##'     \item \bold{percentage} "percentage", uses (tierd) percentage (default
+##'     \item \bold{percentage} 'percentage', uses (tierd) percentage (default
 ##'     0.25) of time lags.
 ##' \tabular{rlll}{
 ##'     [,1] \tab TrackLength \tab Percentage \tab TimeLagsForFitting\cr
@@ -86,240 +83,208 @@
 ##'
 ##' @examples
 ##' # compare files
-##' folder=system.file("extdata","SWR1",package="sojourner")
+##' folder=system.file('extdata','SWR1',package='sojourner')
 ##' trackll = createTrackll(folder=folder, input=3)
 ##' MSD=msd(trackll=trackll)
-##' Dcoef(MSD=MSD,method="static",plot=TRUE)
+##' Dcoef(MSD=MSD,method='static',plot=TRUE)
 ##'
 ##' # compare folders
-##' folder1=system.file("extdata","SWR1",package="sojourner")
-##' folder2=system.file("extdata","HTZ1",package="sojourner")
+##' folder1=system.file('extdata','SWR1',package='sojourner')
+##' folder2=system.file('extdata','HTZ1',package='sojourner')
 ##' trackll2=compareFolder(folders=c(folder1,folder2), input=3)
-##' Dcoef(trackll=trackll2,method="percentage",plot=TRUE)
-##' Dcoef(trackll=trackll2,method="rolling.window",plot=TRUE)
+##' Dcoef(trackll=trackll2,method='percentage',plot=TRUE)
+##' Dcoef(trackll=trackll2,method='rolling.window',plot=TRUE)
 
 
 ##' @export Dcoef
-###############################################################################
+############################################################################### 
 
 # Dcoef (Diffusion coefficient)
 
 
-Dcoef=function(MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
-                resolution=0.107,binwidth=NULL,
-                method=c("static","percentage","rolling.window"),
-                plot=FALSE,output=FALSE,t.interval=0.01,profile=NULL){
-
-
-##-----------------------------------------------------------------------------
+Dcoef = function(MSD = NULL, trackll = NULL, dt = 6, 
+    filter = c(min = 7, max = Inf), rsquare = 0.8, resolution = 0.107, 
+    binwidth = NULL, method = c("static", "percentage", "rolling.window"), 
+    plot = FALSE, output = FALSE, t.interval = 0.01, profile = NULL) {
+    
+    
+    ##--------------------------------------------------------------------------
     # validity check for input
-
+    
     # if neither MSD or trackll is provided
-    if (length(MSD) == 0 & length(trackll) == 0){
+    if (length(MSD) == 0 & length(trackll) == 0) {
         stop("\nPlease provide either MSD or trackll")
     }
-
-    method=match.arg(method)
-
+    
+    method = match.arg(method)
+    
     # if select percentage method but original trackll is not provided
-    if (method == "percentage" & length(trackll) == 0){
+    if (method == "percentage" & length(trackll) == 0) {
         stop("\nPlease provide 'trackll' when using percentage method")
     }
-
+    
     ## set corresponding switches
-
-    ## read in preference parameters
-    ## these are some method dependent parameters, the generic parameters
-    ## (parameter applied to all methods) are set in the function
-
+    
+    ## read in preference parameters these are some method dependent
+    ## parameters, the generic parameters (parameter applied to all methods)
+    ## are set in the function
+    
     ## enable user provided preference file
-    if (is.null(profile)){
-        profile=system.file("extdata","PREF","profile.csv",package="sojourner")
+    if (is.null(profile)) {
+        profile = system.file("extdata", "PREF", "profile.csv", 
+            package = "sojourner")
     }
-
-    PARAM=read.csv(file=profile,header=TRUE,row.names="PARAMETER")
-    lag.start=PARAM["lag.start",]
-    lag.end=PARAM["lag.end",]
-    perc=PARAM["percentage",]
-    window.size=PARAM["window.size",]
-
-
-    # dispatch on "method"
-    switch(method,
-        static={
-            cat("\napplying static,lag.start=",
-                lag.start,"\t","lag.end=", lag.end,"\n")
-                static=TRUE
-                lag.start=lag.start
-                lag.end=lag.end
-
-
-                # if MSD is not provided
-                if (length(MSD) == 0){
-                    # calculate MSD
-                    MSD=msd(trackll,dt=dt,resolution=resolution,
-                        filter=filter,summarize=FALSE)
-                }
-                # default using MSD if trackll and MSD both present
-
-                # calculate Dcoef using static
-                D.coef=Dcoef.static(MSD,lag.start=lag.start,lag.end=lag.end,
-                                t.interval=t.interval)
-            },
-            rolling.window={
-                cat("\napplying rolling window...\n")
-                static=FALSE
-                window.size=window.size
-
-                # if MSD is not provided
-                if (length(MSD) == 0){
-                    # calculate MSD
-                    MSD=msd(trackll,dt=dt,resolution=resolution,
-                            filter=filter,summarize=FALSE)
-                }
-                # default using MSD if trackll and MSD both present
-
-
-                # calculate Dcoef using rolling window
-                D.coef=Dcoef.roll(MSD,window.size=window.size,
-                                  t.interval=t.interval)
-            },
-            percentage={
-                static=TRUE
-                D.coef=Dcoef.perc(trackll,percentage=perc,weighted=FALSE,
-                                filter=filter, resolution=resolution,
-                                t.interval=t.interval)
-
-            })
-
-#     if (plot == "variance"){
-#         ## currently set rollingwindow only for variance plot
-#         cat(
-#    "\nvariance = TRUE, applying rolling window, filter swtiched on\n")
-#         rolling.window=TRUE
-#         filter=TRUE
-#     }else{
-#             rolling.window=FALSE
-#         }
-
-##-----------------------------------------------------------------------------
-## call corresponding functions
-
-#     if (rolling.window == TRUE){
-#
-#         D.coef=Dcoef.roll(MSD,dt=dt)
-#         D.coef.subset=rsquare.filter(D.coef,static=FALSE)
-#         Log.D.coef=Dcoef.log(D.coef.subset,static=FALSE)
-#
-#     }else{
-#
-#         D.coef=Dcoef.static(MSD)
-#         D.coef.subset=rsquare.filter(D.coef,static=TRUE)
-#         Log.D.coef=Dcoef.log(D.coef.subset,static=TRUE)
-#
-#     }
-
-    #if (length(rsquare)!=0){
-#         D.coef.subset=rsquare.filter(D.coef,rsquare=rsquare,static=static)
-#     }else{
-#         D.coef.subset=D.coef
-#     }
-
+    
+    PARAM = read.csv(file = profile, header = TRUE, row.names = "PARAMETER")
+    lag.start = PARAM["lag.start", ]
+    lag.end = PARAM["lag.end", ]
+    perc = PARAM["percentage", ]
+    window.size = PARAM["window.size", ]
+    
+    
+    # dispatch on 'method'
+    switch(method, static = {
+        cat("\napplying static,lag.start=", lag.start, "\t", "lag.end=", 
+            lag.end, "\n")
+        static = TRUE
+        lag.start = lag.start
+        lag.end = lag.end
+        
+        
+        # if MSD is not provided
+        if (length(MSD) == 0) {
+            # calculate MSD
+            MSD = msd(trackll, dt = dt, resolution = resolution, 
+                filter = filter, summarize = FALSE)
+        }
+        # default using MSD if trackll and MSD both present
+        
+        # calculate Dcoef using static
+        D.coef = Dcoef.static(MSD, lag.start = lag.start, lag.end = lag.end, 
+            t.interval = t.interval)
+    }, rolling.window = {
+        cat("\napplying rolling window...\n")
+        static = FALSE
+        window.size = window.size
+        
+        # if MSD is not provided
+        if (length(MSD) == 0) {
+            # calculate MSD
+            MSD = msd(trackll, dt = dt, resolution = resolution, 
+                filter = filter, summarize = FALSE)
+        }
+        # default using MSD if trackll and MSD both present
+        
+        
+        # calculate Dcoef using rolling window
+        D.coef = Dcoef.roll(MSD, window.size = window.size, 
+            t.interval = t.interval)
+    }, percentage = {
+        static = TRUE
+        D.coef = Dcoef.perc(trackll, percentage = perc, weighted = FALSE, 
+            filter = filter, resolution = resolution, t.interval = t.interval)
+        
+    })
+    
+    # if (plot == 'variance'){ ## currently set rollingwindow only for
+    # variance plot cat( '\nvariance = TRUE, applying rolling window,
+    # filter swtiched on\n') rolling.window=TRUE filter=TRUE }else{
+    # rolling.window=FALSE }
+    
+    ##--------------------------------------------------------------------------
+    ## call corresponding functions
+    
+    # if (rolling.window == TRUE){ D.coef=Dcoef.roll(MSD,dt=dt)
+    # D.coef.subset=rsquare.filter(D.coef,static=FALSE)
+    # Log.D.coef=Dcoef.log(D.coef.subset,static=FALSE) }else{
+    # D.coef=Dcoef.static(MSD)
+    # D.coef.subset=rsquare.filter(D.coef,static=TRUE)
+    # Log.D.coef=Dcoef.log(D.coef.subset,static=TRUE) }
+    
+    # if (length(rsquare)!=0){
+    # D.coef.subset=rsquare.filter(D.coef,rsquare=rsquare,static=static)
+    # }else{ D.coef.subset=D.coef }
+    
     # further process dispatch on method
-
-    if(method == "static"||method == "percentage"){
-
+    
+    if (method == "static" || method == "percentage") {
+        
         # subset
-        D.coef.subset=rsquare.filter(D.coef,rsquare=rsquare)
-        D.coef.subset.slope=lapply(D.coef.subset,function(x){x[,"slope"]})
-
+        D.coef.subset = rsquare.filter(D.coef, rsquare = rsquare)
+        D.coef.subset.slope = lapply(D.coef.subset, function(x) {
+            x[, "slope"]
+        })
+        
         # logorithm
-        Log.D.coef=lapply(D.coef.subset.slope,log10)
-
-    }else if(method == "rolling.window"){
+        Log.D.coef = lapply(D.coef.subset.slope, log10)
+        
+    } else if (method == "rolling.window") {
         # subset
-        D.coef.subset=rsquare.filter.roll(D.coef,rsquare=rsquare)
-        D.coef.subset.slope=lapply(D.coef.subset,function(x){
-            for (i in seq_along(x)){
-                x[[i]]=x[[i]][,"slope"]
+        D.coef.subset = rsquare.filter.roll(D.coef, rsquare = rsquare)
+        D.coef.subset.slope = lapply(D.coef.subset, function(x) {
+            for (i in seq_along(x)) {
+                x[[i]] = x[[i]][, "slope"]
             }
             return(x)
         })
-
+        
         ## logorithm
-        Log.D.coef=lapply(D.coef.subset.slope,function(x){
-            for (i in seq_along(x)){
-                x[[i]]=log10(x[[i]])
+        Log.D.coef = lapply(D.coef.subset.slope, function(x) {
+            for (i in seq_along(x)) {
+                x[[i]] = log10(x[[i]])
             }
             return(x)
         })
-
-        # simpler than reverse setup
-        #                 Log.D.coef=list()
-        #                 for (i in seq_along(D.coef.subset.slope)){
-        #                     Log.D.coef[[i]]=lapply(
-        #                           D.coef.subset.slope[[i]],log10)
-        #                 }
-        #                 names(Log.D.coef)=names(D.coef.subset.slope)
-        #                 return(Log.D.coef)
-
+        
+        # simpler than reverse setup Log.D.coef=list() for (i in
+        # seq_along(D.coef.subset.slope)){ Log.D.coef[[i]]=lapply(
+        # D.coef.subset.slope[[i]],log10) }
+        # names(Log.D.coef)=names(D.coef.subset.slope) return(Log.D.coef)
+        
     }
-
-##-----------------------------------------------------------------------------
-## plot
-
-    if (plot == TRUE){
-
+    
+    ##--------------------------------------------------------------------------
+    ## plot
+    
+    if (plot == TRUE) {
+        
         cat("\nPlotting histogram...\n")
         # see count inforamtion
-        histogram=plotHistogram(Log.D.coef,binwidth=binwidth,method=method)
-
+        histogram = plotHistogram(Log.D.coef, binwidth = binwidth, 
+            method = method)
+        
         cat("\nPlotting density...\n")
         # plot frequency so it is easier to compare groups
-        density=plotDensity(Log.D.coef,binwidth=binwidth,method=method)
-
+        density = plotDensity(Log.D.coef, binwidth = binwidth, method = method)
+        
     }
-
-#     plot=match.arg(plot)
-#     switch(plot,
-#            variance={
-#                if (method == "static"||method == "percentage"){
-#
-#                    cat(paste("\n\nvariance plot for method static",
-#                       "and percentage not available for sojourner v0.2\n\n"))
-#
-# #                    cat(paste("variance plot for method static", 
-#                       "and percentage does not use rsquare filter. \n"))
-# #                    Log.D.coef.nofilter=Dcoef.log(D.coef,static=TRUE)
-# #                    plotVariance(Log.D.coef.nofilter,method=method)
-#
-#                }else{ plotVariance(Log.D.coef,method=method)}
-#
-#               },
-#
-#            ## needs more work to deal with a list
-#
-#            # see count inforamtion
-#            histogram=plotHistogram(Log.D.coef,
-#                   binwidth=binwidth,method=method),
-#
-#            # plot frequency so it is easier to compare groups
-#            density=plotDensity(Log.D.coef,binwidth=binwidth,method=method)
-#            # else do nothing
-#            )
-
-##-----------------------------------------------------------------------------
-## output
-
-    if (output == TRUE){
+    
+    # plot=match.arg(plot) switch(plot, variance={ if (method ==
+    # 'static'||method == 'percentage'){ cat(paste('\n\nvariance plot for
+    # method static', 'and percentage not available for sojourner
+    # v0.2\n\n')) # cat(paste('variance plot for method static', 'and
+    # percentage does not use rsquare filter. \n')) #
+    # Log.D.coef.nofilter=Dcoef.log(D.coef,static=TRUE) #
+    # plotVariance(Log.D.coef.nofilter,method=method) }else{
+    # plotVariance(Log.D.coef,method=method)} }, ## needs more work to deal
+    # with a list # see count inforamtion
+    # histogram=plotHistogram(Log.D.coef, binwidth=binwidth,method=method),
+    # # plot frequency so it is easier to compare groups
+    # density=plotDensity(Log.D.coef,binwidth=binwidth,method=method) #
+    # else do nothing )
+    
+    ##--------------------------------------------------------------------------
+    ## output
+    
+    if (output == TRUE) {
         # output csv
-        for (i in seq_along(trackll)){
-            fileName=paste("Dcoef-",.timeStamp(names(trackll)[i]),
-                           ".csv",sep="")
-            write.csv(file=fileName,D.coef.subset[[i]])
+        for (i in seq_along(trackll)) {
+            fileName = paste("Dcoef-", .timeStamp(names(trackll)[i]), ".csv", 
+                sep = "")
+            write.csv(file = fileName, D.coef.subset[[i]])
         }
     }
-
+    
     return(invisible(D.coef.subset))
     # if no subsetting is intended, select rsquare=0
 }

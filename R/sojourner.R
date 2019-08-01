@@ -1,7 +1,4 @@
 # sojourner help (environment)
-#
-#
-###############################################################################
 
 
 ## ----------------------------------------------------------------------------
@@ -44,8 +41,7 @@
 
 ##' 
 ##' @import reshape2
-## @import gridExtra
-## @importFrom reshape2 melt
+## @import gridExtra @importFrom reshape2 melt
 ##' @importFrom scales cbreaks
 ##' @importFrom mixtools normalmixEM
 ##' @importFrom mixtools boot.se
@@ -75,8 +71,8 @@
 
 ## @import dplyr
 
-## dplyr has masked  intersect, setdiff, setequal, union from base and other
-## packages, try to use importFrom instead of import package
+## dplyr has masked intersect, setdiff, setequal, union from base and
+## other packages, try to use importFrom instead of import package
 
 ##' @importFrom dplyr bind_rows
 ##' @importFrom dplyr select
@@ -90,10 +86,11 @@
 ##' @import shiny
 ##' @export sojournerGUI
 ##' @return launch sojourner
-sojourner=function(){}
+sojourner = function() {
+}
 
-sojournerGUI=function(){
-    appPath=system.file("myapp",package="sojourner")
+sojournerGUI = function() {
+    appPath = system.file("myapp", package = "sojourner")
     shiny::runApp(appPath)
 }
 

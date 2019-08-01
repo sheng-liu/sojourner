@@ -37,8 +37,8 @@ Interval.
 }
 \examples{
 # compare folders
-folder1=system.file("extdata","SWR1",package="sojourner")
-folder2=system.file("extdata","HTZ1",package="sojourner")
+folder1=system.file('extdata','SWR1',package='sojourner')
+folder2=system.file('extdata','HTZ1',package='sojourner')
 trackll=compareFolder(folders=c(folder1,folder2), input=3)
 #get msd
 MSD=msd(trackll=trackll)

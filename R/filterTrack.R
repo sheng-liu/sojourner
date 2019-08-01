@@ -1,7 +1,4 @@
 ## filterTrack-methods
-##
-##
-###############################################################################
 ##' @name filterTrack
 ##' @aliases filterTrack trimTrack trackLength
 ##' @title filterTrack
@@ -33,7 +30,7 @@
 ##'
 ##'
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="sojourner")
+##' folder=system.file('extdata','SWR1',package='sojourner')
 ##' trackll=createTrackll(folder=folder, input=3)
 ##'
 ##' trackll.filter=filterTrack(trackll,filter=c(7,Inf))
@@ -53,78 +50,82 @@
 ##-----------------------------------------------------------------------------
 ## filterTrack
 
-## a function to filter trackll based on specified fitler value 
+## a function to filter trackll based on specified fitler value
 ## (filterTrack on track length), default 6 frames/steps to Inf
 
 ##' @export filterTrack
-filterTrack=function(trackll,filter=c(min=7,max=Inf)){
-
-    #filter=match.arg(filter)
-
+filterTrack = function(trackll, filter = c(min = 7, max = Inf)) {
+    
+    # filter=match.arg(filter)
+    
     # reinforce name
-    names(filter)=c("min","max")
-
-    cat("applying filter, min",filter["min"],"  max",filter["max"],"\n")
-
-
-    track.len=list()
-    for (i in seq_along(trackll)){
-        track.len[[i]]=sapply(trackll[[i]],function(track){dim(track)[1]})
-        trackll[[i]]=trackll[[i]][ track.len[[i]]>=filter["min"] & 
-                                       track.len[[i]]<filter["max"]]
+    names(filter) = c("min", "max")
+    
+    cat("applying filter, min", filter["min"], "  max", filter["max"], 
+        "\n")
+    
+    
+    track.len = list()
+    for (i in seq_along(trackll)) {
+        track.len[[i]] = sapply(trackll[[i]], function(track) {
+            dim(track)[1]
+        })
+        trackll[[i]] = trackll[[i]][track.len[[i]] >= 
+            filter["min"] & track.len[[i]] < filter["max"]]
     }
-
+    
     return(trackll)
 }
 
 
-# no need for the focus swtich, as one can simply filter on a number that is 
-# bigger than the dt he wanted to draw on
+# no need for the focus swtich, as one can simply filter on a number
+# that is bigger than the dt he wanted to draw on
 
 ##-----------------------------------------------------------------------------
 ## trim long tracks into shorter ones
 
-.trimTrack=function(track,min=1,max=32){
-    t=track[min:max,]
-    cc.t=complete.cases(t)
-    t=t[cc.t,]
+.trimTrack = function(track, min = 1, max = 32) {
+    t = track[min:max, ]
+    cc.t = complete.cases(t)
+    t = t[cc.t, ]
     return(t)
 }
 
 ##' @export trimTrack
-trimTrack=function(trackll,trimmer=c(min=1,max=32)){
-
+trimTrack = function(trackll, trimmer = c(min = 1, max = 32)) {
+    
     # reinforce name
-    names(trimmer)=c("min","max")
-
-    cat("applying trimmer, min",trimmer["min"],"  max",trimmer["max"],"\n")
-
-
-    trackll.trim=list()
-    length(trackll.trim)=length(trackll)
-    names(trackll.trim)=names(trackll)
-    for (i in seq_along(trackll)){
-        trackll.trim[[i]]=lapply(trackll[[i]],.trimTrack,
-                            min=trimmer["min"],max=trimmer["max"])
+    names(trimmer) = c("min", "max")
+    
+    cat("applying trimmer, min", trimmer["min"], "  max", trimmer["max"], 
+        "\n")
+    
+    
+    trackll.trim = list()
+    length(trackll.trim) = length(trackll)
+    names(trackll.trim) = names(trackll)
+    for (i in seq_along(trackll)) {
+        trackll.trim[[i]] = lapply(trackll[[i]], 
+            .trimTrack, min = trimmer["min"], max = trimmer["max"])
     }
-
+    
     return(trackll.trim)
-
+    
 }
 
 # max(sapply(x[[1]],dim))
 
 ##' @export trackLength
-trackLength=function(trackll){
-    len=list()
-
-    length(len)=length(trackll)
-    names(len)=names(trackll)
-
-    for (i in seq_along(trackll)){
-        len[[i]]=sapply(trackll[[i]],function(track){
-            dim(track)[1]}
-        )
+trackLength = function(trackll) {
+    len = list()
+    
+    length(len) = length(trackll)
+    names(len) = names(trackll)
+    
+    for (i in seq_along(trackll)) {
+        len[[i]] = sapply(trackll[[i]], function(track) {
+            dim(track)[1]
+        })
     }
     return(len)
 }

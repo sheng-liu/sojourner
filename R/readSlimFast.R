@@ -1,7 +1,4 @@
 ## readSlimFast-methods
-##
-##
-###############################################################################
 ##' @name readSlimFast
 ##' @aliases readSlimFast
 ##' @title readSlimFast
@@ -34,7 +31,7 @@
 ##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
 ##' 
 ##' (Note: The last five characters of the file name, excluding the extension, 
-##' cannot contain ".")
+##' cannot contain '.')
 
 ##' @examples
 ##' # Basic function call of readSlimFast
@@ -42,110 +39,110 @@
 ##'
 ##' 
 ##' 
-#@export readSlimFast
-###############################################################################
+# @export readSlimFast
 
 ## TO DO: More efficient way of reading by using dplyr split
 
 #### .readSlimFast ####
 
-.readSlimFast = function(file, interact = FALSE,  ab.track = FALSE, 
-                         frameRecord = FALSE){
+.readSlimFast = function(file, interact = FALSE, ab.track = FALSE, 
+    frameRecord = FALSE) {
     
-    #Interactively open window
+    # Interactively open window
     if (interact == TRUE) {
-        file=file.choose();
+        file = file.choose()
     }
     
-    #Collect file name information
-    file.name = basename(file);
-    file.subname = substr(file.name, start=nchar(file.name)-8, 
-                          stop=nchar(file.name)-4);
+    # Collect file name information
+    file.name = basename(file)
+    file.subname = substr(file.name, start = nchar(file.name) - 8, 
+        stop = nchar(file.name) - 4)
     
-    #Display starter text
-    cat("\nReading SlimFast file: ",file.name,"...\n");
+    # Display starter text
+    cat("\nReading SlimFast file: ", file.name, "...\n")
     
-    #Read first four columns of input SLIMFAST file
-    data <- as.data.frame(subset(read.table(file,skip=1), 
-                                 select=c(seq_len(4))))
+    # Read first four columns of input SLIMFAST file
+    data <- as.data.frame(subset(read.table(file, skip = 1), 
+        select = c(seq_len(4))))
     
-    #Name columns and add z column of 1s in the appropriate location
-    colnames(data) <- c("x","y","Frame", "track");
-    data <- cbind(data, data.frame("z" = 1));
-    data <- data[,c("x","y","z","Frame", "track")]
+    # Name columns and add z column of 1s in the appropriate location
+    colnames(data) <- c("x", "y", "Frame", "track")
+    data <- cbind(data, data.frame(z = 1))
+    data <- data[, c("x", "y", "z", "Frame", "track")]
     
-    #Instantiate track, start frame, and length lists
-    track.list = list();
-    frame.list = list();
-    length.list = list();
+    # Instantiate track, start frame, and length lists
+    track.list = list()
+    frame.list = list()
+    length.list = list()
     
-    #Instantiate counter indexing variable and extract last trajectory
+    # Instantiate counter indexing variable and extract last trajectory
     counter = 1
-    last.trajectory = data[nrow(data), ][[5]];
+    last.trajectory = data[nrow(data), ][[5]]
     
-    #Loop through every given trajectory number
-    for (i in seq_len(last.trajectory)){
+    # Loop through every given trajectory number
+    for (i in seq_len(last.trajectory)) {
         
-        #Create track data frame
-        track <- data.frame();
+        # Create track data frame
+        track <- data.frame()
         
-        #Loop through every line of the input file with a globally updating 
-        #counter index
-        repeat{
+        # Loop through every line of the input file with a globally updating
+        # counter index
+        repeat {
             
-            #If trajectory number is equal to the track number, add line to 
-            #track and update counter
-            if (i == as.integer(data[counter,][[5]]) && counter <= nrow(data)){
-                track <- rbind(track, data[counter, ]);
-                counter = counter + 1;
-            } else { #Break out of loop if they are unequal and the track ends
-                break;
+            # If trajectory number is equal to the track number, add line to track
+            # and update counter
+            if (i == as.integer(data[counter, ][[5]]) && 
+                counter <= nrow(data)) {
+                track <- rbind(track, data[counter, ])
+                counter = counter + 1
+            } else {
+                # Break out of loop if they are unequal and the track ends
+                break
             }
         }
-            
-        #Remove track number column from track
-        track <- track[-c(5)];
-            
-        #Option to add/remove frame record
-        if (!frameRecord){
-            track <- track[-c(4)];
+        
+        # Remove track number column from track
+        track <- track[-c(5)]
+        
+        # Option to add/remove frame record
+        if (!frameRecord) {
+            track <- track[-c(4)]
         }
         
-        #Calcualte absolute track coordinates if desired
-        if (ab.track){
-            track <- abTrack(track);
+        # Calcualte absolute track coordinates if desired
+        if (ab.track) {
+            track <- abTrack(track)
         }
         
-        #Rename row names of track to appropriate index values
+        # Rename row names of track to appropriate index values
         print(track)
         print(nrow(track))
-        rownames(track) <- sapply(seq_len(nrow(track)),toString);
+        rownames(track) <- sapply(seq_len(nrow(track)), toString)
         
-        #Add start frame of track to frame list
-        frame.list[[length(frame.list) + 1]] <- track[[4]][[1]];
+        # Add start frame of track to frame list
+        frame.list[[length(frame.list) + 1]] <- track[[4]][[1]]
         
-        #Add track length to length list
-        length.list[[length(length.list) + 1]] <- nrow(track);
+        # Add track length to length list
+        length.list[[length(length.list) + 1]] <- nrow(track)
         
-        #Append temporary track data frame into track list
-        track.list[[i]] <- track;
+        # Append temporary track data frame into track list
+        track.list[[i]] <- track
     }
     
-    #Name track list:
-    #[Last five characters of the file name without extension 
-    #(cannot contain ".")].[Start frame #].[Length].[Track #]
+    # Name track list: [Last five characters of the file name without
+    # extension (cannot contain '.')].[Start frame #].[Length].[Track #]
     names(track.list) = paste(file.subname, frame.list, length.list, 
-                              c(seq_along(track.list)), sep=".");
+        c(seq_along(track.list)), sep = ".")
     
     cat("\n", file.subname, "read and processed.\n")
-    #Return track list
-    return (track.list);
+    # Return track list
+    return(track.list)
 }
 
 #### readSlimFast ####
 
 readSlimFast = function(folder, ab.track = FALSE, cores = 1, 
-                        frameRecord = TRUE){
+    frameRecord = TRUE) {
     
     trackll = list()
     track.holder = c()
@@ -153,28 +150,25 @@ readSlimFast = function(folder, ab.track = FALSE, cores = 1,
     # getting a file list of SlimFast files in a directory
     file.list = list.files(path = folder, pattern = ".txt", full.names = TRUE)
     file.name = list.files(path = folder, pattern = ".txt", full.names = FALSE)
-    folder.name=basename(folder)
+    folder.name = basename(folder)
     
     
-    # read in tracks
-    # list of list of data.frames,
-    # first level list of file names and
-    # second level list of data.frames
+    # read in tracks list of list of data.frames, first level list of file
+    # names and second level list of data.frames
     
-    max.cores = parallel::detectCores(logical=TRUE)
+    max.cores = parallel::detectCores(logical = TRUE)
     
-    if (cores == 1){
+    if (cores == 1) {
         
-        for (i in seq_along(file.list)){
+        for (i in seq_along(file.list)) {
             
             track.list = .readSlimFast(file = file.list[i], 
-                                       ab.track = ab.track,
-                                       frameRecord = frameRecord)
+                ab.track = ab.track, frameRecord = frameRecord)
             
             # add indexPerTrackll to track name
             indexPerTrackll = seq_along(track.list)
             names(track.list) = mapply(paste, names(track.list), 
-                                       indexPerTrackll,sep = ".")
+                indexPerTrackll, sep = ".")
             
             trackll[[i]] = track.list
             names(trackll)[i] = file.name[i]
@@ -182,34 +176,34 @@ readSlimFast = function(folder, ab.track = FALSE, cores = 1,
         
     } else {
         
-        # parallel this block of code
-        # assign reading in using .readSlimFast to each CPUs
+        # parallel this block of code assign reading in using .readSlimFast to
+        # each CPUs
         
-        # detect number of cores
-        # FUTURE: if more than one, automatic using multicore
+        # detect number of cores FUTURE: if more than one, automatic using
+        # multicore
         
-        if (cores>max.cores)
-            stop(paste("Number of cores specified is",
-                       "greater than recomended maximum: "), max.cores)
+        if (cores > max.cores) 
+            stop(paste("Number of cores specified is", 
+                "greater than recomended maximum: "), max.cores)
         
         cat("Initiated parallel execution on", cores, "cores\n")
-        # use outfile="" to display result on screen
-        cl <- parallel::makeCluster(spec = cores,type = "PSOCK", outfile = "")
+        # use outfile='' to display result on screen
+        cl <- parallel::makeCluster(spec = cores, type = "PSOCK", outfile = "")
         # register cluster
         parallel::setDefaultCluster(cl)
         
         # pass environment variables to workers
-        parallel::clusterExport(cl,varlist=c(".readSlimFast","ab.track", 
-                                             "frameRecord"),
-                                envir=environment())
+        parallel::clusterExport(cl, varlist = c(".readSlimFast", "ab.track", 
+            "frameRecord"), envir = environment())
         
         # trackll=parallel::parLapply(cl,file.list,function(fname){
-        trackll=parallel::parLapply(cl,file.list,function(fname){
-            track=.readSlimFast(file=fname,ab.track=ab.track, 
-                                frameRecord = frameRecord)
+        trackll = parallel::parLapply(cl, file.list, function(fname) {
+            track = .readSlimFast(file = fname, ab.track = ab.track, 
+                frameRecord = frameRecord)
             # add indexPerTrackll to track name
-            indexPerTrackll=seq_along(track)
-            names(track)=mapply(paste,names(track),indexPerTrackll,sep=".")
+            indexPerTrackll = seq_along(track)
+            names(track) = mapply(paste, names(track), indexPerTrackll, 
+                sep = ".")
             return(track)
         })
         
@@ -217,7 +211,7 @@ readSlimFast = function(folder, ab.track = FALSE, cores = 1,
         cat("\nStopping clusters...\n")
         parallel::stopCluster(cl)
         
-        names(trackll)=file.name
+        names(trackll) = file.name
         # names(track)=file.name
         
     }

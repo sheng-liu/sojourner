@@ -1,7 +1,4 @@
 ## exportTrackll-methods
-##
-##
-###############################################################################
 ##' @name exportTrackll
 ##' @aliases exportTrackll
 ##' @title exportTrackll
@@ -42,7 +39,7 @@
 ##' [Last five characters of the file name]_[yy-MM-dd]_[HH-mm-ss].csv
 
 ##' @examples
-##' folder=system.file("extdata","SWR1",package="sojourner")
+##' folder=system.file('extdata','SWR1',package='sojourner')
 ##' trackll=createTrackll(folder=folder, input=3)
 ##' #Basic function call to exportTrackll with 2 cores into current directory
 ##' exportTrackll(trackll)
@@ -55,73 +52,71 @@
 ##' @importFrom rowr cbind.fill
 ##' @export exportTrackll
 
-###############################################################################
+############################################################################### 
 
 #### .exportRowWise ####
 
-.exportRowWise = function(track.list){
+.exportRowWise = function(track.list) {
     
-    #Confirmation text of function call
+    # Confirmation text of function call
     cat("\nWriting .csv row-wise output in current directory for", 
-        getTrackFileName(track.list), "...\n");
+        getTrackFileName(track.list), 
+        "...\n")
     
-    #Collect track file name
-    track.file.name <- getTrackFileName(track.list);
+    # Collect track file name
+    track.file.name <- getTrackFileName(track.list)
     
-    #Check for frame record column
-    if (ncol(track.list[[1]]) != 3){
+    # Check for frame record column
+    if (ncol(track.list[[1]]) != 3) {
         
-        #Rename track list as trajectory numbers
-        names(track.list) <- c(seq_along(track.list));
+        # Rename track list as trajectory numbers
+        names(track.list) <- c(seq_along(track.list))
         
-        #Combine track data frames by trajectory and reorder column
+        # Combine track data frames by trajectory and reorder column
         df <- bind_rows(track.list, .id = "Trajectory")[, c("Trajectory", 
-                                                            "Frame", 
-                                                            "x", "y", "z")]
-    
-    } else{
-        #Empty data frame df to be written into the .csv
-        df <- NULL;
+            "Frame", "x", "y", "z")]
         
-        #Loop through every trajectory in input track.list
-        for (i in seq_along(track.list)){
+    } else {
+        # Empty data frame df to be written into the .csv
+        df <- NULL
+        
+        # Loop through every trajectory in input track.list
+        for (i in seq_along(track.list)) {
             
-            #Create a data frame temp with trajectory, frame, and track 
-            # coordinate data 
-            temp <- data.frame("Trajectory" = i, 
-                               "Frame" = getStartFrame(track.list, i), 
-                               track.list[[i]][seq_len(3)]);
-
-            #Append data frame df with data frame temp
-            df <- rbind(df, temp);
+            # Create a data frame temp with trajectory, frame, and track 
+            # coordinate data
+            temp <- data.frame(Trajectory = i, 
+                Frame = getStartFrame(track.list, i), 
+                track.list[[i]][seq_len(3)])
+            
+            # Append data frame df with data frame temp
+            df <- rbind(df, temp)
         }
     }
-    #Write the data frame df into the .csv and display confirmation text
-    file.name = paste(track.file.name, 
-                      format(Sys.time(), format = "_%y-%m-%d_%H-%M-%S"), 
-                      ".csv", sep = "")
-    write.csv(df, file=file.name);
-    cat(paste("\n", file.name, " placed in current directory.\n", sep =""))
+    # Write the data frame df into the .csv and display confirmation text
+    file.name = paste(track.file.name, format(Sys.time(), 
+        format = "_%y-%m-%d_%H-%M-%S"), ".csv", sep = "")
+    write.csv(df, file = file.name)
+    cat(paste("\n", file.name, " placed in current directory.\n", sep = ""))
 }
 
 #### .exportColWise ####
 
-#Function unused for now- may be helpful when lossy Diatrack .txt export is 
-#neccessary
+# Function unused for now- may be helpful when lossy Diatrack .txt
+# export is neccessary
 
-#Install packages and dependencies
-#library(rowr)
+# Install packages and dependencies library(rowr)
 
-.exportColWise = function(track.list){
+.exportColWise = function(track.list) {
     
-    #Confirmation text of function call
+    # Confirmation text of function call
     cat("\nWriting .csv column-wise output in current directory for", 
-        getTrackFileName(track.list), "...\n");
-
+        getTrackFileName(track.list), "...\n")
+    
     frame.list <- list()
     
-    #Loop through every trajectory in input track.list
-    for (i in seq_along(track.list)){
+    # Loop through every trajectory in input track.list
+    for (i in seq_along(track.list)) {
         
         start.frame = getStartFrame(track.list[i])
         
@@ -129,8 +124,8 @@
         
         temp <- track.list[[i]][seq_len(3)]
         
-        if (i != 1){
-            df <- cbind.fill(df, temp, fill = 0) 
+        if (i != 1) {
+            df <- cbind.fill(df, temp, fill = 0)
         } else {
             df <- temp
         }
@@ -138,53 +133,51 @@
     
     colnames(df) <- frame.list
     
-    #header = "format (columnwise): Frame1 row n+1: (y(tn) x(tn) z(tn)), 
-    # row n+1: (y(t(n+1)) x(t(n+1)) z(t(n+1))), 
-    # row n+2: (y(t(n+2)) x(t(n+2) z(t(n+2)) y(t(n+3)).... 
-    # where Frame1 is the frame number where the target is seen for the first 
-    # time, and the columns define trajectories. Beware! the number of tracks 
-    # is limited by the width of the widest text file on your machine. 
-    # Rowwise export preferred"
-
-    #Write the data frame df into the .csv and display confirmation text
-    file.name = paste("COL", getTrackFileName(track.list), ".csv", sep = "")
-    #write(header, file = file.name, append = TRUE)
-    write.table(df, file = file.name, row.names = FALSE, sep = ","); 
-    #,append = TRUE
+    # header = 'format (columnwise): Frame1 row n+1: (y(tn) x(tn) z(tn)),
+    # row n+1: (y(t(n+1)) x(t(n+1)) z(t(n+1))), row n+2: (y(t(n+2))
+    # x(t(n+2) z(t(n+2)) y(t(n+3))....  where Frame1 is the frame number
+    # where the target is seen for the first time, and the columns define
+    # trajectories. Beware!  the number of tracks is limited by the width
+    # of the widest text file on your machine.  Rowwise export preferred'
     
-    cat(paste("\n", file.name, "placed in current directory.\n\n", sep =""))
+    # Write the data frame df into the .csv and display confirmation text
+    file.name = paste("COL", getTrackFileName(track.list), ".csv", sep = "")
+    # write(header, file = file.name, append = TRUE)
+    write.table(df, file = file.name, row.names = FALSE, sep = ",")
+    # ,append = TRUE
+    
+    cat(paste("\n", file.name, "placed in current directory.\n\n", sep = ""))
 }
 
 #### exportTrackll ####
 
-exportTrackll = function(trackll, cores = 1){
+exportTrackll = function(trackll, cores = 1) {
     
     # detect number of cores
-    max.cores=parallel::detectCores(logical=TRUE)
+    max.cores = parallel::detectCores(logical = TRUE)
     
-    if (cores == 1){
-        export = lapply(trackll,function(x){
+    if (cores == 1) {
+        export = lapply(trackll, function(x) {
             .exportRowWise(track.list = x)
         })
     } else {
         # parallel excecute above block of code
-        if (cores>max.cores)
-            stop("Number of cores specified is greater than maxium: ",
+        if (cores > max.cores) 
+            stop("Number of cores specified is greater than maxium: ", 
                 max.cores)
         
         cat("Initiated parallel execution on", cores, "cores\n")
         
-        # use outfile="" to display result on screen
-        cl <- parallel::makeCluster(spec=cores,type="PSOCK",outfile="")
+        # use outfile='' to display result on screen
+        cl <- parallel::makeCluster(spec = cores, type = "PSOCK", outfile = "")
         # register cluster
         parallel::setDefaultCluster(cl)
         
         # pass environment variables to workers
-        parallel::clusterExport(cl,
-                                varlist=c(".exportRowWise"),
-                                envir=environment())
+        parallel::clusterExport(cl, varlist = c(".exportRowWise"), 
+            envir = environment())
         
-        export = parallel::parLapply(cl,trackll,function(x){
+        export = parallel::parLapply(cl, trackll, function(x) {
             .exportRowWise(track.list = x)
         })
         

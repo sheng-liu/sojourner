@@ -34,7 +34,7 @@ of tracks, trimTrack() is used to trim /cutoff all tracks to a specified
 range (default 1~32).
 }
 \examples{
-folder=system.file("extdata","SWR1",package="sojourner")
+folder=system.file('extdata','SWR1',package='sojourner')
 trackll=createTrackll(folder=folder, input=3)
 
 trackll.filter=filterTrack(trackll,filter=c(7,Inf))

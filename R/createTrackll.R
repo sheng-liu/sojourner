@@ -1,7 +1,4 @@
 ## createTrackll-methods
-##
-##
-###############################################################################
 ##' @name createTrackll
 ##' @aliases createTrackll
 ##' @title createTrackll
@@ -67,62 +64,62 @@
 ##' [Track].[Index in overall list (will differ from Track # when merging)]
 ##' 
 ##' (Note: The last five characters of the file name, excluding the extension, 
-##' cannot contain ".")
+##' cannot contain '.')
 
 ##' @examples
 ##' 
 ##' # Designate a folder and then create trackll from .csv data
-##' folder=system.file("extdata","SWR1",package="sojourner")
+##' folder=system.file('extdata','SWR1',package='sojourner')
 ##' trackll = createTrackll(folder=folder, input=3)
 ##' # Alternatively, use interact to open file 
 ##' # browser and select input data type
 ##' # trackll <- createTrackll(interact = TRUE)
 ##' 
 ##' @export createTrackll
-###############################################################################
+############################################################################### 
 
 ### createTrackll ###
 
-createTrackll=function(folder, interact = FALSE, input = 1, ab.track = FALSE, 
-                       cores = 1, frameRecord = TRUE){
+createTrackll = function(folder, interact = FALSE, input = 1, ab.track = FALSE, 
+    cores = 1, frameRecord = TRUE) {
     
-    #Interactive menu to select file in desired folder and input type
-    if (interact == TRUE){
+    # Interactive menu to select file in desired folder and input type
+    if (interact == TRUE) {
         cat("Choose one file in the folder for processing... \n")
-        folder = dirname(file.choose());
-        input = 0;
-        if (input == 0){
-            cat("Folder selection:", folder, "\n");
+        folder = dirname(file.choose())
+        input = 0
+        if (input == 0) {
+            cat("Folder selection:", folder, "\n")
             cat("Enter input file type and press ENTER: \n")
             cat("1. Diatrack .txt file \n")
             cat("2. Diatrack .mat session file: \n")
             cat("3. ImageJ/MOSAIC or exported save .csv file\n")
             cat("4. SlimFast .txt file \n")
             cat("5. Utrack .mat file \n")
-            input <- readline();
+            input <- readline()
         }
     }
-
-    #Error if no input
-    if (input > 5 || input < 1){
+    
+    # Error if no input
+    if (input > 5 || input < 1) {
         cat("Restart script with correct input.")
     }
-
-    #Designate file types
-    if (input == 1){
+    
+    # Designate file types
+    if (input == 1) {
         return(readDiatrack(folder, ab.track = ab.track, cores = cores, 
-                            frameRecord = frameRecord));
-    } else if (input == 2){
+            frameRecord = frameRecord))
+    } else if (input == 2) {
         return(readDiaSessions(folder, ab.track = ab.track, cores = cores, 
-                               frameRecord = frameRecord));
-    } else if (input == 3){
+            frameRecord = frameRecord))
+    } else if (input == 3) {
         return(readParticleTracker(folder, ab.track = ab.track, cores = cores, 
-                                   frameRecord = frameRecord));
-    } else if (input == 4){
+            frameRecord = frameRecord))
+    } else if (input == 4) {
         return(readSlimFast(folder, ab.track = ab.track, cores = cores, 
-                            frameRecord = frameRecord));
-    } else if (input == 5){
+            frameRecord = frameRecord))
+    } else if (input == 5) {
         return(readUtrack(folder, ab.track = ab.track, cores = cores, 
-                          frameRecord = frameRecord));
+            frameRecord = frameRecord))
     }
 }

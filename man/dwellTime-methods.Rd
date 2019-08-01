@@ -37,7 +37,7 @@ to generate a  single length list, then apply this function.
 Caclulate dwell time (/residence time) for trajecotries.
 }
 \examples{
-folder=system.file("extdata","SWR1",package="sojourner")
+folder=system.file('extdata','SWR1',package='sojourner')
 trackll=createTrackll(folder=folder, input=3)
 dwellTime(trackll,plot=TRUE)
 }

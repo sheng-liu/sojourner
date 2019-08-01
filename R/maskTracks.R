@@ -1,7 +1,4 @@
 ## maskTracks-methods
-##
-##
-###############################################################################
 ##' @name maskTracks
 ##' @aliases maskTracks indexCell filterOnCell sampleTracks
 ##' @title maskTracks
@@ -9,7 +6,7 @@
 ##' @docType methods
 
 ##' @description apply binary image masks to lists of track lists
-#
+# 
 ##' @usage
 ##' maskTracks(folder, trackll)
 ##' 
@@ -33,7 +30,7 @@
 ##' @return masked tracks in trackll format
 ##' @examples
 ##' #Basic masking with folder path with image masks
-##' folder = system.file("extdata","ImageJ",package="sojourner")
+##' folder = system.file('extdata','ImageJ',package='sojourner')
 ##' trackll = createTrackll(folder=folder, input=3)
 ##' trackll.masked <- maskTracks(folder = folder, trackll = trackll)
 ##'
@@ -42,7 +39,7 @@
 ##' plotTrackOverlay(trackll.masked)
 ##'
 ##' #Plot mask
-##' mask.list=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
+##' mask.list=list.files(path=folder,pattern='_MASK.tif',full.names=TRUE)
 ##' plotMask(folder)
 ##' 
 ##' #If Nuclear image is available
@@ -57,7 +54,7 @@
 ##' Filter/trim first using filterTrack() and trimTrack(), then mask using 
 ##' maskTracks(folder, trackll)! 
 ##' Note the mask file should have the same name as the output files with a 
-##' "_MASK.tif" ending. 
+##' '_MASK.tif' ending. 
 ##' If there are more mask files than trackll, masking will fail. If there are 
 ##' less mask files, trackls without masks will be deleted. Users can use 
 ##' plotMask() and plotTrackOverlay() to see the mask and its effect on 
@@ -67,7 +64,7 @@
 ##' all cell areas and mean intensities, and then apply any area and intensity 
 ##' filters.
 ##' There is also the capability to export the final areas/intensities as 
-##' "indexCell.csv" to the home directory and the pixel dimensions can be 
+##' 'indexCell.csv' to the home directory and the pixel dimensions can be 
 ##' changed.
 ##' 
 ##' filterOnCell() eliminates all trackl in trackll that has less than 
@@ -84,26 +81,25 @@
 ##' @export sampleTracks
 
 ##-----------------------------------------------------------------------------
-##
-# read in mask and derive positive pix form a mask
-maskPoint=function(mask.file,plot=FALSE){
+## read in mask and derive positive pix form a mask
+maskPoint = function(mask.file, plot = FALSE) {
     
-    mask.file.name=basename(mask.file)
-    # read in tiff mask
-    # library(rtiff)
-    cat("Reading mask file    ",mask.file.name,"\n")
-    mask=rtiff::readTiff(fn=mask.file)
+    mask.file.name = basename(mask.file)
+    # read in tiff mask library(rtiff)
+    cat("Reading mask file    ", mask.file.name, "\n")
+    mask = rtiff::readTiff(fn = mask.file)
     # plot(mask)
     
-    pospt=which(mask@red!=0,arr.ind=TRUE)
-    pos.point=with(data.frame(pospt),data.frame(x=col,y=row))
+    pospt = which(mask@red != 0, arr.ind = TRUE)
+    pos.point = with(data.frame(pospt), data.frame(x = col, y = row))
     
-    # horizontal is the same vertical is fliped as the pixels is counted from
-    # upper left in the image, but is counted from lower left in the plot.
+    # horizontal is the same vertical is fliped as the pixels is counted
+    # from upper left in the image, but is counted from lower left in the
+    # plot.
     if (plot) {
         plot(mask)
-        plot(x=pos.point$x,y=pos.point$y)
-        #ggplot(pos.point,aes(x=x,y=y))+geom_point()
+        plot(x = pos.point$x, y = pos.point$y)
+        # ggplot(pos.point,aes(x=x,y=y))+geom_point()
     }
     
     
@@ -111,21 +107,23 @@ maskPoint=function(mask.file,plot=FALSE){
 }
 
 ##-----------------------------------------------------------------------------
-##
-# Use each trajectory's geometric center as unit for clusterization.
-# Each data point is an averaged trajectory.
+## Use each trajectory's geometric center as unit for clusterization.
+## Each data point is an averaged trajectory.
 
-trackCenter=function(trackll){
+trackCenter = function(trackll) {
     
     # arithmetic mean for geometric center (centroid)
-    track.center=list()
-    length(track.center)=length(trackll)
-    names(track.center)=names(trackll)
+    track.center = list()
+    length(track.center) = length(trackll)
+    names(track.center) = names(trackll)
     
-    for (i in seq_along(trackll)){
-        track.center[[i]]=lapply(trackll[[i]],function(x){
+    for (i in seq_along(trackll)) {
+        track.center[[i]] = lapply(trackll[[i]], function(x) {
             # round coords
-            apply(x,2,function(coord){round(mean(coord))})})
+            apply(x, 2, function(coord) {
+                round(mean(coord))
+            })
+        })
     }
     
     return(track.center)
@@ -133,159 +131,160 @@ trackCenter=function(trackll){
 
 
 ##-----------------------------------------------------------------------------
-##
-# track.center and pos.point should be one to one cooresponding
-posTracks=function(track.center,pos.point){
+## track.center and pos.point should be one to one cooresponding
+posTracks = function(track.center, pos.point) {
     
     # convert list to data.frame
-    track.center.df=do.call(rbind.data.frame,track.center)
-    names(track.center.df)=c("x","y","z", "Frame")
+    track.center.df = do.call(rbind.data.frame, track.center)
+    names(track.center.df) = c("x", "y", "z", "Frame")
     
-    # change rownames to number to avoid PC mac difference in rowname when 
+    # change rownames to number to avoid PC mac difference in rowname when
     # do.call rbind
-    rownames(track.center.df)=seq(1,dim(track.center.df)[1])
-    pos.tracks=plyr::match_df(track.center.df,pos.point,on=c("x","y"))
+    rownames(track.center.df) = seq(1, dim(track.center.df)[1])
+    pos.tracks = plyr::match_df(track.center.df, pos.point, on = c("x", 
+        "y"))
     return(pos.tracks)
     
 }
 
 ##-----------------------------------------------------------------------------
-##
+## 
 
-maskTracks=function(folder, trackll){
+maskTracks = function(folder, trackll) {
     
     # read in mask
-    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
+    maskl = list.files(path = folder, pattern = "_MASK.tif", full.names = TRUE)
     
-    if (length(maskl) == 0){
+    if (length(maskl) == 0) {
         cat("No image mask file ending '_MASK.tif' found.\n")
         
     }
     
-    if (length(maskl) > length(trackll)){
+    if (length(maskl) > length(trackll)) {
         stop("More masks than trackl.\n")
     }
     # make mask list and trackll one-to-one, delete extra trackl
     maskl.check = list()
-    maskl.names = gsub("_MASK.tif","",basename(maskl))
-    trackll.names = gsub("[.].*","",names(trackll))
+    maskl.names = gsub("_MASK.tif", "", basename(maskl))
+    trackll.names = gsub("[.].*", "", names(trackll))
     for (i in seq_along(trackll.names)) {
         found = FALSE
         for (j in seq_along(maskl.names)) {
             if (trackll.names[[i]] == maskl.names[[j]]) {
-                maskl.check[[length(maskl.check)+1]] = maskl[j]
+                maskl.check[[length(maskl.check) + 1]] = maskl[j]
                 found = TRUE
                 break
             }
         }
         if (!found) {
             cat(paste(names(trackll)[[i]], 
-                      "mask not found. Trackl deleted from masked output.\n", 
-                      sep = " "))
+                "mask not found. Trackl deleted from masked output.\n", 
+                sep = " "))
             trackll[[i]] <- NULL
         }
     }
     maskl = maskl.check
     
-    mask.track.index=list()
-    length(mask.track.index)=length(trackll)
-    names(mask.track.index)=names(trackll)
+    mask.track.index = list()
+    length(mask.track.index) = length(trackll)
+    names(mask.track.index) = names(trackll)
     
-    masked.tracks=list()
-    length(masked.tracks)=length(trackll)
-    names(masked.tracks)=names(trackll)
+    masked.tracks = list()
+    length(masked.tracks) = length(trackll)
+    names(masked.tracks) = names(trackll)
     
-    for (i in seq_along(trackll)){
+    for (i in seq_along(trackll)) {
         
         ## Finds all track centers
-        track.center=trackCenter(trackll)[[i]]
+        track.center = trackCenter(trackll)[[i]]
         
         ## Returns all positive mask pixel locations
-        pos.point=maskPoint(maskl[[i]],plot=FALSE)
+        pos.point = maskPoint(maskl[[i]], plot = FALSE)
         
         ## Filters all positive track centers
-        mask.track.index[[i]]=posTracks(track.center,pos.point)
+        mask.track.index[[i]] = posTracks(track.center, pos.point)
         
-        ## Collects track indexes to keep 
-        index=rownames(mask.track.index[[i]])
+        ## Collects track indexes to keep
+        index = rownames(mask.track.index[[i]])
         
         ## Filters only such indexes in the raw trackll[i]
-        masked.tracks[[i]]=lapply(trackll[i],
-                                  function(x){x[as.numeric(index)]})[[1]]
+        masked.tracks[[i]] = lapply(trackll[i], function(x) {
+            x[as.numeric(index)]
+        })[[1]]
         
     }
     cat("\nAll files masked.\n")
     return(masked.tracks)
 }
 
-# Function masks, separates by cell, displays cell areas and mean intensities, 
-# and filters.
-indexCell=function(folder, trackll, areaFilter = c(0, Inf), 
-                   intensityFilter = c(0, Inf), export = FALSE, 
-                   max.pixel = 128){
+# Function masks, separates by cell, displays cell areas and mean
+# intensities, and filters.
+indexCell = function(folder, trackll, areaFilter = c(0, Inf), 
+    intensityFilter = c(0, Inf), export = FALSE, max.pixel = 128) {
     
     # Read in mask
-    maskl=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
-
-    # Read in nuclear image
-    glowl=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
+    maskl = list.files(path = folder, pattern = "_MASK.tif", full.names = TRUE)
     
-    if (length(maskl) == 0){
+    # Read in nuclear image
+    glowl = list.files(path = folder, pattern = "_Nuclei.tif", 
+        full.names = TRUE)
+    
+    if (length(maskl) == 0) {
         cat("No image mask file ending '_MASK.tif' found.\n")
         
     }
     
-    if (length(maskl) > length(trackll)){
+    if (length(maskl) > length(trackll)) {
         stop("More masks than trackl.\n")
     }
-
+    
     # Make mask list and trackll one-to-one and onto, delete extra trackl
     maskl.check = list()
-    maskl.names = gsub("_MASK.tif","",basename(maskl))
-    trackll.names = gsub("[.].*","",names(trackll))
+    maskl.names = gsub("_MASK.tif", "", basename(maskl))
+    trackll.names = gsub("[.].*", "", names(trackll))
     for (i in seq_along(trackll.names)) {
         found = FALSE
         for (j in seq_along(maskl.names)) {
             if (trackll.names[[i]] == maskl.names[[j]]) {
-                maskl.check[[length(maskl.check)+1]] = maskl[j]
+                maskl.check[[length(maskl.check) + 1]] = maskl[j]
                 found = TRUE
                 break
             }
         }
         if (!found) {
             cat(paste(names(trackll)[[i]], 
-                      "mask not found. Trackl deleted from masked output.\n", 
-                      sep = " "))
+                "mask not found. Trackl deleted from masked output.\n", 
+                sep = " "))
             trackll[[i]] <- NULL
         }
     }
     maskl = maskl.check
     
     # Instantiate new variables
-    masked.trackll=list()
-    raw.names=names(trackll)
+    masked.trackll = list()
+    raw.names = names(trackll)
     cell.count = list()
-    length(cell.count)=length(trackll)
+    length(cell.count) = length(trackll)
     
-    areas=list()
-    intensities=list()
+    areas = list()
+    intensities = list()
     
     ## Find all track centers
-    track.center=trackCenter(trackll)
+    track.center = trackCenter(trackll)
     
     # Loop through each trackl
-    for (i in seq_along(trackll)){
+    for (i in seq_along(trackll)) {
         
         ## Returns all positive mask pixel locations
-        invisible(capture.output(pos.point <- maskPoint(maskl[[i]],
-                                                        plot=FALSE)))
+        invisible(capture.output(pos.point <- maskPoint(maskl[[i]], 
+            plot = FALSE)))
         
-        #Instantiate empty
-        binary.mat = matrix( rep( 0, len=max.pixel*max.pixel),
-                             nrow = max.pixel)
+        # Instantiate empty
+        binary.mat = matrix(rep(0, len = max.pixel * max.pixel), 
+            nrow = max.pixel)
         
-        #Fill with binary pospoints
-        for (m in seq_len(nrow(pos.point))){
+        # Fill with binary pospoints
+        for (m in seq_len(nrow(pos.point))) {
             binary.mat[pos.point[[1]][[m]], pos.point[[2]][[m]]] = 1
         }
         
@@ -294,107 +293,104 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
         
         # FOR VISUALIZING THE LABELED MASK
         # image(t(labeled.mat[128:1,]),col=c('grey',
-        #       rainbow(length(unique(labeled.mat))-1)))
+        # rainbow(length(unique(labeled.mat))-1)))
         
         pos.points.indexed = list()
         length(pos.points.indexed) = max(labeled.mat)
-
+        
         # Convert labeled.mat to lists of pos.points per cell
         for (j in seq_len(nrow(pos.point))) {
-            pos.points.indexed[[
-                labeled.mat[pos.point[j,]$x, pos.point[j,]$y]]] <- rbind(
-                    pos.points.indexed[[
-                        labeled.mat[pos.point[j,]$x, 
-                                    pos.point[j,]$y]]], pos.point[j,])
+            pos.points.indexed[[labeled.mat[pos.point[j, ]$x, pos.point[j, 
+                ]$y]]] <- rbind(pos.points.indexed[[labeled.mat[pos.point[j, 
+                ]$x, pos.point[j, ]$y]]], pos.point[j, ])
         }
-
+        
         ## Display Area ##
         cat(maskl.names[[i]], "\n", "Cell Areas (pixels squared): ", "\n", 
             sep = "")
         areal <- sapply(pos.points.indexed, nrow)
         cat(cat(areal, sep = "\n"))
-        areas <- append(areas, areal) 
-
+        areas <- append(areas, areal)
+        
         
         ## Display Intensity ##
         glow = t(matrix(pixmap::getChannels(rtiff::readTiff(glowl[[i]])), 
-                        nrow = max.pixel, ncol = max.pixel))
+            nrow = max.pixel, ncol = max.pixel))
         raw.intensities = rep(list(list()), max(labeled.mat))
-        for(row in seq_len(nrow(labeled.mat))) {
-            for(col in seq_len(ncol(labeled.mat))) {
-                if (labeled.mat[row, col] != 0){
-                    raw.intensities[[
-                        labeled.mat[row, col]]][[
-                            length(raw.intensities[[
-                                labeled.mat[row, col]]])+1]] = glow[row, col]
+        for (row in seq_len(nrow(labeled.mat))) {
+            for (col in seq_len(ncol(labeled.mat))) {
+                if (labeled.mat[row, col] != 0) {
+                    raw.intensities[[labeled.mat[row, col]]][[length(
+                        raw.intensities[[labeled.mat[row, col]]]) + 1]] = 
+                        glow[row, col]
                 }
             }
         }
         cat("Cell Intensities (grayscale): ", "\n", sep = "")
         intensityl <- list()
-        for (cell in seq_along(raw.intensities)){
+        for (cell in seq_along(raw.intensities)) {
             intensityl[[cell]] <- mean(unlist(raw.intensities[[cell]]))
             cat(paste(intensityl[[cell]], "\n"))
         }
         cat("\n")
-        intensities <- append(intensities, intensityl) 
-
-
+        intensities <- append(intensities, intensityl)
+        
+        
         # Update cell count per trackl
         cell.count[[i]] <- length(pos.points.indexed)
         
         # Loop through each cell
-        for (k in seq_along(pos.points.indexed)){
+        for (k in seq_along(pos.points.indexed)) {
             
-            mask.track.index=list()
-            length(mask.track.index)=length(trackll)
-            names(mask.track.index)=names(trackll)
+            mask.track.index = list()
+            length(mask.track.index) = length(trackll)
+            names(mask.track.index) = names(trackll)
             
             ## Filters all positive track centers
-            mask.track.index[[k]]=posTracks(track.center[[i]], 
-                                            pos.points.indexed[[k]])
+            mask.track.index[[k]] = posTracks(track.center[[i]], 
+                pos.points.indexed[[k]])
             
-            ## Collects track indexes to keep 
-            index=rownames(mask.track.index[[k]])
+            ## Collects track indexes to keep
+            index = rownames(mask.track.index[[k]])
             
             ## Filters only such indexes in the raw trackll[i]
-            masked.trackll[[
-                length(masked.trackll)+1]]=lapply(
-                    trackll[i],function(x){x[as.numeric(index)]})[[1]]
+            masked.trackll[[length(masked.trackll) + 1]] = lapply(trackll[i], 
+                function(x) {
+                  x[as.numeric(index)]
+                })[[1]]
         }
         
     }
     
-    #print(areas, row.names = FALSE)
-    #print(intensities, row.names = FALSE)
-
+    # print(areas, row.names = FALSE) print(intensities, row.names = FALSE)
+    
     # Edit the names with concatenated cell number to trackl names
     masked.names = list()
-    for (c in seq_along(cell.count)){
-        for (v in seq_len(cell.count[[c]])){
-            masked.names[[length(masked.names)+1]] <- paste(
-                raw.names[c], toString(v), sep = "_")
+    for (c in seq_along(cell.count)) {
+        for (v in seq_len(cell.count[[c]])) {
+            masked.names[[length(masked.names) + 1]] <- paste(raw.names[c], 
+                toString(v), sep = "_")
         }
     }
     names(masked.trackll) <- masked.names
     
-    if (export){
+    if (export) {
         df <- data.frame(matrix(ncol = 3, nrow = 0))
         colnames(df) <- c("Cell", "Area (pixel sq)", "Intensity (grayscale)")
     }
     
     # Filter
     j = 1
-    for(i in seq_along(areas)){
+    for (i in seq_along(areas)) {
         if (areas[[i]] > areaFilter[[2]] || areas[[i]] < areaFilter[[1]] || 
             intensities[[i]] > intensityFilter[[2]] || intensities[[i]] < 
-            intensityFilter[[1]]){
-            masked.trackll[[j]] <- NULL;
+            intensityFilter[[1]]) {
+            masked.trackll[[j]] <- NULL
         } else {
-            if (export){
-                df[nrow(df) + 1,] = list(names(masked.trackll)[[j]], 
-                                         areas[[i]],
-                                         intensities[[i]])
+            if (export) {
+                df[nrow(df) + 1, ] = list(names(masked.trackll)[[j]], 
+                    areas[[i]], 
+                    intensities[[i]])
             }
             j = j + 1
         }
@@ -403,23 +399,23 @@ indexCell=function(folder, trackll, areaFilter = c(0, Inf),
         areaFilter[[2]], " pixels sq kept.", sep = "")
     cat("\nOnly cell with avg intensities between ", intensityFilter[[1]], 
         " and ", intensityFilter[[2]], " grayscale kept.", sep = "")
-    if (export){
+    if (export) {
         write.csv(df, file = "indexCell.csv")
         cat("\nindexCell.csv exported to working directory.")
     }
     
-    cat(paste("\n\nAll files masked,",
-              "separated by cell indexes, and filters applied.\n"))
+    cat(paste("\n\nAll files masked,", 
+        "separated by cell indexes, and filters applied.\n"))
     return(masked.trackll)
 }
 
-filterOnCell=function(trackll, numTracks = 0){
+filterOnCell = function(trackll, numTracks = 0) {
     if (numTracks == 0) {
         cat("\nEnter a lower limit for number of tracks.\n")
     } else {
         i = 1
-        while(i != length(trackll)){
-            if (length(trackll[[i]]) < numTracks){
+        while (i != length(trackll)) {
+            if (length(trackll[[i]]) < numTracks) {
                 trackll[[i]] <- NULL
             } else {
                 i = i + 1
@@ -429,11 +425,11 @@ filterOnCell=function(trackll, numTracks = 0){
     return(trackll)
 }
 
-sampleTracks = function(trackll, num = 0){
+sampleTracks = function(trackll, num = 0) {
     if (num == 0) {
         cat("\nEnter sample size.\n")
     } else {
-        for (i in seq_along(trackll)){
+        for (i in seq_along(trackll)) {
             trackll[[i]] <- sample(trackll[[i]], num)
         }
         return(trackll)
