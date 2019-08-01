@@ -1,47 +1,47 @@
-## readSlimFast-methods
-##' @name readSlimFast
-##' @aliases readSlimFast
-##' @title readSlimFast
-##' @rdname readSlimFast-methods
-##' @docType methods
-##'
-##' @description take in a SlimFast .txt session file as input, along with
-##'  several other user-configurable parameters and output options, to return 
-##'  a track list of all the trajectories
-
-##' @usage 
-##' readSlimFast(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
-##' .readSlimFast(file, interact = FALSE,  ab.track = FALSE, 
-##' frameRecord = FALSE)
-
-##' @param folder Full path to SlimFast .txt files output folder.
-##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be 
-##' the cores on a workstation, or on a cluster. Tip: each core will be 
-##' assigned to read in a file when paralleled.
-##' @param frameRecord Add a fourth column to the track list after the 
-##' xyz-coordinates for the frame that coordinate point was found (especially 
-##' helpful when linking frames).
-##' @param file Full path to track file.
-##' @param interact Open menu to interactively choose file.
-##' @return trackll
-##' @details
-##' The naming scheme for each track is as follows:
-##' 
-##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
-##' 
-##' (Note: The last five characters of the file name, excluding the extension, 
-##' cannot contain '.')
-
-##' @examples
-##' # Basic function call of readSlimFast
-##' # trackll <- readSlimFast(folder = folder, cores = 1)
-##'
-##' 
-##' 
-# @export readSlimFast
-
-## TO DO: More efficient way of reading by using dplyr split
+# ## readSlimFast-methods
+# ##' @name readSlimFast
+# ##' @aliases readSlimFast
+# ##' @title readSlimFast
+# ##' @rdname readSlimFast-methods
+# ##' @docType methods
+# ##'
+# ##' @description take in a SlimFast .txt session file as input, along with
+# ##'  several other user-configurable parameters and output options, to return 
+# ##'  a track list of all the trajectories
+# 
+# ##' @usage 
+# ##' readSlimFast(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
+# ##' .readSlimFast(file, interact = FALSE,  ab.track = FALSE, 
+# ##' frameRecord = FALSE)
+# 
+# ##' @param folder Full path to SlimFast .txt files output folder.
+# ##' @param ab.track Use absolute coordinates for tracks.
+# ##' @param cores Number of cores used for parallel computation. This can be 
+# ##' the cores on a workstation, or on a cluster. Tip: each core will be 
+# ##' assigned to read in a file when paralleled.
+# ##' @param frameRecord Add a fourth column to the track list after the 
+# ##' xyz-coordinates for the frame that coordinate point was found (especially 
+# ##' helpful when linking frames).
+# ##' @param file Full path to track file.
+# ##' @param interact Open menu to interactively choose file.
+# ##' @return trackll
+# ##' @details
+# ##' The naming scheme for each track is as follows:
+# ##' 
+# ##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
+# ##' 
+# ##' (Note: The last five characters of the file name, excluding the extension,
+# ##'  cannot contain '.')
+# 
+# ##' @examples
+# ##' # Basic function call of readSlimFast
+# ##' # trackll <- readSlimFast(folder = folder, cores = 1)
+# ##'
+# ##' 
+# ##' 
+# # @export readSlimFast
+# 
+# ## TO DO: More efficient way of reading by using dplyr split
 
 #### .readSlimFast ####
 
@@ -89,8 +89,8 @@
         # counter index
         repeat {
             
-            # If trajectory number is equal to the track number, add line to track
-            # and update counter
+            # If trajectory number is equal to the track number, add line to 
+            # track and update counter
             if (i == as.integer(data[counter, ][[5]]) && 
                 counter <= nrow(data)) {
                 track <- rbind(track, data[counter, ])

@@ -4,7 +4,7 @@
 ##
 ###############################################################################
 ##' @name displacementCDF
-##' @aliases displacementCDF displacement_trackll
+##' @aliases displacementCDF
 ##' @title displacementCDF
 ##' @rdname displacementCDF-methods
 ##' @docType methods
@@ -15,8 +15,6 @@
 ##' @usage 
 ##' displacementCDF(trackll,dt=1,resolution=0.107,plot=FALSE,output=FALSE,
 ##' bivar=FALSE)
-##' displacement_trackll(trackll,dt=1,resolution=0.107,bivar=FALSE)
-
 
 ##' @param dt Time intervals.
 ##' @param resolution ratio of pixel to uM.
@@ -237,7 +235,7 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
 
 ##-----------------------------------------------------------------------------
 ## displacement_trackll
-##'@export displacement_trackll
+# ##'@export displacement_trackll
 displacement_trackll=function(trackll,dt=1,resolution=0.107,bivar=FALSE){
 
 

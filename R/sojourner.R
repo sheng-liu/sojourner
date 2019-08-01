@@ -27,7 +27,12 @@
 ##' - diffusion coefficient (Dcoef) and
 ##'
 ##' - emperical cumulative distribution function (eCDF) of MSD over time.
-
+##' 
+##' @examples
+##' # Recommended that sojourner is used through command-line functions, but
+##' # can also be used with the GUI. To launch the GUI:
+##' # sojournerGUI()
+##' 
 ## @seealso
 ##' @import ggplot2
 ##' @import utils

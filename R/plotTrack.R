@@ -5,8 +5,7 @@
 ###############################################################################
 ##' @name plotTrack
 ##' @aliases plotTrack plotTrackFromIndex plotTrackOverlay plotNucTrackOverlay 
-##' plotComponentTrackOverlay plotMask trackOverlayData 
-##' plotNucTrackOverlayTrackl
+##' plotComponentTrackOverlay plotMask plotNucTrackOverlayTrackl
 ##' @title plotTrack
 ##' @rdname plotTrack-methods
 ##' @docType methods
@@ -32,11 +31,9 @@
 ##'
 ##' plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
-##' trackOverlayData(trackl)
 ##'
 ##' @param ab.trackll absolute coordinates for plotting, generated from
 ##'   createTrackll(folder, input, ab.track=TRUE).
-##' @param trackl Track list
 ##' @param trackll a list of track lists.
 ##' @param folder folder containing desired input data.
 ##' @param resolution ratio of pixel to uM.
@@ -186,7 +183,7 @@
 ## .plotMask(mask.list[1])
 
 ## FOR SHINY USAGE:
-##' @export trackOverlayData
+# ##' @export trackOverlayData
 ##' @export plotNucTrackOverlayTrackl
 
 

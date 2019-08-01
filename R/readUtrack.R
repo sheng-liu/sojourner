@@ -1,41 +1,41 @@
-## readUtrack-methods
-##' @name readUtrack
-##' @aliases readUtrack
-##' @title readUtrack
-##' @rdname readUtrack-methods
-##' @docType methods
-
-##' @description take in a single channel Utrack file as input, along with 
-##' several other user-configurable parameters and output options, to return a 
-##' track list of all the trajectories found in the file
-
-##' @usage 
-##' readUtrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
-##' 
-##' @param folder Full path to Utrack files output folder.
-##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be 
-##' the cores on a workstation, or on a cluster. Tip: each core will be 
-##' assigned to read in a file when paralleled.
-##' @param frameRecord Add a fourth column to the track list after the 
-##' xyz-coordinates for the frame that coordinate point was found (almost 
-##' mandatory for Utrack).
-##' @return trackll
-##' @details
-##' The naming scheme for each track is as follows:
-##' 
-##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
-##' 
-##' (Note: The last five characters of the file name, excluding the extension, 
-##' cannot contain '.')
-
-##' @examples
-##' #Basic function call of readUtrack
-##' # trackll <- readUtrack(folder=folder)
-##' 
-# @export readUtrack
-
-##' @importFrom R.matlab readMat
+# ## readUtrack-methods
+# ##' @name readUtrack
+# ##' @aliases readUtrack
+# ##' @title readUtrack
+# ##' @rdname readUtrack-methods
+# ##' @docType methods
+# 
+# ##' @description take in a single channel Utrack file as input, along with 
+# ##' several other user-configurable parameters and output options, to return a
+# ##'  track list of all the trajectories found in the file
+# 
+# ##' @usage 
+# ##' readUtrack(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
+# ##' 
+# ##' @param folder Full path to Utrack files output folder.
+# ##' @param ab.track Use absolute coordinates for tracks.
+# ##' @param cores Number of cores used for parallel computation. This can be 
+# ##' the cores on a workstation, or on a cluster. Tip: each core will be 
+# ##' assigned to read in a file when paralleled.
+# ##' @param frameRecord Add a fourth column to the track list after the 
+# ##' xyz-coordinates for the frame that coordinate point was found (almost 
+# ##' mandatory for Utrack).
+# ##' @return trackll
+# ##' @details
+# ##' The naming scheme for each track is as follows:
+# ##' 
+# ##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
+# ##' 
+# ##' (Note: The last five characters of the file name, excluding the extension,
+# ##'  cannot contain '.')
+# 
+# ##' @examples
+# ##' #Basic function call of readUtrack
+# ##' # trackll <- readUtrack(folder=folder)
+# ##' 
+# # @export readUtrack
+# 
+# ##' @importFrom R.matlab readMat
 
 ############################################################################### 
 

@@ -9,7 +9,6 @@
 \alias{plotNucTrackOverlay}
 \alias{plotComponentTrackOverlay}
 \alias{plotMask}
-\alias{trackOverlayData}
 \alias{plotNucTrackOverlayTrackl}
 \title{plotTrack}
 \usage{
@@ -29,8 +28,6 @@ plotComponentTrackOverlay(folder,trackll.sel=NULL,
 max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
 plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
-
-trackOverlayData(trackl)
 }
 \arguments{
 \item{resolution}{ratio of pixel to uM.}
@@ -45,8 +42,6 @@ trackOverlayData(trackl)
 
 \item{ab.trackll}{absolute coordinates for plotting, generated from
 createTrackll(folder, input, ab.track=TRUE).}
-
-\item{trackl}{Track list}
 
 \item{trackll}{a list of track lists.}
 

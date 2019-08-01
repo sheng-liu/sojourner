@@ -1,54 +1,54 @@
-
-## readParticleTracker-methods
-##' @name readParticleTracker
-##' @aliases readParticleTracker
-##' @title readParticleTracker
-##' @rdname readParticleTracker-methods
-##' @docType methods
-##'
-##' @description Read output file (tracks/trajectories in csv format) from 
-##' ParticleTracker (a program of ImageJ plugin MosaicSuit).
-
-##' @usage
-##' readParticleTracker(folder, ab.track=FALSE, cores=1, frameRecord=TRUE)
-##'
-##'
-## @method # this roxygen directive does not working
-##' @param folder Full path to ImageJ .csv files output folder.
-##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be 
-##' the cores on a workstation, or on a cluster. Tip: each core will be 
-##' assigned to read in a file when paralleled.
-##' @param frameRecord Add a fourth column to the track list after the 
-##' xyz-coordinates for the frame that coordinate point was found (especially 
-##' helpful when linking frames).
-##' @return trackll
-
-##' @examples
-##' # reading in tracks
-##' #folder=system.file('extdata','ImageJ',package='sojourner')
-##' #trackll=readParticleTracker(folder)
-##' #str(trackll,max.level=2)
-
-##' @details
-##' The usage of readParticleTracker() is equivalent to readDiatrack().
-##'
-##' Note: the folder name should not contain '.', as it is a key character for 
-##' subsequent indexing of file names.
-##'
-##' trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
-##'
-##' This 'indexPerFile' is the index within a track file.
-##'
-##' This 'indexPerTrackll' is the index within a trackll, which is unique.
-##'
-##' The macro used for generating the csv file is also included in ImageJ 
-##' folder of the package: 
-##' folder=system.file('extdata','ImageJ',package='sojourner')
-##'
-
-##' 
-# @export readParticleTracker
+# 
+# ## readParticleTracker-methods
+# ##' @name readParticleTracker
+# ##' @aliases readParticleTracker
+# ##' @title readParticleTracker
+# ##' @rdname readParticleTracker-methods
+# ##' @docType methods
+# ##'
+# ##' @description Read output file (tracks/trajectories in csv format) from 
+# ##' ParticleTracker (a program of ImageJ plugin MosaicSuit).
+# 
+# ##' @usage
+# ##' readParticleTracker(folder, ab.track=FALSE, cores=1, frameRecord=TRUE)
+# ##'
+# ##'
+# ## @method # this roxygen directive does not working
+# ##' @param folder Full path to ImageJ .csv files output folder.
+# ##' @param ab.track Use absolute coordinates for tracks.
+# ##' @param cores Number of cores used for parallel computation. This can be 
+# ##' the cores on a workstation, or on a cluster. Tip: each core will be 
+# ##' assigned to read in a file when paralleled.
+# ##' @param frameRecord Add a fourth column to the track list after the 
+# ##' xyz-coordinates for the frame that coordinate point was found (especially 
+# ##' helpful when linking frames).
+# ##' @return trackll
+# 
+# ##' @examples
+# ##' # reading in tracks
+# ##' #folder=system.file('extdata','ImageJ',package='sojourner')
+# ##' #trackll=readParticleTracker(folder)
+# ##' #str(trackll,max.level=2)
+# 
+# ##' @details
+# ##' The usage of readParticleTracker() is equivalent to readDiatrack().
+# ##'
+# ##' Note: the folder name should not contain '.', as it is a key character for
+# ##'  subsequent indexing of file names.
+# ##'
+# ##' trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
+# ##'
+# ##' This 'indexPerFile' is the index within a track file.
+# ##'
+# ##' This 'indexPerTrackll' is the index within a trackll, which is unique.
+# ##'
+# ##' The macro used for generating the csv file is also included in ImageJ 
+# ##' folder of the package: 
+# ##' folder=system.file('extdata','ImageJ',package='sojourner')
+# ##'
+# 
+# ##' 
+# # @export readParticleTracker
 
 ############################################################################### 
 

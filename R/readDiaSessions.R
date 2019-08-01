@@ -1,43 +1,43 @@
-## readDiaSessions-methods
-##' @name readDiaSessions
-##' @aliases readDiaSessions
-##' @title readDiaSessions
-##' @rdname readDiaSessions-methods
-##' @docType methods
-
-##' @description take in a Diatrack .mat session file as input, along with 
-##' several other user-configurable parameters and output options, to return a 
-##' track list of all the trajectories found in the session file
-##' @usage
-##' readDiaSessions(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
-##' 
-##' @param folder Full path to Diatrack .mat session files output folder.
-##' @param ab.track Use absolute coordinates for tracks.
-##' @param cores Number of cores used for parallel computation. This can be 
-##' the cores on a workstation, or on a cluster. Tip: each core will be 
-##' assigned to read in a file when paralleled.
-##' @param frameRecord Add a fourth column to the track list after the 
-##' xyz-coordinates for the frame that coordinate point was found (especially 
-##' helpful when linking frames).
-##' @return trackll
-##' @details
-##' The naming scheme for each track is as follows:
-##' 
-##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
-##' 
-##' (Note: The last five characters of the file name, excluding the extension, 
-##' cannot contain '.')
-##' 
-##' (Note: readDiaSessions supports reading in intensity values)
-
-##' @examples
-##' #Basic function call of readDiaSessions
-##' # hsf_folder=system.file('extdata', 'HSF_2', package='sojourner')
-##' # trackll <- readDiaSessions(folder=hsf_folder)
-
-##' 
-# @export readDiaSessions
-
+# ## readDiaSessions-methods
+# ##' @name readDiaSessions
+# ##' @aliases readDiaSessions
+# ##' @title readDiaSessions
+# ##' @rdname readDiaSessions-methods
+# ##' @docType methods
+# 
+# ##' @description take in a Diatrack .mat session file as input, along with 
+# ##' several other user-configurable parameters and output options, to return a
+# ##' track list of all the trajectories found in the session file
+# ##' @usage
+# ##' readDiaSessions(folder, ab.track = FALSE, cores = 1, frameRecord = TRUE)
+# ##' 
+# ##' @param folder Full path to Diatrack .mat session files output folder.
+# ##' @param ab.track Use absolute coordinates for tracks.
+# ##' @param cores Number of cores used for parallel computation. This can be 
+# ##' the cores on a workstation, or on a cluster. Tip: each core will be 
+# ##' assigned to read in a file when paralleled.
+# ##' @param frameRecord Add a fourth column to the track list after the 
+# ##' xyz-coordinates for the frame that coordinate point was found (especially 
+# ##' helpful when linking frames).
+# ##' @return trackll
+# ##' @details
+# ##' The naming scheme for each track is as follows:
+# ##' 
+# ##' [Last five characters of the file name].[Start frame #].[Length].[Track #]
+# ##' 
+# ##' (Note: The last five characters of the file name, excluding the extension,
+# ##'  cannot contain '.')
+# ##' 
+# ##' (Note: readDiaSessions supports reading in intensity values)
+# 
+# ##' @examples
+# ##' #Basic function call of readDiaSessions
+# ##' # hsf_folder=system.file('extdata', 'HSF_2', package='sojourner')
+# ##' # trackll <- readDiaSessions(folder=hsf_folder)
+# 
+# ##' 
+# # @export readDiaSessions
+# 
 ##' @importFrom R.matlab readMat
 
 ############################################################################### 

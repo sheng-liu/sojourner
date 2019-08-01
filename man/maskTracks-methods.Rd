@@ -12,7 +12,7 @@
 maskTracks(folder, trackll)
 
 indexCell(folder, trackll, areaFilter = c(0, Inf), 
-intensityFilter = c(0, Inf), export = FALSE, max.pixel = 128)
+    intensityFilter = c(0, Inf), export = FALSE, max.pixel = 128)
 
 filterOnCell(trackll, numTracks = 0)
 
@@ -86,4 +86,21 @@ plotNucTrackOverlay(folder=folder,trackll=trackll.masked)
 
 #Plot mask
 plotMask(folder=folder)
+
+# To mask a trackll, separate each cell into a trackl, and apply any 
+# intensity and area filters
+str(trackll, max.level=1)
+trackll_indexed = indexCell(folder = folder, trackll = trackll)
+str(trackll_indexed, max.level=1)
+
+# To eliminate all trackl in trackll that has less than numTracks = 5 tracks
+# In this example, we eliminate all cells less with less than 5 tracks
+trackll_filterOnCell = filterOnCell(trackll=trackll_indexed,
+    numTracks = 5)
+str(trackll_filterOnCell, max.level=1)
+
+# To randomly sample num = 5 tracks fo each trackl in trackll
+# In this example, we randomly sample 5 tracks for each cell
+trackll_sampled = sampleTracks(trackll=trackll_filterOnCell, num=5)
+str(trackll_sampled, max.level=1)
 }
