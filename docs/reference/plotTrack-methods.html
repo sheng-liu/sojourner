@@ -142,9 +142,7 @@ specified.</p>
 <span class='fu'>plotComponentTrackOverlay</span>(<span class='no'>folder</span>,<span class='kw'>trackll.sel</span><span class='kw'>=</span><span class='kw'>NULL</span>,
 <span class='kw'>max.pixel</span><span class='kw'>=</span><span class='fl'>128</span>,<span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>width</span><span class='kw'>=</span><span class='fl'>16</span>,<span class='kw'>height</span><span class='kw'>=</span><span class='fl'>16</span>)
 
-<span class='fu'>plotMask</span>(<span class='no'>folder</span>,<span class='kw'>max.pixel</span><span class='kw'>=</span><span class='fl'>128</span>,<span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>width</span><span class='kw'>=</span><span class='fl'>16</span>,<span class='kw'>height</span><span class='kw'>=</span><span class='fl'>16</span>)
-
-<span class='fu'>trackOverlayData</span>(<span class='no'>trackl</span>)</pre>
+<span class='fu'>plotMask</span>(<span class='no'>folder</span>,<span class='kw'>max.pixel</span><span class='kw'>=</span><span class='fl'>128</span>,<span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>2</span>,<span class='kw'>width</span><span class='kw'>=</span><span class='fl'>16</span>,<span class='kw'>height</span><span class='kw'>=</span><span class='fl'>16</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,10 +171,6 @@ specified.</p>
       <th>ab.trackll</th>
       <td><p>absolute coordinates for plotting, generated from
 createTrackll(folder, input, ab.track=TRUE).</p></td>
-    </tr>
-    <tr>
-      <th>trackl</th>
-      <td><p>Track list</p></td>
     </tr>
     <tr>
       <th>trackll</th>
@@ -236,9 +230,9 @@ file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).</p></td>
 
     
 <ul>
-<li><p>PDF One PDF file with all the frames satisfy the creteria. If trackll
-has multiple items, it ouptus mutiple PDF files each corresponding to one
-item.</p></li>
+<li><p>PDF One PDF file with all the frames satisfy the creteria. If 
+trackll has multiple items, it ouptus mutiple PDF files each corresponding 
+to one item.</p></li>
 <li><p>csv Outputs csv file of the coordiantes of the trajectory, which
 users can use other plotting software (e.g. Prism or Excel) to plot tracks
 in their favor.</p></li>
@@ -250,10 +244,10 @@ in their favor.</p></li>
     <ul>
 <li><p>plotTrackFromIndex: if user provide a csv file with first column
 listing the index of trajectories, this program will plot the tracks isted
-in the csv file. It is useful after manipulating with the output from Dceof,
-to plot the tracks that of interest to the user (e.g. highest Dcoef). User
-need to provide the indexFile.csv, and specify the movie folder which
-contains the movies where specified trajectories are tracked.</p></li>
+in the csv file. It is useful after manipulating with the output from 
+Dcoef, to plot the tracks that of interest to the user (e.g. highest 
+Dcoef). User need to provide the indexFile.csv, and specify the movie 
+folder which contains the movies where specified trajectories are tracked.</p></li>
 <li><p>plotTrackOverlay: plot all tracks in trackll overlaid on one plot.</p></li>
 <li><p>plotNucTrackOverlay: plot tracks in a movie overlayed with nuclei
 image. The nuclei image file must end with "_Nuclei.tif" to be recognized.
@@ -261,9 +255,9 @@ If trackll is NULL (default), program will read in trackll from specified
 folder and return trackll, otherwise it will take the specified trackll
 directly.</p></li>
 <li><p>plotComponentTrackOverlay: plot tracks base on component fitting of
-diffusion coefficient. Combined with selComponentTracks() function, together
-it allows select and plot tracks based on component fitting of track
-diffusion coefficient.</p></li>
+diffusion coefficient. Combined with selComponentTracks() function, 
+together it allows select and plot tracks based on component fitting of 
+track diffusion coefficient.</p></li>
 <li><p>plotMask: plot image mask. The mask file name must ended with
 _MASK.tiff to be recognized.</p></li>
 </ul>
@@ -306,7 +300,8 @@ _MASK.tiff to be recognized.</p></li>
 <span class='no'>folder2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"HTZ1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
 <span class='no'>index.file2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"INDEX"</span>,<span class='st'>"indexFile2.csv"</span>,
 <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
-<span class='fu'>plotTrackFromIndex</span>(<span class='kw'>index.file</span><span class='kw'>=</span><span class='no'>index.file2</span>,<span class='kw'>movie.folder</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>folder1</span>,<span class='no'>folder2</span>),
+<span class='fu'>plotTrackFromIndex</span>(<span class='kw'>index.file</span><span class='kw'>=</span><span class='no'>index.file2</span>,
+ <span class='kw'>movie.folder</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>folder1</span>,<span class='no'>folder2</span>),
  <span class='kw'>input</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 #&gt; 

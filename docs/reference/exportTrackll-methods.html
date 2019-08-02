@@ -138,9 +138,9 @@ row-wise (ImageJ/MOSAIC) .csv files in the working directory</p>
     </tr>
     <tr>
       <th>cores</th>
-      <td><p>Number of cores used for parallel computation. This can be the 
-cores on a workstation, or on a cluster. Tip: each core will be assigned to 
-read in a file when paralleled.</p></td>
+      <td><p>Number of cores used for parallel computation. This can be 
+the cores on a workstation, or on a cluster. Tip: each core will be 
+assigned to read in a file when paralleled.</p></td>
     </tr>
     </table>
     
@@ -153,21 +153,21 @@ read in a file when paralleled.</p></td>
     <p>The reason why ImageJ/MOSAIC style .csv export was chosen is because it 
 fully preserves track frame data, while maintaining short computation time 
 and easy readability in Excel/etc.</p>
-<p>In order to import this .csv export back into a trackll at any point (while 
-preserving all information), select input = 3 in createTrackll.</p>
+<p>In order to import this .csv export back into a trackll at any point 
+(while preserving all information), select input = 3 in createTrackll.</p>
 <p>If the track list does not have a fourth frame record column (not 
-recommended), it will just output the start frame of each track instead and 
-will take noticeably longer.</p>
+recommended), it will just output the start frame of each track instead 
+and will take noticeably longer.</p>
 <p>It is not recommended that exportTrackll be run on merged list of track 
 lists (trackll).
-Also, ensure that the input trackll is a list of track lists and not just a 
-track list.</p>
+Also, ensure that the input trackll is a list of track lists and not just 
+a track list.</p>
 <p>The naming scheme for each export is as follows:</p>
 <p>[Last five characters of the file name]_[yy-MM-dd]_[HH-mm-ss].csv</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"SWR1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+    <pre class="examples"><div class='input'><span class='no'>folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'SWR1'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='no'>trackll</span><span class='kw'>=</span><span class='fu'><a href='createTrackll-methods.html'>createTrackll</a></span>(<span class='kw'>folder</span><span class='kw'>=</span><span class='no'>folder</span>, <span class='kw'>input</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 #&gt; 
@@ -177,16 +177,20 @@ track list.</p>
 <span class='fu'>exportTrackll</span>(<span class='no'>trackll</span>)</div><div class='output co'>#&gt; 
 #&gt; Writing .csv row-wise output in current directory for mage6 ...
 #&gt; 
-#&gt; mage6_19-07-24_15-44-28.csv placed in current directory.</div><div class='input'>
+#&gt; mage6_19-08-02_11-19-53.csv placed in current directory.</div><div class='input'>
 <span class='co'>#Get current working directory</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>()</div><div class='output co'>#&gt; [1] "/Users/sunjayyoo/Documents/Wu Lab/sojourner/docs/reference"</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>()</div><div class='output co'>#&gt; [1] "/Volumes/SDXC Disc/Google Drive/SingleMoleculeTracking/sojourner-master/sojourner/docs/reference"</div><div class='input'>
 <span class='co'>#Import export save back into a trackll</span>
 <span class='no'>trackll.2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='createTrackll-methods.html'>createTrackll</a></span>(<span class='kw'>folder</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>(), <span class='kw'>input</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  mage6_19-07-24_15-44-28.csv ...
 #&gt; 
 #&gt;  44-28 read and processed.
 #&gt; 
-#&gt; Process complete.</div></pre>
+#&gt; Reading ParticleTracker file:  mage6_19-08-02_11-19-53.csv ...
+#&gt; 
+#&gt;  19-53 read and processed.
+#&gt; 
+#&gt; Reading ParticleTracker file:  Track Coords-HTZ1-20190724_154541.csv ...</div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown columns: `Trajectory`, `Frame`, `z`</span></div><div class='output co'>#&gt; <span class='error'>Error in split.default(x = seq_len(nrow(x)), f = f, drop = drop, ...): group length is 0 but data length &gt; 0</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -143,10 +143,10 @@ coefficient.</p>
     </tr>
     <tr>
       <th>likelihood</th>
-      <td><p>The likelihood of a trajecotry to be in fitted group. This
-parameter specifies the strigency of selecting trajectories to be in the 
-fitted group and therefore influence the number of trajectories been 
-selected.</p></td>
+      <td><p>The likelihood of a trajecotry to be in fitted group. 
+This parameter specifies the strigency of selecting trajectories to be in 
+the fitted group and therefore influence the number of trajectories been 
+ selected.</p></td>
     </tr>
     <tr>
       <th>dcoef</th>
@@ -173,7 +173,7 @@ which can be used for plot individual trajectory using plotTrack.</p></td>
 <ul>
 <li><p>combined list of trackll The result is a combined list of selected 
 trajectories. The list is one level higher than trackll, use subsetting to 
-output trackll.e.g. trackll[[1]], or trackll[["SWR1"]].</p></li>
+output trackll.e.g. trackll[[1]], or trackll[['SWR1']].</p></li>
 </ul>
 
     
@@ -181,14 +181,14 @@ output trackll.e.g. trackll[[1]], or trackll[["SWR1"]].</p></li>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## selComponentTracks() usage</span>
-<span class='co'># 1. select componentTracks per folder (cross movie) by using compareFolders</span>
+<span class='co'># 1. select componentTracks per folder (cross movie) using compareFolders</span>
 <span class='co'># 2. select componentTracks per movie base, use plotComponentTracks to plot</span>
 <span class='co'># component tracks back to initial Nuclei image.</span>
 
 <span class='co'>## 1. select componentTracks per folder (cross movie) by using </span>
 <span class='co'>## compareFolders</span>
-<span class='no'>folder1</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"SWR1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
-<span class='no'>folder2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"HTZ1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+<span class='no'>folder1</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'SWR1'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
+<span class='no'>folder2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'HTZ1'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='no'>trackll</span><span class='kw'>=</span><span class='fu'><a href='compareFolder-methods.html'>compareFolder</a></span>(<span class='kw'>folders</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>folder1</span>,<span class='no'>folder2</span>), <span class='kw'>input</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 #&gt; 
@@ -266,7 +266,7 @@ output trackll.e.g. trackll[[1]], or trackll[["SWR1"]].</p></li>
 #&gt;      comp.1 comp.2
 #&gt; SWR1 3      12    
 #&gt; HTZ1 0      34    </div><div class='input'><span class='co'># subset component tracks to further analyze msd, dcoef</span>
-<span class='no'>trackll.swr1</span><span class='kw'>=</span><span class='no'>trackll.sel</span><span class='kw'>[[</span><span class='st'>"SWR1"</span>]]
+<span class='no'>trackll.swr1</span><span class='kw'>=</span><span class='no'>trackll.sel</span><span class='kw'>[[</span><span class='st'>'SWR1'</span>]]
 <span class='fu'><a href='msd-methods.html'>msd</a></span>(<span class='no'>trackll.swr1</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; applying filter, min 7   max Inf 
 #&gt;  3 	tracks length &gt; &amp; =	 1 3 	tracks length &gt; &amp; =	 2 3 	tracks length &gt; &amp; =	 3 3 	tracks length &gt; &amp; =	 4 3 	tracks length &gt; &amp; =	 5 3 	tracks length &gt; &amp; =	 6
 #&gt; 
@@ -304,12 +304,13 @@ output trackll.e.g. trackll[[1]], or trackll[["SWR1"]].</p></li>
 #&gt;      comp.1 comp.2
 #&gt; SWR1 3      12    
 #&gt; HTZ1 0      34    </div><div class='input'><span class='co'># specify index file path.</span>
-<span class='no'>index.file</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"INDEX"</span>,<span class='st'>"componentTrackID-SWR1.comp.1.csv"</span>,
-                       <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
-<span class='no'>index.file2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"INDEX"</span>,
-                        <span class='st'>"componentTrackID-SWR1.comp.2.csv"</span>,
-                        <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
-<span class='no'>movie.folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"SWR1_2"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+<span class='no'>index.file</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'INDEX'</span>,
+                       <span class='st'>'componentTrackID-SWR1.comp.1.csv'</span>,
+                       <span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
+<span class='no'>index.file2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'INDEX'</span>,
+                        <span class='st'>'componentTrackID-SWR1.comp.2.csv'</span>,
+                        <span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
+<span class='no'>movie.folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'SWR1_2'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='fu'><a href='plotTrack-methods.html'>plotTrackFromIndex</a></span>(<span class='kw'>index.file</span><span class='kw'>=</span><span class='no'>index.file</span>,<span class='kw'>movie.folder</span> <span class='kw'>=</span> <span class='no'>movie.folder</span>,
                    <span class='kw'>input</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
@@ -354,10 +355,10 @@ output trackll.e.g. trackll[[1]], or trackll[["SWR1"]].</p></li>
 #&gt; Output track plot...</div><div class='output co'>#&gt; 
 #&gt; Output csv file for track plot...</div><div class='input'>
 
-<span class='co'>## 2. select componentTracks per movie base, use plotComponentTracks to plot</span>
-<span class='co'>##component tracks back to initial Nuclei image.</span>
+<span class='co'>## 2. select componentTracks per movie base, use plotComponentTracks to </span>
+<span class='co'>##plot component tracks back to initial Nuclei image.</span>
 <span class='co'>## plotComponentTrackOverlay</span>
-<span class='no'>folder3</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"SWR1_2"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+<span class='no'>folder3</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'SWR1_2'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='no'>trackll</span><span class='kw'>=</span><span class='fu'><a href='createTrackll-methods.html'>createTrackll</a></span>(<span class='kw'>folder</span><span class='kw'>=</span><span class='no'>folder3</span>, <span class='kw'>input</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 #&gt; 
@@ -390,7 +391,7 @@ output trackll.e.g. trackll[[1]], or trackll[["SWR1"]].</p></li>
 #&gt; 
 #&gt; ...</div><div class='input'>
 <span class='co'>## calculate Dcoef</span>
-<span class='no'>dcoef</span><span class='kw'>=</span><span class='fu'><a href='Dcoef-methods.html'>Dcoef</a></span>(<span class='kw'>MSD</span><span class='kw'>=</span><span class='no'>MSD</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"static"</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; 
+<span class='no'>dcoef</span><span class='kw'>=</span><span class='fu'><a href='Dcoef-methods.html'>Dcoef</a></span>(<span class='kw'>MSD</span><span class='kw'>=</span><span class='no'>MSD</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>'static'</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; 
 #&gt; applying static,lag.start= 2 	 lag.end= 5 
 #&gt; lag.start   2 	 lag.end   5 
 #&gt; 

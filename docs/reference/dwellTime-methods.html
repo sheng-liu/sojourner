@@ -145,8 +145,8 @@
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>An Logical indicate if plot should be generated. If plot = TRUE,
-the plot data will also be output.</p></td>
+      <td><p>An Logical indicate if plot should be generated. If 
+plot = TRUE, the plot data will also be output.</p></td>
     </tr>
     <tr>
       <th>output</th>
@@ -160,10 +160,10 @@ will have an individual csv file. 2) Plot PDF and plot data will be saved.</p></
 
     
 <ul>
-<li><p>dwell time list A list of dwell time for every trajectory, separated 
-by file names of the trajectory file in Diatrack file folder. If combined 
-dwell time is intended, use readDiatrack(folder, merge=TRUE) to generate a 
-single length list, then apply this function.</p></li>
+<li><p>dwell time list A list of dwell time for all trajectories, 
+separated by file names of the trajectory file in Diatrack file folder. 
+If combined dwell time is intended, use readDiatrack(folder, merge=TRUE) 
+to generate a  single length list, then apply this function.</p></li>
 <li><p>PDF dwell time frequency plot in PDF format, when plot = TRUE.</p></li>
 <li><p>csv dwell time output in csv format, when output = TRUE.</p></li>
 </ul>
@@ -171,7 +171,7 @@ single length list, then apply this function.</p></li>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"SWR1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+    <pre class="examples"><div class='input'><span class='no'>folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'SWR1'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='no'>trackll</span><span class='kw'>=</span><span class='fu'><a href='createTrackll-methods.html'>createTrackll</a></span>(<span class='kw'>folder</span><span class='kw'>=</span><span class='no'>folder</span>, <span class='kw'>input</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 #&gt; 

@@ -128,8 +128,7 @@ for individual trajectories.</p>
     </div>
 
     <pre class="usage"><span class='fu'>displacementCDF</span>(<span class='no'>trackll</span>,<span class='kw'>dt</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>resolution</span><span class='kw'>=</span><span class='fl'>0.107</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>output</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
-<span class='kw'>bivar</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'>displacement_trackll</span>(<span class='no'>trackll</span>,<span class='kw'>dt</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>resolution</span><span class='kw'>=</span><span class='fl'>0.107</span>,<span class='kw'>bivar</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</pre>
+<span class='kw'>bivar</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,8 +171,8 @@ stepwise.displacement" and "CDF.displacement". the name of the list is the
 track folder name.</p></li>
 <li><p>Output file, Displacement of individual trajectoreis at specified
 dt. The output file is for user to plot in other applications. The column
-"UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a CDF
-plot. The distribution of "UniqueDisplacement" is the density plot.</p></li>
+"UniqueDisplacement" is the x axis, and column "CDF" is the y axis for a 
+CDF plot. The distribution of "UniqueDisplacement" is the density plot.</p></li>
 <li><p>CDF plot, CDF plot of displacement for individual files.</p></li>
 </ul>
 
@@ -186,8 +185,8 @@ origin at time lag i*dt:</p>
 <p>P(r,i*dt) = 1 - e^(-r^2/4*D*(i*dt))</p>
 <p>the CDF and UniqueDisplacement in the output file is corresponding to P and
 r in this formula. If intend to generate the CDF plot from the output file,
-the CDF and UniqueDisplacement is corresponding to the y and x values in the
-CDF output plot.</p>
+the CDF and UniqueDisplacement is corresponding to the y and x values in 
+the CDF output plot.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

@@ -190,7 +190,7 @@ in the trackll.</p>
     <pre class="examples"><div class='input'>
 <span class='co'># Generate trackll, and process, </span>
 <span class='co'># e.g. mask region of interest, merge tracks from multiple files.</span>
-<span class='no'>folder1</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"HSF"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+<span class='no'>folder1</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'HSF'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='no'>trackll1</span><span class='kw'>=</span><span class='fu'><a href='createTrackll-methods.html'>createTrackll</a></span>(<span class='no'>folder1</span>,<span class='kw'>input</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Initiated parallel execution on 2 cores
 #&gt; 
 #&gt; Stopping clusters...
@@ -200,7 +200,7 @@ in the trackll.</p>
 #&gt; 
 #&gt; All files masked.</div><div class='input'><span class='no'>trackll1</span><span class='kw'>=</span><span class='fu'><a href='mergeTracks-methods.html'>mergeTracks</a></span>(<span class='no'>folder1</span>,<span class='no'>trackll1</span>)</div><div class='output co'>#&gt; 
 #&gt; Merging of folder HSF complete.</div><div class='input'>
-<span class='no'>folder2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"HSF_2"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+<span class='no'>folder2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'HSF_2'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='no'>trackll2</span><span class='kw'>=</span><span class='fu'><a href='createTrackll-methods.html'>createTrackll</a></span>(<span class='no'>folder2</span>,<span class='kw'>input</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; Initiated parallel execution on 2 cores
 #&gt; 
 #&gt; Stopping clusters...

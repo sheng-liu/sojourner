@@ -32,8 +32,8 @@
 
 <meta property="og:title" content="fitNormDistr — fitNormDistr" />
 
-<meta property="og:description" content="fit normal distributions to diffusion coefficient caclulated by
- Dcoef method and saves seed state as a attribute of the result" />
+<meta property="og:description" content="fit normal distributions to diffusion coefficient caclulated 
+by Dcoef method and saves seed state as a attribute of the result" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,8 +122,8 @@
 
     <div class="ref-description">
     
-    <p>fit normal distributions to diffusion coefficient caclulated by
- Dcoef method and saves seed state as a attribute of the result</p>
+    <p>fit normal distributions to diffusion coefficient caclulated 
+by Dcoef method and saves seed state as a attribute of the result</p>
     
     </div>
 
@@ -136,8 +136,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>sd</th>
-      <td><p>numeric vector with estimates of standard deviation(sigma) values 
-for each component.</p></td>
+      <td><p>numeric vector with estimates of standard deviation(sigma)
+values for each component.</p></td>
     </tr>
     <tr>
       <th>constrain</th>
@@ -166,9 +166,9 @@ automatic assign binwidth.</p></td>
     </tr>
     <tr>
       <th>combine.plot</th>
-      <td><p>Logical indicate if all the plot should be combined into
-one, with same scale (/same axises breaks), same color theme, and same bin 
-size for comparison.</p></td>
+      <td><p>Logical indicate if all the plot should be combined 
+into one, with same scale (/same axises breaks), same color theme, and same
+ bin size for comparison.</p></td>
     </tr>
     <tr>
       <th>output</th>
@@ -192,9 +192,9 @@ component.</p></td>
 <dl class='dl-horizontal'>
 <dt>proportions</dt><dd><p>The proportions of mixing components.</p></dd>
 <dt>mean</dt><dd><p>The Means of the components.</p></dd>
-<dt>sd</dt><dd><p>The Standard Deviations (SD) of components if not log transformed;
- if log transformed, it is then interpreted as Coefficient of Variation 
- (CV).</p></dd>
+<dt>sd</dt><dd><p>The Standard Deviations (SD) of components if not log 
+transformed; if log transformed, it is then interpreted as Coefficient of 
+Variation (CV).</p></dd>
 <dt>loglik</dt><dd><p>The log likelihood, useful for compare different fitting 
 result, the bigger the better fit.</p></dd>
 </dl>
@@ -206,9 +206,9 @@ result, the bigger the better fit.</p></dd>
 number of mixture components.
 Bad Random seed generation may cause normalmixEM to crash. Using another 
 seed will solve the issue.</p>
-<p>Note: Ensure that a random number generator seed has been manually set! The 
-seed is stored as an attribute of the returned object of fitNormDistr() and 
-using the same seed makes results repeatable (see examples).</p>
+<p>Note: Ensure that a random number generator seed has been manually set! 
+The seed is stored as an attribute of the returned object of fitNormDistr()
+ and using the same seed makes results repeatable (see examples).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -252,10 +252,10 @@ using the same seed makes results repeatable (see examples).</p>
 <span class='co'># set unique seed (use any number)</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>123</span>)
 
-<span class='co'># fit dcoef (function automatically saves seed state as an attribute of the </span>
-<span class='co'># result)</span>
-<span class='no'>a</span><span class='kw'>=</span><span class='fu'>fitNormDistr</span>(<span class='no'>dcoef</span>,<span class='kw'>components</span><span class='kw'>=</span><span class='kw'>NULL</span>,<span class='kw'>log.transform</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>combine.plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
-               <span class='kw'>output</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; 
+<span class='co'># fit dcoef (function automatically saves seed state as an attribute of </span>
+<span class='co'># the result)</span>
+<span class='no'>a</span><span class='kw'>=</span><span class='fu'>fitNormDistr</span>(<span class='no'>dcoef</span>,<span class='kw'>components</span><span class='kw'>=</span><span class='kw'>NULL</span>,<span class='kw'>log.transform</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
+               <span class='kw'>combine.plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>output</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; 
 #&gt; IMPORTANT: Ensure a seed has been manually set! See help docs for more info.
 #&gt; 
 #&gt; components analysis
@@ -452,7 +452,7 @@ using the same seed makes results repeatable (see examples).</p>
 #&gt; auto binwidth = 0.291253 </div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing non-finite values (stat_bin).</span></div><div class='img'><img src='fitNormDistr-methods-9.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; Plotting density...
 #&gt; auto binwidth = 0.291253 </div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing non-finite values (stat_density).</span></div><div class='img'><img src='fitNormDistr-methods-10.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># try with constrain =TRUE, the values will be forced to eqaul the provided </span>
+<span class='co'># try with constrain=TRUE, the values will be forced to equal the provided </span>
 <span class='co'># ones.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>345</span>)
 <span class='no'>e</span><span class='kw'>=</span><span class='fu'>fitNormDistr</span>(<span class='no'>dcoef</span>,<span class='kw'>means</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.3</span>,<span class='fl'>0.5</span>), <span class='kw'>constrain</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 

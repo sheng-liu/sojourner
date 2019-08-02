@@ -32,8 +32,8 @@
 
 <meta property="og:title" content="msd — msd" />
 
-<meta property="og:description" content="calculate mean square displacement for individual trajectory or
-summarize on trajectories." />
+<meta property="og:description" content="calculate mean square displacement for individual trajectory 
+or summarize on trajectories." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,8 +122,8 @@ summarize on trajectories." />
 
     <div class="ref-description">
     
-    <p>calculate mean square displacement for individual trajectory or
-summarize on trajectories.</p>
+    <p>calculate mean square displacement for individual trajectory 
+or summarize on trajectories.</p>
     
     </div>
 
@@ -162,8 +162,8 @@ than (&gt;=) min and less than (&lt;) max.</p></td>
     <tr>
       <th>cores</th>
       <td><p>Number of cores used for parallel computation. This can be the
-cores on a workstation, or on a cluster. Tip: the computation on each file
-will be parallel assigned to each CPU core.</p></td>
+cores on a workstation, or on a cluster. Tip: the computation on each 
+file will be parallel assigned to each CPU core.</p></td>
     </tr>
     <tr>
       <th>plot</th>
@@ -212,14 +212,15 @@ passed to a variable, one can then export the trackll with this variable.</p></l
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>msd() calculate track (/trajectory)'s mean square displacement as a function
-of time (dt). For a track of N steps, at each dt, there are N-dt number of
-sub-trajectory/sub-tracks, mean of dt-wise sub-trajectories/ step-wise sub
-tracks average subtracks into one number at each dt.</p>
-<p>the dt number of su-btracks each contains N:N-dt steps. Because minimum step
-is 1 (N-dt &gt; = 1), so the maxium dt is N-1 (dt &lt; = N-1). As dt increase, the
-number of steps used to generate that mean decrease with the maxmum dt
-(dt=N-1) generated from one step.</p>
+    <p>msd() calculate track (/trajectory)'s mean square displacement as a 
+function of time (dt). For a track of N steps, at each dt, there are N-dt 
+number of sub-trajectory/sub-tracks, mean of dt-wise 
+sub-trajectories/step-wise sub tracks average subtracks into one number at 
+each dt.</p>
+<p>the dt number of su-btracks each contains N:N-dt steps. Because minimum 
+step is 1 (N-dt &gt; = 1), so the maxium dt is N-1 (dt &lt; = N-1). As dt 
+increase, the number of steps used to generate that mean decrease with the 
+maxmum dt (dt=N-1) generated from one step.</p>
 <p>if one wants to focus on a group of trajectory's evolution, he can simply
 filter on a number that is bigger than the dt he wanted to plot MSD.</p>
 <p>by assinging cores, computation is paralelled on each each list of trackll

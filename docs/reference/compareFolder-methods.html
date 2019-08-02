@@ -138,7 +138,7 @@ of the resulting list.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>folders</th>
-      <td><p>a vector storing paths to the folders location."..."
+      <td><p>a vector storing paths to the folders location.'...'
 indicates multiple (unlimited) folders can be added into the function.</p></td>
     </tr>
     <tr>
@@ -148,7 +148,8 @@ file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).</p></td>
     </tr>
     <tr>
       <th>ab.track</th>
-      <td><p>a Logical indicating if absolute coordinates should be used.</p></td>
+      <td><p>a Logical indicating if absolute coordinates should be 
+used.</p></td>
     </tr>
     <tr>
       <th>cores</th>
@@ -168,8 +169,8 @@ folder. This list can then be fed into other functions for comparison.</p></li>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>folder1</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"SWR1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
-<span class='no'>folder2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"HTZ1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+    <pre class="examples"><div class='input'><span class='no'>folder1</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'SWR1'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
+<span class='no'>folder2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'HTZ1'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='no'>trackll</span><span class='kw'>=</span><span class='fu'>compareFolder</span>(<span class='kw'>folders</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>folder1</span>,<span class='no'>folder2</span>), <span class='kw'>input</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 #&gt; 

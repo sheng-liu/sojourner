@@ -148,16 +148,16 @@
 
     <p>IMPORTANT: Once a trackll has been merged, it cannot be masked using 
 maskTracks().</p>
-<p>Merging creates the following data structure: (1) first level is the folder 
-name, (2) second level is a list of data.frames/tracks from all output files
- merged into one.</p>
-<p>If not merged, track lists takes the name of individual files in the folder.
-If merged, the single merged track list takes the folder name.</p>
+<p>Merging creates the following data structure: (1) first level is the 
+folder name, (2) second level is a list of data.frames/tracks from all 
+output files merged into one.</p>
+<p>If not merged, track lists takes the name of individual files in the 
+folder. If merged, the single merged track list takes the folder name.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#Basic masking with folder path with image masks</span>
-<span class='no'>folder</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"SWR1"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sojourner"</span>)
+<span class='no'>folder</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>, <span class='st'>'SWR1'</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'sojourner'</span>)
 <span class='no'>trackll</span><span class='kw'>=</span><span class='fu'><a href='createTrackll-methods.html'>createTrackll</a></span>(<span class='kw'>folder</span><span class='kw'>=</span><span class='no'>folder</span>, <span class='kw'>input</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 #&gt; 

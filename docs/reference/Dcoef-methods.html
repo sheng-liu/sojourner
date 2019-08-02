@@ -127,7 +127,7 @@
 
     <pre class="usage"><span class='fu'>Dcoef</span>( <span class='kw'>MSD</span><span class='kw'>=</span><span class='kw'>NULL</span>,<span class='kw'>trackll</span><span class='kw'>=</span><span class='kw'>NULL</span>,<span class='kw'>dt</span><span class='kw'>=</span><span class='fl'>6</span>,<span class='kw'>filter</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>min</span><span class='kw'>=</span><span class='fl'>7</span>,<span class='kw'>max</span><span class='kw'>=</span><span class='fl'>Inf</span>),<span class='kw'>rsquare</span><span class='kw'>=</span><span class='fl'>0.8</span>,
 <span class='kw'>resolution</span><span class='kw'>=</span><span class='fl'>0.107</span>, <span class='kw'>binwidth</span><span class='kw'>=</span><span class='kw'>NULL</span>,
-<span class='kw'>method</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"static"</span>,<span class='st'>"percentage"</span>,<span class='st'>"rolling.window"</span>),
+<span class='kw'>method</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'static'</span>,<span class='st'>'percentage'</span>,<span class='st'>'rolling.window'</span>),
 <span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>output</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>t.interval</span><span class='kw'>=</span><span class='fl'>0.01</span>,<span class='kw'>profile</span><span class='kw'>=</span><span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -136,7 +136,7 @@
     <tr>
       <th>MSD</th>
       <td><p>Mean Square Displacement calculated using msd() function. 
-Either MSD or trackll can be passed into Dcoef for calculation of diffusion 
+Either MSD or trackll can be passed into Dcoef for calculation of diffusion
 coefficient.</p></td>
     </tr>
     <tr>
@@ -155,8 +155,8 @@ than (&gt;=) min and less than (&lt;) max.</p></td>
     </tr>
     <tr>
       <th>rsquare</th>
-      <td><p>rsquare filter on Dcoef results. Default to be 0.8. Set value
-to 0 if rsquare filter is not desired.</p></td>
+      <td><p>rsquare filter on Dcoef results. Default to be 0.8. Set 
+value to 0 if rsquare filter is not desired.</p></td>
     </tr>
     <tr>
       <th>resolution</th>
@@ -169,16 +169,16 @@ assign binwidth.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>"static", uses time lags 2~5 to calculate diffusion
-coefficient; "percentage", uses (tierd) percentage (default 0.25) of time
-lags (see Details). "rolling.window", time lags uses for Dcoef follows a
+      <td><p>'static', uses time lags 2~5 to calculate diffusion
+coefficient; 'percentage', uses (tierd) percentage (default 0.25) of time
+lags (see Details). 'rolling.window', time lags uses for Dcoef follows a
 rolling window with specified window size (default 4).</p></td>
     </tr>
     <tr>
       <th>plot</th>
       <td><p>A parameter for plotting. Default FALSE, no plot; If TRUE,
-automatically plots "histogram" with count information, binwidth can be
-set through parameter binwidth; as well as "density" with
+automatically plots 'histogram' with count information, binwidth can be
+set through parameter binwidth; as well as 'density' with
 density/frequency.</p></td>
     </tr>
     <tr>
@@ -193,9 +193,9 @@ for detail.</p></td>
     <tr>
       <th>profile</th>
       <td><p>Location of preference file. By default (NULL), it is stored
-at : system.file("extdata","PREF","profile.csv",package="sojourner"). User
- can provide preference file by specifying the location of the file, e.g. 
- profile="/Users/shengliu/Desktop/profile.csv".</p></td>
+at : system.file('extdata','PREF','profile.csv',package='sojourner').
+User can provide preference file by specifying the location of the file, 
+e.g. profile='/Users/shengliu/Desktop/profile.csv'.</p></td>
     </tr>
     </table>
     
@@ -214,17 +214,17 @@ at : system.file("extdata","PREF","profile.csv",package="sojourner"). User
 
     <p>Generic parameters (parameter applied to all methods, such as
 resolution etc) are set in the function. Method dependent parameters (such
-as lag.start, lag.end for method = "static"), are stored in profile.csv in
+as lag.start, lag.end for method = 'static'), are stored in profile.csv in
 PREF folder under extdata. To change preference parameter, can either
 programably or manually go to folder
-system.file("extdata","PREF","profile.csv",package="sojourner"), and c
+system.file('extdata','PREF','profile.csv',package='sojourner'), and c
 hange the profile.csv.</p>
 <p>lag.start: time lag used as start of dt for compute Dcoef. Default 2.
 lag.end: Time lag used as end of dt for compute Dcoef. Default 2.</p>
 <p>method for calculating Dcoef:</p><ul>
 <li><p><b>static</b> stabilize the number of time lags used for fitting
     using time lag 2~ 5 despite the total time lags measured.</p></li>
-<li><p><b>percentage</b> "percentage", uses (tierd) percentage (default
+<li><p><b>percentage</b> 'percentage', uses (tierd) percentage (default
     0.25) of time lags.</p><table class='table'>
 <tr><td></td><td>[,1]</td><td>TrackLength</td><td>Percentage</td></tr>
 <tr><td>TimeLagsForFitting</td><td></td><td>[,2]</td><td>31~</td></tr>
@@ -236,14 +236,14 @@ lag.end: Time lag used as end of dt for compute Dcoef. Default 2.</p>
 <tr><td>1</td><td>2~5-2~7</td><td></td><td>[,1]</td></tr>
 </table>
 </li>
-<li><p><b>rolling.window</b>  time lags uses for Dcoef follows a rolling 
+<li><p><b>rolling.window</b>  time lags uses for Dcoef follows a rolling
     window with specified window size (default 4).</p></li>
 </ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># compare files</span>
-<span class='no'>folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"SWR1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+<span class='no'>folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'SWR1'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='no'>trackll</span> <span class='kw'>=</span> <span class='fu'><a href='createTrackll-methods.html'>createTrackll</a></span>(<span class='kw'>folder</span><span class='kw'>=</span><span class='no'>folder</span>, <span class='kw'>input</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 #&gt; 
@@ -252,7 +252,7 @@ lag.end: Time lag used as end of dt for compute Dcoef. Default 2.</p>
 #&gt; Process complete.</div><div class='input'><span class='no'>MSD</span><span class='kw'>=</span><span class='fu'><a href='msd-methods.html'>msd</a></span>(<span class='kw'>trackll</span><span class='kw'>=</span><span class='no'>trackll</span>)</div><div class='output co'>#&gt; applying filter, min 7   max Inf 
 #&gt;  45 	tracks length &gt; &amp; =	 1 45 	tracks length &gt; &amp; =	 2 45 	tracks length &gt; &amp; =	 3 45 	tracks length &gt; &amp; =	 4 45 	tracks length &gt; &amp; =	 5 45 	tracks length &gt; &amp; =	 6
 #&gt; 
-#&gt; ...</div><div class='input'><span class='fu'>Dcoef</span>(<span class='kw'>MSD</span><span class='kw'>=</span><span class='no'>MSD</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"static"</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+#&gt; ...</div><div class='input'><span class='fu'>Dcoef</span>(<span class='kw'>MSD</span><span class='kw'>=</span><span class='no'>MSD</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>'static'</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
 #&gt; applying static,lag.start= 2 	 lag.end= 5 
 #&gt; lag.start   2 	 lag.end   5 
 #&gt; 
@@ -262,8 +262,8 @@ lag.end: Time lag used as end of dt for compute Dcoef. Default 2.</p>
 #&gt; Plotting density...
 #&gt; auto binwidth = 0.2613932 </div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 3 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 3 rows containing non-finite values (stat_density).</span></div><div class='img'><img src='Dcoef-methods-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># compare folders</span>
-<span class='no'>folder1</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"SWR1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
-<span class='no'>folder2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>,<span class='st'>"HTZ1"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>"sojourner"</span>)
+<span class='no'>folder1</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'SWR1'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
+<span class='no'>folder2</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'extdata'</span>,<span class='st'>'HTZ1'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'sojourner'</span>)
 <span class='no'>trackll2</span><span class='kw'>=</span><span class='fu'><a href='compareFolder-methods.html'>compareFolder</a></span>(<span class='kw'>folders</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>folder1</span>,<span class='no'>folder2</span>), <span class='kw'>input</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; 
 #&gt; Reading ParticleTracker file:  SWR1_WT_140mW_image6.csv ...
 #&gt; 
@@ -283,7 +283,7 @@ lag.end: Time lag used as end of dt for compute Dcoef. Default 2.</p>
 #&gt; 
 #&gt; Merging of folder HTZ1 complete.
 #&gt; 
-#&gt; ...</div><div class='input'><span class='fu'>Dcoef</span>(<span class='kw'>trackll</span><span class='kw'>=</span><span class='no'>trackll2</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"percentage"</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+#&gt; ...</div><div class='input'><span class='fu'>Dcoef</span>(<span class='kw'>trackll</span><span class='kw'>=</span><span class='no'>trackll2</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>'percentage'</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
 #&gt; applying percentage, 0.25 
 #&gt; applying filter, min 7   max Inf 
 #&gt; applying trimmer, min 1   max 31 
@@ -293,7 +293,7 @@ lag.end: Time lag used as end of dt for compute Dcoef. Default 2.</p>
 #&gt; Plotting histogram...
 #&gt; auto binwidth = 0.4251506 </div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 6 rows containing non-finite values (stat_bin).</span></div><div class='img'><img src='Dcoef-methods-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; Plotting density...
-#&gt; auto binwidth = 0.4251506 </div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 6 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 6 rows containing non-finite values (stat_density).</span></div><div class='img'><img src='Dcoef-methods-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>Dcoef</span>(<span class='kw'>trackll</span><span class='kw'>=</span><span class='no'>trackll2</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>"rolling.window"</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+#&gt; auto binwidth = 0.4251506 </div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 6 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 6 rows containing non-finite values (stat_density).</span></div><div class='img'><img src='Dcoef-methods-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>Dcoef</span>(<span class='kw'>trackll</span><span class='kw'>=</span><span class='no'>trackll2</span>,<span class='kw'>method</span><span class='kw'>=</span><span class='st'>'rolling.window'</span>,<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
 #&gt; applying rolling window...
 #&gt; applying filter, min 7   max Inf 
 #&gt;  45 	tracks length &gt; &amp; =	 1 45 	tracks length &gt; &amp; =	 2 45 	tracks length &gt; &amp; =	 3 45 	tracks length &gt; &amp; =	 4 45 	tracks length &gt; &amp; =	 5 45 	tracks length &gt; &amp; =	 6
