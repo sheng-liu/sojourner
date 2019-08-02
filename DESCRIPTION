@@ -21,5 +21,7 @@ Authors@R: c(
     person("Xiao Na","Tang", role = "aut"),
     person("Young Soo","Sung", role = "aut"),
     person("Carl","Wu", email = "wuc@jhu.edu",role = "aut"),
+    person("Anand","Ranjan", role = "ctb"),
+    person("Vu","Nguyen", role = "ctb"),
     person("Sojourner", "Developer", email = "sojourner.developer@outlook.com", role = c("cre"))
     )
