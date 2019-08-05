@@ -17,8 +17,8 @@ selecting any file in it and select input type (script will process all
 files of that type in this folder).}
 
 \item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat 
-session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4; 
-U-Track .mat file = 5).}
+session file = 2; ImageJ .csv file = 3; SLIMfast .txt file = 4; 
+u-track .mat file = 5).}
 
 \item{ab.track}{Use absolute coordinates for tracks.}
 
@@ -34,8 +34,8 @@ helpful when linking frames). Highly recommended to leave on.}
 trackll
 }
 \description{
-take in Diatrack (.txt or .mat), ImageJ (.csv), 
-SlimFast (.txt), or Utrack (.mat) input from a folder to output 
+take in Diatrack (.txt or .mat), ImageJ Particle Tracker 
+(.csv), SLIMfast (.txt), or u-track (.mat) input from a folder to output 
 a list of track lists.
 }
 \details{
@@ -51,7 +51,7 @@ Otherwise, all other data types naturally record the frames of every
 coordinate point.
 
 The pre-censoring of single-frame tracks is dependent on the tracking 
-software. For complete lossless track data, use Diatrack (.mat) session 
+software. For highest fidelity track data, use Diatrack (.mat) session 
 files.
 If the initial creation of the trackll does not have a frame record, 
 future exports and imports of the trackll will only preserve the start 

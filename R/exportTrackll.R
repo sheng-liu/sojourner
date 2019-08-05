@@ -7,7 +7,7 @@
 ##'
 
 ##' @description take in a list of track lists (trackll) and export it into 
-##' row-wise (ImageJ/MOSAIC) .csv files in the working directory
+##' row-wise (ImageJ Particle Tracker style) .csv files in the working directory
 
 ##' @usage 
 ##' exportTrackll(trackll, cores = 1)
@@ -18,9 +18,9 @@
 ##' assigned to read in a file when paralleled.
 ##' @return .csv file output
 ##' @details
-##' The reason why ImageJ/MOSAIC style .csv export was chosen is because it 
-##' fully preserves track frame data, while maintaining short computation time 
-##' and easy readability in Excel/etc.
+##' The reason why ImageJ particle Tracker style .csv export was chosen is 
+##' because it fully preserves track frame data, while maintaining short 
+##' computation time and easy readability in Excel/etc.
 ##' 
 ##' In order to import this .csv export back into a trackll at any point 
 ##' (while preserving all information), select input = 3 in createTrackll.
