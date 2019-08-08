@@ -133,9 +133,9 @@ compare_RT_CDF <- function(trackll = NULL, x.max = 30, filter = c(min = 3,
         trackllname <- append(trackllname, gsub("ST_", "", names(trackll)[i]))
         n <- append(n, length(trackll.n[[1]]))
         ## Calculate track length and 1-CDF
-        trajLength <- sapply(trackll.n[[1]], function(x) {
+        trajLength <- vapply(trackll.n[[1]], function(x) {
             (x$Frame[dim(x)[1]] - x$Frame[1] + 1) * t.interval[i]
-        })
+        }, FUN.VALUE=double(1))
         CDF <- mltools::empirical_cdf(trajLength, 
                                         ubounds = seq(min(t.interval), 
             2 * x.max, by = min(t.interval)))

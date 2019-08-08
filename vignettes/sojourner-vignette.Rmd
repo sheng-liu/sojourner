@@ -232,7 +232,6 @@ trackll.masked <- maskTracks(folder = folder, trackll = trackll.filter)
 To plot the masks:
 ```{r, eval=TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 # Plot mask
-mask.list=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
 plotMask(folder)
 ```
 
