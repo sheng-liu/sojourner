@@ -296,9 +296,16 @@ dwellTime(trackll,plot=TRUE) # default t.interval=10, x.scale=c(0,250)
 
 # Calculating Diffusion Coefficient Using MSD-Based Method
 
+Below is an example of simple analysis workflow using diffusion coefficient. 
+
+
 ```{r, eval=TRUE, messsage = FALSE, warning=FALSE, include=FALSE, echo=TRUE, results = 'hide'}
 library(sojourner)
 ```
+
+## Data Import
+
+We will need to first create a basic data structure (trackll, i.e. list of track list) for all analysis. It contains the trajectory information of all tracks in a specified folder, using createTrackll() function. 
 
 ```{r, eval = FALSE}
 
@@ -308,11 +315,29 @@ folder=system.file("extdata","HSF",package="sojourner")
 # Create track list
 trackll<-createTrackll(folder=folder, interact=FALSE, input=3, ab.track=FALSE, cores=1, frameRecord=TRUE)
 
+# Take a look at the list by 
+str(trackll,1)
+
+```
+
+## Data Clean Up
+
+We then clean up the data with filters and masks. In this case, we select only the tracks with 3 frames or more, and remove tracks that is outside of the nuclei.
+
+```{r, eval = FALSE}
 # Filter/choose tracks 3 frames or longer for all analysis
 trackll.fi<-filterTrack(trackll=trackll, filter=c(min=3,max=Inf))
 
 # Apply mask and remove tracks outside nuclei
 trackll.fi.ma<-maskTracks(folder,trackll.fi)
+
+```
+
+## Visulization of Trajectories
+
+To see how the tracks look like, we can plot the tracks over cell image (e.g. bright field image or nuclei overall fluorescence) to see the distribution of tracks.
+
+```{r, eval = FALSE}
 
 # Overlay all tracks on nuclei
 plotNucTrackOverlay(folder=folder,trackll=trackll.fi,cores=1, max.pixel=128,nrow=2,ncol=2,width=16,height=16)
@@ -321,30 +346,78 @@ plotNucTrackOverlay(folder=folder,trackll=trackll.fi,cores=1, max.pixel=128,nrow
 plotNucTrackOverlay(folder=folder,trackll=trackll.fi.ma,cores=1, max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
 # Overlay tracks color coded for diffusion coefficient
-plotTrackOverlay_Dcoef(trackll=trackll.fi.ma, Dcoef.range=c(-2,1))
+plotTrackOverlay_Dcoef(trackll=trackll.fi.ma, Dcoef.range=c(-2,1), rsquare=0.8, t.interval=0.01, dt=6, resolution=0.107)
+
+```
+we used Dcoef.range	to select tracks whose Dcoef is within the range. Other tracks will not be plotted.
+
+
+## Analysis
+
+We then move on to the analysis of the biophysical properties of a molecule, e.g. mean square displacement (MSD), diffusion coefficient (Dcoef), residence time (RT) etc. 
+
+For an overall view of one factor, we may want to merge all tracks in a folder. 
+
+```{r, eval = FALSE}
 
 # Merge tracks from different image files in the folder
 trackll.fi.ma.me=c(mergeTracks(folder, trackll.fi.ma))
 
-# calculate MSD for all tracks longer than 3 frames
-msd(trackll.fi.ma.me,dt=20,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
 
-trackll.combine.trim=trimTrack(trackll.fi.ma.me,trimmer=c(1,11))
+```
+
+And sometimes, we may have data of same type in multiple folders and want to combine them together. 
+
+```{r, eval = FALSE}
+folder2=system.file('extdata','HSF_2',package='sojourner')
+trackll2=createTrackll(folder2,input=2, cores = 1)
+trackll2=maskTracks(folder2,trackll2)
+trackll2=mergeTracks(folder2,trackll2)
+
+# Combine the tracklls together
+Trackll.combine=combineTrackll(trackll=c(trackll,trackll2),merged=TRUE)
+```
+
+Now we can calculate msd, Dcoef, and residence time of a molecule. 
+
+```{r, eval = FALSE}
+# calculate MSD for all tracks longer than 3 frames
+msd(Trackll.combine,dt=20,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
+
+```
+
+For some analysis, we may just want to a portion of the trajectory, this can be done by using trimTrack() function.
+
+```{r, eval = FALSE}
+trackll.combine.trim=trimTrack(Trackll.combine,trimmer=c(1,11))
+
+msd(trackll.combine.trim,dt=10,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
 
 Dcoef(trackll=trackll.combine.trim,dt=5, filter=c(min=6,max=Inf), method="static", plot=TRUE, output=TRUE)
 
-msd(trackll.combine.trim,dt=10,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
+```
+
+
+```{r, eval = FALSE}
+## calculating displacement CDF
 
 # Calculate all dislacement frequency and displacement CDF for all tracks longer than 3 frames
 displacementCDF(trackll.combine.trim, dt=1, plot=TRUE, output=TRUE)
 
-# Calculate all dislacement frequency and displacement CDF for all tracks longer than 3 frames
-displacementCDF(trackll.combine.trim, dt=2, plot=TRUE, output=TRUE)
+```
 
-# End
+```{r, eval = FALSE}
+## Analysis for Residence time. 
+
+# Calculate 1-CDF (survival probability) of the dwell time/residence time of all tracks (not trimmed) longer than 3 frames
+compare_RT_CDF(trackll= Trackll.combine, x.max=100, filter=c(min=3,max=Inf), t.interval=0.5, output=FALSE)
+
+# Calculate residence time of tracks by 2-component exponential decay fitting of the 1-CDF curve
+fitRT(trackll= trackll.fi.ma.me, x.max=100, N.min=1.5, t.interval=0.5)
 
 ```
 
+This is just a brief example of analysis one can do using the statistic tools provided in sojourner package. Further information regarding function usage or analysis techniques can be found on https://sheng-liu.github.io/sojourner/ website.
 
 # sojournerGUI: A Shiny Interface
 
