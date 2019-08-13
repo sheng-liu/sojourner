@@ -30,8 +30,8 @@ lines/ploygons}
 \item{separate}{Separate by cluster}
 
 \item{buildModel}{Manually configure the kernel density probability (p), 
-while continuously building a model. T to create a model or improve an 
-existing model. F to load in a MODEL.csv for automatic masking.}
+while continuously building a model. TRUE to create a model or improve an 
+existing model. FALSE to load in a MODEL.csv for automatic masking.}
 }
 \value{
 masked trackll
@@ -64,9 +64,9 @@ Applying this separate parameter to a list of track lists from multiple
 videos will simply append all the separated clusters together. Each track
 list is named 'c#' as the header. The # indicating the cluster number.
 
-The removeEdge parameter allwos users to automatically remove any clusters
+The removeEdge parameter allows users to automatically remove any clusters
 that are on edges and/or have an incomplete contour line (discontinuous
-polgon)
+polygon)
 
 Use plotPoints and plotLines to plot lists of track lists into
 separate scatter/line plots. Use plotPointsTrackl and plotLinesTrackl for a

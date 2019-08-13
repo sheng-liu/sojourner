@@ -24,8 +24,8 @@
 ##' lines/ploygons
 ##' @param separate Separate by cluster
 ##' @param buildModel Manually configure the kernel density probability (p), 
-##' while continuously building a model. T to create a model or improve an 
-##' existing model. F to load in a MODEL.csv for automatic masking.
+##' while continuously building a model. TRUE to create a model or improve an 
+##' existing model. FALSE to load in a MODEL.csv for automatic masking.
 ##' @return masked trackll
 ##' @details
 ##' 
@@ -52,9 +52,9 @@
 ##' videos will simply append all the separated clusters together. Each track
 ##' list is named 'c#' as the header. The # indicating the cluster number.
 ##' 
-##' The removeEdge parameter allwos users to automatically remove any clusters
+##' The removeEdge parameter allows users to automatically remove any clusters
 ##' that are on edges and/or have an incomplete contour line (discontinuous
-##' polgon)
+##' polygon)
 ##' 
 ##' Use plotPoints and plotLines to plot lists of track lists into
 ##' separate scatter/line plots. Use plotPointsTrackl and plotLinesTrackl for a
@@ -213,10 +213,10 @@ createMask = function(track.list, scale = 128, kernel.density, p = NULL,
     dy <- diff(kernel.density$y[seq_len(2)])
     sz <- sort(kernel.density$z)
     c1 <- cumsum(sz) * dx * dy
-    levels <- sapply(prob, function(x) {
+    levels <- vapply(prob, function(x) {
         approx(c1, sz, xout = 1 - x)$y
-    })
-    
+    }, double(1))
+
     # Create the countour polygon with using coordinate points
     ls <- contourLines(kernel.density, levels = levels)
     

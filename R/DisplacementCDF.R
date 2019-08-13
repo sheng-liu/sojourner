@@ -159,7 +159,7 @@ displacement.track=function(track,dt=1,resolution=0.107,bivar=FALSE){
 displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
 
     # validity check for max track length greater than dt
-    track.len=sapply(trackl,function(x) dim(x)[1])
+    track.len=vapply(trackl,function(x) dim(x)[1], integer(1))
     if (dt>(max(track.len)-1)) {
         stop("\nmax track length:\t",max(track.len),
             "\ndt:\t\t\t",dt,
@@ -194,12 +194,10 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
 
         num.tracks[i]=length(trackl.dt)
         
-
-            displacement.individual=sapply(trackl.dt,function(x){
+            displacement.individual=lapply(trackl.dt,function(x){
                 displacement.track(
-                    track=x,dt=i,resolution=resolution,bivar=bivar)},
-                simplify = FALSE)
-        
+                    track=x,dt=i,resolution=resolution,bivar=bivar)})
+
 
         # as the result is of different length, the output is a list
     }
@@ -210,13 +208,10 @@ displacement.trackl=function(trackl,dt=1,resolution=0.107,bivar=FALSE){
         # calculate mean and sd for displacement at each dt
         N=length(displacement.individual)
         for ( i in seq_len(N)){
-            displacement.summarized[i]=list(sapply(
-                displacement.individual[[i]],mean,na.rm=TRUE,simplify=FALSE))
-
-            std.summarized[i]=list(sapply(
-        #displacement.individual[[i]],function(x){sd(x)/N},na.rm=TRUE,
-        #        simplify=FALSE))
-            displacement.individual[[i]],sd,na.rm=TRUE,simplify=FALSE))
+            displacement.summarized[i]=list(lapply(
+                displacement.individual[[i]],mean,na.rm=TRUE))
+            std.summarized[i]=list(lapply(
+                displacement.individual[[i]],sd,na.rm=TRUE))
         }
 
         names(displacement.summarized)=names(displacement.individual)

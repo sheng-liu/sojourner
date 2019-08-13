@@ -59,9 +59,23 @@ dwellTime = function(trackll, t.interval = 10, x.scale = c(min = 0, max = 250),
     plot = TRUE, output = FALSE) {
     
     ## compute dwell time
-    dwell.time = sapply(trackll, function(x) {
+    
+    #dwell.times = sapply(trackll, function(x) {
+    #    .dwellTime(x, t.interval)
+    #})
+    
+    dwell.time = lapply(trackll, function(x) {
         .dwellTime(x, t.interval)
     })
+    # lapply() replacement with sapply() requires special case
+    if (length(trackll)==1){
+        dwell.time = matrix(unlist(dwell.time), 
+            dimnames = list(names(unlist(dwell.time))))
+        
+        colnames(dwell.time) <- names(trackll)
+        rownames(dwell.time) = lapply(rownames(dwell.time),function(x){
+            gsub(paste(names(trackll),".",sep=""), "",x)})
+    }
     
     file.name = names(trackll)
     

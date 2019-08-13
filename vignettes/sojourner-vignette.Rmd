@@ -349,8 +349,8 @@ plotNucTrackOverlay(folder=folder,trackll=trackll.fi.ma,cores=1, max.pixel=128,n
 plotTrackOverlay_Dcoef(trackll=trackll.fi.ma, Dcoef.range=c(-2,1), rsquare=0.8, t.interval=0.01, dt=6, resolution=0.107)
 
 ```
-we used Dcoef.range	to select tracks whose Dcoef is within the range. Other tracks will not be plotted.
 
+We used Dcoef.range to select tracks whose Dcoef is within the range. Other tracks will not be plotted.
 
 ## Analysis
 

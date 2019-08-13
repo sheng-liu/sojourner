@@ -5,8 +5,8 @@
 ##' @rdname hmmTrackll-methods
 ##' @docType methods
 ##'
-##' @description Convert trackll to a (bivarte) displacement format for Hidden 
-##' Markov Model fitting.
+##' @description Convert trackll to a (bivariate) displacement format for 
+##' Hidden Markov Model fitting.
 ##' @usage
 ##' hmmTrackll(trackll, t.interval=0.01)
 
@@ -78,10 +78,16 @@ hmmTrackll = function(trackll, t.interval = 0.01) {
     # data=dp$stepwise.displacement }
     
     # if (numericIndex == FALSE){
-    
-    dat = sapply(data, function(x) {
+    # 
+    # "InidvidualDisplacement" name tag shifted to list level
+    # not list of list level when using vapply() over sapply()
+    #dats = sapply(data, function(x) {
+    #    x["InidvidualDisplacement"]
+    #})
+    dat = vapply(data, function(x) {
         x["InidvidualDisplacement"]
-    })
+    }, list(1))
+    names(dat) <- names(data)
     
     # rownames(dat) lapply(dat,function(x){ for (i in seq_along(x)){
     # y=rownames(x[[i]]) } y })
@@ -107,19 +113,19 @@ hmmTrackll = function(trackll, t.interval = 0.01) {
         # mage6.1026.2.109.109 3 10 1 mage6.1030.2.110.110 mage6.1042.2.111.111
         # mage6.11.12.5.5 1 1 11
         
-        track.len = sapply(dat[[i]], function(x) {
+        track.len = vapply(dat[[i]], function(x) {
             dim(x)[1]
-        })
-        
+        }, integer(1))
         
         
         # from tb.index generate time
-        time.lst = sapply(names(track.len), function(x) {
+        time.lst = lapply(names(track.len), function(x) {
             t = data.frame(seq(from = t.interval, 
-                to = track.len[x] * t.interval, by = t.interval))
+                               to = track.len[x] * t.interval, by = t.interval))
             names(t) = "time"
             return(t)
-        }, simplify = FALSE, USE.NAMES = TRUE)
+        })
+        names(time.lst) <- names(track.len)
         
         # # lapply code is change from this for loop time=list() for (j in
         # seq_along(names(track.len))){ time[[j]]=seq(
@@ -144,13 +150,14 @@ hmmTrackll = function(trackll, t.interval = 0.01) {
         # 'mage6.1.4.1.1' 'mage6.1.4.1.1' 'mage6.1.4.1.1' ...
         
         # track unique id trackStepIndex
-        id.lst = sapply(names(track.len), function(x, t.interval = 1) {
+        id.lst = lapply(names(track.len), function(x, t.interval = 1) {
             id = data.frame(seq(from = t.interval, to = track.len[x] * 
-                t.interval, by = t.interval))
+                                    t.interval, by = t.interval))
             names(id) = "trackStepIndex"
             return(id)
-        }, simplify = FALSE, USE.NAMES = TRUE)
-        
+        })
+        names(id.lst) <- names(track.len)
+
         
         # with Mapp no need for these id.df=reshape2::melt(id.lst)
         # colnames(id.df)=c('stepNum','trackIndex')

@@ -106,6 +106,8 @@
 ##' @export fitNormDistr
 ###############################################################################
 # fit normal distribution to diffusion coefficient
+# 
+# TO DO: combine.plot=TRUE requires additional testing
 
 #function that deals with one-component normal distribution fitting
 .singlecompFit=function(data, mean=NULL, sd=NULL, constrain=FALSE){
@@ -262,12 +264,12 @@
 
         # same scale, same binwidth, same breaks
         ss=same.scale(mixmdl.lst)
-
+        
         # auto binwidth, smaller of the two
         if (is.null(binwidth)) {
-            binwidth.vec=sapply(mixmdl.lst,function(mdl){
+            binwidth.vec=vapply(mixmdl.lst,function(mdl){
                 auto.binwidth(mdl$x)
-            })
+            },double(1))
 
             binwidth=min(binwidth.vec)
             cat("\ncombined binwidth =",binwidth,"\n")

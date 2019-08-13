@@ -16,8 +16,8 @@ hmmTrackll(trackll, t.interval=0.01)
 Hidden Markov Model fitted trackll
 }
 \description{
-Convert trackll to a (bivarte) displacement format for Hidden 
-Markov Model fitting.
+Convert trackll to a (bivariate) displacement format for 
+Hidden Markov Model fitting.
 }
 \details{
 dx, displacement on x.

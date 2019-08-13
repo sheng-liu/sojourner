@@ -39,10 +39,10 @@ Dcoef.static = function(MSD, lag.start = 2, lag.end = 5, t.interval = 0.01) {
     # setup and its comparison
     
     # change shape of the matrix
-    D.coef = sapply(D.coef, function(x) {
+    D.coef = lapply(D.coef, function(x) {
         t(x)
-    }, simplify = FALSE)
-    
+    })
+
     return(D.coef)
 }
 
@@ -258,10 +258,10 @@ Dcoef.perc = function(trackll, percentage = 0.25, weighted = FALSE,
     
     
     # this changes shape/format into a matrix
-    D.coef = sapply(D.coef, function(x) {
+    D.coef = lapply(D.coef, function(x) {
         do.call(rbind, x)
-    }, simplify = FALSE)
-    
+    })
+
     return(D.coef)
     
 }
