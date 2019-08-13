@@ -49,9 +49,9 @@
 ## file
 
 .dwellTime = function(trackl, t.interval = 10) {
-    sapply(trackl, function(x) {
+    vapply(trackl, function(x) {
         dim(x)[1] * t.interval
-    })
+    }, FUN.VALUE=double(1))
 }
 
 
@@ -62,6 +62,7 @@ dwellTime = function(trackll, t.interval = 10, x.scale = c(min = 0, max = 250),
     dwell.time = sapply(trackll, function(x) {
         .dwellTime(x, t.interval)
     })
+    
     file.name = names(trackll)
     
     ## reshape data for plot

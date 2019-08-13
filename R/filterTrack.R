@@ -64,12 +64,11 @@ filterTrack = function(trackll, filter = c(min = 7, max = Inf)) {
     cat("applying filter, min", filter["min"], "  max", filter["max"], 
         "\n")
     
-    
     track.len = list()
     for (i in seq_along(trackll)) {
-        track.len[[i]] = sapply(trackll[[i]], function(track) {
+        track.len[[i]] = vapply(trackll[[i]], function(track) {
             dim(track)[1]
-        })
+        }, integer(1))
         trackll[[i]] = trackll[[i]][track.len[[i]] >= 
             filter["min"] & track.len[[i]] < filter["max"]]
     }
@@ -123,9 +122,9 @@ trackLength = function(trackll) {
     names(len) = names(trackll)
     
     for (i in seq_along(trackll)) {
-        len[[i]] = sapply(trackll[[i]], function(track) {
+        len[[i]] = vapply(trackll[[i]], function(track) {
             dim(track)[1]
-        })
+        }, integer(1))
     }
     return(len)
 }

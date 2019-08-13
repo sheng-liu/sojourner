@@ -325,7 +325,7 @@ indexCell = function(folder, trackll, areaFilter = c(0, Inf),
         ## Display Area ##
         cat(maskl.names[[i]], "\n", "Cell Areas (pixels squared): ", "\n", 
             sep = "")
-        areal <- sapply(pos.points.indexed, nrow)
+        areal <- vapply(pos.points.indexed, nrow, FUN.VALUE=integer(1))
         cat(cat(areal, sep = "\n"))
         areas <- append(areas, areal)
         

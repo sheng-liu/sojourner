@@ -223,24 +223,23 @@ fitRT=function(trackll=NULL,x.max=30,N.min=1.5,t.interval=0.5,
 
     ############ Get trajectory information####################
     if(is.null(trackll)){
-    trackll.label<-readline(cat("Enter the trackll you want to fit:    "))
-    name=names(get(paste(trackll.label)))
-    name=gsub("ST_","",name)
-    title=paste("Residence time fitting of ",name,sep="")
-    trackll<-get(paste(trackll.label))
-    }
-    else{
-    name=names(trackll)
-    name=gsub("ST_","",name)
-    title=paste("Residence time fitting of ",name,sep="")
+        trackll.label<-readline(cat("Enter the trackll you want to fit:    "))
+        name=names(get(paste(trackll.label)))
+        name=gsub("ST_","",name)
+        title=paste("Residence time fitting of ",name,sep="")
+        trackll<-get(paste(trackll.label))
+    } else {
+        name=names(trackll)
+        name=gsub("ST_","",name)
+        title=paste("Residence time fitting of ",name,sep="")
     }
     filter=c(min=N.min/t.interval,max=Inf)
     trackll<-filterTrack(trackll,filter=filter)
 
     ########## Generate 1-CDF of dwell time (trajectory length) ###############
     #library(mltools)
-    trajLength<-sapply(trackll[[1]],function(x){(
-        x$Frame[dim(x)[1]]-x$Frame[1]+1)*t.interval})
+    trajLength<-vapply(trackll[[1]],function(x){(
+        x$Frame[dim(x)[1]]-x$Frame[1]+1)*t.interval}, FUN.VALUE=double(1))
     CDF<-mltools::empirical_cdf(trajLength,ubounds=seq(t.interval, 
                                                        max(trajLength), 
                                                        by=t.interval))

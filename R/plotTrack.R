@@ -220,9 +220,8 @@
     # trackl is just a list of trajectories, with no upper level indicating 
     # folder
     ab.trackl.res=lapply(ab.trackl,function(x) x*resolution)
-    m=max(sapply(ab.trackl.res,max))
-    
-    
+    m=max(vapply(ab.trackl.res,max, double(1)))
+
     # add names to each plot
     name=names(ab.trackl)
     

@@ -99,9 +99,8 @@
         length(df$Frame)
     }
     
-    frame.id = sapply(track.list, init.fm)
-    duration = sapply(track.list, duration.fm)
-    
+    frame.id = vapply(track.list, init.fm, integer(1))
+    duration = vapply(track.list, duration.fm, integer(1))
     
     ## TODO, modify the macro to remove the last affix .tif in xxx.tif.csv
     ## for now

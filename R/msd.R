@@ -170,7 +170,7 @@ msd_track=function(track,dt=6,resolution=0.107,at.dt=FALSE){
 msd.trackl=function(trackl,dt=6,resolution=0.107){
 
     # extrack track length
-    track.len=sapply(trackl,function(x) dim(x)[1])
+    track.len=vapply(trackl,function(x) dim(x)[1], integer(1))
 
     # stop if dt greater than max track length
     if (dt>(max(track.len)-1)) {
@@ -204,9 +204,9 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
             }
 
         # calculate msd_track for dt=i
-        msd.individual[[i]]=sapply(trackl.sel,function(x){
+        msd.individual[[i]]=vapply(trackl.sel,function(x){
             msd_track(track=x,dt=i,resolution=resolution,at.dt=TRUE)
-            },simplify=TRUE)
+            },FUN.VALUE=double(1))
 
         # calculate summarized msd and se
         N=length(msd.individual[[i]])
@@ -531,7 +531,7 @@ msd_track_vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
     names(msd.lst)=names(trackll)
 
 
-    track.name=sapply(vecdt,names)
+    track.name=lapply(vecdt,names)
 
     # i folder name level
     for (i in seq_along(trackll)){
@@ -606,13 +606,13 @@ msd_perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
     N=list()
 
     for (i in seq_along(trackll)){
-        N[[i]]=sapply(trackll[[i]],function(x){dim(x)[1]})
+        N[[i]]=vapply(trackll[[i]],function(x){dim(x)[1]},integer(1))
     }
     names(N)=names(trackll)
 
     # n, number of frames used for MSD calculation
     n=N
-    l=sapply(n,function(x) length(x))
+    l=vapply(n,function(x) length(x), integer(1))
 
 
     # for loop, use i to traversing through list, j traversing though vector

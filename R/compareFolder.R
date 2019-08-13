@@ -46,9 +46,9 @@ compareFolder = function(folders, input = 1, ab.track = FALSE, cores = 1) {
     # null.folder=sapply(folder.list,is.null)
     # folder.list=folder.list[!null.folder]
     
-    folder.list = sapply(folders, list, simplify = TRUE)
+    folder.list = vapply(folders, list, FUN.VALUE=list(1))
     
-    names(folder.list) = sapply(folder.list, basename)
+    names(folder.list) = vapply(folder.list, basename, FUN.VALUE=character(1))
     
     sample.list = list()
     

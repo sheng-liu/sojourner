@@ -144,30 +144,30 @@
         }
         # trackl=trackl[-which(sapply(trackl, is.null))]
         
-        Dcoef = sapply(trackl, function(x) {
+        Dcoef = vapply(trackl, function(x) {
             x[[2]]
-        })
+        },double(1))
         Dcoef[!is.finite(Dcoef)] <- NA
         trackl = trackl[!is.na(Dcoef)]
-        Dcoef = sapply(trackl, function(x) {
+        Dcoef = vapply(trackl, function(x) {
             x[[2]]
-        })
+        }, double(1))
         trackl = trackl[which(Dcoef >= (Dcoef.range[1]))]
-        Dcoef = sapply(trackl, function(x) {
+        Dcoef = vapply(trackl, function(x) {
             x[[2]]
-        })
+        }, double(1))
         trackl = trackl[which(Dcoef <= (Dcoef.range[2]))]
-        Rsquare = sapply(trackl, function(x) {
+        Rsquare = vapply(trackl, function(x) {
             x[[3]]
-        })
-        trackl = trackl[which(sapply(Rsquare, function(x) {
+        },double(1))
+        trackl = trackl[which(vapply(Rsquare, function(x) {
             x >= rsquare
-        }))]
-        
-        Dcoef = sapply(trackl, function(x) {
+        }, logical(1)))]
+
+        Dcoef = vapply(trackl, function(x) {
             x[[2]]
-        })
-        
+        },double(1))
+
         ## Plot trackoverlay for each file (trackl) in the un-merged trackll.
         plot.new()
         ## If image folder is provided, add nuclei background to the plot.

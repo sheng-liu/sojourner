@@ -115,10 +115,10 @@
         }
         
         # Rename row names of track to appropriate index values
-        print(track)
-        print(nrow(track))
-        rownames(track) <- sapply(seq_len(nrow(track)), toString)
-        
+        #print(track)
+        #print(nrow(track))
+        rownames(track) <- vapply(seq_len(nrow(track)), toString, character(1))
+
         # Add start frame of track to frame list
         frame.list[[length(frame.list) + 1]] <- track[[4]][[1]]
         
