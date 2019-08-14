@@ -1,5 +1,6 @@
 ---
 title: "Sojourner: an R package for statistical analysis of single molecule trajectories"
+
 author:
 - name: Sheng Liu
   affiliation:
@@ -37,6 +38,8 @@ vignette: >
 ```{r style, echo = FALSE, results = 'asis'}
   BiocStyle::markdown()
 ```
+
+![](sojourner_logo.png){width=30%}
 
 # Introduction
 
@@ -298,16 +301,11 @@ dwellTime(trackll,plot=TRUE) # default t.interval=10, x.scale=c(0,250)
 
 Below is an example of simple analysis workflow using diffusion coefficient. 
 
-
-```{r, eval=TRUE, messsage = FALSE, warning=FALSE, include=FALSE, echo=TRUE, results = 'hide'}
-library(sojourner)
-```
-
 ## Data Import
 
 We will need to first create a basic data structure (trackll, i.e. list of track list) for all analysis. It contains the trajectory information of all tracks in a specified folder, using createTrackll() function. 
 
-```{r, eval = FALSE}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 
 # Specify folder with data
 folder=system.file("extdata","HSF",package="sojourner")
@@ -324,7 +322,7 @@ str(trackll,1)
 
 We then clean up the data with filters and masks. In this case, we select only the tracks with 3 frames or more, and remove tracks that is outside of the nuclei.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 # Filter/choose tracks 3 frames or longer for all analysis
 trackll.fi<-filterTrack(trackll=trackll, filter=c(min=3,max=Inf))
 
@@ -337,7 +335,7 @@ trackll.fi.ma<-maskTracks(folder,trackll.fi)
 
 To see how the tracks look like, we can plot the tracks over cell image (e.g. bright field image or nuclei overall fluorescence) to see the distribution of tracks.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 
 # Overlay all tracks on nuclei
 plotNucTrackOverlay(folder=folder,trackll=trackll.fi,cores=1, max.pixel=128,nrow=2,ncol=2,width=16,height=16)
@@ -358,7 +356,7 @@ We then move on to the analysis of the biophysical properties of a molecule, e.g
 
 For an overall view of one factor, we may want to merge all tracks in a folder. 
 
-```{r, eval = FALSE}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 
 # Merge tracks from different image files in the folder
 trackll.fi.ma.me=c(mergeTracks(folder, trackll.fi.ma))
@@ -368,7 +366,7 @@ trackll.fi.ma.me=c(mergeTracks(folder, trackll.fi.ma))
 
 And sometimes, we may have data of same type in multiple folders and want to combine them together. 
 
-```{r, eval = FALSE}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 folder2=system.file('extdata','HSF_2',package='sojourner')
 trackll2=createTrackll(folder2,input=2, cores = 1)
 trackll2=maskTracks(folder2,trackll2)
@@ -380,7 +378,7 @@ Trackll.combine=combineTrackll(trackll=c(trackll,trackll2),merged=TRUE)
 
 Now we can calculate msd, Dcoef, and residence time of a molecule. 
 
-```{r, eval = FALSE}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 # calculate MSD for all tracks longer than 3 frames
 msd(Trackll.combine,dt=20,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
 
@@ -388,7 +386,7 @@ msd(Trackll.combine,dt=20,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,outp
 
 For some analysis, we may just want to a portion of the trajectory, this can be done by using trimTrack() function.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 trackll.combine.trim=trimTrack(Trackll.combine,trimmer=c(1,11))
 
 msd(trackll.combine.trim,dt=10,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
@@ -398,7 +396,7 @@ Dcoef(trackll=trackll.combine.trim,dt=5, filter=c(min=6,max=Inf), method="static
 ```
 
 
-```{r, eval = FALSE}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 ## calculating displacement CDF
 
 # Calculate all dislacement frequency and displacement CDF for all tracks longer than 3 frames
@@ -406,7 +404,7 @@ displacementCDF(trackll.combine.trim, dt=1, plot=TRUE, output=TRUE)
 
 ```
 
-```{r, eval = FALSE}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 ## Analysis for Residence time. 
 
 # Calculate 1-CDF (survival probability) of the dwell time/residence time of all tracks (not trimmed) longer than 3 frames
@@ -448,3 +446,14 @@ currently not supported.
 
 * Reading tracks depends on a **running session of R**, as it uses its 
 native `file.choose()` function.
+
+# SessionInfo
+
+Here is the sessionInfo() on which this document was compiled:
+
+```{r, eval = TRUE}
+sessionInfo()
+```
+
+
+
