@@ -5,48 +5,31 @@
 ## sojourner Roxygen help
 ##' @name sojourner
 ##' @aliases sojourner sojournerGUI
-##' @title sojourner-simple parameters for single molecule tracking analysis
+##' @title sojourner - statistical analysis of single molecule trajectories
 ##' @rdname sojourner
 ##' @docType package
-##' @description simple analysis on single molecule tracking data using 
-##' parameters based on mean square displacement (MSD).
+##' @description Single molecule tracking reports live biophysical properties of molecules being investigated besides their coding sequence. It has evolved as a novel approach complementing genomic sequencing. Here we provided “sojourner” package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data.
+
+
 ##' @usage
 ##' sojourner()
 ##' sojournerGUI()
 
 
-##' @details sojourner provide a simple analysis on single molecule tracking 
-##' data using parameters based on mean square displacement (MSD). Currently 
-##' includes:
-##' - duration of the tracks (dwellTime),
-##'
-##' - square displacement (squareDisp),
-##'
-##' - mean square displacement as a function of time (msd),
-##'
-##' - diffusion coefficient (Dcoef) and
-##'
-##' - emperical cumulative distribution function (eCDF) of MSD over time.
+##' @details sojourner package provides statistical analysis of biophysical properties of single molecules. Current version primarily uses mean square displacement (MSD) based analysis, more functions using displacement based and hidden Markov model based method will be added in future release.  
 ##' 
-##' @examples
-##' # Recommended that sojourner is used through command-line functions, but
-##' # can also be used with the GUI. To launch the GUI:
-##' # sojournerGUI()
-##' 
-## @seealso
+##' Current version includes: dwellTime (duration of the tracks), squareDisp (squared displacement), MSD (mean square displacement), Dcoef(diffusion coefficient), CDF(cumulative distribution function), etc., and various plotting functions for visulization. It also includes a graphical user interface (GUI) sojournerGUI(). The GUI version has the most frequently used functions but not all command line ones.
+
 ##' @import ggplot2
 ##' @import utils
 ##' @import graphics
 ##' @import grDevices
 ##' @import grid
+##' @import reshape2
+##  @importFrom reshape2 melt
+
 ##' @importFrom stats approx coef coefficients complete.cases sigma dnorm
 ##' density deviance lm median nls nls.control qt sd setNames var
-##' 
-##' 
-
-##' 
-##' @import reshape2
-## @import gridExtra @importFrom reshape2 melt
 ##' @importFrom scales cbreaks
 ##' @importFrom mixtools normalmixEM
 ##' @importFrom mixtools boot.se
@@ -75,7 +58,6 @@
 ##' @importFrom shinyjs useShinyjs
 
 ## @import dplyr
-
 ## dplyr has masked intersect, setdiff, setequal, union from base and
 ## other packages, try to use importFrom instead of import package
 

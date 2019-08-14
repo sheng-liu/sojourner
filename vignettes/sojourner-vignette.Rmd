@@ -276,13 +276,16 @@ first column. *sojourner* package contains such an example .csv file.
 
 ```{r, eval = FALSE}
 # specify the path of the file containing trajectory index names, index file
-index.file2=system.file("extdata","INDEX","indexFile2.csv",package="sojourner")
+index.file2=system.file("extdata","INDEX","indexFile2.csv",
+package="sojourner")
 # specify the folders containing the output files
-folder1=system.file("extdata","SWR1_2",package="sojourner")
+folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
 # plot trajectories specified in the trajectory index file
-plotTrackFromIndex(index.file=index.file2, movie.folder=c(folder1,folder2),input=3)
+plotTrackFromIndex(index.file=index.file2,
+                   movie.folder=c(folder1,folder2),input=3)
 ```
+
 
 The output plots the tracks based on its name, with the information contained
 in its name (i.e. start frame and length/duration), one can also pull out its
