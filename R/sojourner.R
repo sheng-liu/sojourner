@@ -4,7 +4,7 @@
 ## ----------------------------------------------------------------------------
 ## sojourner Roxygen help
 ##' @name sojourner
-##' @aliases sojourner sojournerGUI
+##' @aliases sojourner
 ##' @title sojourner - statistical analysis of single molecule trajectories
 ##' @rdname sojourner
 ##' @docType package
@@ -15,11 +15,8 @@
 ##'   related to the analysis and comprehension of high throughput single
 ##'   molecule tracking data.
 
-
-##' @usage
-##' library(sojourner)
-##' sojournerGUI()
-
+##  @usage
+## library(sojourner)
 
 ##' @details sojourner package provides statistical analysis of biophysical
 ##'   properties of single molecules. Current version primarily uses mean square
@@ -34,10 +31,10 @@
 ##'   used functions but not all command line ones.
 ##'   
 ##' 
-##' @examples
-##' library(sojourner)
-##' # not run
-##' # sojournerGUI()
+## @examples
+## # not run
+## # library(sojourner)
+## # sojournerGUI()
 ##' 
 ##' 
 ##' @import ggplot2
@@ -91,16 +88,9 @@
 ##' @importFrom sp point.in.polygon
 
 ##' @import shiny
-##' @export sojournerGUI
-##' @return launch sojourner
-sojourner = function() {
-}
 
-sojournerGUI = function() {
-    appPath = system.file("myapp", package = "sojourner")
-    shiny::runApp(appPath)
-}
+## required for roxygen2 to genrate rd files
+NULL
 
 
-# shinyjs
 

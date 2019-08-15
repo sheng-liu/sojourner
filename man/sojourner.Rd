@@ -3,16 +3,8 @@
 \docType{package}
 \name{sojourner}
 \alias{sojourner}
-\alias{sojournerGUI}
 \alias{sojourner-package}
 \title{sojourner - statistical analysis of single molecule trajectories}
-\usage{
-library(sojourner)
-sojournerGUI()
-}
-\value{
-launch sojourner
-}
 \description{
 Single molecule tracking reports live biophysical properties of
   molecules being investigated besides their coding sequence. It has evolved
@@ -33,11 +25,4 @@ sojourner package provides statistical analysis of biophysical
   plotting functions for visulization. It also includes a graphical user
   interface (GUI) sojournerGUI(). The GUI version has the most frequently
   used functions but not all command line ones.
-}
-\examples{
-library(sojourner)
-# not run
-# sojournerGUI()
-
-
 }
