@@ -1,3 +1,9 @@
+# sojourner 0.99.7
+* fixed BiocCheck error checkForSupportSiteRegistration - unblocked maintainer email account
+
+# sojourner 0.99.6
+* fixed BiocCheck warning - revised sojourner.r
+
 # sojourner 0.99.5
 * fixed various issues raised in review for Bioconductor submission. 
 
