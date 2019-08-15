@@ -29,8 +29,13 @@ output:
           toc_depth: 3
           toc_float: true
           number_sections: true
+
+# output: 
+# BiocStyle::pdf_document
+          
+          
 vignette: >
-    %\VignetteIndexEntry{sojourner package}
+    %\VignetteIndexEntry{Sojourner: an R package for statistical analysis of single molecule trajectories}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -233,19 +238,19 @@ trackll.masked <- maskTracks(folder = folder, trackll = trackll.filter)
 ```
 
 To plot the masks:
-```{r, eval=TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
+```{r, eval=TRUE, warning=FALSE, echo=TRUE, results = 'hide',fig.show="hide"}
 # Plot mask
 plotMask(folder)
 ```
 
 To plot the nuclear overlay of the un-masked data:
-```{r, eval=TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
+```{r, eval=TRUE, warning=FALSE, echo=TRUE, results = 'hide',fig.show="hide"}
 # If nuclear image is available
 plotNucTrackOverlay(folder=folder,trackll=trackll)
 ```
 
 To plot the nuclear overlay of the masked data:
-```{r, eval=TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
+```{r, eval=TRUE, warning=FALSE, echo=TRUE, results = 'hide',fig.show="hide"}
 # If nuclear image is available
 plotNucTrackOverlay(folder=folder,trackll=trackll.masked)
 ```
@@ -296,7 +301,7 @@ movie. See `? plotTrack` for more plotting options.
 One may be interested to see the distribution of the (time) length of the
 tracks. This can be done by calculating and plotting the dwell times:
 
-```{r, eval = TRUE, warning=FALSE, out.width='90%', dpi=300}
+```{r, eval = TRUE, warning=FALSE}
 dwellTime(trackll,plot=TRUE) # default t.interval=10, x.scale=c(0,250)
 ```
 
@@ -338,14 +343,16 @@ trackll.fi.ma<-maskTracks(folder,trackll.fi)
 
 To see how the tracks look like, we can plot the tracks over cell image (e.g. bright field image or nuclei overall fluorescence) to see the distribution of tracks.
 
-```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide',fig.show="hide"}
 
 # Overlay all tracks on nuclei
 plotNucTrackOverlay(folder=folder,trackll=trackll.fi,cores=1, max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
 # Overlay tracks after nuclear mask
 plotNucTrackOverlay(folder=folder,trackll=trackll.fi.ma,cores=1, max.pixel=128,nrow=2,ncol=2,width=16,height=16)
+```
 
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 # Overlay tracks color coded for diffusion coefficient
 plotTrackOverlay_Dcoef(trackll=trackll.fi.ma, Dcoef.range=c(-2,1), rsquare=0.8, t.interval=0.01, dt=6, resolution=0.107)
 
@@ -389,17 +396,20 @@ msd(Trackll.combine,dt=20,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,outp
 
 For some analysis, we may just want to a portion of the trajectory, this can be done by using trimTrack() function.
 
-```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide',fig.show="hide"}
 trackll.combine.trim=trimTrack(Trackll.combine,trimmer=c(1,11))
 
 msd(trackll.combine.trim,dt=10,resolution=0.107,summarize=TRUE,cores=1,plot=TRUE,output=TRUE)
+```
+
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 
 Dcoef(trackll=trackll.combine.trim,dt=5, filter=c(min=6,max=Inf), method="static", plot=TRUE, output=TRUE)
 
 ```
 
 
-```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide',fig.show="hide"}
 ## calculating displacement CDF
 
 # Calculate all dislacement frequency and displacement CDF for all tracks longer than 3 frames
@@ -407,18 +417,21 @@ displacementCDF(trackll.combine.trim, dt=1, plot=TRUE, output=TRUE)
 
 ```
 
-```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide',fig.show="hide"}
 ## Analysis for Residence time. 
 
 # Calculate 1-CDF (survival probability) of the dwell time/residence time of all tracks (not trimmed) longer than 3 frames
 compare_RT_CDF(trackll= Trackll.combine, x.max=100, filter=c(min=3,max=Inf), t.interval=0.5, output=FALSE)
+```
 
+
+```{r, eval = TRUE, warning=FALSE, echo=TRUE, results = 'hide'}
 # Calculate residence time of tracks by 2-component exponential decay fitting of the 1-CDF curve
 fitRT(trackll= trackll.fi.ma.me, x.max=100, N.min=1.5, t.interval=0.5)
 
 ```
 
-This is just a brief example of analysis one can do using the statistic tools provided in sojourner package. Further information regarding function usage or analysis techniques can be found on https://sheng-liu.github.io/sojourner/ website.
+This is just a brief example of analysis one can do using the statistic tools provided in sojourner package. Further information regarding function usage or analysis techniques can be found in function help docs and on https://sheng-liu.github.io/sojourner/ website.
 
 # sojournerGUI: A Shiny Interface
 

@@ -1,3 +1,6 @@
+# sojourner 0.99.5
+* fixed various issues raised in review for Bioconductor submission. 
+
 # sojourner 0.99.4
 
 * fixed Linux build error and removed extraneous .pdf files
@@ -5,7 +8,6 @@
 # sojourner 0.99.3
 
 * fixed git clone issues for Windows
-
 
 # sojourner 0.99.2
 
@@ -17,7 +19,6 @@
 
 # sojourner 0.99.0
 
-* Added a `NEWS.md` file to track changes to the package.
 * Submitted to Bioconductor
 
 

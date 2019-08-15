@@ -8,18 +8,38 @@
 ##' @title sojourner - statistical analysis of single molecule trajectories
 ##' @rdname sojourner
 ##' @docType package
-##' @description Single molecule tracking reports live biophysical properties of molecules being investigated besides their coding sequence. It has evolved as a novel approach complementing genomic sequencing. Here we provided “sojourner” package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data.
+##' @description Single molecule tracking reports live biophysical properties of
+##'   molecules being investigated besides their coding sequence. It has evolved
+##'   as a novel approach complementing genomic sequencing. Here we provided
+##'   “sojourner” package, to address statistical and bioinformatic needs
+##'   related to the analysis and comprehension of high throughput single
+##'   molecule tracking data.
 
 
 ##' @usage
-##' sojourner()
+##' library(sojourner)
 ##' sojournerGUI()
 
 
-##' @details sojourner package provides statistical analysis of biophysical properties of single molecules. Current version primarily uses mean square displacement (MSD) based analysis, more functions using displacement based and hidden Markov model based method will be added in future release.  
+##' @details sojourner package provides statistical analysis of biophysical
+##'   properties of single molecules. Current version primarily uses mean square
+##'   displacement (MSD) based analysis, more functions using displacement based
+##'   and hidden Markov model based method will be added in future release.
+##'
+##'   Current version includes: dwellTime (duration of the tracks), squareDisp
+##'   (squared displacement), MSD (mean square displacement), Dcoef(diffusion
+##'   coefficient), CDF(cumulative distribution function), etc., and various
+##'   plotting functions for visulization. It also includes a graphical user
+##'   interface (GUI) sojournerGUI(). The GUI version has the most frequently
+##'   used functions but not all command line ones.
+##'   
 ##' 
-##' Current version includes: dwellTime (duration of the tracks), squareDisp (squared displacement), MSD (mean square displacement), Dcoef(diffusion coefficient), CDF(cumulative distribution function), etc., and various plotting functions for visulization. It also includes a graphical user interface (GUI) sojournerGUI(). The GUI version has the most frequently used functions but not all command line ones.
-
+##' @examples
+##' library(sojourner)
+##' # not run
+##' # sojournerGUI()
+##' 
+##' 
 ##' @import ggplot2
 ##' @import utils
 ##' @import graphics
