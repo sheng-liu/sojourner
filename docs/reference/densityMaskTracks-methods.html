@@ -64,7 +64,7 @@ density clusters" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sojourner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
       </span>
     </div>
 
@@ -161,8 +161,8 @@ lines/ploygons</p></td>
     <tr>
       <th>buildModel</th>
       <td><p>Manually configure the kernel density probability (p), 
-while continuously building a model. T to create a model or improve an 
-existing model. F to load in a MODEL.csv for automatic masking.</p></td>
+while continuously building a model. TRUE to create a model or improve an 
+existing model. FALSE to load in a MODEL.csv for automatic masking.</p></td>
     </tr>
     </table>
     
@@ -192,9 +192,9 @@ video into their cluster components, creating a list of track lists.
 Applying this separate parameter to a list of track lists from multiple
 videos will simply append all the separated clusters together. Each track
 list is named 'c#' as the header. The # indicating the cluster number.</p>
-<p>The removeEdge parameter allwos users to automatically remove any clusters
+<p>The removeEdge parameter allows users to automatically remove any clusters
 that are on edges and/or have an incomplete contour line (discontinuous
-polgon)</p>
+polygon)</p>
 <p>Use plotPoints and plotLines to plot lists of track lists into
 separate scatter/line plots. Use plotPointsTrackl and plotLinesTrackl for a
 single track list. These track lists can be plotted at any point in

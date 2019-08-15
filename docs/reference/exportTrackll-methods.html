@@ -33,7 +33,7 @@
 <meta property="og:title" content="exportTrackll — exportTrackll" />
 
 <meta property="og:description" content="take in a list of track lists (trackll) and export it into 
-row-wise (ImageJ/MOSAIC) .csv files in the working directory" />
+row-wise (ImageJ Particle Tracker style) .csv files in the working directory" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -64,7 +64,7 @@ row-wise (ImageJ/MOSAIC) .csv files in the working directory" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sojourner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@ row-wise (ImageJ/MOSAIC) .csv files in the working directory" />
     <div class="ref-description">
     
     <p>take in a list of track lists (trackll) and export it into 
-row-wise (ImageJ/MOSAIC) .csv files in the working directory</p>
+row-wise (ImageJ Particle Tracker style) .csv files in the working directory</p>
     
     </div>
 
@@ -150,9 +150,9 @@ assigned to read in a file when paralleled.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The reason why ImageJ/MOSAIC style .csv export was chosen is because it 
-fully preserves track frame data, while maintaining short computation time 
-and easy readability in Excel/etc.</p>
+    <p>The reason why ImageJ particle Tracker style .csv export was chosen is 
+because it fully preserves track frame data, while maintaining short 
+computation time and easy readability in Excel/etc.</p>
 <p>In order to import this .csv export back into a trackll at any point 
 (while preserving all information), select input = 3 in createTrackll.</p>
 <p>If the track list does not have a fourth frame record column (not 
@@ -177,7 +177,7 @@ a track list.</p>
 <span class='fu'>exportTrackll</span>(<span class='no'>trackll</span>)</div><div class='output co'>#&gt; 
 #&gt; Writing .csv row-wise output in current directory for mage6 ...
 #&gt; 
-#&gt; mage6_19-08-02_11-19-53.csv placed in current directory.</div><div class='input'>
+#&gt; mage6_19-08-14_14-58-49.csv placed in current directory.</div><div class='input'>
 <span class='co'>#Get current working directory</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>()</div><div class='output co'>#&gt; [1] "/Volumes/SDXC Disc/Google Drive/SingleMoleculeTracking/sojourner-master/sojourner/docs/reference"</div><div class='input'>
 <span class='co'>#Import export save back into a trackll</span>
@@ -190,7 +190,11 @@ a track list.</p>
 #&gt; 
 #&gt;  19-53 read and processed.
 #&gt; 
-#&gt; Reading ParticleTracker file:  Track Coords-HTZ1-20190724_154541.csv ...</div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown columns: `Trajectory`, `Frame`, `z`</span></div><div class='output co'>#&gt; <span class='error'>Error in split.default(x = seq_len(nrow(x)), f = f, drop = drop, ...): group length is 0 but data length &gt; 0</span></div></pre>
+#&gt; Reading ParticleTracker file:  mage6_19-08-14_14-58-49.csv ...
+#&gt; 
+#&gt;  58-49 read and processed.
+#&gt; 
+#&gt; Reading ParticleTracker file:  Track Coords-HTZ1-20190802_112151.csv ...</div><div class='output co'>#&gt; <span class='warning'>Warning: Unknown columns: `Trajectory`, `Frame`, `z`</span></div><div class='output co'>#&gt; <span class='error'>Error in split.default(x = seq_len(nrow(x)), f = f, drop = drop, ...): group length is 0 but data length &gt; 0</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

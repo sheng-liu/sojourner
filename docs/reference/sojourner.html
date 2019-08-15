@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>sojourner-simple parameters for single molecule tracking analysis — sojourner • sojourner</title>
+<title>sojourner - statistical analysis of single molecule trajectories — sojourner • sojourner</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="sojourner-simple parameters for single molecule tracking analysis — sojourner" />
+<meta property="og:title" content="sojourner - statistical analysis of single molecule trajectories — sojourner" />
 
-<meta property="og:description" content="simple analysis on single molecule tracking data using 
-parameters based on mean square displacement (MSD)." />
+<meta property="og:description" content="Single molecule tracking reports live biophysical properties of molecules being investigated besides their coding sequence. It has evolved as a novel approach complementing genomic sequencing. Here we provided “sojourner” package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -64,7 +63,7 @@ parameters based on mean square displacement (MSD)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sojourner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
       </span>
     </div>
 
@@ -115,15 +114,14 @@ parameters based on mean square displacement (MSD)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>sojourner-simple parameters for single molecule tracking analysis</h1>
+    <h1>sojourner - statistical analysis of single molecule trajectories</h1>
     <small class="dont-index">Source: <a href='https://github.com/sheng-liu/sojourner/blob/master/R/sojourner.R'><code>R/sojourner.R</code></a></small>
     <div class="hidden name"><code>sojourner.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>simple analysis on single molecule tracking data using 
-parameters based on mean square displacement (MSD).</p>
+    <p>Single molecule tracking reports live biophysical properties of molecules being investigated besides their coding sequence. It has evolved as a novel approach complementing genomic sequencing. Here we provided “sojourner” package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data.</p>
     
     </div>
 
@@ -136,22 +134,10 @@ parameters based on mean square displacement (MSD).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>sojourner provide a simple analysis on single molecule tracking 
-data using parameters based on mean square displacement (MSD). Currently 
-includes:
-- duration of the tracks (dwellTime),</p>
-<p>- square displacement (squareDisp),</p>
-<p>- mean square displacement as a function of time (msd),</p>
-<p>- diffusion coefficient (Dcoef) and</p>
-<p>- emperical cumulative distribution function (eCDF) of MSD over time.</p>
+    <p>sojourner package provides statistical analysis of biophysical properties of single molecules. Current version primarily uses mean square displacement (MSD) based analysis, more functions using displacement based and hidden Markov model based method will be added in future release.</p>
+<p>Current version includes: dwellTime (duration of the tracks), squareDisp (squared displacement), MSD (mean square displacement), Dcoef(diffusion coefficient), CDF(cumulative distribution function), etc., and various plotting functions for visulization. It also includes a graphical user interface (GUI) sojournerGUI(). The GUI version has the most frequently used functions but not all command line ones.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># Recommended that sojourner is used through command-line functions, but
-# can also be used with the GUI. To launch the GUI:
-# sojournerGUI()
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -160,9 +146,7 @@ includes:
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

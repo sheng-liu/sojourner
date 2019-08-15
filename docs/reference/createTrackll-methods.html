@@ -32,8 +32,8 @@
 
 <meta property="og:title" content="createTrackll — createTrackll" />
 
-<meta property="og:description" content="take in Diatrack (.txt or .mat), ImageJ (.csv), 
-SlimFast (.txt), or Utrack (.mat) input from a folder to output 
+<meta property="og:description" content="take in Diatrack (.txt or .mat), ImageJ Particle Tracker 
+(.csv), SLIMfast (.txt), or u-track (.mat) input from a folder to output 
 a list of track lists." />
 <meta name="twitter:card" content="summary" />
 
@@ -65,7 +65,7 @@ a list of track lists." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sojourner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
       </span>
     </div>
 
@@ -123,8 +123,8 @@ a list of track lists." />
 
     <div class="ref-description">
     
-    <p>take in Diatrack (.txt or .mat), ImageJ (.csv), 
-SlimFast (.txt), or Utrack (.mat) input from a folder to output 
+    <p>take in Diatrack (.txt or .mat), ImageJ Particle Tracker 
+(.csv), SLIMfast (.txt), or u-track (.mat) input from a folder to output 
 a list of track lists.</p>
     
     </div>
@@ -149,8 +149,8 @@ files of that type in this folder).</p></td>
     <tr>
       <th>input</th>
       <td><p>Input file type (Diatrack .txt file = 1; Diatrack .mat 
-session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4; 
-U-Track .mat file = 5).</p></td>
+session file = 2; ImageJ .csv file = 3; SLIMfast .txt file = 4; 
+u-track .mat file = 5).</p></td>
     </tr>
     <tr>
       <th>ab.track</th>
@@ -186,7 +186,7 @@ consecutive frames after the given start frame.
 Otherwise, all other data types naturally record the frames of every 
 coordinate point.</p>
 <p>The pre-censoring of single-frame tracks is dependent on the tracking 
-software. For complete lossless track data, use Diatrack (.mat) session 
+software. For highest fidelity track data, use Diatrack (.mat) session 
 files.
 If the initial creation of the trackll does not have a frame record, 
 future exports and imports of the trackll will only preserve the start 
