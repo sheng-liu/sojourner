@@ -1,3 +1,6 @@
+# sojourner 0.99.8
+* added unit test - createTrackll() and msd() in this version
+
 # sojourner 0.99.7
 * fixed BiocCheck error checkForSupportSiteRegistration - unblocked maintainer email account
 
