@@ -5,5 +5,5 @@ test_trimTrack <- function() {
     RUnit::checkTrue(lapply(trackLength(trackll.trm),max)==20)
     RUnit::checkTrue(lapply(trackLength(trackll.trm),min)==2)
     RUnit::checkTrue(lapply(trackLength(trackll),max)==30)
-    RUnit::checkTrue(length(trackll.flt[[1]])==207)
+    RUnit::checkTrue(length(trackll.trm[[1]])==207)
 }
