@@ -67,9 +67,9 @@
 
 ## Function for plotting trajectory overlay with color coded by Dcoef
 .plotTrackOverlay.Dcoef<-function(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
-                          t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
-                          folder=NULL,file.No=0,line.width=0.1){
-
+                                  t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
+                                  folder=NULL,file.No=0,line.width=0.1){
+  
   ## Import trackll (un-merged) information
   if (length(file.No)>1&min(file.No) == 0){
     stop("Wrong file.No input. Ceased.",call. = FALSE, domain = NULL)
@@ -107,50 +107,79 @@
   #cl=colorspace::diverge_hcl(max(dense))
   cl <- colorRampPalette(color)(n = 101)
   
+  ## Calculate total molecule numbers into nTotal
+  nTotal=0
+  
   #Get trackl information in the un-merged trackll and filter by Dcoef range and rsquare.
   for (i in c(1:length(trackll))){
-
+    
     x=(2:5)*t.interval
     dimension=2
     trackl=list()
     
     for (j in c(1:length(trackll[[i]]))){
-      track=trackll[[i]][[j]]
-      msd.n=msd.track(track, dt=dt, at.dt=F)
-      
-      fit=lm(msd.n[2:5]~x)
-      MSDslope=coefficients(fit)[2]/(2*dimension)
-      Log.D.coef=log(MSDslope)
-      MSDcorr=summary(fit)$r.squared
-      #if((!is.na(Log.D.coef))&(MSDcorr>=rsquare))
-      trackl[[j]]=list(track,Log.D.coef,MSDcorr)
+      if (length(trackll[[i]])>0){
+        track=trackll[[i]][[j]]
+        msd.n=msd.track(track, dt=dt, at.dt=F)
+        
+        fit=lm(msd.n[2:5]~x)
+        MSDslope=coefficients(fit)[2]/(2*dimension)
+        Log.D.coef=log(MSDslope)
+        MSDcorr=summary(fit)$r.squared
+        #if((!is.na(Log.D.coef))&(MSDcorr>=rsquare))
+        trackl[[j]]=list(track,Log.D.coef,MSDcorr)
+      }
     }
     #trackl=trackl[-which(sapply(trackl, is.null))]
     
-    Dcoef=sapply(trackl,function(x){x[[2]]})
-    Dcoef[!is.finite(Dcoef)] <- NA
-    trackl=trackl[!is.na(Dcoef)]
-    Dcoef=sapply(trackl,function(x){x[[2]]})
-    trackl=trackl[which(Dcoef>=(Dcoef.range[1]))]
-    Dcoef=sapply(trackl,function(x){x[[2]]})
-    trackl=trackl[which(Dcoef<=(Dcoef.range[2]))]
-    Rsquare=sapply(trackl,function(x){x[[3]]})
-    trackl=trackl[which(sapply(Rsquare, function(x){x>=rsquare}))]
+    Dcoef=list()
+    if (length(trackl)>0){
+      
+      Dcoef=sapply(trackl,function(x){x[[2]]})
+      Dcoef[!is.finite(Dcoef)] <- NA
+      trackl=trackl[!is.na(Dcoef)]
+      Dcoef=sapply(trackl,function(x){x[[2]]})
+    }
+    if (length(trackl)>0){
+      trackl=trackl[which(Dcoef>=(Dcoef.range[1]))]
+      Dcoef=sapply(trackl,function(x){x[[2]]})
+    }
+    if (length(trackl)>0){
+      trackl=trackl[which(Dcoef<=(Dcoef.range[2]))]
+    }    
+    if (length(trackl)>0){
+      Rsquare=sapply(trackl,function(x){x[[3]]})
+      trackl=trackl[which(sapply(Rsquare, function(x){x>=rsquare}))]
+    }    
     
     Dcoef=sapply(trackl,function(x){x[[2]]})
+    
+    
     
     ## Plot trackoverlay for each file (trackl) in the un-merged trackll.
-    plot.new()
+    #plot.new()
     ## If image folder is provided, add nuclei background to the plot.
     if(!is.null(folder)){
       #library(EBImage)
-      img=EBImage::readImage(nuclei.lst[[i]])
+      img=EBImage::readImage(nuclei.lst[[which(basename(gsub("_Nuclei.tif","",(nuclei.lst)))==gsub(".mat","",names(trackll[i])))]])
+      #d=img@.Data
+      #raster.img <- as.raster(t(d[,,1]))
+      #plot.window(xlim=c(0,scale),ylim=c(0,scale),xaxs = "i", yaxs = "i")
+      #plot(raster.img,add = TRUE)
       d=img@.Data
-      raster.img <- as.raster(t(d[,,1]))
-      plot.window(xlim=c(0,scale),ylim=c(0,scale),xaxs = "i", yaxs = "i")
-      plot(raster.img,add = TRUE)
+      m=as.matrix(d[,,1])
+      n=apply(m,2,rev)
+      o=apply(n,1,rev)
+      p=apply(o,1,rev)
+      
+      q=p[c(1:scale),c(1:scale)]
+      image(q, useRaster=TRUE, axes=FALSE,col = grey(seq(0, 1, length = 256)))
+      mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=1,col.main="white") 
+    }else{
+      plot.new()
+      mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=1,col.main="white") 
     }
-    mtext(gsub(".mat","",names(trackll[i])),side=3,line=0.5,cex=2,col.main="white") 
+    
     
     ## Rescale the plotting area with resolution, changing the units from pixel to um.
     plot.window(xlim=c(0,scale*resolution),ylim=c(0,scale*resolution),xaxs = "i", yaxs = "i")
@@ -159,18 +188,27 @@
     mtext(expression(paste("X (",mu,"m)")),side=1,line=2,cex.lab=1,col="white")
     mtext(expression(paste("Y (",mu,"m)")),side=2,line=2,cex.lab=1,col="white")
     box()
-    for(k in c(1:length(trackl))){
-      lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*resolution,
-            col=cl[(Dcoef[k]-Dcoef.range[1])/(Dcoef.range[2]-Dcoef.range[1])*100+1],lwd=line.width)
-      
+    if(length(Dcoef)>0){
+      for(k in c(1:length(trackl))){
+        lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*resolution,
+              col=cl[(Dcoef[k]-Dcoef.range[1])/(Dcoef.range[2]-Dcoef.range[1])*100+1],lwd=line.width)
+        
+      }
     }
+    
     
     ## Add color gradient legend to the right edge of each plot.
     .legend.col(col = cl, lev = Dcoef.range)
     
     ## Add parameters and track number (n) as text legend to the topright corner of each plot.
-    legend=c(paste("dt = ",dt),as.expression(bquote('Rsquare'>=.(rsquare))), 
-             paste("n = ",length(Dcoef)),paste('Dcoef range [',Dcoef.range[1],",",Dcoef.range[2],"]"))
+    if(length(Dcoef)>0){
+      legend=c(paste("dt = ",dt),as.expression(bquote('Rsquare'>=.(rsquare))), 
+               paste("n = ",length(Dcoef)),paste('Dcoef range [',Dcoef.range[1],",",Dcoef.range[2],"]"))
+    }else{
+      legend=c(paste("dt = ",dt),as.expression(bquote('Rsquare'>=.(rsquare))), 
+               paste("n = ",length(Dcoef)),paste('Dcoef range [',Dcoef.range[1],",",Dcoef.range[2],"]"))
+      
+    }
     
     temp <- legend("topright", legend = c(" ", " "," "," "),
                    text.width = strwidth("Rsquare>=0.8"),
@@ -183,6 +221,12 @@
   ## Reset plotting area parameters.
   par(oldpar)
   par(mfrow=c(1,1),bg="white",fg="black")
+  
+  ## Calculate total molecule numbers into nTotal
+  nTotal=nTotal+length(Dcoef)
+  
+  return(nTotal)
+  
 }
 
 
@@ -228,14 +272,16 @@
 
 ## Function for outputting the plots into one multipage PDF file in the working directory.
 plotTrackOverlay.Dcoef<-function(trackll=trackll,scale=128,dt=6,filter=c(min=7,max=Inf),resolution=0.107,rsquare=0.8,
-                         t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
-                         folder=NULL,file.No=0,line.width=0.1){
+                                 t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
+                                 folder=NULL,file.No=0,line.width=0.1){
   ## Output the plots into one PDF file in the working directory.
-  pdf(paste("plotTrackOverlay.Dcoef.Heatmap--",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
-
-  .plotTrackOverlay.Dcoef(trackll=trackll,scale=scale,dt=dt,filter=filter,resolution=resolution,rsquare=rsquare,
-                  t.interval=t.interval,Dcoef.range=Dcoef.range,color=color, 
-                  folder=folder,file.No=file.No,line.width = line.width)
+  pdf(paste("plotTrackOverlay.Dcoef.Heatmap-",names(trackll),"_Rsquare=",rsquare,"-",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
+  
+  nTotal=.plotTrackOverlay.Dcoef(trackll=trackll,scale=scale,dt=dt,filter=filter,resolution=resolution,rsquare=rsquare,
+                          t.interval=t.interval,Dcoef.range=Dcoef.range,color=color, 
+                          folder=folder,file.No=file.No,line.width = line.width)
+  
+  legend("bottomright",legend=paste0("Total number of molecules in the folder = ", nTotal))
   
   dev.off()
   
