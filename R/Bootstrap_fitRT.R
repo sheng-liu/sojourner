@@ -108,19 +108,19 @@
 ##' 
 
 ##' @importFrom mltools empirical_cdf 
-##' @export calculate_1_CDF
+##' 
 ##' @export calculate_1_CDF_multiple
 ##' @export Boot_1_CDF
 ##' @export fitRT_Boot_1comp
 ##' @export fitRT_Boot_2comp
 ##' @export fitRT_Boot_3comp
 ##' @export fitRT_Boot_2and3comp
-##' 
 #####################################################################################
 #####################################################################################
 
 ################################################################################
 ## Function to calculate 1-CDF and 95% CI
+
 calculate_1_CDF<-function(trackll=trackll,x.max=100,y.min=0.0001,filter=c(min=3,max=Inf),t.interval=0.5,output=FALSE,plot_linear=TRUE){
   #library(mltools)
   
@@ -230,6 +230,7 @@ calculate_1_CDF<-function(trackll=trackll,x.max=100,y.min=0.0001,filter=c(min=3,
   ## Return value: data.frame containing time intervals and corrsponding 1-CDF
   return(invisible(ONE_CDF))
 }
+
 
 calculate_1_CDF_multiple<-function(trackll=c(trackll1,trackll2),x.max=100,y.min=0.0001,filter=c(min=3,max=Inf),t.interval=0.5,
                                    x.max.linear=NULL,output=FALSE,plot_linear=FALSE,plotCI=TRUE){
@@ -712,6 +713,7 @@ Boot_1_CDF<-function(trackll=trackll,t.interval=0.25,R=100,output=FALSE,plot=TRU
 
 ################################################################################
 ## 2 or 3-component exponential decay fitting of original and bootstrapped data
+
 fitRT_Boot_1comp<-function(BootData,t.interval=0.25,x.max=100,y.min=0.0001,output=FALSE,plot.fit=TRUE){
   ## Output plots into a PDF file
   pdf(paste("Bootstrapped data 1-component fitting - ", BootData$Name," - ",format(Sys.time(),"%Y%m%d_%H%M%S"),".pdf",sep=""),width=11,height=8.5)
