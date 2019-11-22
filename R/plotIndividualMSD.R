@@ -11,7 +11,8 @@
 ##' @title plotIndividualMSD
 ##' @rdname plotIndividualMSD-methods
 ##' @docType methods
-##' @description Plot the correlation between diffusion coefficient and Rsquare of the MSD fit in a trackll. With an option to plot MSD and linear regression of individual tracks one by one, with grid layout.
+##' @description Plot the correlation between diffusion coefficient and Rsquare of the MSD fit in a trackll. 
+##' With an option to plot individual MSD and linear regression of all tracks one by one, with grid layout.
 ##'              Tracks can be sorted by their lengths, diffusion coefficient or R square of the MSD linear regresson.
 ##' @usage
 ##'
