@@ -107,9 +107,14 @@
 ##' 
 ##' 
 
+<<<<<<< HEAD
 #@importFrom mltools empirical_cdf 
 ##' 
 ##' @export calculate_1_CDF
+=======
+##' @importFrom mltools empirical_cdf 
+##' 
+>>>>>>> 8573e8b38c45a987e78f1a7717ab363ad0e2a041
 ##' @export calculate_1_CDF_multiple
 ##' @export Boot_1_CDF
 ##' @export fitRT_Boot_1comp
