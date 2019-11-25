@@ -14,3 +14,4 @@ Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdis
 NeedsCompilation: no
 Packaged: 2017-09-05; shengliu
 RoxygenNote: 6.1.1
+Encoding: UTF-8
