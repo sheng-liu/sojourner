@@ -106,10 +106,15 @@ def diffusion_map(filename):
 ################################
 
 import matplotlib
-import numpy as np
 
 import matplotlib.pyplot as plt
+
+import mpl_toolkits
+
 from mpl_toolkits.mplot3d import Axes3D
+
+import numpy as np
+
 import matplotlib.animation as manimation
 
 import matplotlib.tri as mtri

@@ -106,10 +106,18 @@
 ##'                                  cutoff=FALSE,weighting=TRUE,output=FALSE,k_ns=FALSE,plot.fit = TRUE)
 ##' 
 ##' 
+<<<<<<< HEAD
 
 #@importFrom mltools empirical_cdf 
 ##' 
 ##' @export calculate_1_CDF
+=======
+#@importFrom mltools empirical_cdf 
+##' 
+##' @export calculate_1_CDF
+##' @importFrom mltools empirical_cdf 
+##' 
+>>>>>>> 6722b4dd3c5ffcb7c8d9b3eb91e74d3e3168ce61
 ##' @export calculate_1_CDF_multiple
 ##' @export Boot_1_CDF
 ##' @export fitRT_Boot_1comp
