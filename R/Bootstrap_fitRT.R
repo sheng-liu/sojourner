@@ -7,12 +7,13 @@
 ##
 ###############################################################################
 ##' @name Bootstrap_fitRT
-##' @aliases Bootstrap_fitRT
+##' @aliases Bootstrap_fitRT, calculate_1_CDF, calculate_1_CDF_multiple, Boot_1_CDF, fitRT_Boot_1comp, fitRT_Boot_2comp, fitRT_Boot_3comp
+##' , fitRT_Boot_2and3comp
 ##' @title Fitting 1-CDF of Bootstrapped residence time data with exponential decay
 ##' @rdname Bootstrap_fitRT-methods
 ##' @docType methods
 ##' @description Calculate/Compare Residence time/Survival Curve of single/multiple trackll, 
-##' with upper and lower bound of 95% conficence interval.
+##' with upper and lower bound of 95 percent conficence interval.
 ##' 
 ##' Generate bootstrapped data sets (resampling) of residence times, fitting 1-CDF of all bootstrapped
 ##' data sets with multi-component exponential decay can derive average unbinding rate (k off) 
@@ -63,7 +64,7 @@
 ##' \item{Plot:} 1-CDF of track lengths of each input trackll will be plotted together in one plot.
 ##' }
 ##' @details calculate_1_CDF calculate Survival Curve of a trackll, with upper and lower bound of 
-##' 95% conficence interval. The survival curve/probability is calculated as 1-CDF of the length of tracks/trajectories.
+##' 95 percent conficence interval. The survival curve/probability is calculated as 1-CDF of the length of tracks/trajectories.
 ##' 
 ##' calculate_1_CDF_multiple compare the 1-CDF of multiple tracklls.
 ##' 
@@ -120,7 +121,7 @@
 #####################################################################################
 
 ################################################################################
-## Function to calculate 1-CDF and 95% CI
+## Function to calculate 1-CDF and 95 percent CI
 calculate_1_CDF<-function(trackll=trackll,x.max=100,y.min=0.0001,filter=c(min=3,max=Inf),t.interval=0.5,output=FALSE,plot_linear=TRUE){
   #library(mltools)
   
@@ -136,7 +137,7 @@ calculate_1_CDF<-function(trackll=trackll,x.max=100,y.min=0.0001,filter=c(min=3,
   ONE_CDF<-setNames(data.frame(t,one_CDF), 
                     c("Time intervals (s)",names(trackll)))
   
-  ## Calculate survival (1-CDF) and 95% CI using "survival" package
+  ## Calculate survival (1-CDF) and 95 percent CI using "survival" package
   df1=data.frame("t"=rep(1,length(trajLength)),trajLength)
   f1 <- survival::survfit(survival::Surv(trajLength, t) ~ 1, data = df1)
   df2=data.frame("time"=f1$time,"lower 95% CI"=f1$lower,"upper 95% CI"=f1$upper)
@@ -251,7 +252,7 @@ calculate_1_CDF_multiple<-function(trackll=c(trackll1,trackll2),x.max=100,y.min=
     ONE_CDF.i<-setNames(data.frame(t,one_CDF.i), 
                       c("Time intervals (s)",names(trackll.i)))
     
-    ## Calculate survival (1-CDF) and 95% CI using "survival" package
+    ## Calculate survival (1-CDF) and 95 percent CI using "survival" package
     df1=data.frame("t"=rep(1,length(trajLength)),trajLength)
     f1 <- survival::survfit(survival::Surv(trajLength, t) ~ 1, data = df1)
     df2=data.frame("time"=f1$time,"lower 95% CI"=f1$lower,"upper 95% CI"=f1$upper)

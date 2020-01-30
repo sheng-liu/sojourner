@@ -65,7 +65,7 @@ The fitting functions output the fitting result of original and all bootstrapped
 }
 \description{
 Calculate/Compare Residence time/Survival Curve of single/multiple trackll, 
-with upper and lower bound of 95% conficence interval.
+with upper and lower bound of 95 percent conficence interval.
 
 Generate bootstrapped data sets (resampling) of residence times, fitting 1-CDF of all bootstrapped
 data sets with multi-component exponential decay can derive average unbinding rate (k off) 
@@ -73,7 +73,7 @@ and estimate the standard deviation.
 }
 \details{
 calculate_1_CDF calculate Survival Curve of a trackll, with upper and lower bound of 
-95% conficence interval. The survival curve/probability is calculated as 1-CDF of the length of tracks/trajectories.
+95 percent conficence interval. The survival curve/probability is calculated as 1-CDF of the length of tracks/trajectories.
 
 calculate_1_CDF_multiple compare the 1-CDF of multiple tracklls.
 
