@@ -1,6 +1,6 @@
 #### Fitting 1-CDF of Bootstrapped residence time data with exponential decay
 #### Wu Lab, Johns Hopkins University
-#### Author: Xiaona Tang
+#### Author: Xiaona Tang, Sun Jay Yoo
 #### Date: Sep 20, 2019
 
 ## Bootstrapping residence time data and multi-component exponential decay fitting-methods
@@ -106,30 +106,21 @@
 ##'                                  cutoff=FALSE,weighting=TRUE,output=FALSE,k_ns=FALSE,plot.fit = TRUE)
 ##' 
 ##' 
-<<<<<<< HEAD
 
-#@importFrom mltools empirical_cdf 
-##' 
-##' @export calculate_1_CDF
-=======
-#@importFrom mltools empirical_cdf 
-##' 
-##' @export calculate_1_CDF
 ##' @importFrom mltools empirical_cdf 
-##' 
->>>>>>> 6722b4dd3c5ffcb7c8d9b3eb91e74d3e3168ce61
+##' @export calculate_1_CDF
 ##' @export calculate_1_CDF_multiple
 ##' @export Boot_1_CDF
 ##' @export fitRT_Boot_1comp
 ##' @export fitRT_Boot_2comp
 ##' @export fitRT_Boot_3comp
 ##' @export fitRT_Boot_2and3comp
+##' 
 #####################################################################################
 #####################################################################################
 
 ################################################################################
 ## Function to calculate 1-CDF and 95% CI
-
 calculate_1_CDF<-function(trackll=trackll,x.max=100,y.min=0.0001,filter=c(min=3,max=Inf),t.interval=0.5,output=FALSE,plot_linear=TRUE){
   #library(mltools)
   
@@ -239,7 +230,6 @@ calculate_1_CDF<-function(trackll=trackll,x.max=100,y.min=0.0001,filter=c(min=3,
   ## Return value: data.frame containing time intervals and corrsponding 1-CDF
   return(invisible(ONE_CDF))
 }
-
 
 calculate_1_CDF_multiple<-function(trackll=c(trackll1,trackll2),x.max=100,y.min=0.0001,filter=c(min=3,max=Inf),t.interval=0.5,
                                    x.max.linear=NULL,output=FALSE,plot_linear=FALSE,plotCI=TRUE){
@@ -722,7 +712,6 @@ Boot_1_CDF<-function(trackll=trackll,t.interval=0.25,R=100,output=FALSE,plot=TRU
 
 ################################################################################
 ## 2 or 3-component exponential decay fitting of original and bootstrapped data
-
 fitRT_Boot_1comp<-function(BootData,t.interval=0.25,x.max=100,y.min=0.0001,output=FALSE,plot.fit=TRUE){
   ## Output plots into a PDF file
   pdf(paste("Bootstrapped data 1-component fitting - ", BootData$Name," - ",format(Sys.time(),"%Y%m%d_%H%M%S"),".pdf",sep=""),width=11,height=8.5)
@@ -1395,261 +1384,264 @@ fitRT_Boot_2and3comp<-function(BootData,t.interval=0.25,x.max=100,y.min=0.0001,
   par(mfrow=c(2,2),bg="white",fg="black")
   for (i in 1:R){
     
-      if (i==1){
-        cat("\nOriginal data")
+    
+    if(cutoff==FALSE){
+      ## Generate X values of data points for fitting
+      
+      if(length(which(P[[i]] == 1))>=2){
+        t.fit<-seq(t.interval*length(which(P[[i]] == 1)),t.interval*length(P[[i]]),by=t.interval)
       }else{
-        cat(paste("\n","Bootstrapped data # ",i-1,sep=""))
+        t.fit<-seq(t.interval,t.interval*length(P[[i]]),by=t.interval)
       }
       
-      if(cutoff==FALSE){
-        ## Generate X values of data points for fitting
-        
-        if(length(which(P[[i]] == 1))>=2){
-          t.fit<-seq(t.interval*length(which(P[[i]] == 1)),t.interval*length(P[[i]]),by=t.interval)
-        }else{
-          t.fit<-seq(t.interval,t.interval*length(P[[i]]),by=t.interval)
-        }
-        
-        ## Generate Y values of data points for fitting
-        ## Remove multiple "1" of P values, leaving only one "1" value.
-        ## The rest P values will be used for fitting.  
-        if(length(which(P[[i]] == 1))>=2){
-          P.fit<-P[[i]][-(1:(length(which(P[[i]] == 1))-1))]
-        } else{
-          P.fit<-P[[i]]
-        }
+      ## Generate Y values of data points for fitting
+      ## Remove multiple "1" of P values, leaving only one "1" value.
+      ## The rest P values will be used for fitting.  
+      if(length(which(P[[i]] == 1))>=2){
+        P.fit<-P[[i]][-(1:(length(which(P[[i]] == 1))-1))]
+      } else{
+        P.fit<-P[[i]]
+      }
+    }else{
+      ## Generate X values of data points for fitting
+      
+      if(length(which(P[[i]] == 1))>=2){
+        t.fit<-seq(t.interval*length(which(P[[i]] == 1)),cutoff,by=t.interval)
       }else{
-        ## Generate X values of data points for fitting
-        
-        if(length(which(P[[i]] == 1))>=2){
-          t.fit<-seq(t.interval*length(which(P[[i]] == 1)),cutoff,by=t.interval)
-        }else{
-          t.fit<-seq(t.interval,cutoff,by=t.interval)
-        }
-        
-        ## Generate Y values of data points for fitting
-        ## Remove multiple "1" of P values, leaving only one "1" value.
-        ## The rest P values will be used for fitting.  
-        if(length(which(P[[i]] == 1))>=2){
-          P.fit<-P[[i]][-(1:(length(which(P[[i]] == 1))-1))]
-        } 
-        P.fit<-P.fit[seq_along(t.fit)]
+        t.fit<-seq(t.interval,cutoff,by=t.interval)
       }
       
+      ## Generate Y values of data points for fitting
+      ## Remove multiple "1" of P values, leaving only one "1" value.
+      ## The rest P values will be used for fitting.  
+      if(length(which(P[[i]] == 1))>=2){
+        P.fit<-P[[i]][-(1:(length(which(P[[i]] == 1))-1))]
+      } 
+      P.fit<-P.fit[seq_along(t.fit)]
+    }
+    
+    
+    # t minimum correction
+    t.fit.shift = t.fit - min(t.fit)
+    
+    
+    ####### 2-component fitting
+    if (i==1){
+      cat("\r","Original data","         2-component fitting")
+    }else{
+      cat("\r","Bootstrapped data # ",i-1,"      2-component fitting")
+    }
+    
+    result = NULL
+    attempt = 0
+    maximum_attempts = 50
+    while( (is.null(result) && attempt <= maximum_attempts) || 
+           coef(result)['alpha']<0 ){
+      #cat(paste0("\nattemp=",attempt))
+      try(
+        if(weighting){
+          result<-twoCompFitRT_weighted(t=t.fit.shift,P=P.fit,t.interval,start=list(k_s=c(1/600,1/t.interval),k_ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),
+                                        weighting=weighting,maxiter.search=1e3)
+        }else{
+          result<-twoCompFitRT(t=t.fit.shift,P=P.fit,t.interval,start=list(k_s=c(1/600,1/t.interval),k_ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),
+                               maxiter.search=1e3,
+                               k_ns=k_ns)
+        },
+        silent = TRUE
+      )
+      #cat("\n")
+      #print(coef(result))
+      #cat(paste0("\nalpha+beta=",as.numeric((coef(result)['alpha'] + coef(result)['beta']))))
+      attempt = attempt + 1
+    }
+    
+    if (!is.null(result)) {
+      result=coef(result)[c(3,1,2)]
+      if (as.numeric(result['k_s'])>as.numeric(result['k_ns'])){
+        result=result[c(1,3,2)]
+        result[1]=1-as.numeric(result[1])
+        names(result)=c("alpha","k_s","k_ns")
+      }
       
-      # t minimum correction
-      t.fit.shift = t.fit - min(t.fit)
+      # Calculate predicted/expected P from the fit
+      P_pred = twoComponentPrediction(t.fit.shift, result['alpha'], result['k_s'], result['k_ns'])
       
+      ## Calculate the fitting errors
+      rss=RSS(P.fit, P_pred)
+      aic=AIC(P.fit, P_pred, 3)
+      bic=BIC(P.fit, P_pred, 3)
+      #result=c(result[2:4],rss,aic,bic)
+      result=c(result,rss,aic,bic)
+      names(result)[4:6]=c("RSS","AIC","BIC")
       
-      ####### 2-component fitting
-      cat("\n      2-component fitting")
+      boot.2.fitRT=rbind(boot.2.fitRT,result)
+      rownames(boot.2.fitRT)[dim(boot.2.fitRT)[1]]<-as.character(i-1)
       
-      result = NULL
-      attempt = 0
-      maximum_attempts = 50
-      while( (is.null(result) && attempt <= maximum_attempts) || 
-             coef(result)['alpha']<0 ){
-        #cat(paste0("\nattemp=",attempt))
-        try(
-          if(weighting){
-            result<-twoCompFitRT_weighted(t=t.fit.shift,P=P.fit,t.interval,start=list(k_s=c(1/600,1/t.interval),k_ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),
-                                          weighting=weighting,maxiter.search=1e3)
-          }else{
-            result<-twoCompFitRT(t=t.fit.shift,P=P.fit,t.interval,start=list(k_s=c(1/600,1/t.interval),k_ns=c(1/600,1/t.interval),alpha=c(1e-3,1)),
+      if (plot.fit||i<=3){
+        ## Plot the data to be fitted in log-log scale
+        par(mar = c(5,6,4,2) + 0.1)
+        if (i==1){
+          plot(t.plot,P[[i]][1:length(t.plot)],main="2-comp fit of original data",xlab="Time (s)",ylab=" ",
+               cex.main=1.2,xlim=c(0.1,x.max),ylim=c(y.min,1.28),cex.axis=1.5,cex.lab=1.1,pch=20,cex=0.8,
+               bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n")
+        }
+        else{
+          plot(t.plot,P[[i]][1:length(t.plot)],main=paste0("2-comp fit of bootstrapped data # ",i-1),xlab="Time (s)",ylab=" ",
+               cex.main=1.2,xlim=c(0.1,x.max),ylim=c(y.min,1.28),cex.axis=1.5,cex.lab=1.1,pch=20,cex=0.8,
+               bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n")
+        }
+        
+        title(ylab="Survival probability (1-CDF)",cex.lab=1.1,line=3.6)
+        axis(2, at=at.y, labels=lab.y, las=1)
+        axis(1, at=at.x, labels=lab.x, las=1)
+        # Plot fitted curve
+        p2_model = function(x){
+          result['alpha']*exp(-result['k_s']*(x-min(t.fit))) + (1- result['alpha'])*exp(-result['k_ns']*(x-min(t.fit)))
+        }
+        curve(p2_model,add=T,col="red",lwd=2)
+        
+        ## Print parameters on the plot
+        result.text=c(expression(italic(P(t) == alpha*e^-k[s]*''^t+(1-alpha)*e^-k[ns]*''^t)),
+                      as.expression(bquote(italic('k'['s']==.(result['k_s'])))),
+                      as.expression(bquote(italic('k'['ns']==.(result['k_ns'])))),
+                      as.expression(bquote(italic(alpha==.(result['alpha'])))),
+                      "  ",
+                      as.expression(bquote(italic('RSS'==.(result['RSS'])))),
+                      as.expression(bquote(italic('AIC'==.(result['AIC'])))),
+                      as.expression(bquote(italic('BIC'==.(result['BIC'])))),
+                      " "
+        )
+        legend("left",legend=result.text,pch=NULL,y.intersp=0.8,x.intersp=0.3,bty="n",cex=1)
+        par(font=1)
+        legend("topright",legend = c("Data      ","Fit      "),
+               pch=c(20,NA),lty=c(NA,1),seg.len=0.6,lwd = 1.5,text.col=c("black","black"),
+               col=c("black","red"),bty="n",y.intersp = 0.8,x.intersp = 0.5)
+        legend("bottomleft",legend = c(BootData$Name,paste("n = ",BootData$n,sep="")),
+               text.col=c("grey60","grey60"),bty="n",y.intersp = 0.8,x.intersp = 0.5)
+        abline(v=cutoff, lty=3,  col='blue')
+      }
+      
+    }else{
+      cat("      This data set couldn't fit")
+    }
+    
+    
+    ####### 3-component fitting
+    if (i==1){
+      cat("\r","Original data","         3-component fitting")
+    }else{
+      cat("\r","Bootstrapped data # ",i-1,"      3-component fitting")
+    }
+    
+    result = NULL
+    attempt = 1
+    maximum_attempts = 50
+    while( (is.null(result) && attempt <= maximum_attempts) || 
+           coef(result)['alpha']<0 || coef(result)['beta']<0 || 
+           (coef(result)['alpha'] + coef(result)['beta']) >1){
+      attempt = attempt + 1
+      try(
+        if(weighting){
+          result<-threeCompFitRT_weighted(t=t.fit.shift,P=P.fit,t.interval,start=list(k_s=c(1/600,1/t.interval),k_m=c(1/600,1/t.interval),k_ns=c(1/600,1/t.interval),alpha=c(1e-3,1),beta=c(1e-3,1)),
+                                          weighting = weighting,maxiter.search=1e3)
+        }else{
+          result<-threeCompFitRT(t=t.fit.shift,P=P.fit,t.interval,start=list(k_s=c(1/600,1/t.interval),k_m=c(1/600,1/t.interval),k_ns=c(1/600,1/t.interval),alpha=c(1e-3,1),beta=c(1e-3,1)),
                                  maxiter.search=1e3,
                                  k_ns=k_ns)
-          },
-          silent = TRUE
-        )
-        #cat("\n")
-        #print(coef(result))
-        #cat(paste0("\nalpha+beta=",as.numeric((coef(result)['alpha'] + coef(result)['beta']))))
-        attempt = attempt + 1
-      }
-      
-      if (!is.null(result)) {
-        result=coef(result)[c(3,1,2)]
-        if (as.numeric(result['k_s'])>as.numeric(result['k_ns'])){
-          result=result[c(1,3,2)]
-          result[1]=1-as.numeric(result[1])
-          names(result)=c("alpha","k_s","k_ns")
-        }
-        
-        # Calculate predicted/expected P from the fit
-        P_pred = twoComponentPrediction(t.fit.shift, result['alpha'], result['k_s'], result['k_ns'])
-        
-        ## Calculate the fitting errors
-        rss=RSS(P.fit, P_pred)
-        aic=AIC(P.fit, P_pred, 3)
-        bic=BIC(P.fit, P_pred, 3)
-        #result=c(result[2:4],rss,aic,bic)
-        result=c(result,rss,aic,bic)
-        names(result)[4:6]=c("RSS","AIC","BIC")
-        
-        boot.2.fitRT=rbind(boot.2.fitRT,result)
-        rownames(boot.2.fitRT)[dim(boot.2.fitRT)[1]]<-as.character(i-1)
-        
-        if (plot.fit||i<=3){
-          ## Plot the data to be fitted in log-log scale
-          par(mar = c(5,6,4,2) + 0.1)
-          if (i==1){
-            plot(t.plot,P[[i]][1:length(t.plot)],main="2-comp fit of original data",xlab="Time (s)",ylab=" ",
-                 cex.main=1.2,xlim=c(0.1,x.max),ylim=c(y.min,1.28),cex.axis=1.5,cex.lab=1.1,pch=20,cex=0.8,
-                 bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n")
-          }
-          else{
-            plot(t.plot,P[[i]][1:length(t.plot)],main=paste0("2-comp fit of bootstrapped data # ",i-1),xlab="Time (s)",ylab=" ",
-                 cex.main=1.2,xlim=c(0.1,x.max),ylim=c(y.min,1.28),cex.axis=1.5,cex.lab=1.1,pch=20,cex=0.8,
-                 bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n")
-          }
-          
-          title(ylab="Survival probability (1-CDF)",cex.lab=1.1,line=3.6)
-          axis(2, at=at.y, labels=lab.y, las=1)
-          axis(1, at=at.x, labels=lab.x, las=1)
-          # Plot fitted curve
-          p2_model = function(x){
-            result['alpha']*exp(-result['k_s']*(x-min(t.fit))) + (1- result['alpha'])*exp(-result['k_ns']*(x-min(t.fit)))
-          }
-          curve(p2_model,add=T,col="red",lwd=2)
-          
-          ## Print parameters on the plot
-          result.text=c(expression(italic(P(t) == alpha*e^-k[s]*''^t+(1-alpha)*e^-k[ns]*''^t)),
-                        as.expression(bquote(italic('k'['s']==.(result['k_s'])))),
-                        as.expression(bquote(italic('k'['ns']==.(result['k_ns'])))),
-                        as.expression(bquote(italic(alpha==.(result['alpha'])))),
-                        "  ",
-                        as.expression(bquote(italic('RSS'==.(result['RSS'])))),
-                        as.expression(bquote(italic('AIC'==.(result['AIC'])))),
-                        as.expression(bquote(italic('BIC'==.(result['BIC'])))),
-                        " "
-          )
-          legend("left",legend=result.text,pch=NULL,y.intersp=0.8,x.intersp=0.3,bty="n",cex=1)
-          par(font=1)
-          legend("topright",legend = c("Data      ","Fit      "),
-                 pch=c(20,NA),lty=c(NA,1),seg.len=0.6,lwd = 1.5,text.col=c("black","black"),
-                 col=c("black","red"),bty="n",y.intersp = 0.8,x.intersp = 0.5)
-          legend("bottomleft",legend = c(BootData$Name,paste("n = ",BootData$n,sep="")),
-                 text.col=c("grey60","grey60"),bty="n",y.intersp = 0.8,x.intersp = 0.5)
-          abline(v=cutoff, lty=3,  col='blue')
-        }
-        
-      }else{
-        cat("      This data set couldn't fit")
-      }
-      
-      
-      ####### 3-component fitting
-      cat("\n      3-component fitting")
-      
-      result = NULL
-      attempt = 1
-      maximum_attempts = 50
-      while( (is.null(result) && attempt <= maximum_attempts) || 
-             coef(result)['alpha']<0 || coef(result)['beta']<0 || 
-             (coef(result)['alpha'] + coef(result)['beta']) >1){
-        attempt = attempt + 1
-        try(
-          if(weighting){
-            result<-threeCompFitRT_weighted(t=t.fit.shift,P=P.fit,t.interval,start=list(k_s=c(1/600,1/t.interval),k_m=c(1/600,1/t.interval),k_ns=c(1/600,1/t.interval),alpha=c(1e-3,1),beta=c(1e-3,1)),
-                                            weighting = weighting,maxiter.search=1e3)
-          }else{
-            result<-threeCompFitRT(t=t.fit.shift,P=P.fit,t.interval,start=list(k_s=c(1/600,1/t.interval),k_m=c(1/600,1/t.interval),k_ns=c(1/600,1/t.interval),alpha=c(1e-3,1),beta=c(1e-3,1)),
-                                   maxiter.search=1e3,
-                                   k_ns=k_ns)
-          },
-          silent = TRUE
-        )
-        #cat("\n")
-        #print(coef(result))
-        #cat(paste0("\nalpha+beta=",as.numeric((coef(result)['alpha'] + coef(result)['beta']))))
-        #cat(paste0("\nattemp=",attempt))
-      } 
-      
-      if (is.null(result)) {
-        cat("    This data set couldn't fit")
-      }else{
-        result=coef(result)[c(4,5,1,2,3)]
-        
-        if (as.numeric(result["k_s"])>as.numeric(result["k_m"])){
-          result=result[c(2,1,4,3,5)]
-          names(result)=c("alpha","beta","k_s","k_m","k_ns")
-        }
-        
-        if (as.numeric(result["k_s"])>as.numeric(result["k_ns"])){
-          result=result[c(1,2,5,4,3)]
-          result[1]=1-as.numeric(result[1])-as.numeric(result[2])
-          names(result)=c("alpha","beta","k_s","k_m","k_ns")
-        }
-        
-        if (as.numeric(result["k_m"])>as.numeric(result["k_ns"])){
-          result=result[c(1,2,3,5,4)]
-          result[2]=1-as.numeric(result[1])-as.numeric(result[2])
-          names(result)=c("alpha","beta","k_s","k_m","k_ns")
-        }
-        
-        # Calculate predicted/expected P from the fit
-        P_pred = threeComponentPrediction(t.fit.shift, result['alpha'], result['beta'], result['k_s'], result['k_m'], result['k_ns'])
-        
-        ## Calculate the fitting errors
-        rss=RSS(P.fit, P_pred)
-        aic=AIC(P.fit, P_pred, 5)
-        bic=BIC(P.fit, P_pred, 5)
-        result=c(result,rss,aic,bic)
-        names(result)[6:8]=c("RSS","AIC","BIC")
-        
-        boot.3.fitRT=rbind(boot.3.fitRT,result)
-        rownames(boot.3.fitRT)[dim(boot.3.fitRT)[1]]<-as.character(i-1)
-        
-        if (plot.fit||i<=3){
-          ## Plot the data to be fitted in log-log scale
-          par(mar = c(5,6,4,2) + 0.1)
-          if (i==1){
-            plot(t.plot,P[[i]][1:length(t.plot)],main="3-comp fit of original data",xlab="Time (s)",ylab=" ",
-                 cex.main=1.2,xlim=c(0.1,x.max),ylim=c(y.min,1.28),cex.axis=1.5,cex.lab=1.1,pch=20,cex=0.8,
-                 bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n")
-          }
-          else{
-            plot(t.plot,P[[i]][1:length(t.plot)],main=paste0("3-comp fit of bootstrapped data # ",i-1),xlab="Time (s)",ylab=" ",
-                 cex.main=1.2,xlim=c(0.1,x.max),ylim=c(y.min,1.28),cex.axis=1.5,cex.lab=1.1,pch=20,cex=0.8,
-                 bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n")
-          }
-          
-          title(ylab="Survival probability (1-CDF)",cex.lab=1.1,line=3.6)
-          axis(2, at=at.y, labels=lab.y, las=1)
-          axis(1, at=at.x, labels=lab.x, las=1)
-          
-          # Plot fitted curve
-          p3_model = function(x){
-            result['alpha']*exp(-result['k_s']*(x-min(t.fit))) + 
-              result['beta']*exp(-result['k_m']*(x-min(t.fit))) + 
-              (1- result['alpha']-result['beta'])*exp(-result['k_ns']*(x-min(t.fit)))
-          }
-          curve(p3_model,add=T,col="purple",lwd=2)
-          
-          ## Print parameters on the plot
-          result.text=c(expression(italic(P(t) == alpha*e^-k[s]*''^t+beta*e^-k[m]*''^t+(1-alpha-beta)*e^-k[ns]*''^t)),
-                        as.expression(bquote(italic('k'['s']==.(result['k_s'])))),
-                        as.expression(bquote(italic('k'['m']==.(result['k_m'])))),
-                        as.expression(bquote(italic('k'['ns']==.(result['k_ns'])))),
-                        as.expression(bquote(italic(alpha==.(result['alpha'])))),
-                        as.expression(bquote(italic(beta==.(result['beta'])))),
-                        "  ",
-                        as.expression(bquote(italic('RSS'==.(result['RSS'])))),
-                        as.expression(bquote(italic('AIC'==.(result['AIC'])))),
-                        as.expression(bquote(italic('BIC'==.(result['BIC'])))),
-                        " "
-          )
-          legend("left",legend=result.text,pch=NULL,y.intersp=0.8,x.intersp=0.3,bty="n",cex=1)
-          par(font=1)
-          legend("topright",legend = c("Data      ","Fit      "),
-                 pch=c(20,NA),lty=c(NA,1),seg.len=0.6,lwd = 1.5,text.col=c("black","black"),
-                 col=c("black","purple"),bty="n",y.intersp = 0.8,x.intersp = 0.5)
-          legend("bottomleft",legend = c(BootData$Name,paste("n = ",BootData$n,sep="")),
-                 text.col=c("grey60","grey60"),bty="n",y.intersp = 0.8,x.intersp = 0.5)
-          abline(v=cutoff, lty=3, col='blue')
-        }
-      }
+        },
+        silent = TRUE
+      )
+      #cat("\n")
+      #print(coef(result))
+      #cat(paste0("\nalpha+beta=",as.numeric((coef(result)['alpha'] + coef(result)['beta']))))
+      #cat(paste0("\nattemp=",attempt))
+    } 
     
+    if (is.null(result)) {
+      cat("    This data set couldn't fit")
+    }else{
+      result=coef(result)[c(4,5,1,2,3)]
+      
+      if (as.numeric(result["k_s"])>as.numeric(result["k_m"])){
+        result=result[c(2,1,4,3,5)]
+        names(result)=c("alpha","beta","k_s","k_m","k_ns")
+      }
+      
+      if (as.numeric(result["k_s"])>as.numeric(result["k_ns"])){
+        result=result[c(1,2,5,4,3)]
+        result[1]=1-as.numeric(result[1])-as.numeric(result[2])
+        names(result)=c("alpha","beta","k_s","k_m","k_ns")
+      }
+      
+      if (as.numeric(result["k_m"])>as.numeric(result["k_ns"])){
+        result=result[c(1,2,3,5,4)]
+        result[2]=1-as.numeric(result[1])-as.numeric(result[2])
+        names(result)=c("alpha","beta","k_s","k_m","k_ns")
+      }
+      
+      # Calculate predicted/expected P from the fit
+      P_pred = threeComponentPrediction(t.fit.shift, result['alpha'], result['beta'], result['k_s'], result['k_m'], result['k_ns'])
+      
+      ## Calculate the fitting errors
+      rss=RSS(P.fit, P_pred)
+      aic=AIC(P.fit, P_pred, 5)
+      bic=BIC(P.fit, P_pred, 5)
+      result=c(result,rss,aic,bic)
+      names(result)[6:8]=c("RSS","AIC","BIC")
+      
+      boot.3.fitRT=rbind(boot.3.fitRT,result)
+      rownames(boot.3.fitRT)[dim(boot.3.fitRT)[1]]<-as.character(i-1)
+      
+      if (plot.fit||i<=3){
+        ## Plot the data to be fitted in log-log scale
+        par(mar = c(5,6,4,2) + 0.1)
+        if (i==1){
+          plot(t.plot,P[[i]][1:length(t.plot)],main="3-comp fit of original data",xlab="Time (s)",ylab=" ",
+               cex.main=1.2,xlim=c(0.1,x.max),ylim=c(y.min,1.28),cex.axis=1.5,cex.lab=1.1,pch=20,cex=0.8,
+               bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n")
+        }
+        else{
+          plot(t.plot,P[[i]][1:length(t.plot)],main=paste0("3-comp fit of bootstrapped data # ",i-1),xlab="Time (s)",ylab=" ",
+               cex.main=1.2,xlim=c(0.1,x.max),ylim=c(y.min,1.28),cex.axis=1.5,cex.lab=1.1,pch=20,cex=0.8,
+               bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n")
+        }
+        
+        title(ylab="Survival probability (1-CDF)",cex.lab=1.1,line=3.6)
+        axis(2, at=at.y, labels=lab.y, las=1)
+        axis(1, at=at.x, labels=lab.x, las=1)
+        
+        # Plot fitted curve
+        p3_model = function(x){
+          result['alpha']*exp(-result['k_s']*(x-min(t.fit))) + 
+            result['beta']*exp(-result['k_m']*(x-min(t.fit))) + 
+            (1- result['alpha']-result['beta'])*exp(-result['k_ns']*(x-min(t.fit)))
+        }
+        curve(p3_model,add=T,col="purple",lwd=2)
+        
+        ## Print parameters on the plot
+        result.text=c(expression(italic(P(t) == alpha*e^-k[s]*''^t+beta*e^-k[m]*''^t+(1-alpha-beta)*e^-k[ns]*''^t)),
+                      as.expression(bquote(italic('k'['s']==.(result['k_s'])))),
+                      as.expression(bquote(italic('k'['m']==.(result['k_m'])))),
+                      as.expression(bquote(italic('k'['ns']==.(result['k_ns'])))),
+                      as.expression(bquote(italic(alpha==.(result['alpha'])))),
+                      as.expression(bquote(italic(beta==.(result['beta'])))),
+                      "  ",
+                      as.expression(bquote(italic('RSS'==.(result['RSS'])))),
+                      as.expression(bquote(italic('AIC'==.(result['AIC'])))),
+                      as.expression(bquote(italic('BIC'==.(result['BIC'])))),
+                      " "
+        )
+        legend("left",legend=result.text,pch=NULL,y.intersp=0.8,x.intersp=0.3,bty="n",cex=1)
+        par(font=1)
+        legend("topright",legend = c("Data      ","Fit      "),
+               pch=c(20,NA),lty=c(NA,1),seg.len=0.6,lwd = 1.5,text.col=c("black","black"),
+               col=c("black","purple"),bty="n",y.intersp = 0.8,x.intersp = 0.5)
+        legend("bottomleft",legend = c(BootData$Name,paste("n = ",BootData$n,sep="")),
+               text.col=c("grey60","grey60"),bty="n",y.intersp = 0.8,x.intersp = 0.5)
+        abline(v=cutoff, lty=3, col='blue')
+      }
+    }
+    flush.console()
   }
   
   
@@ -1824,7 +1816,7 @@ fitRT_Boot_2and3comp<-function(BootData,t.interval=0.25,x.max=100,y.min=0.0001,
   }
   
   cat("\n\nPDF output in working directory")
-  return(list("2-component fitting"=boot.2.fitRT.filter,"3-component fitting"=boot.3.fitRT.filter))
+  return(invisible(list("2-component fitting"=boot.2.fitRT.filter,"3-component fitting"=boot.3.fitRT.filter)))
   
 }
 

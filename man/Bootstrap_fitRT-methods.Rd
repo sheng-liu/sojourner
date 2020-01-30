@@ -4,6 +4,12 @@
 \name{Bootstrap_fitRT}
 \alias{Bootstrap_fitRT}
 \alias{calculate_1_CDF}
+\alias{calculate_1_CDF_multiple}
+\alias{Boot_1_CDF}
+\alias{fitRT_Boot_1comp}
+\alias{fitRT_Boot_2comp}
+\alias{fitRT_Boot_3comp}
+\alias{fitRT_Boot_2and3comp}
 \title{Fitting 1-CDF of Bootstrapped residence time data with exponential decay}
 \usage{
 calculate_1_CDF(trackll=trackll,x.max=100,y.min=0.0001,filter=c(min=3,max=Inf),t.interval=0.5,output=FALSE,plot_linear=TRUE)
@@ -39,7 +45,7 @@ fitRT_Boot_2and3comp(BootData,t.interval=0.25,x.max=100,y.min=0.0001,
 
 \item{x.max.linear}{The maximum range of X axis for linear scaled plot, if not specified, will be generated based on data.}
 
-\item{plotCI}{A Logical indicate if to plot upper and lower bound of 95% conficence interval.}
+\item{plotCI}{A Logical indicate if to plot upper and lower bound of 95 percent conficence interval.}
 
 \item{R}{number of resampling times for bootstrapping, default is 100.}
 
@@ -65,7 +71,7 @@ The fitting functions output the fitting result of original and all bootstrapped
 }
 \description{
 Calculate/Compare Residence time/Survival Curve of single/multiple trackll, 
-with upper and lower bound of 95% conficence interval.
+with upper and lower bound of 95 percent confidence interval.
 
 Generate bootstrapped data sets (resampling) of residence times, fitting 1-CDF of all bootstrapped
 data sets with multi-component exponential decay can derive average unbinding rate (k off) 
@@ -73,7 +79,7 @@ and estimate the standard deviation.
 }
 \details{
 calculate_1_CDF calculate Survival Curve of a trackll, with upper and lower bound of 
-95% conficence interval. The survival curve/probability is calculated as 1-CDF of the length of tracks/trajectories.
+95 percent confidence interval. The survival curve/probability is calculated as 1-CDF of the length of tracks/trajectories.
 
 calculate_1_CDF_multiple compare the 1-CDF of multiple tracklls.
 
@@ -113,6 +119,8 @@ plot=TRUE,x.max=100,y.min=0.0001)
 # Fit boot strapped data
 fitRT_Boot_2and3comp(BootData,t.interval=0.25,x.max=100,y.min=0.0001,
                                  cutoff=FALSE,weighting=TRUE,output=FALSE,k_ns=FALSE,plot.fit = TRUE)
+
+
 
 
 

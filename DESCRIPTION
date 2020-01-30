@@ -13,9 +13,5 @@ VignetteBuilder: knitr
 Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,sp,truncnorm,utils,stats,pixmap,SDMTools,rlang,rowr
 NeedsCompilation: no
 Packaged: 2017-09-05; shengliu
-<<<<<<< HEAD
 RoxygenNote: 7.0.1
-=======
-RoxygenNote: 6.1.1
 Encoding: UTF-8
->>>>>>> 6722b4dd3c5ffcb7c8d9b3eb91e74d3e3168ce61
