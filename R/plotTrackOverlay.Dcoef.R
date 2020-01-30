@@ -275,7 +275,9 @@ plotTrackOverlay.Dcoef<-function(trackll=trackll,scale=128,dt=6,filter=c(min=7,m
                                  t.interval=0.01,Dcoef.range=c(-6,2),color=c("blue", "white", "red"),
                                  folder=NULL,file.No=0,line.width=0.1){
   ## Output the plots into one PDF file in the working directory.
-  pdf(paste("plotTrackOverlay.Dcoef.Heatmap-",names(trackll),"_Rsquare=",rsquare,"-",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
+    #trackll.label<-stringr::str_extract(names(trackll)[1],"[A-Z]+[a-z]+-+[A-Z]+[a-z]+-\\d")
+    trackll.label<-gsub("_555nmLaser.*","",names(trackll)[1])
+    pdf(paste("plotTrackOverlay.Dcoef.Heatmap-",trackll.label,"_Rsquare=",rsquare,"-",format(Sys.time(),"%Y%m%d.%H%M%S"),".pdf",sep=""),width=11.7,height=11.7)
   
   nTotal=.plotTrackOverlay.Dcoef(trackll=trackll,scale=scale,dt=dt,filter=filter,resolution=resolution,rsquare=rsquare,
                           t.interval=t.interval,Dcoef.range=Dcoef.range,color=color, 
