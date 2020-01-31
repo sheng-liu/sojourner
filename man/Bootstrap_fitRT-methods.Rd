@@ -119,6 +119,4 @@ plot=TRUE,x.max=100,y.min=0.0001)
 # Fit boot strapped data
 fitRT_Boot_2and3comp(BootData,t.interval=0.25,x.max=100,y.min=0.0001,
                                  cutoff=FALSE,weighting=TRUE,output=FALSE,k_ns=FALSE,plot.fit = TRUE)
-
-
 }
