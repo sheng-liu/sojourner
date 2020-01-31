@@ -76,7 +76,6 @@
 ##' 
 ##' The maximum time range to be plotted can be set using x.max, this will not change the curve/probabiltiy, 
 ##' which is determined by all track information in the trackll. 
-
 ##'
 ##' @examples
 ##'
@@ -107,7 +106,6 @@
 ##'                                  cutoff=FALSE,weighting=TRUE,output=FALSE,k_ns=FALSE,plot.fit = TRUE)
 ##' 
 ##' 
-
 ##' @importFrom mltools empirical_cdf 
 ##' @export calculate_1_CDF
 ##' @export calculate_1_CDF_multiple
