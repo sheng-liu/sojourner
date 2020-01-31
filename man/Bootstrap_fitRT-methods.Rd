@@ -4,6 +4,14 @@
 \name{Bootstrap_fitRT}
 \alias{Bootstrap_fitRT}
 \alias{calculate_1_CDF}
+\alias{Bootstrap_fitRT}
+\alias{calculate_1_CDF}
+\alias{calculate_1_CDF_multiple}
+\alias{Boot_1_CDF}
+\alias{fitRT_Boot_1comp}
+\alias{fitRT_Boot_2comp}
+\alias{fitRT_Boot_3comp}
+\alias{fitRT_Boot_2and3comp}
 \title{Fitting 1-CDF of Bootstrapped residence time data with exponential decay}
 \usage{
 calculate_1_CDF(trackll=trackll,x.max=100,y.min=0.0001,filter=c(min=3,max=Inf),t.interval=0.5,output=FALSE,plot_linear=TRUE)

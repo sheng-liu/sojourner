@@ -7,8 +7,8 @@
 ##
 ###############################################################################
 ##' @name Bootstrap_fitRT
-##' @aliases Bootstrap_fitRT, calculate_1_CDF, calculate_1_CDF_multiple, Boot_1_CDF, fitRT_Boot_1comp, fitRT_Boot_2comp, fitRT_Boot_3comp
-##' , fitRT_Boot_2and3comp
+##' @aliases Bootstrap_fitRT calculate_1_CDF calculate_1_CDF_multiple Boot_1_CDF fitRT_Boot_1comp fitRT_Boot_2comp fitRT_Boot_3comp
+##'  fitRT_Boot_2and3comp
 ##' @title Fitting 1-CDF of Bootstrapped residence time data with exponential decay
 ##' @rdname Bootstrap_fitRT-methods
 ##' @docType methods
