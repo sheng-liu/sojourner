@@ -47,7 +47,7 @@
 ##' @param output A Logical indicate if output should be generated. See Values for detail.
 ##' @param plot_linear An Logical indicate if also plot in linear scale. log-log scaled plot is default.
 ##' @param x.max.linear The maximum range of X axis for linear scaled plot, if not specified, will be generated based on data.
-##' @param plotCI A Logical indicate if to plot upper and lower bound of 95% conficence interval.
+##' @param plotCI A Logical indicate if to plot upper and lower bound of 95 percent conficence interval.
 ##' @param R number of resampling times for bootstrapping, default is 100.
 ##' @param plot A Logical indicate if to plot for Boot_1_CDF.
 ##' @param plot.fit An Logical indicate if to plot the fitting result of all bootstrapped data set. If False, only 3 rows of fitting will be plotted.
@@ -76,7 +76,6 @@
 ##' 
 ##' The maximum time range to be plotted can be set using x.max, this will not change the curve/probabiltiy, 
 ##' which is determined by all track information in the trackll. 
-
 ##'
 ##' @examples
 ##'
@@ -107,7 +106,6 @@
 ##'                                  cutoff=FALSE,weighting=TRUE,output=FALSE,k_ns=FALSE,plot.fit = TRUE)
 ##' 
 ##' 
-
 ##' @importFrom mltools empirical_cdf 
 ##' @export calculate_1_CDF
 ##' @export calculate_1_CDF_multiple

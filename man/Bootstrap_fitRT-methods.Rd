@@ -4,8 +4,6 @@
 \name{Bootstrap_fitRT}
 \alias{Bootstrap_fitRT}
 \alias{calculate_1_CDF}
-\alias{Bootstrap_fitRT}
-\alias{calculate_1_CDF}
 \alias{calculate_1_CDF_multiple}
 \alias{Boot_1_CDF}
 \alias{fitRT_Boot_1comp}
@@ -47,7 +45,7 @@ fitRT_Boot_2and3comp(BootData,t.interval=0.25,x.max=100,y.min=0.0001,
 
 \item{x.max.linear}{The maximum range of X axis for linear scaled plot, if not specified, will be generated based on data.}
 
-\item{plotCI}{A Logical indicate if to plot upper and lower bound of 95% conficence interval.}
+\item{plotCI}{A Logical indicate if to plot upper and lower bound of 95 percent conficence interval.}
 
 \item{R}{number of resampling times for bootstrapping, default is 100.}
 
