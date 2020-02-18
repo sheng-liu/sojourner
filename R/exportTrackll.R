@@ -49,7 +49,6 @@
 ##' 
 ##' #Import export save back into a trackll
 ##' trackll.2 <- createTrackll(folder = getwd(), input = 3)
-##' @importFrom rowr cbind.fill
 ##' @export exportTrackll
 
 ############################################################################### 
@@ -100,54 +99,54 @@
     cat(paste("\n", file.name, " placed in current directory.\n", sep = ""))
 }
 
-#### .exportColWise ####
+# #### .exportColWise ####
 
-# Function unused for now- may be helpful when lossy Diatrack .txt
-# export is neccessary
+# # Function unused for now- may be helpful when lossy Diatrack .txt
+# # export is neccessary
 
-# Install packages and dependencies library(rowr)
+# # Install packages and dependencies library(rowr)
 
-.exportColWise = function(track.list) {
+# .exportColWise = function(track.list) {
     
-    # Confirmation text of function call
-    cat("\nWriting .csv column-wise output in current directory for", 
-        getTrackFileName(track.list), "...\n")
+#     # Confirmation text of function call
+#     cat("\nWriting .csv column-wise output in current directory for", 
+#         getTrackFileName(track.list), "...\n")
     
-    frame.list <- list()
+#     frame.list <- list()
     
-    # Loop through every trajectory in input track.list
-    for (i in seq_along(track.list)) {
+#     # Loop through every trajectory in input track.list
+#     for (i in seq_along(track.list)) {
         
-        start.frame = getStartFrame(track.list[i])
+#         start.frame = getStartFrame(track.list[i])
         
-        frame.list <- c(frame.list, start.frame, 0, 0)
+#         frame.list <- c(frame.list, start.frame, 0, 0)
         
-        temp <- track.list[[i]][seq_len(3)]
+#         temp <- track.list[[i]][seq_len(3)]
         
-        if (i != 1) {
-            df <- cbind.fill(df, temp, fill = 0)
-        } else {
-            df <- temp
-        }
-    }
+#         if (i != 1) {
+#             df <- cbind.fill(df, temp, fill = 0)
+#         } else {
+#             df <- temp
+#         }
+#     }
     
-    colnames(df) <- frame.list
+#     colnames(df) <- frame.list
     
-    # header = 'format (columnwise): Frame1 row n+1: (y(tn) x(tn) z(tn)),
-    # row n+1: (y(t(n+1)) x(t(n+1)) z(t(n+1))), row n+2: (y(t(n+2))
-    # x(t(n+2) z(t(n+2)) y(t(n+3))....  where Frame1 is the frame number
-    # where the target is seen for the first time, and the columns define
-    # trajectories. Beware!  the number of tracks is limited by the width
-    # of the widest text file on your machine.  Rowwise export preferred'
+#     # header = 'format (columnwise): Frame1 row n+1: (y(tn) x(tn) z(tn)),
+#     # row n+1: (y(t(n+1)) x(t(n+1)) z(t(n+1))), row n+2: (y(t(n+2))
+#     # x(t(n+2) z(t(n+2)) y(t(n+3))....  where Frame1 is the frame number
+#     # where the target is seen for the first time, and the columns define
+#     # trajectories. Beware!  the number of tracks is limited by the width
+#     # of the widest text file on your machine.  Rowwise export preferred'
     
-    # Write the data frame df into the .csv and display confirmation text
-    file.name = paste("COL", getTrackFileName(track.list), ".csv", sep = "")
-    # write(header, file = file.name, append = TRUE)
-    write.table(df, file = file.name, row.names = FALSE, sep = ",")
-    # ,append = TRUE
+#     # Write the data frame df into the .csv and display confirmation text
+#     file.name = paste("COL", getTrackFileName(track.list), ".csv", sep = "")
+#     # write(header, file = file.name, append = TRUE)
+#     write.table(df, file = file.name, row.names = FALSE, sep = ",")
+#     # ,append = TRUE
     
-    cat(paste("\n", file.name, "placed in current directory.\n\n", sep = ""))
-}
+#     cat(paste("\n", file.name, "placed in current directory.\n\n", sep = ""))
+# }
 
 #### exportTrackll ####
 
