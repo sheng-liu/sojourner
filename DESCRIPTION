@@ -8,7 +8,7 @@ LazyData: FALSE
 Suggests: BiocStyle, knitr, rmarkdown, RUnit, BiocGenerics
 VignetteBuilder: knitr
 biocViews: Technology, WorkflowStep
-Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,shinyjs,sp,truncnorm,utils,stats,pixmap,SDMTools,rlang,graphics,grDevices,grid,compiler,lattice
+Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,shinyjs,sp,truncnorm,utils,stats,pixmap,rlang,graphics,grDevices,grid,compiler,lattice
 NeedsCompilation: no
 RoxygenNote: 6.1.1
 Encoding: UTF-8

@@ -4,15 +4,11 @@
 \name{maskTracks}
 \alias{maskTracks}
 \alias{maskPoint}
-\alias{indexCell}
 \alias{filterOnCell}
 \alias{sampleTracks}
 \title{maskTracks}
 \usage{
 maskTracks(folder, trackll)
-
-indexCell(folder, trackll, areaFilter = c(0, Inf), 
-    intensityFilter = c(0, Inf), export = FALSE, max.pixel = 128)
 
 filterOnCell(trackll, numTracks = 0)
 
@@ -22,15 +18,6 @@ sampleTracks(trackll, num = 0)
 \item{folder}{Full path to the output files.}
 
 \item{trackll}{A list of track lists.}
-
-\item{export}{Logical indicate if .csv output file should be generated}
-
-\item{max.pixel}{Pixel dimension of image}
-
-\item{areaFilter}{Range of cell areas (pixel sq) to keep in filtering}
-
-\item{intensityFilter}{Range of avg cell intensities (grayscale) to keep 
-in filtering}
 
 \item{numTracks}{Minimum number of required tracks in the trackll}
 
@@ -52,13 +39,6 @@ If there are more mask files than trackll, masking will fail. If there are
 less mask files, trackls without masks will be deleted. Users can use 
 plotMask() and plotTrackOverlay() to see the mask and its effect on 
 screening tracks.
-
-indexCell() will mask a trackll, separate each cell into a trackl, display 
-all cell areas and mean intensities, and then apply any area and intensity 
-filters.
-There is also the capability to export the final areas/intensities as 
-'indexCell.csv' to the home directory and the pixel dimensions can be 
-changed.
 
 filterOnCell() eliminates all trackl in trackll that has less than 
 numTracks tracks.
@@ -87,20 +67,4 @@ plotNucTrackOverlay(folder=folder,trackll=trackll.masked)
 #Plot mask
 plotMask(folder=folder)
 
-# To mask a trackll, separate each cell into a trackl, and apply any 
-# intensity and area filters
-str(trackll, max.level=1)
-trackll_indexed = indexCell(folder = folder, trackll = trackll)
-str(trackll_indexed, max.level=1)
-
-# To eliminate all trackl in trackll that has less than numTracks = 5 tracks
-# In this example, we eliminate all cells less with less than 5 tracks
-trackll_filterOnCell = filterOnCell(trackll=trackll_indexed,
-    numTracks = 5)
-str(trackll_filterOnCell, max.level=1)
-
-# To randomly sample num = 5 tracks fo each trackl in trackll
-# In this example, we randomly sample 5 tracks for each cell
-trackll_sampled = sampleTracks(trackll=trackll_filterOnCell, num=5)
-str(trackll_sampled, max.level=1)
 }
