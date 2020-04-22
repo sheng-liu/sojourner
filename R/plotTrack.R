@@ -167,7 +167,7 @@
 ##' fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
 ##'
 ##' ## plot component tracks
-##' plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
+##' # plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
 
 ##' @export plotTrack
 ##' @export plotTrackFromIndex

@@ -119,5 +119,5 @@ fit=fitNormDistr(dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,
 trackll.sel=selComponentTracks(trackll=trackll,fit=fit,likelihood = 0.9,
                                dcoef)
 ## plot component tracks
-plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
+# plotComponentTrackOverlay(folder=folder3,trackll.sel=trackll.sel)
 }
