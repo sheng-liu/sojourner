@@ -3,6 +3,7 @@
 \docType{package}
 \name{sojourner}
 \alias{sojourner}
+\alias{sojourner-package}
 \title{sojourner - statistical analysis of single molecule trajectories}
 \description{
 Single molecule tracking reports live biophysical properties of
