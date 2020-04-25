@@ -18,22 +18,52 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-Single molecule tracking has evolved as a novel new approach complementing genomic sequencing, it reports live biophysical properties of molecules being investigated besides properties relating their coding sequence. 
+Single molecule tracking has evolved as a novel new approach complementing genomic sequencing, it reports live biophysical properties of molecules being investigated besides properties relating their coding sequence. Here we provided "sojourner" package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data (https://bioconductor.org/packages/release/bioc/html/sojourner.html).
 
-Here we provided "sojourner" package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data.
+Maintainer: 
+
+Sojourner Developer <sojourner.developer at outlook.com>
+
+Citation (from within R, enter citation("sojourner")):
+
+Liu S, Yoo S, Tang X, Sung Y, Wu C (2020). sojourner: sojourner: An R package for statistical analysis of single molecule trajectories. R package version 1.0.2,  https://github.com/sheng-liu/sojourner. DOI: 10.18129/B9.bioc.sojourner.
+
+ 
 
 ## Installation
 
-You can install the released version from [GitHub](https://github.com/) with:
+You can install sojourner as a Bioconductor package:
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("sojourner")
+```
+
+Alternatively, you can also install sojourner directly from github. 
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("sheng-liu/sojourner", build_vignettes = TRUE)
+devtools::install_github("sheng-liu/sojourner", build_vignettes = TRUE, ref = "master")
+
 ```
+
+## Documentation
+
+sojourner has a vignette contained in the package. You can view the documentation by
+
+``` r
+browseVignettes("sojourner") function. 
+```
+
+Alternatively, you can also access the the vignette on sojourner's website
+
+https://sheng-liu.github.io/sojourner/articles/sojourner-vignette.html 
 
 ## Dependencies
 
-The packages that sojourner uses in case not installed automatically.
+These are packages that sojourner uses in case they are not installed automatically.
 
 ``` r
 # plotting
