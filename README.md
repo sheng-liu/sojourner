@@ -3,7 +3,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Sojourner: Statistical Analysis of Single Molecule Trajectories
+# *Sojourner*: Statistical Analysis of Single Molecule Trajectories
 
 <!-- badges: start -->
 
@@ -12,25 +12,25 @@
 Single molecule tracking has evolved as a novel new approach
 complementing genomic sequencing, it reports live biophysical properties
 of molecules being investigated besides properties relating their coding
-sequence. Here we provided “sojourner” package, to address statistical
+sequence. Here we provided “*sojourner*” package, to address statistical
 and bioinformatic needs related to the analysis and comprehension of
 high throughput single molecule tracking data
 (<https://bioconductor.org/packages/release/bioc/html/sojourner.html>).
 
 Maintainer:
 
-Sojourner Developer \<sojourner.developer at outlook.com\>
+*sojourner* developer \<sojourner.developer at outlook.com\>
 
-Citation (from within R, enter citation(“sojourner”)):
+Citation:
 
-Liu S, Yoo S, Tang X, Sung Y, Wu C (2020). sojourner: sojourner: An R
-package for statistical analysis of single molecule trajectories. R
-package version 1.0.2, <https://github.com/sheng-liu/sojourner>. DOI:
+Liu S, Yoo S, Tang X, Sung Y, Wu C (2020). Sojourner: statistical
+analysis of single molecule trajectories. R package version 1.0.2,
+<https://github.com/sheng-liu/sojourner>. DOI:
 10.18129/B9.bioc.sojourner.
 
 ## Installation
 
-You can install sojourner as a Bioconductor package:
+You can install *sojourner* as a Bioconductor package:
 
 ``` r
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -39,7 +39,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("sojourner")
 ```
 
-Alternatively, you can also install sojourner directly from github.
+Alternatively, you can also install *sojourner* directly from github.
 
 ``` r
 # install.packages("devtools")
@@ -48,21 +48,21 @@ devtools::install_github("sheng-liu/sojourner", build_vignettes = TRUE, ref = "m
 
 ## Documentation
 
-sojourner has a vignette contained in the package. You can view the
+*Sojourner* has a vignette contained in the package. You can view the
 documentation by
 
 ``` r
-browseVignettes("sojourner") function. 
+browseVignettes("sojourner")
 ```
 
-Alternatively, you can also access the the vignette on sojourner’s
+Alternatively, you can also access the the vignette on *sojourner*’s
 website
 
 <https://sheng-liu.github.io/sojourner/articles/sojourner-vignette.html>
 
 ## Dependencies
 
-These are packages that sojourner uses in case they are not installed
+These are packages that *sojourner* uses in case they are not installed
 automatically.
 
 ``` r
