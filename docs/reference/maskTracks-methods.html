@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sojourner</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.4</span>
       </span>
     </div>
 
@@ -127,9 +127,6 @@
 
     <pre class="usage"><span class='fu'>maskTracks</span>(<span class='no'>folder</span>, <span class='no'>trackll</span>)
 
-<span class='fu'>indexCell</span>(<span class='no'>folder</span>, <span class='no'>trackll</span>, <span class='kw'>areaFilter</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>Inf</span>),
-    <span class='kw'>intensityFilter</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>Inf</span>), <span class='kw'>export</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>max.pixel</span> <span class='kw'>=</span> <span class='fl'>128</span>)
-
 <span class='fu'>filterOnCell</span>(<span class='no'>trackll</span>, <span class='kw'>numTracks</span> <span class='kw'>=</span> <span class='fl'>0</span>)
 
 <span class='fu'>sampleTracks</span>(<span class='no'>trackll</span>, <span class='kw'>num</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
@@ -144,23 +141,6 @@
     <tr>
       <th>trackll</th>
       <td><p>A list of track lists.</p></td>
-    </tr>
-    <tr>
-      <th>export</th>
-      <td><p>Logical indicate if .csv output file should be generated</p></td>
-    </tr>
-    <tr>
-      <th>max.pixel</th>
-      <td><p>Pixel dimension of image</p></td>
-    </tr>
-    <tr>
-      <th>areaFilter</th>
-      <td><p>Range of cell areas (pixel sq) to keep in filtering</p></td>
-    </tr>
-    <tr>
-      <th>intensityFilter</th>
-      <td><p>Range of avg cell intensities (grayscale) to keep 
-in filtering</p></td>
     </tr>
     <tr>
       <th>numTracks</th>
@@ -187,12 +167,6 @@ If there are more mask files than trackll, masking will fail. If there are
 less mask files, trackls without masks will be deleted. Users can use 
 plotMask() and plotTrackOverlay() to see the mask and its effect on 
 screening tracks.</p>
-<p>indexCell() will mask a trackll, separate each cell into a trackl, display 
-all cell areas and mean intensities, and then apply any area and intensity 
-filters.
-There is also the capability to export the final areas/intensities as 
-'indexCell.csv' to the home directory and the pixel dimensions can be 
-changed.</p>
 <p>filterOnCell() eliminates all trackl in trackll that has less than 
 numTracks tracks.</p>
 <p>sampleTracks() randomly samples num number of tracks for each trackl in 
@@ -246,75 +220,7 @@ trackll.</p>
 #&gt; Reading mask file epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1_MASK.tif</div><div class='img'><img src='maskTracks-methods-7.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; Reading mask file epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2_MASK.tif</div><div class='img'><img src='maskTracks-methods-8.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; Done!</div><div class='input'>
-<span class='co'># To mask a trackll, separate each cell into a trackl, and apply any </span>
-<span class='co'># intensity and area filters</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>trackll</span>, <span class='kw'>max.level</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; List of 2
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv:List of 800
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv:List of 544</div><div class='input'><span class='no'>trackll_indexed</span> <span class='kw'>=</span> <span class='fu'>indexCell</span>(<span class='kw'>folder</span> <span class='kw'>=</span> <span class='no'>folder</span>, <span class='kw'>trackll</span> <span class='kw'>=</span> <span class='no'>trackll</span>)</div><div class='output co'>#&gt; epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1
-#&gt; Cell Areas (pixels squared): 
-#&gt; 94
-#&gt; 166
-#&gt; 169
-#&gt; 137
-#&gt; 153
-#&gt; Cell Intensities (grayscale): 
-#&gt; 0.633249895702962 
-#&gt; 0.734136546184739 
-#&gt; 0.672467803689523 
-#&gt; 0.572921139258623 
-#&gt; 0.537459951300782 
-#&gt; 
-#&gt; epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2
-#&gt; Cell Areas (pixels squared): 
-#&gt; 157
-#&gt; 70
-#&gt; 88
-#&gt; 154
-#&gt; Cell Intensities (grayscale): 
-#&gt; 0.667041338828525 
-#&gt; 0.583977591036415 
-#&gt; 0.709447415329768 
-#&gt; 0.652711993888464 
-#&gt; 
-#&gt; 
-#&gt; Only cell with areas between 0 and Inf pixels sq kept.
-#&gt; Only cell with avg intensities between 0 and Inf grayscale kept.
-#&gt; 
-#&gt; All files masked, separated by cell indexes, and filters applied.</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>trackll_indexed</span>, <span class='kw'>max.level</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; List of 9
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_1:List of 29
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_2:List of 111
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_3:List of 84
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_4:List of 35
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_5:List of 34
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_1:List of 67
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_2:List of 10
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_3:List of 2
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_4:List of 41</div><div class='input'>
-<span class='co'># To eliminate all trackl in trackll that has less than numTracks = 5 tracks</span>
-<span class='co'># In this example, we eliminate all cells less with less than 5 tracks</span>
-<span class='no'>trackll_filterOnCell</span> <span class='kw'>=</span> <span class='fu'>filterOnCell</span>(<span class='kw'>trackll</span><span class='kw'>=</span><span class='no'>trackll_indexed</span>,
-    <span class='kw'>numTracks</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>trackll_filterOnCell</span>, <span class='kw'>max.level</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; List of 8
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_1:List of 29
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_2:List of 111
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_3:List of 84
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_4:List of 35
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_5:List of 34
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_1:List of 67
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_2:List of 10
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_4:List of 41</div><div class='input'>
-<span class='co'># To randomly sample num = 5 tracks fo each trackl in trackll</span>
-<span class='co'># In this example, we randomly sample 5 tracks for each cell</span>
-<span class='no'>trackll_sampled</span> <span class='kw'>=</span> <span class='fu'>sampleTracks</span>(<span class='kw'>trackll</span><span class='kw'>=</span><span class='no'>trackll_filterOnCell</span>, <span class='kw'>num</span><span class='kw'>=</span><span class='fl'>5</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>trackll_sampled</span>, <span class='kw'>max.level</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; List of 8
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_1:List of 5
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_2:List of 5
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_3:List of 5
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_4:List of 5
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_1.tif.csv_5:List of 5
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_1:List of 5
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_2:List of 5
-#&gt;  $ epl11AA_HTZ1Halo_No_RAP_fr10ms_120mW_2.tif.csv_4:List of 5</div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
