@@ -124,7 +124,7 @@
         
         fit=lm(msd.n[2:5]~x)
         MSDslope=coefficients(fit)[2]/(2*dimension)
-        Log.D.coef=log(MSDslope)
+        Log.D.coef=log10(MSDslope)
         MSDcorr=summary(fit)$r.squared
         #if((!is.na(Log.D.coef))&(MSDcorr>=rsquare))
         trackl[[j]]=list(track,Log.D.coef,MSDcorr)
