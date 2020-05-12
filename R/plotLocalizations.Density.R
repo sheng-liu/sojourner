@@ -135,6 +135,12 @@ plotLocalizations.Density<-function(trackll=trackll,scale=256, r=125, bin=30,col
       localizations$density[k]=sum(count.n,na.rm = T)
     }
     
+    ## Order by density
+    density.order <- order(localizations$density, decreasing = F)
+    localizations@data <- localizations@data[density.order,]
+    localizations@coords <- localizations@coords[density.order,]
+    
+    
     ## Determine which bin each localization is in.
     v = sp::GridTopology(c(0,0), c(bin/1000,bin/1000), 
                          c(ceiling(scale*resolution*1000/bin)+1,ceiling(scale*resolution*1000/bin)+1))
@@ -185,7 +191,7 @@ plotLocalizations.Density<-function(trackll=trackll,scale=256, r=125, bin=30,col
            (bin.density[[o]]$bin.yc[1]+bin/2000), density = NULL, angle = 45,
            col = cl[as.numeric(names(bin.density)[[o]])], border=NA)
     }
-    legend.col(col = cl, lev = as.numeric(names(bin.density)))
+    .legend.col(col = cl, lev = as.numeric(names(bin.density)))
     ## Add bin size and molecule number (n) as text legend to the topright corner of each plot.
     legend("topright",paste(rep(c("bin = ","n = ")), rep(c(bin,nrow(localizations))),rep(c(" nm",""))),col="white",bty = "n")
     

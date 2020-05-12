@@ -124,7 +124,7 @@
         
         fit=lm(msd.n[2:5]~x)
         MSDslope=coefficients(fit)[2]/(2*dimension)
-        Log.D.coef=log(MSDslope)
+        Log.D.coef=log10(MSDslope)
         MSDcorr=summary(fit)$r.squared
         #if((!is.na(Log.D.coef))&(MSDcorr>=rsquare))
         trackl[[j]]=list(track,Log.D.coef,MSDcorr)
@@ -190,7 +190,7 @@
     box()
     if(length(Dcoef)>0){
       for(k in c(1:length(trackl))){
-        lines(trackl[[k]][[1]]$x*resolution,(128-trackl[[k]][[1]]$y)*resolution,
+        lines(trackl[[k]][[1]]$x*resolution,(scale-trackl[[k]][[1]]$y)*resolution,
               col=cl[(Dcoef[k]-Dcoef.range[1])/(Dcoef.range[2]-Dcoef.range[1])*100+1],lwd=line.width)
         
       }
@@ -216,17 +216,16 @@
     text(temp$rect$left + temp$rect$w, temp$text$y,
          legend,col="white",pos = 2,cex=2)
     
+    ## Calculate total molecule numbers into nTotal
+    nTotal=nTotal+length(Dcoef)
   }
   
   ## Reset plotting area parameters.
   par(oldpar)
   par(mfrow=c(1,1),bg="white",fg="black")
   
-  ## Calculate total molecule numbers into nTotal
-  nTotal=nTotal+length(Dcoef)
-  
   return(nTotal)
-  
+  cat("Done!\n")
 }
 
 

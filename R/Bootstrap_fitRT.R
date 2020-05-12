@@ -54,6 +54,7 @@
 ##' @param cutoff A value of X axis (time) to cutoff when fitting. Data points larger than cutoff will not be used in fitting.
 ##' @param weighting A Logical indicate if the fitting should weight on the tail of 1-CDF curve, the weighting equation is 1/Y.
 ##' @param k.ns Logical indicate or numeric used to control fitting.
+##' @param plotType type of plot for 1-CDF, "l" for line plot, "p" for point plot.
 ##' @return
 ##' \itemize{
 ##' \item{csv:} calculate_1_CDF outputs 1-CDF of track lengths of a single trackll and time intervals output in .csv format, when output = TRUE.
@@ -231,7 +232,7 @@ calculate_1_CDF<-function(trackll=trackll,x.max=100,y.min=0.0001,filter=c(min=3,
 }
 
 calculate_1_CDF_multiple<-function(trackll=c(trackll1,trackll2),x.max=100,y.min=0.0001,filter=c(min=3,max=Inf),t.interval=0.5,
-                                   x.max.linear=NULL,output=FALSE,plot_linear=FALSE,plotCI=TRUE){
+                                   x.max.linear=NULL,output=FALSE,plot_linear=FALSE,plotCI=TRUE, plotType="l"){
   #library(mltools)
   
   #one_CDF=c()
@@ -291,13 +292,18 @@ calculate_1_CDF_multiple<-function(trackll=c(trackll1,trackll2),x.max=100,y.min=
     
     plot(ONE_CDF[[1]][,1],ONE_CDF[[1]][,2],main=" ",xlab="Time (s)",ylab=" ",
          cex.main=1.5,xlim=c(0,x.max.linear),ylim=c(0.0001,1.11),cex.axis=1.5,cex.lab=1.5,pch=20,cex=0.5,
-         bty="n",xaxs="i",yaxs="i",xaxt="n",yaxt="n")
+         bty="n",xaxs="i",yaxs="i",xaxt="n",yaxt="n",type = plotType)
     title(ylab="Survival probability (1-CDF)",cex.lab=1.5,line=3.6)
     axis(1,at=seq(0,x.max.linear,by=5),cex.axis=1.5)
     axis(2,at=seq(0,1,by=0.1),cex.axis=1.5)
     
     for (i in seq_along(trackll)){
-      points(ONE_CDF[[i]][,1],ONE_CDF[[i]][,2],pch=20,col=cl[i],cex=0.5)
+      if(plotType=="l"){
+          lines(ONE_CDF[[i]][,1],ONE_CDF[[i]][,2],pch=20,col=cl[i],cex=0.5)
+      }else{
+          points(ONE_CDF[[i]][,1],ONE_CDF[[i]][,2],pch=20,col=cl[i],cex=0.5)
+      }
+        
       if (plotCI){
         lines(ONE_CDF[[i]][,1][!is.na(ONE_CDF[[i]][,3])],ONE_CDF[[i]][,3][!is.na(ONE_CDF[[i]][,3])],lty=3,col="grey50")
         lines(ONE_CDF[[i]][,1][!is.na(ONE_CDF[[i]][,4])],ONE_CDF[[i]][,4][!is.na(ONE_CDF[[i]][,4])],lty=3,col="grey50")
@@ -323,7 +329,7 @@ calculate_1_CDF_multiple<-function(trackll=c(trackll1,trackll2),x.max=100,y.min=
   
   plot(ONE_CDF[[1]][,1],ONE_CDF[[1]][,2],main=" ",xlab="Time (s)",ylab=" ",
        cex.main=1.5,xlim=c(0.1,x.max),ylim=c(y.min,1.11),cex.axis=1.5,cex.lab=1.5,pch=20,cex=0.5,
-       bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n")
+       bty="n",xaxs="i",yaxs="i",log="xy",xaxt="n",yaxt="n", type = plotType)
   title(ylab="Survival probability (1-CDF)",cex.lab=1.5,line=3.6)
   at.y <- outer(1:9, 10^(log10(y.min):0))
   lab.y <- ifelse(log10(at.y) %% 1 == 0, at.y, NA)
@@ -341,7 +347,11 @@ calculate_1_CDF_multiple<-function(trackll=c(trackll1,trackll2),x.max=100,y.min=
       
     }
     
-    points(ONE_CDF[[i]][,1],ONE_CDF[[i]][,2],pch=20,col=cl[i],cex=0.5)
+      if(plotType=="l"){
+          lines(ONE_CDF[[i]][,1],ONE_CDF[[i]][,2],pch=20,col=cl[i],cex=0.5)
+      }else{
+          points(ONE_CDF[[i]][,1],ONE_CDF[[i]][,2],pch=20,col=cl[i],cex=0.5)
+      }
     
     #lines(ONE_CDF[[i]][,1][!is.na(ONE_CDF[[i]][,3])],ONE_CDF[[i]][,3][!is.na(ONE_CDF[[i]][,3])],lty=3,col="blue")
     #lines(ONE_CDF[[i]][,1][!is.na(ONE_CDF[[i]][,4])],ONE_CDF[[i]][,4][!is.na(ONE_CDF[[i]][,4])],lty=3,col="blue")
