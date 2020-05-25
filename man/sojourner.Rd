@@ -3,16 +3,7 @@
 \docType{package}
 \name{sojourner}
 \alias{sojourner}
-<<<<<<< HEAD
 \title{sojourner - statistical analysis of single molecule trajectories}
-=======
-\alias{sojournerGUI}
-\title{sojourner-simple parameters for single molecule tracking analysis}
-\usage{
-sojourner()
-sojournerGUI()
-}
->>>>>>> develop
 \description{
 Single molecule tracking reports live biophysical properties of
   molecules being investigated besides their coding sequence. It has evolved
