@@ -1,4 +1,6 @@
 ## helperFunctions
+#
+################################################################################
 
 ##-----------------------------------------------------------------------------
 ## .timeStamp add time stamp and file name as a unique signature of the
@@ -154,3 +156,13 @@ removeFrameRecord = function(track.list) {
     return(track.list)
 }
 
+convert.abtrackll=function(trackll){
+    ab.trackll = list()
+    for(i in 1:length(trackll)){
+        segl = trackll[[i]]
+        segl = lapply(trackll[[i]], abTrack)
+        ab.trackll[[i]] = segl
+    }
+    names(ab.trackll) = names(trackll)
+    return (ab.trackll)
+}

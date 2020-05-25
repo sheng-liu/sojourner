@@ -1,0 +1,152 @@
+---
+title: "sojourner trackll Manipulation Guide"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+date: "July 18, 2017"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## sojourner trackll manipulation
+![](sojourner_Pipeline.png)
+
+## createTrackll()
+
+### Description
+Take in Diatrack (.txt or .mat), ImageJ (.csv), or SlimFast (.txt) input from a folder to output a list of track lists (trackll) with the option to merge, mask, censor, record frames, and use multiple cores.
+
+### Parameters
+
+Parameter                            | Description
+-------------------------------------|--------------------------------------------------------------------------------------------
+interact (default F)                 | Open interactive menu to choose the desired folder by selecting any file in it and select input type (script will process all files of that type in this folder).
+folder (specify, unless interact = T)| Full path output file folder (if they are .txt, ensure that they are either all Diatrack or all SlimFast).
+input (specify, unless interact = T) | Input file type (Diatrack .txt file = 1; Diatrack .mat session file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).
+merge (default F)                    | Indicate if the output list should be merged into one- output list is divided by file names otherwise.
+ab.track (default F)                 | Use absolute coordinates for tracks.
+mask (default F)                     | Indicate if image mask should be applied to screen tracks (Note: the mask file should have the same name as the Diatrack output txt file with a "_MASK.tif" ending. Users can use plotMask() and plotTrackOverlay() to see the mask and its effect on screening tracks).
+cores (default 1)                    | Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
+frameRecord (default T)              | Add a fourth column to the track list after the xyz-coordinates for the frame that coordinate point was found (especially helpful when linking frames). Highly recommended to leave on.
+
+### Notes
+It is highly advised that the frame record option be left on to preserve the most information, especially when linking frames. If the frame record option is turned on for reading Diatrack .txt files (input = 1), take note that the frame record is artificially created as consecutive frames after the given start frame. Otherwise, all other data types naturally record the frames of every coordinate point.
+
+The pre-censoring of single-frame tracks is dependent on the tracking software. For complete lossless track data, use Diatrack (.mat) session files. If the initial creation of the trackll does not have a frame record, future exports and imports of the trackll will only preserve the start frames.
+
+If the cores are set to the maximum number of cores available on the system, the script may return a error after processing all the files. This error is due to the requirement of some systems to have one core open for system functions. This error will not affect the trackll output, but to avoid it, one can input one less than the maximum number of cores available.
+
+The naming scheme for the list of track list is as follows:
+
+Track List: [full name of input file]
+
+Track: [Last five characters of the file name].[Start frame].[Length].[Track].[Index in overall list (will differ from Track # when merging)]
+
+(Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+
+### Examples
+
+```{r, eval = FALSE}
+#Basic function call with interactive menu (optimzing 2 cores)
+trackll <- createTrackll(interact = T, cores = 2)
+
+#Manual function call to process Diatrack session files (.mat)
+trackll <- createTrackll("/DIRECTORYPATH/", input = 2, cores = 2)
+```
+
+## exportTrackll()
+
+### Description
+Take in a list of track lists (trackll) and export it into row-wise (ImageJ/MOSAIC) .csv files in the working directory.
+
+### Parameters
+
+Parameter         | Description
+------------------|--------------------------------------------------------------------------------------------
+trackll           | A list of track lists.
+cores (default 1) | Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
+
+
+### Notes
+The reason why ImageJ/MOSAIC style .csv export was chosen is because it fully preserves track frame data, while maintaining short computation time and easy readability in Excel/etc.
+
+In order to import this .csv export back into a trackll at any point (while preserving all information), select input = 3 in createTrackll.
+
+If the track list does not have a fourth frame record column (not recommended), it will just output the start frame of each track instead and will take noticeably longer.
+
+It is not recommended that exportTrackll be run on merged list of track lists (trackll). Also, ensure that the input trackll is a list of track lists and not just a track list.
+
+The naming scheme for each export is as follows:
+
+[yy-MM-dd]_[HH-mm-ss]_[Last five characters of the file name].csv
+
+### Examples
+
+```{r, eval = FALSE}
+#Basic function call to exportTrackll with 2 cores into current directory
+exportTrackll(trackll, cores = 2)
+
+#Export one track list
+.exportRowWise(trackl)
+
+#Get current working directory
+getwd()
+
+#Import export save back into a trackll
+trackll.2 <- createTrackll(folder = getwd(), input = 3, cores = 2)
+```
+
+## linkSkippedFrames()
+
+### Description
+Link trajectories skipped (or do not appear for) a number of frames.
+
+### Parameters
+
+Parameter         | Description
+------------------|--------------------------------------------------------------------------------------------
+trackll (specify)   | A list of track lists.
+tolerance (specify) | Distance tolerance level measured in pixels after the frame skip.
+maxSkip (specify)   | Maximum number of frames a trajectory can skip.
+cores (default 1) | Number of cores used for parallel computation. This can be the cores on a workstation, or on a cluster. Tip: each core will be assigned to read in a file when paralleled.
+
+
+### Notes
+Given user input for a tolerance level to limit how far the next point after the skip can deviate from the last point in pixel distance and a maximum number of frame skips possible, all trajectories falling within these parameters are automatically linked, renamed, and ordered accordingly. For a maxSkip example, if the maxSkip for a trajectory ending in frame 7 was 3, the next linked trajectory can start up to a maximum frame of 11).
+
+Although not required, in order for the output to have a frame record column (recommended), the input must have one as well.
+
+The naming scheme for each linked track is as follows:
+
+[Last five characters of the file name].[Start frame #].[Length].[Track #].[# of links]
+
+Track List: [full name of input file]
+
+Track: [Last five characters of the file name].[Start frame].[Length].[Track].[# of links].[Index in overall list (will differ from Track # when merging)]
+
+(Note: The last five characters of the file name, excluding the extension, cannot contain “.”)
+
+### Examples
+
+```{r, eval = FALSE}
+#Basic function call of linkSkippedFrames
+trackll.linked <- linkSkippedFrames(trackll, tolerance = 5, maxSkip = 10)
+
+#Export linked trackll into .csv files
+exportTrackll(trackll.linked, cores = 2)
+```
+
+## Aditional Information
+
+* Using createTrackll() is equivalent to using readDiatrack(), readDiaSessions(), readParticleTracker(), and readSlimFast() with their corresponding input files.
+
+* In order to use these scripts for a single input file and track list, one can use .readDiatrack()/.readDiaSessions()/.readParticleTracker()/.readSlimFast(), .exportRowWise(), and .linkSkippedFrames().
+
+* If the frame record in the fourth column needs to be deleted in a single track list, call removeFrameRecord() with the track list as the only input.
+
+* Each script has a help file availble in R Help.
+
+[here]: https://github.com/sheng-liu/sojourner-beta/blob/master/CHANGELOG.md

@@ -276,11 +276,11 @@ plotTrack=function(ab.trackll,resolution=0.107,
 
         # output csv of the plot
         cat("\nOutput csv file for track plot...\n")
-
+        
         plot.coords.df=do.call(rbind,plot.coords)
         # melt(plot.coords)
-
-
+        
+        
         fileName=paste("Track Coords-",.timeStamp(file.name[i]),".csv",sep="")
         write.csv(file=fileName,plot.coords.df)
 
@@ -328,8 +328,8 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
     #
     #         ## read in tracks in movie.folder with absolute coords,
     #         ## merge them as the input is merged csv files
-    #         ab.trackll[i]=readDiatrack(folder=folder.list[[i]],merg=T,
-    #                                    ab.track=T)
+    #         ab.trackll[i]=readDiatrack(folder=folder.list[[i]],merg=TRUE,
+    #                                    ab.track=TRUE)
     #         cat("\n...\n") # seperator makes ouput clearer
     #         names(ab.trackll)[i]=names(folder.list)[i]
     #
@@ -494,15 +494,15 @@ plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,
     # output
     cat("\nOutput combined plot...")
     cmb.plot=gridExtra::marrangeGrob(plot.lst,nrow=nrow,ncol=ncol)
-
+    
     fileName=paste(.timeStamp("TrackOverlay"),".pdf",sep="")
     # TODO: add folder name in .timeStamp
     # fileName=paste("TrackOverlay-",.timeStamp("folder"),".pdf",sep="")
-
+    
     ggplot2::ggsave(filename=fileName,cmb.plot,width=width,height=height)
-
+    
     cat("\nDone!")
-
+    
 }
 
 
