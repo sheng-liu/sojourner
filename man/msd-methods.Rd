@@ -3,15 +3,15 @@
 \docType{methods}
 \name{msd}
 \alias{msd}
-\alias{msd_track}
-\alias{msd_perc}
-\alias{msd_track_vecdt}
+\alias{msd.track}
+\alias{msd.perc}
+\alias{msd.track.vecdt}
 \title{msd}
 \usage{
 msd(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,
 plot=FALSE,output=FALSE,filter=c(min=7,max=Inf))
-msd_track_vecdt(trackll,vecdt=NULL,resolution=0.107,output=FALSE)
-msd_perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
+  msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=F)
+  msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
 trimmer=c(min=1,max=31),resolution=0.107,output=FALSE)
 }
 \arguments{
@@ -19,7 +19,7 @@ trimmer=c(min=1,max=31),resolution=0.107,output=FALSE)
 
 \item{resolution}{ratio of pixel to uM.}
 
-\item{trackll}{a list of track lists.}
+\item{trackll}{Track list output from createTrackll().}
 
 \item{summarize}{An logical indicate if MSD should be calculated on
 individual trajectories (Default) or summarized on all trajectories.}
@@ -29,8 +29,8 @@ to be analyzed. Take only trajectories that has number of frames greater
 than (>=) min and less than (<) max.}
 
 \item{cores}{Number of cores used for parallel computation. This can be the
-cores on a workstation, or on a cluster. Tip: the computation on each 
-file will be parallel assigned to each CPU core.}
+cores on a workstation, or on a cluster. Tip: the computation on each file
+will be parallel assigned to each CPU core.}
 
 \item{plot}{An logical indicate if plot should be generated. See Values for
 detail.}
@@ -40,8 +40,7 @@ for detail.}
 
 \item{vecdt}{A list containing varying dt values.}
 
-\item{percentage}{compute msd based on (tierd) percentage of its total 
-length.}
+\item{percentage}{compute msd based on (tierd) percentage of its total length.}
 
 \item{trimmer}{vector used for trimming via trimTrack()}
 }
@@ -62,25 +61,24 @@ SE=SD/sqrt(N).
 \item{SampleSize} The sample size (number of tracks/trajectories) used for
 calculating the msd and standard error.
 
-\item{Trackll} The msd function also returns the processed trackll. If 
-passed to a variable, one can then export the trackll with this variable.
+\item{Trackll} The msd function also returns the processed trackll. If passed
+to a variable, one can then export the trackll with this variable.
 }
 }
 \description{
-calculate mean square displacement for individual trajectory 
-or summarize on trajectories.
+calculate mean square displacement for individual trajectory or
+  summarize on trajectories.
 }
 \details{
-msd() calculate track (/trajectory)'s mean square displacement as a 
-function of time (dt). For a track of N steps, at each dt, there are N-dt 
-number of sub-trajectory/sub-tracks, mean of dt-wise 
-sub-trajectories/step-wise sub tracks average subtracks into one number at 
-each dt.
+msd() calculate track (/trajectory)'s mean square displacement as a function
+of time (dt). For a track of N steps, at each dt, there are N-dt number of
+sub-trajectory/sub-tracks, mean of dt-wise sub-trajectories/ step-wise sub
+tracks average subtracks into one number at each dt.
 
-the dt number of su-btracks each contains N:N-dt steps. Because minimum 
-step is 1 (N-dt > = 1), so the maxium dt is N-1 (dt < = N-1). As dt 
-increase, the number of steps used to generate that mean decrease with the 
-maxmum dt (dt=N-1) generated from one step.
+the dt number of su-btracks each contains N:N-dt steps. Because minimum step
+is 1 (N-dt > = 1), so the maxium dt is N-1 (dt < = N-1). As dt increase, the
+number of steps used to generate that mean decrease with the maxmum dt
+(dt=N-1) generated from one step.
 
 if one wants to focus on a group of trajectory's evolution, he can simply
 filter on a number that is bigger than the dt he wanted to plot MSD.
@@ -89,7 +87,7 @@ by assinging cores, computation is paralelled on each each list of trackll
 (corresponding to one movie file).
 }
 \examples{
-# read in using track files
+# read in using createTrackll()
 folder=system.file("extdata","SWR1",package="sojourner")
 trackll=createTrackll(folder=folder, input=3)
 

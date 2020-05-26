@@ -3,39 +3,38 @@
 ##
 ###############################################################################
 ##' @name msd
-##' @aliases msd msd_perc msd_track_vecdt
+##' @aliases msd msd.perc msd.track.vecdt
 ##' @title msd
 ##' @rdname msd-methods
 ##' @docType methods
 ##'
-##' @description calculate mean square displacement for individual trajectory 
-##' or summarize on trajectories.
+##' @description calculate mean square displacement for individual trajectory or
+##'   summarize on trajectories.
 
 ##' @usage
 ##' msd(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,
 ##' plot=FALSE,output=FALSE,filter=c(min=7,max=Inf))
-##' msd_track_vecdt(trackll,vecdt=NULL,resolution=0.107,output=FALSE)
-##' msd_perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
+##'   msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=F)
+##'   msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
 ##' trimmer=c(min=1,max=31),resolution=0.107,output=FALSE)
 ##'   
 ##' @param dt Time intervals. Default 6.
 ##' @param resolution ratio of pixel to uM.
-##' @param trackll a list of track lists.
+##' @param trackll Track list output from createTrackll().
 ##' @param summarize An logical indicate if MSD should be calculated on
 ##'   individual trajectories (Default) or summarized on all trajectories.
 ##' @param filter a vector specifies the minimum and max length of trajecotries
 ##'   to be analyzed. Take only trajectories that has number of frames greater
 ##'   than (>=) min and less than (<) max.
 ##' @param cores Number of cores used for parallel computation. This can be the
-##'   cores on a workstation, or on a cluster. Tip: the computation on each 
-##'   file will be parallel assigned to each CPU core.
+##'   cores on a workstation, or on a cluster. Tip: the computation on each file
+##'   will be parallel assigned to each CPU core.
 ##' @param plot An logical indicate if plot should be generated. See Values for
 ##'   detail.
 ##' @param output An logical indicate if output should be generated. See Values
 ##'   for detail.
 ##' @param vecdt A list containing varying dt values.
-##' @param percentage compute msd based on (tierd) percentage of its total 
-##' length.
+##' @param percentage compute msd based on (tierd) percentage of its total length.
 ##' @param trimmer vector used for trimming via trimTrack()
 ##' @return \itemize{ \item{SummarizedMSD} MSD summarized over all trajectories
 ##' as a function of dt.
@@ -53,13 +52,13 @@
 ##' \item{SampleSize} The sample size (number of tracks/trajectories) used for
 ##' calculating the msd and standard error.
 ##'
-##' \item{Trackll} The msd function also returns the processed trackll. If 
-##' passed to a variable, one can then export the trackll with this variable.
+##' \item{Trackll} The msd function also returns the processed trackll. If passed
+##' to a variable, one can then export the trackll with this variable.
 ##' }
 
 
 ##' @examples
-##' # read in using track files
+##' # read in using createTrackll()
 ##' folder=system.file("extdata","SWR1",package="sojourner")
 ##' trackll=createTrackll(folder=folder, input=3)
 ##'
@@ -73,16 +72,15 @@
 ##' msd2=msd(trackll.flt2,dt=6,summarize=TRUE,plot=TRUE)
 
 ##' @details
-##' msd() calculate track (/trajectory)'s mean square displacement as a 
-##' function of time (dt). For a track of N steps, at each dt, there are N-dt 
-##' number of sub-trajectory/sub-tracks, mean of dt-wise 
-##' sub-trajectories/step-wise sub tracks average subtracks into one number at 
-##' each dt.
+##' msd() calculate track (/trajectory)'s mean square displacement as a function
+##' of time (dt). For a track of N steps, at each dt, there are N-dt number of
+##' sub-trajectory/sub-tracks, mean of dt-wise sub-trajectories/ step-wise sub
+##' tracks average subtracks into one number at each dt.
 ##'
-##' the dt number of su-btracks each contains N:N-dt steps. Because minimum 
-##' step is 1 (N-dt > = 1), so the maxium dt is N-1 (dt < = N-1). As dt 
-##' increase, the number of steps used to generate that mean decrease with the 
-##' maxmum dt (dt=N-1) generated from one step.
+##' the dt number of su-btracks each contains N:N-dt steps. Because minimum step
+##' is 1 (N-dt > = 1), so the maxium dt is N-1 (dt < = N-1). As dt increase, the
+##' number of steps used to generate that mean decrease with the maxmum dt
+##' (dt=N-1) generated from one step.
 ##'
 ##' if one wants to focus on a group of trajectory's evolution, he can simply
 ##' filter on a number that is bigger than the dt he wanted to plot MSD.
@@ -93,8 +91,8 @@
 ###############################################################################
 
 
-##-----------------------------------------------------------------------------
-## msd_track
+##------------------------------------------------------------------------------
+## msd.track
 
 ## calculate msd for tracks (data.frame)
 ## track, data.frame, xyz
@@ -113,15 +111,15 @@
 
 # compile track wise computations to bytecode for performance
 # compiler::enableJIT(3)
-# msd_track=compiler::cmpfun(msd_track,options=list(optimize=3))
+# msd.track=compiler::cmpfun(msd.track,options=list(optimize=3))
 # compiler::enableJIT(0)
 
 # separate at.dt is to remove repeated calcualtion in msd.trackl
 
-##' @export msd_track
-msd_track=function(track,dt=6,resolution=0.107,at.dt=FALSE){
+##' @export msd.track
+msd.track=function(track,dt=6,resolution=0.107,at.dt=F){
 
-    if (at.dt == FALSE){
+    if (at.dt == F){
 
         # calculate msd for track at 1~dt
         msd_track=c()
@@ -215,19 +213,17 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
 
     }
 
-    # add an extra "\n" outside of the loop to make system output in a new 
-    # line.
+    # add an extra "\n" outside of the loop to make system output in a new line.
     cat("\n")
 
 
     # output
 
     # collapse /binding  msd.individual list into matrix cooresponding to their
-    # name for plotting. When reshape2::melt for plotting, reshape2::melt 
-    # function generates an index when pass in as matrix but not data.frame. 
-    # format msd.individual from vector to single row matrix. this is in line 
-    # with tidy data format where variables are columns and observations are 
-    # rows.
+    # name for plotting. When reshape2::melt for plotting, reshape2::melt function
+    # generates an index when pass in as matrix but not data.frame. format
+    # msd.individual from vector to single row matrix. this is in line with tidy
+    # data format where variables are columns and observations are rows.
 
     # format msd.individual from vector to single row matrix.
     msd.individual.mx=lapply(msd.individual,function(x){
@@ -237,8 +233,8 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
     # collapse /binding matrix of list with colnames
     msd.individual=do.call(plyr::rbind.fill.matrix,msd.individual.mx)
 
-    # format msd.summarized into tidy data format it is so much easier to do 
-    # the formating here than down the line when need processing
+    # format msd.summarized into tidy data format it is so much easier to do the
+    # formating here than down the line when need processing
     msd.summarized=cbind(SummarizedMSD=msd.summarized,
                         StandardError=std.summarized,
                         NumTracksAtDt=num.tracks.sel)
@@ -300,7 +296,7 @@ msd.trackll=function(trackll,dt=6,resolution=0.107,cores=1){
             # parallel excecute above block of code
             if (cores>max.cores)
                 stop("Number of cores specified is greater than maxium: ",
-                        max.cores)
+                     max.cores)
 
             cat("Initiated parallel execution on", cores, "cores\n")
 
@@ -331,17 +327,17 @@ msd.trackll=function(trackll,dt=6,resolution=0.107,cores=1){
 
 # when testing, need to pass all variables
 # parallel::clusterExport(cl,varlist=c(
-#     "squareDisp","msd_track","msd.trackl","dt","resolution"),
+#     "squareDisp","msd.track","msd.trackl","dt","resolution"),
 # envir=environment())
 
 
-##-----------------------------------------------------------------------------
+##------------------------------------------------------------------------------
 ## msd
 
 # computes msd for single trajectory as well as summarized msd for all
-# trajectories over a specified time lags (tau) of 1, 2, 3, … ,τ time steps 
-# (dt) in the system. It calls msd.trackll() function (can be paralleled), 
-# and does plotting and output msd csv files.
+# trajectories over a specified time lags (τ) of 1, 2, 3, … ,τ time steps (dt)
+# in the system. It calls msd.trackll() function (can be paralleled), and does
+# plotting and output msd csv files.
 
 
 ##' @export msd
@@ -370,8 +366,7 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,
         # remove the IndividualMSD
         MSD.summarized=lapply(MSD,function(x){x$SummarizedMSD})
 
-        # if file.name has ".", replace it with "_", as it interference with 
-        # Index
+        # if file.name has ".", replace it with "_", as it interference with Index
         # indentifier "."
         names(MSD.summarized)=gsub('\\.', '_', names(MSD.summarized))
 
@@ -506,10 +501,10 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,
 
 }
 
-##-----------------------------------------------------------------------------
-## msd_track_vecdt
+##------------------------------------------------------------------------------
+## msd.track.vecdt
 
-## This function is a special case of msd_track(), where dt is of different
+## This function is a special case of msd.track(), where dt is of different
 ## values, corresponding to the first 25% of the total length, when calculate
 ## MSD for each track.
 
@@ -522,8 +517,8 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,
 ## trajectory, dt is a fixed number corresponding to 1/4 of its length.
 
 
-##' @export msd_track_vecdt
-msd_track_vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
+##' @export msd.track.vecdt
+msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=F){
 
     # copy trackll's structure
     msd.lst=list()
@@ -555,8 +550,7 @@ msd_track_vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
         }
     }
 
-    # add an extra "\n" outside of the loop to make system output in a new 
-    # line.
+    # add an extra "\n" outside of the loop to make system output in a new line.
     cat("\n")
 
     if(output == TRUE){
@@ -579,18 +573,18 @@ msd_track_vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=FALSE){
 ## functions, works only for functions that require preferentially for one
 ## parameter. e.g. mapply(rep, 1:4, 4:1), repeat 1 4 times, 2, 3times, etc.
 
-# mapply(msd_track,trackll,n,MoreArgs=list(resolution=0.107))
-# mapply(msd_track,vectdt=n[[1]],trackll=trackll[[1]])
+# mapply(msd.track,trackll,n,MoreArgs=list(resolution=0.107))
+# mapply(msd.track,vectdt=n[[1]],trackll=trackll[[1]])
 
-##-----------------------------------------------------------------------------
-## msd_track_vecdt
+##------------------------------------------------------------------------------
+## msd.track.vecdt
 
 # compute msd based on (tierd) percentage of its total length, rather than
 # specified dt. This is specially designed for coefficient calculation using
 # percentage method.
 
-##' @export msd_perc
-msd_perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
+##' @export msd.perc
+msd.perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
                     trimmer=c(min=1,max=31),resolution=0.107,output=FALSE){
 
 
