@@ -5,7 +5,7 @@
 ###############################################################################
 ##' @name plotTrack
 ##' @aliases plotTrack plotTrackFromIndex plotTrackOverlay plotNucTrackOverlay 
-##' plotComponentTrackOverlay plotMask trackOverlayData
+##' plotMask trackOverlayData
 ##' @title plotTrack
 ##' @rdname plotTrack-methods
 ##' @docType methods
@@ -28,6 +28,7 @@
 ##'
 ##' plotComponentTrackOverlay(folder,trackll.sel=NULL,
 ##' max.pixel=128,nrow=2,ncol=2,width=16,height=16)
+##' (use with plotComponentTrackOverlay(), currently in sojourner.pro)
 ##'
 ##' plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
@@ -91,7 +92,7 @@
 ##' \item{plotComponentTrackOverlay:} plot tracks base on component fitting of
 ##' diffusion coefficient. Combined with selComponentTracks() function, 
 ##' together it allows select and plot tracks based on component fitting of 
-##' track diffusion coefficient.
+##' track diffusion coefficient. (This function is currently in sojourner.pro)
 ##'
 ##' \item{plotMask:} plot image mask. The mask file name must ended with
 ##' _MASK.tiff to be recognized.
@@ -104,20 +105,19 @@
 ##' plotTrack(trackll.ab)
 ##'
 ##' ## plot from index file
-##' index.file=system.file("extdata","INDEX","indexFile.csv",
-##' package="sojourner")
+##' index.file=
+##'           system.file("extdata","INDEX","indexFile.csv",package="sojourner")
 ##' movie.folder=system.file("extdata","SWR1",package="sojourner")
-##' plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder,
-##' input = 3)
+##' plotTrackFromIndex(
+##'           index.file=index.file,movie.folder = movie.folder,input = 3)
 ##'
 ##' ## index file contain trajectories from multiple movie folders
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
-##' index.file2=system.file("extdata","INDEX","indexFile2.csv",
-##' package="sojourner")
-##' plotTrackFromIndex(index.file=index.file2,
-##'  movie.folder = c(folder1,folder2),
-##'  input = 3)
+##' index.file2=system.file(
+##'           "extdata","INDEX","indexFile2.csv",package="sojourner")
+##' plotTrackFromIndex(
+##'           index.file=index.file2, movie.folder = c(folder1,folder2),input = 3)
 ##'
 ##' ## masking with image mask
 ##' track.folder=system.file("extdata","SWR1_2",package="sojourner")
@@ -140,54 +140,25 @@
 ##' plotMask(track.folder,nrow=1,ncol=1,width=8,height=8)
 ##'
 ##'
-##' ## plotComponentTrackOverlay (see selComponentTracks() for more details)
-##' folder2=system.file("extdata","SWR1_2",package="sojourner")
-##' trackll=createTrackll(folder=folder2, input=3)
-##'
-##' ## use mergeTracks() for per folder comparison, the analsyis result 
-##' ## can't be plotted
-##' ## back to original image. To see component tracks on original nuclei image,
-##' ## set merge=F, for per movie analysis.
 
-##'
-##' ## compute MSD
-##' MSD=msd(trackll=trackll,plot=TRUE)
-##' msd(trackll=trackll,summarize=TRUE,plot=TRUE)
-##'
-##' ## calculate Dcoef
-##' dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
-##'
-##' ## fit normal distribution to define component
-##' ## set seed to reproduce results (see fitNormalDistr() for details on seed)
-##' set.seed(123)
-##' fit=fitNormDistr(
-##' dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
-##'
-##' ## select component tracks based on fitting
-##' trackll.sel=selComponentTracks(trackll,
-##' fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
-##'
-##' ## plot component tracks
-##' # plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
 
 ##' @export plotTrack
 ##' @export .plotTrack
 ##' @export plotTrackFromIndex
-##' @import reshape2
+##' @importFrom reshape2 melt
 ## @import animation
 ## FUTURE: maybe plot on dt
 
 ##' @export plotTrackOverlay
 ##' @export plotMask
 ##' @export plotNucTrackOverlay
-##' @export plotComponentTrackOverlay
-
-## .plotMask(mask.list[1])
 
 ## FOR SHINY USAGE:
 ##' @export trackOverlayData
 ##' @export .plotNucTrackOverlay
 
+
+## .plotMask(mask.list[1])
 
 
 ##
@@ -782,281 +753,3 @@ plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
     return(invisible(trackll))
     
 }
-
-##-----------------------------------------------------------------------------
-##
-
-# plotComponentTrackOverlay
-
-plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
-                                   max.pixel=128,
-                                   nrow=2,ncol=2,width=16,height=16){
-    
-    nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=TRUE)
-    
-    # no need to read them in, as only plot trackll.sel to the images
-    # the folder is only to provide image location
-    
-    # if (is.null(trackll)){
-    #     cat("\ntrackll not specified, read in Diatrack file\n")
-    #     trackll=readDiatrack(folder=folder,merge=F,mask=mask,cores=cores)
-    # }
-    
-    plot.lst=list()
-    
-    # track.overlay.data.lst=lapply(trackll.sel,function(x){cmpOverlayData(x)})
-    
-    track.overlay.data.lst=list()
-    length(track.overlay.data.lst)=length(trackll.sel)
-    names(track.overlay.data.lst)=names(trackll.sel)
-    
-    for (i in seq_along(trackll.sel)){
-        
-        track.overlay.data.lst[[i]]=cmpOverlayData(trackll.sel[i])
-    }
-    
-    
-    color.lst=lapply(track.overlay.data.lst,function(x){x$component})
-    
-    # trackll or trackll.sel 
-    # plotComponentTrackOverlay: no visible binding for global 
-    # variable "trackll"
-    # print(track.overlay.data.lst)
-    # print(color.lst)
-    # print(class(color.lst[[1]]))
-    
-    ### trackll -> trackll.sel
-    for (i in seq_along(trackll.sel)) plot.lst[[i]]=
-        
-        # Warning message:
-        # In readTIFF(x, all = all, ...) :
-        # TIFFReadDirectory: Unknown field with tag 65531 (0xfffb) encountered
-        # these are unnecesary private tags can be suppressed
-        
-        # https://stackoverflow.com/questions/27608124/imagemagick-
-        # how-to-get-rid-of-tiffwarnings-768-message-about-unknown-field-wh
-        
-        suppressWarnings(.plotNucTrackOverlay(
-            trackl=NULL,component.trackl=trackll.sel[i],
-            image.file=nuclei.lst[[i]],
-            max.pixel=max.pixel,color=color.lst[[i]]))
-    
-    
-    # output
-    cat("\nOutput combined plot...")
-    cmb.plot=gridExtra::marrangeGrob(plot.lst,nrow=nrow,ncol=ncol)
-    
-    fileName=paste(.timeStamp("NucTrackOverlay"),".pdf",sep="")
-    # TODO: add folder name in .timeStamp
-    # fileName=paste("TrackOverlay-",.timeStamp("folder"),".pdf",sep="")
-    
-    ggplot2::ggsave(filename=fileName,cmb.plot,width=width,height=height)
-    # tip: save as png help keep the raster pixel better than pdf
-    
-    cat("\nDone!")
-    
-    return(invisible(trackll.sel))
-    
-}
-
-
-##-----------------------------------------------------------------------------
-##
-
-# cmpOverlayData
-
-# pass in component.trackl with name, rather than just comp1 comp2
-# str(trackll.sel[1],2)
-# $ 120mW_10ms1.txt:List of 2
-# ..$ comp.1:List of 12
-# ..$ comp.2:List of 26
-
-# ratehr than
-# > str(trackll.sel[[1]],1)
-# List of 2
-# $ comp.1:List of 12
-# $ comp.2:List of 26
-
-# component.trackl=trackll.sel[1]
-# > str(component.trackl,2)
-# List of 1
-# $ 120mW_10ms1.txt:List of 2
-# ..$ comp.1:List of 12
-# ..$ comp.2:List of 26
-
-# used to be pass in two component list
-# now pass in one list of two component list
-# to have name of the movie included
-
-cmpOverlayData=function(component.trackl){
-    
-    # keep this, although this is no need as when do.call(rbind, list) convert
-    # names into the names
-    # add one more column into data.frame as identifier
-    # column, then collaps tracks for (i in seq_along(component.trackl)){
-    # component.trackl[[i]]=lapply(component.trackl[[i]],function(x,cmp.id){
-    # component=rep(cmp.id,dim(x)[1]) cmp.id.x=cbind(x,component)
-    # return(cmp.id.x) },cmp.id=names(component.trackl)[i]) }
-    
-    
-    plot.title=names(component.trackl)
-    
-    cat("\nProcessing",names(component.trackl))
-    # cat("\nProcessing",names(component.trackl[[1]]))
-    
-    # combine components into cmp.lst
-    cmp.lst=list()
-    length(cmp.lst)=length(component.trackl[[1]])
-    cmp.name=names(component.trackl[[1]])
-    
-    # replace file.name ".",with "_",
-    # as it interference with Index indentifier "."
-    cmp.name=gsub('\\.', '_', cmp.name)
-    names(cmp.lst)=cmp.name
-    
-    # for (i in seq_along(component.trackl)){
-    #     cmp.lst[[i]]=do.call(rbind.data.frame,component.trackl[[i]])
-    # }
-    
-    for (i in seq_along(component.trackl[[1]])){
-        for (j in seq_along(component.trackl[[1]][i])){
-            cmp.lst[[i]]=do.call(rbind.data.frame,component.trackl[[1]][[i]])
-        }
-    }
-    
-    cmp.df=do.call(rbind.data.frame,cmp.lst)
-    
-    # TODO: these name manipulations is used so frequently should be put into a
-    # function
-    
-    # split rownames
-    n=cmp.df
-    
-    if (length(grep("txt",rownames(n)[1])) == 0){
-        Index=strsplit(rownames(n),"\\.")
-    }else{
-        Index=strsplit(rownames(n),".txt.")
-    }
-    
-    # trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
-    Index.df=data.frame(do.call(rbind,Index))
-    # do.call(rbind.data.frame,Index)
-    
-    colnames(Index.df)=c("component","fileID","frameID","duration",
-                         "indexPerFile","indexPerTrackll","SN")
-    
-    track.plot.df=cbind(cmp.df,Index.df)
-    
-    return(track.plot.df)
-    
-}
-
-## TODO:
-# replace or combine readTiff to eBIage
-# TODO: max.pixel=128 can be removed
-
-
-##-----------------------------------------------------------------------------
-##
-
-#
-
-# these below function can be used to add image as background
-
-# .nucleiGrob=function(nuclei.file){
-#
-#     # read in tiff nuclei file
-#     # library(EBImage)
-#
-#     title=basename(nuclei.file)
-#     cat("\nReading nuclei file",title,"\n")
-#     nuclei=EBImage::readImage(nuclei.file)
-#     # display(nuclei)
-#     # interpolate =F to make pixel clearer
-#     nucleiGrob= grid::rasterGrob(nuclei, interpolate=F)
-#
-#     #     ggplot(data=pos.point,aes(x=x,y=y),shape=22)+
-#     #         annotation_custom(grob=g,xmin=-Inf, xmax=Inf, ymin=-Inf, 
-#     #                           ymax=Inf)+
-#     #         geom_point(color="red")
-#
-#     #     ggplot(data.frame(x=1:10,y=1:10),aes(x=x,y=y))+
-#     #         annotation_custom(grob=g,xmin=-Inf, xmax=Inf, ymin=-Inf, 
-#     #                           ymax=Inf)+
-#     #         geom_point()
-#
-#     return(nucleiGrob)
-# }
-
-# for one file (i.e. trackl)
-# .plotPicTrackOverlay=function(trackl,nucleiGrob,max.pixel=128){
-#
-#     # get names of the trackll (/video) to put it on each graph
-#     plot.title=names(trackl)
-#
-#     track.overlay.data=trackOverlayData(trackl)
-#
-#     p=ggplot(track.overlay.data,aes(x=x,y=y,group=indexPerFile))+
-#         annotation_custom(grob=nucleiGrob,xmin=-Inf, xmax=Inf, ymin=-Inf, 
-#                           ymax=Inf)+
-#
-#         geom_path(color="red")+
-#         scale_x_continuous(
-#             name="Pixel",
-#             breaks=seq(from=0, to=max.pixel,by=20),
-#             limits=c(0,max.pixel))+
-#         scale_y_continuous(
-#             name="Pixel",
-#             breaks=seq(from=0, to=max.pixel,by=20),
-#             limits=c(0,max.pixel))+
-#         ggtitle(plot.title)+
-#
-#         # this makes integer breaks
-#         #        scale_x_continuous(breaks=scales::pretty_breaks(n=5))+
-#         #        scale_y_continuous(breaks=scales::pretty_breaks(n=5))+
-#         #labs(x="Pixel", y="Pixel")+
-#
-#         theme_bw()
-#
-#     plot(p)
-#     return(p)
-#
-# }
-
-# plotPicTrackOverlay=function(folder,mask=F,cores=1,
-#                              max.pixel=128,
-#                              nrow=2,ncol=2,width=16,height=16){
-#
-#     nuclei.lst=list.files(path=folder,pattern="_Nuclei.tif",full.names=T)
-#
-#     nucleiGrob.lst=lapply(nuclei.lst,.nucleiGrob)
-#     names(nucleiGrob.lst)=sapply(nuclei.lst,basename,
-#                                  simplify = TRUE, USE.NAMES = F)
-#
-#
-#     trackll=readDiatrack(folder=folder,merge=F,mask=mask,cores=cores)
-#
-#     plot.lst=list()
-# #     for (i in seq_along(trackll)){
-# #         .plotNucTrackOverlay(trackll,nrow=1,ncol=1,width=8,height=8)
-# #
-# #     }
-#
-#     for (i in seq_along(trackll)) plot.lst[[i]]=.plotNucTrackOverlay(
-#         trackl=trackll[i],nucleiGrob.lst[[i]],max.pixel=max.pixel)
-#
-#
-#     # output
-#     cat("\nOutput combined plot...")
-#     cmb.plot=gridExtra::marrangeGrob(plot.lst,nrow=nrow,ncol=ncol)
-#
-#     fileName=paste(.timeStamp("NucTrackOverlay"),".pdf",sep="")
-#
-#     # fileName=paste("TrackOverlay-",.timeStamp("folder"),".pdf",sep="")
-#
-#     ggplot2::ggsave(filename=fileName,cmb.plot,width=width,height=height)
-#
-#     cat("\nDone!")
-#
-#
-# }

@@ -69,7 +69,9 @@
 ##'
 ##' # focus on a group of trajectory by setting filter greater than dt
 ##' trackll.flt2=filterTrack(trackll,filter=c(min=7,max=Inf))
-##' msd2=msd(trackll.flt2,dt=6,summarize=TRUE,plot=TRUE)
+##' msd2=msd(trackll.flt2,dt=6,summarize=FALSE,plot=TRUE) # individual
+##' msd2=msd(trackll.flt2,dt=6,summarize=TRUE,plot=TRUE) # summarized
+##' 
 
 ##' @details
 ##' msd() calculate track (/trajectory)'s mean square displacement as a function
@@ -469,8 +471,10 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,
             p$inter=interaction(p$file.name,p$track.name)
             
             msd.plot=ggplot(p,aes_string(x="index",y="msd",
-                                    group=interaction("file.name",
-                                                      "track.name"),
+                                # this conventional way somehow does not work
+                                # group=interaction("file.name","track.name"),
+                                
+                                    group="inter",
                                     col="file.name"))+
                 geom_line()+
                 # this makes integer breaks

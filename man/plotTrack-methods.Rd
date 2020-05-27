@@ -7,9 +7,8 @@
 \alias{plotTrackFromIndex}
 \alias{plotTrackOverlay}
 \alias{plotNucTrackOverlay}
-\alias{plotComponentTrackOverlay}
 \alias{plotMask}
-\alias{plotNucTrackOverlayTrackl}
+\alias{trackOverlayData}
 \title{plotTrack}
 \usage{
 plotTrack(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,
@@ -26,8 +25,11 @@ max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
 plotComponentTrackOverlay(folder,trackll.sel=NULL,
 max.pixel=128,nrow=2,ncol=2,width=16,height=16)
+(use with plotComponentTrackOverlay(), currently in sojourner.pro)
 
 plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
+
+trackOverlayData(trackl)
 }
 \arguments{
 \item{resolution}{ratio of pixel to uM.}
@@ -43,7 +45,9 @@ plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 \item{ab.trackll}{absolute coordinates for plotting, generated from
 createTrackll(folder, input, ab.track=TRUE).}
 
-\item{trackll}{a list of track lists.}
+\item{trackl}{Track list}
+
+\item{trackll}{Track list output from createTrackll().}
 
 \item{folder}{folder containing desired input data.}
 
@@ -84,7 +88,7 @@ in their favor.
 }
 \description{
 Plot track/trajectory from track list. either randomly or
-specified.
+  specified.
 }
 \details{
 \itemize{
@@ -106,7 +110,7 @@ directly.
 \item{plotComponentTrackOverlay:} plot tracks base on component fitting of
 diffusion coefficient. Combined with selComponentTracks() function, 
 together it allows select and plot tracks based on component fitting of 
-track diffusion coefficient.
+track diffusion coefficient. (This function is currently in sojourner.pro)
 
 \item{plotMask:} plot image mask. The mask file name must ended with
 _MASK.tiff to be recognized.
@@ -119,20 +123,19 @@ trackll.ab=createTrackll(folder=folder, input=3, ab.track=TRUE)
 plotTrack(trackll.ab)
 
 ## plot from index file
-index.file=system.file("extdata","INDEX","indexFile.csv",
-package="sojourner")
+index.file=
+          system.file("extdata","INDEX","indexFile.csv",package="sojourner")
 movie.folder=system.file("extdata","SWR1",package="sojourner")
-plotTrackFromIndex(index.file=index.file,movie.folder = movie.folder,
-input = 3)
+plotTrackFromIndex(
+          index.file=index.file,movie.folder = movie.folder,input = 3)
 
 ## index file contain trajectories from multiple movie folders
 folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
-index.file2=system.file("extdata","INDEX","indexFile2.csv",
-package="sojourner")
-plotTrackFromIndex(index.file=index.file2,
- movie.folder = c(folder1,folder2),
- input = 3)
+index.file2=system.file(
+          "extdata","INDEX","indexFile2.csv",package="sojourner")
+plotTrackFromIndex(
+          index.file=index.file2, movie.folder = c(folder1,folder2),input = 3)
 
 ## masking with image mask
 track.folder=system.file("extdata","SWR1_2",package="sojourner")
@@ -155,32 +158,4 @@ plotNucTrackOverlay(folder=track.folder,trackll.masked,
 plotMask(track.folder,nrow=1,ncol=1,width=8,height=8)
 
 
-## plotComponentTrackOverlay (see selComponentTracks() for more details)
-folder2=system.file("extdata","SWR1_2",package="sojourner")
-trackll=createTrackll(folder=folder2, input=3)
-
-## use mergeTracks() for per folder comparison, the analsyis result 
-## can't be plot
-##back to original image. To see component tracks on original nuclei image,
-## do not use mergeTracks(), for per movie analysis.
-
-## compute MSD
-MSD=msd(trackll=trackll,plot=TRUE)
-msd(trackll=trackll,summarize=TRUE,plot=TRUE)
-
-## calculate Dcoef
-dcoef=Dcoef(MSD=MSD,method="static",plot=TRUE)
-
-## fit normal distribution to define component
-## set seed to reproduce results (see fitNormalDistr() for details on seed)
-set.seed(123)
-fit=fitNormDistr(
-dcoef,components=2,log.transform=TRUE,combine.plot=FALSE,output=FALSE)
-
-## select component tracks based on fitting
-trackll.sel=selComponentTracks(trackll,
-fit=fit,likelihood = 0.9,dcoef = dcoef,log.transformed=TRUE, output=FALSE)
-
-## plot component tracks
-# plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
 }

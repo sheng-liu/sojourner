@@ -98,5 +98,7 @@ str(msd)
 
 # focus on a group of trajectory by setting filter greater than dt
 trackll.flt2=filterTrack(trackll,filter=c(min=7,max=Inf))
-msd2=msd(trackll.flt2,dt=6,summarize=TRUE,plot=TRUE)
+msd2=msd(trackll.flt2,dt=6,summarize=FALSE,plot=TRUE) # individual
+msd2=msd(trackll.flt2,dt=6,summarize=TRUE,plot=TRUE) # summarized
+
 }
