@@ -5,12 +5,12 @@
 ###############################################################################
 ##' @name plotTrack
 ##' @aliases plotTrack plotTrackFromIndex plotTrackOverlay plotNucTrackOverlay 
-##' plotComponentTrackOverlay plotMask plotNucTrackOverlayTrackl
+##' plotComponentTrackOverlay plotMask trackOverlayData
 ##' @title plotTrack
 ##' @rdname plotTrack-methods
 ##' @docType methods
 ##' @description Plot track/trajectory from track list. either randomly or
-##' specified.
+##'   specified.
 
 ##' @usage
 ##'
@@ -31,10 +31,12 @@
 ##'
 ##' plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
+##' trackOverlayData(trackl)
 ##'
 ##' @param ab.trackll absolute coordinates for plotting, generated from
 ##'   createTrackll(folder, input, ab.track=TRUE).
-##' @param trackll a list of track lists.
+##' @param trackl Track list
+##' @param trackll Track list output from createTrackll().
 ##' @param folder folder containing desired input data.
 ##' @param resolution ratio of pixel to uM.
 ##' @param frame.min minimum frame number for plotting.
@@ -143,10 +145,9 @@
 ##' trackll=createTrackll(folder=folder2, input=3)
 ##'
 ##' ## use mergeTracks() for per folder comparison, the analsyis result 
-##' ## can't be plot
-
-##' ##back to original image. To see component tracks on original nuclei image,
-##' ## do not use mergeTracks(), for per movie analysis.
+##' ## can't be plotted
+##' ## back to original image. To see component tracks on original nuclei image,
+##' ## set merge=F, for per movie analysis.
 
 ##'
 ##' ## compute MSD
@@ -170,6 +171,7 @@
 ##' # plotComponentTrackOverlay(folder2,trackll.sel=trackll.sel)
 
 ##' @export plotTrack
+##' @export .plotTrack
 ##' @export plotTrackFromIndex
 ##' @import reshape2
 ## @import animation
@@ -183,8 +185,8 @@
 ## .plotMask(mask.list[1])
 
 ## FOR SHINY USAGE:
-# ##' @export trackOverlayData
-##' @export plotNucTrackOverlayTrackl
+##' @export trackOverlayData
+##' @export .plotNucTrackOverlay
 
 
 
@@ -581,16 +583,15 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
 ##-----------------------------------------------------------------------------
 ##
 
-# plotNucTrackOverlayTrackl
+# .plotNucTrackOverlay
 
 # color="red"
 # color=track.overlay.data$component
 
-# process one movie at a time, trackl or component.trackl (which corresponding 
-# to one movie with two components)
+# process one movie at a time, trackl or component.trackl (which corresponding to
+# one movie with two components)
 
-plotNucTrackOverlayTrackl=function(trackl=NULL,component.trackl=NULL,
-                                   image.file,
+.plotNucTrackOverlay=function(trackl=NULL,component.trackl=NULL,image.file,
                               max.pixel=128,color="red"){
     
     # double input, trackl or component.trackl to allow more flexible
@@ -606,9 +607,8 @@ plotNucTrackOverlayTrackl=function(trackl=NULL,component.trackl=NULL,
     # when use aes, it reads both, when use aes_string, it read it as string.
     
     p=  ggplot()+
-        geom_raster(data=melt(d), 
-                    aes_string(x="Var1",y="Var2",fill="value"),
-                    interpolate=FALSE)+
+        geom_raster(data=reshape2::melt(d), 
+                    aes_string(x="Var1",y="Var2",fill="value"),interpolate=FALSE)+
         scale_fill_gradient(low = "black", high = "white")+ guides(fill=FALSE)
     
     
@@ -761,7 +761,7 @@ plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
     for (i in seq_along(trackll)) plot.lst[[i]]=
         
         suppressWarnings(
-        plotNucTrackOverlayTrackl(
+        .plotNucTrackOverlay(
         trackl=trackll[i],component.trackl=NULL,image.file=nuclei.lst[[i]],
         max.pixel=max.pixel,color="red")
         )
@@ -836,7 +836,7 @@ plotComponentTrackOverlay=function(folder,trackll.sel=NULL,
         # https://stackoverflow.com/questions/27608124/imagemagick-
         # how-to-get-rid-of-tiffwarnings-768-message-about-unknown-field-wh
         
-        suppressWarnings(plotNucTrackOverlayTrackl(
+        suppressWarnings(.plotNucTrackOverlay(
             trackl=NULL,component.trackl=trackll.sel[i],
             image.file=nuclei.lst[[i]],
             max.pixel=max.pixel,color=color.lst[[i]]))
@@ -1038,11 +1038,11 @@ cmpOverlayData=function(component.trackl){
 #
 #     plot.lst=list()
 # #     for (i in seq_along(trackll)){
-# #         plotNucTrackOverlayTrackl(trackll,nrow=1,ncol=1,width=8,height=8)
+# #         .plotNucTrackOverlay(trackll,nrow=1,ncol=1,width=8,height=8)
 # #
 # #     }
 #
-#     for (i in seq_along(trackll)) plot.lst[[i]]=plotNucTrackOverlayTrackl(
+#     for (i in seq_along(trackll)) plot.lst[[i]]=.plotNucTrackOverlay(
 #         trackl=trackll[i],nucleiGrob.lst[[i]],max.pixel=max.pixel)
 #
 #

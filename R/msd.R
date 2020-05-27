@@ -163,7 +163,7 @@ msd.track=function(track,dt=6,resolution=0.107,at.dt=F){
 ##-----------------------------------------------------------------------------
 ## msd.trackl
 
-## calculate msd_track for a list of tracks, trackl
+## calculate msd.track for a list of tracks, trackl
 
 msd.trackl=function(trackl,dt=6,resolution=0.107){
 
@@ -201,9 +201,9 @@ msd.trackl=function(trackl,dt=6,resolution=0.107){
             cat("\r",num.tracks.sel[i],"\ttracks length > & =\t",i)
             }
 
-        # calculate msd_track for dt=i
+        # calculate msd.track for dt=i
         msd.individual[[i]]=vapply(trackl.sel,function(x){
-            msd_track(track=x,dt=i,resolution=resolution,at.dt=TRUE)
+            msd.track(track=x,dt=i,resolution=resolution,at.dt=TRUE)
             },FUN.VALUE=double(1))
 
         # calculate summarized msd and se
@@ -465,6 +465,9 @@ msd=function(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,plot=FALSE,
             # file.name) as track.name starts over again from a new file, use
             # interaction() realize it
 
+            
+            p$inter=interaction(p$file.name,p$track.name)
+            
             msd.plot=ggplot(p,aes_string(x="index",y="msd",
                                     group=interaction("file.name",
                                                       "track.name"),
@@ -539,9 +542,9 @@ msd.track.vecdt=function(trackll,vecdt=NULL,resolution=0.107,output=F){
             # make system output in a new line.
             cat("\rcalculating MSD for individual tracks...","folder ",i,
                 " track ",j)
-            msd.lst[[i]][[j]]=as.matrix(msd_track(track=trackll[[i]][[j]],
-                                                    dt=vecdt[[i]][[j]],
-                                                    resolution=resolution))
+            msd.lst[[i]][[j]]=as.matrix(msd.track(track=trackll[[i]][[j]],
+                                                  dt=vecdt[[i]][[j]],
+                                                  resolution=resolution))
 
             # use matrix as output to be uniform with msd.inividual output
             # names(vecdt[[i]][j]) subsets to list; names(msd.lst[[i]][[j]])
@@ -639,8 +642,7 @@ msd.perc=function(trackll,percentage=0.25,filter=c(min=7,max=Inf),
     # lapply(n,summary);lapply(N,summary)
 
     # calculate msd
-    msd.lst=msd_track_vecdt(trackll,vecdt=n,resolution=resolution,
-                            output=output)
+    msd.lst=msd.track.vecdt(trackll,vecdt=n,resolution=resolution,output=output)
 
     return(msd.lst)
 
