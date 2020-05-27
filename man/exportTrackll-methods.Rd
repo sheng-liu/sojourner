@@ -34,10 +34,9 @@ If the track list does not have a fourth frame record column (not
 recommended), it will just output the start frame of each track instead 
 and will take noticeably longer.
 
-It is not recommended that exportTrackll be run on merged list of track 
-lists (trackll).
-Also, ensure that the input trackll is a list of track lists and not just 
-a track list.
+It is not recommended that exportTrackll be run on merged list of track
+lists (trackll).Also, ensure that the input trackll is a list of track lists
+and not just a track list.
 
 The naming scheme for each export is as follows:
 
@@ -46,12 +45,13 @@ The naming scheme for each export is as follows:
 \examples{
 folder=system.file('extdata','SWR1',package='sojourner')
 trackll=createTrackll(folder=folder, input=3)
-#Basic function call to exportTrackll with 2 cores into current directory
+
+# Basic function call to exportTrackll into current directory
 exportTrackll(trackll)
 
-#Get current working directory
+# Import export save back into a trackll
+# Get current working directory
 getwd()
-
-#Import export save back into a trackll
 trackll.2 <- createTrackll(folder = getwd(), input = 3)
+
 }
