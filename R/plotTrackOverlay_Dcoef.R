@@ -133,7 +133,7 @@
         
         for (j in c(seq_along(trackll[[i]]))) {
             track = trackll[[i]][[j]]
-            msd.n = msd_track(track, dt = dt, at.dt = FALSE)
+            msd.n = msd.track(track, dt = dt, at.dt = FALSE)
             
             fit = lm(msd.n[2:5] ~ x)
             MSDslope = coefficients(fit)[2]/(2 * dimension)

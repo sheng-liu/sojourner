@@ -23,10 +23,6 @@ plotTrackOverlay(trackll,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 plotNucTrackOverlay(folder,trackll=NULL,cores=1,
 max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
-plotComponentTrackOverlay(folder,trackll.sel=NULL,
-max.pixel=128,nrow=2,ncol=2,width=16,height=16)
-(use with plotComponentTrackOverlay(), currently in sojourner.pro)
-
 plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 
 trackOverlayData(trackl)
@@ -54,7 +50,7 @@ createTrackll(folder, input, ab.track=TRUE).}
 \item{index.file}{a csv file that contains index of tracks in the first
 column. Leave a header line when preparing such a file.}
 
-\item{movie.folder}{the path to the folder which contains track files 
+\item{movie.folder}{the path to the folder which contains track files
 (presumably it is the same folder with movie files).}
 
 \item{max.pixel}{Number of pixels of imaging regime.}
@@ -68,9 +64,6 @@ column. Leave a header line when preparing such a file.}
 \item{height}{Height of the page for plotting.}
 
 \item{cores}{Number of cores to be used.}
-
-\item{trackll.sel}{Selected component trajectory output by
-selComponentTracks().}
 
 \item{input}{Input file type (Diatrack .txt file = 1; Diatrack .mat session
 file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).}
@@ -114,7 +107,6 @@ track diffusion coefficient. (This function is currently in sojourner.pro)
 
 \item{plotMask:} plot image mask. The mask file name must ended with
 _MASK.tiff to be recognized.
-
 }
 }
 \examples{
@@ -124,18 +116,18 @@ plotTrack(trackll.ab)
 
 ## plot from index file
 index.file=
-          system.file("extdata","INDEX","indexFile.csv",package="sojourner")
+        system.file("extdata","INDEX","indexFile.csv",package="sojourner")
 movie.folder=system.file("extdata","SWR1",package="sojourner")
 plotTrackFromIndex(
-          index.file=index.file,movie.folder = movie.folder,input = 3)
+        index.file=index.file,movie.folder = movie.folder,input = 3)
 
 ## index file contain trajectories from multiple movie folders
 folder1=system.file("extdata","SWR1",package="sojourner")
 folder2=system.file("extdata","HTZ1",package="sojourner")
 index.file2=system.file(
-          "extdata","INDEX","indexFile2.csv",package="sojourner")
+        "extdata","INDEX","indexFile2.csv",package="sojourner")
 plotTrackFromIndex(
-          index.file=index.file2, movie.folder = c(folder1,folder2),input = 3)
+        index.file=index.file2, movie.folder = c(folder1,folder2),input = 3)
 
 ## masking with image mask
 track.folder=system.file("extdata","SWR1_2",package="sojourner")

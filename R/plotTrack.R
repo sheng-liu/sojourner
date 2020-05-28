@@ -11,9 +11,7 @@
 ##' @docType methods
 ##' @description Plot track/trajectory from track list. either randomly or
 ##'   specified.
-
 ##' @usage
-##'
 ##' plotTrack(ab.trackll,resolution=0.107,frame.min=8,frame.max=100,
 ##' frame.start=1,frame.end=500)
 ##'
@@ -26,14 +24,14 @@
 ##' plotNucTrackOverlay(folder,trackll=NULL,cores=1,
 ##' max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
-##' plotComponentTrackOverlay(folder,trackll.sel=NULL,
-##' max.pixel=128,nrow=2,ncol=2,width=16,height=16)
-##' (use with plotComponentTrackOverlay(), currently in sojourner.pro)
-##'
 ##' plotMask(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16)
 ##'
 ##' trackOverlayData(trackl)
-##'
+##' 
+# plotComponentTrackOverlay(folder,trackll.sel=NULL,
+# max.pixel=128,nrow=2,ncol=2,width=16,height=16)
+# (use with plotComponentTrackOverlay(), currently in sojourner.pro)
+#
 ##' @param ab.trackll absolute coordinates for plotting, generated from
 ##'   createTrackll(folder, input, ab.track=TRUE).
 ##' @param trackl Track list
@@ -46,23 +44,20 @@
 ##' @param frame.end last frame to plot. Default 500.
 ##' @param index.file a csv file that contains index of tracks in the first
 ##'   column. Leave a header line when preparing such a file.
-##' @param movie.folder the path to the folder which contains track files 
-##' (presumably it is the same folder with movie files).
+##' @param movie.folder the path to the folder which contains track files
+##'   (presumably it is the same folder with movie files).
 ##' @param max.pixel Number of pixels of imaging regime.
 ##' @param nrow Number of rows in the final plot.
 ##' @param ncol Number of colums in the final plot.
 ##' @param width Width of the page for plotting.
 ##' @param height Height of the page for plotting.
 ##' @param cores Number of cores to be used.
-##' @param trackll.sel Selected component trajectory output by
-##'   selComponentTracks().
-##'
+# @param trackll.sel Selected component trajectory output by
+#   selComponentTracks().
 ##' @param input Input file type (Diatrack .txt file = 1; Diatrack .mat session
 ##'   file = 2; ImageJ .csv file = 3; SlimFast .txt file = 4).
-
 ##' @return
 ##' \itemize{
-
 ##' \item{PDF} One PDF file with all the frames satisfy the creteria. If 
 ##' trackll has multiple items, it ouptus mutiple PDF files each corresponding 
 ##' to one item.
@@ -70,7 +65,6 @@
 ##' \item{csv} Outputs csv file of the coordiantes of the trajectory, which
 ##' users can use other plotting software (e.g. Prism or Excel) to plot tracks
 ##' in their favor.
-
 ##' }
 ##' @details
 ##' \itemize{
@@ -96,7 +90,6 @@
 ##'
 ##' \item{plotMask:} plot image mask. The mask file name must ended with
 ##' _MASK.tiff to be recognized.
-##'
 ##' }
 
 ##' @examples
@@ -106,18 +99,18 @@
 ##'
 ##' ## plot from index file
 ##' index.file=
-##'           system.file("extdata","INDEX","indexFile.csv",package="sojourner")
+##'         system.file("extdata","INDEX","indexFile.csv",package="sojourner")
 ##' movie.folder=system.file("extdata","SWR1",package="sojourner")
 ##' plotTrackFromIndex(
-##'           index.file=index.file,movie.folder = movie.folder,input = 3)
+##'         index.file=index.file,movie.folder = movie.folder,input = 3)
 ##'
 ##' ## index file contain trajectories from multiple movie folders
 ##' folder1=system.file("extdata","SWR1",package="sojourner")
 ##' folder2=system.file("extdata","HTZ1",package="sojourner")
 ##' index.file2=system.file(
-##'           "extdata","INDEX","indexFile2.csv",package="sojourner")
+##'         "extdata","INDEX","indexFile2.csv",package="sojourner")
 ##' plotTrackFromIndex(
-##'           index.file=index.file2, movie.folder = c(folder1,folder2),input = 3)
+##'         index.file=index.file2, movie.folder = c(folder1,folder2),input = 3)
 ##'
 ##' ## masking with image mask
 ##' track.folder=system.file("extdata","SWR1_2",package="sojourner")
@@ -140,8 +133,6 @@
 ##' plotMask(track.folder,nrow=1,ncol=1,width=8,height=8)
 ##'
 ##'
-
-
 ##' @export plotTrack
 ##' @export .plotTrack
 ##' @export plotTrackFromIndex
@@ -159,9 +150,6 @@
 
 
 ## .plotMask(mask.list[1])
-
-
-##
 ## useful when the file is too big to include into the package.
 ## masking with image mask
 ## Not run:
@@ -181,7 +169,6 @@
 # download.file(data.url, "~/masking_test/_DATA.txt")
 # download.file(nuclei.url, "~/masking_test/_Nuclei.tif")
 # track.folder="~/masking_test/"
-
 
 
 ###############################################################################
@@ -324,9 +311,6 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
     # no further manipulation or matching needed. no assembly required.
     trackll.plot=lapply(ab.trackll,function(x){x[index]})
     
-    
-    
-    
     ## remove NA (or combine it into one list)
     trackll.plot.narm=lapply(trackll.plot, function(x) x[!is.na(names(x))])
     
@@ -339,8 +323,6 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
     
     plotTrack(trackll.plot.narm,resolution=resolution,frame.min=frame.min,
               frame.max=frame.max,frame.start=frame.start,frame.end=frame.end)
-    
-    
 }
 
 # return(trackll.plot)
@@ -349,17 +331,14 @@ plotTrackFromIndex=function(index.file, movie.folder,resolution=0.107,
 
 # plot all movies in a folder
 
-# becasue "indexPerTrackll"
-# must be list from one movie
+# becasue "indexPerTrackll" must be list from one movie
 # TrackOverlay only plots the first object in trackll list,
 # use trackll[n] to specifically nth object in the trackll list
 
 # collaps tracks of a single file (i.e. trackl)
 trackOverlayData=function(trackl){
     
-    
     # plot.title=names(trackl)
-    
     cat("\nProcessing",names(trackl))
     
     track.df=do.call(rbind.data.frame,trackl[[1]])
@@ -397,10 +376,8 @@ trackOverlayData=function(trackl){
 
 .plotTrackOverlay=function(trackl,max.pixel=128){
     
-    
     # get names of the trackll (/video) to put it on each graph
     plot.title=names(trackl)
-    
     
     track.overlay.data=trackOverlayData(trackl)
     
@@ -537,17 +514,11 @@ plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,
 
 
 plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
-
     mask.lst=list.files(path=folder,pattern="_MASK.tif",full.names=TRUE)
-
     mask.plot.lst=lapply(mask.lst,.plotMask,max.pixel=max.pixel)
-
     cmb.plot.mask=gridExtra::marrangeGrob(mask.plot.lst,nrow=nrow,ncol=ncol)
-
     fileName=paste(.timeStamp("TrackMask"),".pdf",sep="")
-
     ggsave(filename=fileName,cmb.plot.mask,width=width,height=height)
-
     cat("\nDone!")
 }
 
@@ -663,8 +634,6 @@ plotMask=function(folder,max.pixel=128,nrow=2,ncol=2,width=16,height=16){
     #            text=element_blank())
     
     
-    
-    
     #     p=  ggplot()+
     #         geom_raster(data=reshape2::melt(d), 
     #                     aes_string(x="Var1",y="Var2",fill="value"),
@@ -753,3 +722,103 @@ plotNucTrackOverlay=function(folder,trackll=NULL,cores=1,
     return(invisible(trackll))
     
 }
+
+##-----------------------------------------------------------------------------
+##
+
+# cmpOverlayData
+
+# pass in component.trackl with name, rather than just comp1 comp2
+# str(trackll.sel[1],2)
+# $ 120mW_10ms1.txt:List of 2
+# ..$ comp.1:List of 12
+# ..$ comp.2:List of 26
+
+# ratehr than
+# > str(trackll.sel[[1]],1)
+# List of 2
+# $ comp.1:List of 12
+# $ comp.2:List of 26
+
+# component.trackl=trackll.sel[1]
+# > str(component.trackl,2)
+# List of 1
+# $ 120mW_10ms1.txt:List of 2
+# ..$ comp.1:List of 12
+# ..$ comp.2:List of 26
+
+# used to be pass in two component list
+# now pass in one list of two component list
+# to have name of the movie included
+
+cmpOverlayData=function(component.trackl){
+    
+    # keep this, although this is no need as when do.call(rbind, list) convert
+    # names into the names
+    # add one more column into data.frame as identifier
+    # column, then collaps tracks for (i in seq_along(component.trackl)){
+    # component.trackl[[i]]=lapply(component.trackl[[i]],function(x,cmp.id){
+    # component=rep(cmp.id,dim(x)[1]) cmp.id.x=cbind(x,component)
+    # return(cmp.id.x) },cmp.id=names(component.trackl)[i]) }
+    
+    
+    plot.title=names(component.trackl)
+    
+    cat("\nProcessing",names(component.trackl))
+    # cat("\nProcessing",names(component.trackl[[1]]))
+    
+    # combine components into cmp.lst
+    cmp.lst=list()
+    length(cmp.lst)=length(component.trackl[[1]])
+    cmp.name=names(component.trackl[[1]])
+    
+    # replace file.name ".",with "_",
+    # as it interference with Index indentifier "."
+    cmp.name=gsub('\\.', '_', cmp.name)
+    names(cmp.lst)=cmp.name
+    
+    # for (i in seq_along(component.trackl)){
+    #     cmp.lst[[i]]=do.call(rbind.data.frame,component.trackl[[i]])
+    # }
+    
+    for (i in seq_along(component.trackl[[1]])){
+        for (j in seq_along(component.trackl[[1]][i])){
+            cmp.lst[[i]]=do.call(rbind.data.frame,component.trackl[[1]][[i]])
+        }
+    }
+    
+    cmp.df=do.call(rbind.data.frame,cmp.lst)
+    
+    # TODO: these name manipulations is used so frequently should be put into a
+    # function
+    
+    # split rownames
+    n=cmp.df
+    
+    if (length(grep("txt",rownames(n)[1])) == 0){
+        Index=strsplit(rownames(n),"\\.")
+    }else{
+        Index=strsplit(rownames(n),".txt.")
+    }
+    
+    # trackID=fileID.frameID.duration.indexPerFile.indexPerTrackll
+    Index.df=data.frame(do.call(rbind,Index))
+    # do.call(rbind.data.frame,Index)
+    
+    colnames(Index.df)=c("component","fileID","frameID","duration",
+                         "indexPerFile","indexPerTrackll","SN")
+    
+    track.plot.df=cbind(cmp.df,Index.df)
+    
+    return(track.plot.df)
+    
+}
+
+## TODO:
+# replace or combine readTiff to eBIage
+# TODO: max.pixel=128 can be removed
+
+
+## TODO:
+# all helper functions needs to have a line of description.
+

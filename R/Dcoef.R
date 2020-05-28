@@ -8,9 +8,9 @@
 ##'
 ##' @usage
 ##' Dcoef( MSD=NULL,trackll=NULL,dt=6,filter=c(min=7,max=Inf),rsquare=0.8,
-##' resolution=0.107, binwidth=NULL,
-##' method=c('static','percentage','rolling.window'),
-##' plot=FALSE,output=FALSE,t.interval=0.01,profile=NULL)
+##'        resolution=0.107,binwidth=NULL,method=c("static","percentage",
+##'        "rolling.window"),plot=FALSE,output=FALSE,t.interval=0.01,
+##'        profile=NULL)
 ##' @param MSD Mean Square Displacement calculated using msd() function. 
 ##' Either MSD or trackll can be passed into Dcoef for calculation of diffusion
 ##' coefficient.
@@ -26,21 +26,19 @@
 ##'   automatically plots 'histogram' with count information, binwidth can be
 ##'   set through parameter binwidth; as well as 'density' with
 ##'   density/frequency.
-##'
 ##' @param binwidth binwidth used for histogram. Default NULL, automatically
 ##'   assign binwidth.
-##' @param method 'static', uses time lags 2~5 to calculate diffusion
-##'   coefficient; 'percentage', uses (tierd) percentage (default 0.25) of time
-##'   lags (see Details). 'rolling.window', time lags uses for Dcoef follows a
+##' @param method "static", uses time lags 2~5 to calculate diffusion
+##'   coefficient; "percentage", uses (tierd) percentage (default 0.25) of time
+##'   lags (see Details). "rolling.window", time lags uses for Dcoef follows a
 ##'   rolling window with specified window size (default 4).
-##'
 ##' @param output An Logical indicate if output should be generated. See Values
 ##'   for detail.
 ##' @param t.interval time interval between frames, default 0.010 s (10ms).
 ##' @param profile Location of preference file. By default (NULL), it is stored
-##'   at : system.file('extdata','PREF','profile.csv',package='sojourner').
+##'   at : system.file("extdata","PREF","profile.csv",package="sojourner").
 ##'   User can provide preference file by specifying the location of the file, 
-##'   e.g. profile='/Users/shengliu/Desktop/profile.csv'.
+##'   e.g. profile="/Users/shengliu/Desktop/profile.csv".
 ##'
 ##' @return
 ##' \itemize{
@@ -50,21 +48,22 @@
 ##' \item \emph{csv} Dcoef output in csv format, when output = TRUE.
 ##' }
 ##' @details Generic parameters (parameter applied to all methods, such as
-##' resolution etc) are set in the function. Method dependent parameters (such
-##' as lag.start, lag.end for method = 'static'), are stored in profile.csv in
-##' PREF folder under extdata. To change preference parameter, can either
-##' programably or manually go to folder
-##' system.file('extdata','PREF','profile.csv',package='sojourner'), and c
-##' hange the profile.csv.
+##'   resolution etc) are set in the function. Method dependent parameters (such
+##'   as lag.start, lag.end for method = "static"), are stored in profile.csv in
+##'   PREF folder under extdata. To change preference parameter, can either
+##'   programably or manually go to folder
+##'   system.file("extdata","PREF","profile.csv",package="sojourner"), and c
+##'   hange the profile.csv.
 ##' 
 ##' lag.start: time lag used as start of dt for compute Dcoef. Default 2.
+##'
 ##' lag.end: Time lag used as end of dt for compute Dcoef. Default 2.
 ##'
 ##' method for calculating Dcoef:
 ##' \itemize{
 ##'     \item \bold{static} stabilize the number of time lags used for fitting
 ##'     using time lag 2~ 5 despite the total time lags measured.
-##'     \item \bold{percentage} 'percentage', uses (tierd) percentage (default
+##'     \item \bold{percentage} "percentage", uses (tierd) percentage (default
 ##'     0.25) of time lags.
 ##' \tabular{rlll}{
 ##'     [,1] \tab TrackLength \tab Percentage \tab TimeLagsForFitting\cr
@@ -83,17 +82,17 @@
 ##'
 ##' @examples
 ##' # compare files
-##' folder=system.file('extdata','SWR1',package='sojourner')
+##' folder=system.file("extdata",'SWR1',package="sojourner")
 ##' trackll = createTrackll(folder=folder, input=3)
 ##' MSD=msd(trackll=trackll)
-##' Dcoef(MSD=MSD,method='static',plot=TRUE)
+##' Dcoef(MSD=MSD,method="static",plot=TRUE)
 ##'
 ##' # compare folders
-##' folder1=system.file('extdata','SWR1',package='sojourner')
-##' folder2=system.file('extdata','HTZ1',package='sojourner')
+##' folder1=system.file("extdata",'SWR1',package="sojourner")
+##' folder2=system.file("extdata",'HTZ1',package="sojourner")
 ##' trackll2=compareFolder(folders=c(folder1,folder2), input=3)
-##' Dcoef(trackll=trackll2,method='percentage',plot=TRUE)
-##' Dcoef(trackll=trackll2,method='rolling.window',plot=TRUE)
+##' Dcoef(trackll=trackll2,method="percentage",plot=TRUE)
+##' Dcoef(trackll=trackll2,method="rolling.window",plot=TRUE)
 
 
 ##' @export Dcoef
@@ -125,9 +124,9 @@ Dcoef = function(MSD = NULL, trackll = NULL, dt = 6,
     
     ## set corresponding switches
     
-    ## read in preference parameters these are some method dependent
-    ## parameters, the generic parameters (parameter applied to all methods)
-    ## are set in the function
+    ## read in preference parameters these are some method dependent parameters,
+    ## the generic parameters (parameter applied to all methods) are set in the
+    ## function
     
     ## enable user provided preference file
     if (is.null(profile)) {
@@ -260,7 +259,7 @@ Dcoef = function(MSD = NULL, trackll = NULL, dt = 6,
     }
     
     # plot=match.arg(plot) switch(plot, variance={ if (method ==
-    # 'static'||method == 'percentage'){ cat(paste('\n\nvariance plot for
+    # "static"||method == "percentage"){ cat(paste('\n\nvariance plot for
     # method static', 'and percentage not available for sojourner
     # v0.2\n\n')) # cat(paste('variance plot for method static', 'and
     # percentage does not use rsquare filter. \n')) #
