@@ -23,5 +23,4 @@ RT(residence time) etc.
 # not run
 # library(sojourner)
 # sojournerGUI()
-
 }

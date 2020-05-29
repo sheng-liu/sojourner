@@ -24,7 +24,8 @@
 ##' # not run
 ##' # library(sojourner)
 ##' # sojournerGUI()
-##' 
+##  # running this GUI could cause R CMD check to stall at examples. 
+
 ## required for BiocCheck pass
 ##' @return A graphical user interface for sojourner.
 ##' 

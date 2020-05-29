@@ -10,7 +10,7 @@
 \usage{
 msd(trackll,dt=6,resolution=0.107,summarize=FALSE,cores=1,
 plot=FALSE,output=FALSE,filter=c(min=7,max=Inf))
-  msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=F)
+  msd.track.vecdt(trackll,vecdt=NULL,resolution=0.107,output=FALSE)
   msd.perc(trackll,percentage=0.25,filter=c(min=7,max=Inf),
 trimmer=c(min=1,max=31),resolution=0.107,output=FALSE)
 }

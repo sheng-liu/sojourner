@@ -109,17 +109,19 @@ same.scale=function(mixmdl.lst) {
 ##-----------------------------------------------------------------------------
 ## seedIt
 ## @export seedIt
-seedIt=function(expr,seed){
-    if (is.null(seed)){
-        seed=sample(0:647,1)
-        set.seed(seed)
-    }else{set.seed(seed)}
-
-    note <- paste("\nRandom number generation seed",seed,"\n")
-    cat(note)
-    structure(expr, seed=seed)
-}
-
+# seedIt=function(expr,seed){
+#     if (is.null(seed)){
+#         seed=sample(0:647,1)
+#         set.seed(seed)
+#     }else{set.seed(seed)}
+# 
+#     note <- paste("\nRandom number generation seed",seed,"\n")
+#     cat(note)
+#     structure(expr, seed=seed)
+# }
+# can't be used according to BiocCheck()
+# WARNING: Remove set.seed usage in R code
+# https://support.bioconductor.org/p/110439/
 
 ##------------------------------------------------------------------------------
 ## getStartFrame
@@ -185,7 +187,7 @@ removeFrameRecord=function(track.list) {
 
 convert.abtrackll=function(trackll){
     ab.trackll=list()
-    for(i in 1:length(trackll)){
+    for(i in seq_along(trackll)){
         segl=trackll[[i]]
         segl=lapply(trackll[[i]], abTrack)
         ab.trackll[[i]]=segl

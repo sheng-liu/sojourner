@@ -1,6 +1,6 @@
 Package: sojourner
 Title: Statistical analysis of single molecule trajectories
-Version: 1.1.4
+Version: 1.1.5
 Date: 2015-10-15
 Description: Single molecule tracking has evolved as a novel new approach complementing genomic sequencing, it reports live biophysical properties of molecules being investigated besides properties relating their coding sequence; here we provided "sojourner" package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data.
 License: Artistic-2.0
@@ -8,7 +8,7 @@ LazyData: FALSE
 Suggests: BiocStyle, knitr, rmarkdown, RUnit, BiocGenerics
 VignetteBuilder: knitr
 biocViews: Technology, WorkflowStep
-Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,boot,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,shinyjs,sp,truncnorm,utils,stats,pixmap,rlang,graphics,grDevices,grid,compiler,lattice
+Imports: ggplot2,dplyr,reshape2,gridExtra,EBImage,MASS,R.matlab,Rcpp,fitdistrplus,mclust,minpack.lm,mixtools,mltools,nls2,plyr,rtiff,sampSurf,scales,shiny,shinyjs,sp,truncnorm,utils,stats,pixmap,rlang,graphics,grDevices,grid,compiler,lattice
 NeedsCompilation: no
 RoxygenNote: 7.1.0
 Encoding: UTF-8
