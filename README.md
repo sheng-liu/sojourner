@@ -15,7 +15,7 @@ of molecules being investigated besides properties relating their coding
 sequence. Here we provided “*sojourner*” package, to address statistical
 and bioinformatic needs related to the analysis and comprehension of
 high throughput single molecule tracking data
-(<https://bioconductor.org/packages/release/bioc/html/sojourner.html>).
+(<https://bioconductor.org/packages/sojourner/>).
 
 Maintainer:
 
@@ -24,7 +24,7 @@ Maintainer:
 Citation:
 
 Liu S, Yoo S, Tang X, Sung Y, Wu C (2020). Sojourner: statistical
-analysis of single molecule trajectories. R package version 1.0.2,
+analysis of single molecule trajectories. R package version 1.3.0,
 <https://github.com/sheng-liu/sojourner>. DOI:
 10.18129/B9.bioc.sojourner.
 

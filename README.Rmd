@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-Single molecule tracking has evolved as a novel new approach complementing genomic sequencing, it reports live biophysical properties of molecules being investigated besides properties relating their coding sequence. Here we provided "_sojourner_" package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data (https://bioconductor.org/packages/release/bioc/html/sojourner.html).
+Single molecule tracking has evolved as a novel new approach complementing genomic sequencing, it reports live biophysical properties of molecules being investigated besides properties relating their coding sequence. Here we provided "_sojourner_" package, to address statistical and bioinformatic needs related to the analysis and comprehension of high throughput single molecule tracking data (https://bioconductor.org/packages/sojourner/).
 
 Maintainer: 
 
@@ -26,7 +26,7 @@ _sojourner_ developer <sojourner.developer at outlook.com>
 
 Citation:
 
-Liu S, Yoo S, Tang X, Sung Y, Wu C (2020). Sojourner: statistical analysis of single molecule trajectories. R package version 1.0.2,  https://github.com/sheng-liu/sojourner. DOI: 10.18129/B9.bioc.sojourner.
+Liu S, Yoo S, Tang X, Sung Y, Wu C (2020). Sojourner: statistical analysis of single molecule trajectories. R package version 1.3.0,  https://github.com/sheng-liu/sojourner. DOI: 10.18129/B9.bioc.sojourner.
 
 
 ## Installation
