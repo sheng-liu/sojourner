@@ -815,9 +815,9 @@ cmpOverlayData=function(component.trackl){
 }
 
 ## TODO:
-# replace or combine readTiff to eBIage
+# replace or combine readTiff to EBImage, or "tiff" package
 # TODO: max.pixel=128 can be removed
-
+# plotTrack, plutNucTrack, the lines needs to be finer, and has points on each step, start and end.
 
 ## TODO:
 # all helper functions needs to have a line of description.
