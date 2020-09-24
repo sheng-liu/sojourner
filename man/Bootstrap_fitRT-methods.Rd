@@ -58,6 +58,8 @@ fitRT_Boot_2and3comp(BootData,t.interval=0.25,x.max=100,y.min=0.0001,
 \item{weighting}{A Logical indicate if the fitting should weight on the tail of 1-CDF curve, the weighting equation is 1/Y.}
 
 \item{k.ns}{Logical indicate or numeric used to control fitting.}
+
+\item{plotType}{type of plot for 1-CDF, "l" for line plot, "p" for point plot.}
 }
 \value{
 \itemize{

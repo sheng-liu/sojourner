@@ -315,7 +315,7 @@ calculate_1_CDF_multiple<-function(trackll=c(trackll1,trackll2),x.max=100,y.min=
     par(mar=c(0, 0, 0, 0),xpd=TRUE)
     temp <- legend("topright", legend = rep(" ", length(trackll)),
                    text.width = max(strwidth(paste(rep(names(trackll))," ( n = ",rep(c(n))," )",sep=""))),
-                   xjust = 1, yjust = 1, y.intersp = 2,bty="n")
+                   xjust = 1, yjust = 1, y.intersp = 0.5,bty="n")
     text(temp$rect$left + temp$rect$w, temp$text$y,
          paste(rep(names(trackll)), 
                rep(" ( n=",length(trackll)),
@@ -362,7 +362,7 @@ calculate_1_CDF_multiple<-function(trackll=c(trackll1,trackll2),x.max=100,y.min=
   par(mar=c(0, 0, 0, 0),xpd=TRUE)
   temp <- legend("bottomleft", legend = rep(" ", length(trackll)),
                  text.width = max(strwidth(paste(rep(names(trackll))," ( n = ",rep(c(n))," )",sep=""))),
-                 xjust = 1, yjust = 1, y.intersp = 2,bty="n")
+                 xjust = 1, yjust = 1, y.intersp = 0.5,bty="n")
   text(10^temp$rect$left, 10^temp$text$y,
        paste(rep(names(trackll)), 
              rep(" ( n=",length(trackll)),
