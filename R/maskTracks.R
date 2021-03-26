@@ -71,7 +71,8 @@ maskPoint = function(mask.file, plot = FALSE) {
     mask.file.name = basename(mask.file)
     # read in tiff mask library(rtiff)
     cat("Reading mask file    ", mask.file.name, "\n")
-    mask = rtiff::readTiff(fn = mask.file)
+    # mask = rtiff::readTiff(fn = mask.file)
+    mask = tiff2pixmap(fn = mask.file)
     # plot(mask)
     
     pospt = which(mask@red != 0, arr.ind = TRUE)

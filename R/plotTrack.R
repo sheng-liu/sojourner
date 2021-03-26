@@ -466,7 +466,8 @@ plotTrackOverlay=function(trackll,max.pixel=128,nrow=2,ncol=2,width=16,
     # read in tiff mask
     # library(rtiff)
     cat("\nReading mask file",title)
-    mask=rtiff::readTiff(fn=mask.file)
+   # mask=rtiff::readTiff(fn=mask.file)
+    mask = tiff2pixmap(fn = mask.file)
     # plot(mask)
     
     # TODO 

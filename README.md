@@ -82,7 +82,6 @@ install.packages('truncnorm')
 install.packages('mclust')
 
 # image processing - CRAN
-install.packages('rtiff')
 install.packages('jpeg')
 install.packages('tiff')
 install.packages('png')
